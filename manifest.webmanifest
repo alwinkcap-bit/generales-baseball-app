@@ -1,0 +1,9 @@
+{
+  "name": "Generales Baseball Academy",
+  "short_name": "Generales",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#061a2c",
+  "theme_color": "#082A4A",
+  "icons": []
+}
