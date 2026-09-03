@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+Zimport React, { useEffect, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { supabase } from './supabase'
 import './styles.css'
@@ -88,13 +88,26 @@ function App() {
     loadPlayers()
   }
 
-  async function login(e) {
-    e.preventDefault()
-    const fd = new FormData(e.currentTarget)
-    const { error } = await supabase.auth.signInWithPassword({ email: fd.get('email'), password: fd.get('password') })
-    if (error) return setMessage(error.message)
-    setLoginOpen(false)
+async function login(e) {
+  e.preventDefault()
+  setMessage('')
+
+  const fd = new FormData(e.currentTarget)
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: fd.get('email'),
+    password: fd.get('password')
+  })
+
+  if (error) {
+    alert('Error al iniciar sesión: ' + error.message)
+    return
   }
+
+  setSession(data.session)
+  setLoginOpen(false)
+  alert('Administrador conectado correctamente')
+}
 
   async function logout() { await supabase.auth.signOut() }
 
