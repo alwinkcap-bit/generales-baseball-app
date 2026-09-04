@@ -5,7 +5,7 @@ import './styles.css'
 
 const blankPlayer = {
   nombre: '', apellido: '', fecha_nacimiento: '', categoria: '', posicion: '', numero: '',
-  batea: 'R', lanza: 'R', estatura_cm: '', peso_kg: '', foto_url: '', estado: 'Activo', notas: ''
+  batea: 'R', lanza: 'R', estatura_cm: '', estatura_pulgadas: '', peso_kg: '', foto_url: '', estado: 'Activo', notas: ''
 }
 
 function edad(fecha) {
@@ -55,8 +55,26 @@ function openNew() {
     setEditorOpen(true)
   }
 function openEdit(p) {
-    setForm({ ...blankPlayer, ...p })
-    setEditorOpen(true)
+function openEdit(p) {
+  const pies = p.estatura_cm ? Math.floor(Number(p.estatura_cm)) : ''
+  const pulgadas = p.estatura_cm
+    ? Math.round((Number(p.estatura_cm) - Math.floor(Number(p.estatura_cm))) * 12)
+    : ''
+
+  const libras = p.peso_kg
+    ? (Number(p.peso_kg) / 0.453592).toFixed(1)
+    : ''
+
+  setForm({
+    ...blankPlayer,
+    ...p,
+    estatura_cm: pies,
+    estatura_pulgadas: pulgadas,
+    peso_kg: libras
+  })
+
+  setEditorOpen(true)
+}   
   }
   async function subirFoto(file) {
   if (!file) return
@@ -90,8 +108,8 @@ function openEdit(p) {
     const payload = {
       nombre: form.nombre.trim(), apellido: form.apellido.trim(), fecha_nacimiento: form.fecha_nacimiento || null,
       categoria: form.categoria || null, posicion: form.posicion || null, numero: form.numero === '' ? null : Number(form.numero),
-      batea: form.batea || null, lanza: form.lanza || null, estatura_cm: form.estatura_cm === '' ? null : Number(form.estatura_cm),
-      peso_kg: form.peso_kg === '' ? null : Number(form.peso_kg), foto_url: form.foto_url || null,
+      batea: form.batea || null, lanza: form.lanza || null, estatura_cm: form.estatura_cm === '' ? null : Number(form.estatura_cm) + (Number(form.estatura_pulgadas || 0) / 12),
+      peso_kg: form.peso_kg === '' ? null : Number(form.peso_kg) * 0.453592, foto_url: form.foto_url || null,
       estado: form.estado || null, notas: form.notas || null
     }
     let result
@@ -178,8 +196,8 @@ async function login(e) {
               <div className="bio-card"><h3>Información</h3><dl>
                 <dt>Fecha de nacimiento</dt><dd>{selected.fecha_nacimiento || '—'}</dd>
                 <dt>Categoría</dt><dd>{selected.categoria || '—'}</dd>
-                <dt>Estatura</dt><dd>{selected.estatura_cm ? `${selected.estatura_cm} cm` : '—'}</dd>
-                <dt>Peso</dt><dd>{selected.peso_kg ? `${selected.peso_kg} kg` : '—'}</dd>
+               <dt>Estatura</dt><dd>{selected.estatura_cm ? `${Math.floor(Number(selected.estatura_cm))} pies ${Math.round((Number(selected.estatura_cm) - Math.floor(Number(selected.estatura_cm))) * 12)} pulgadas` : '-'}</dd>
+              <dt>Peso</dt><dd>{selected.peso_kg ? `${(Number(selected.peso_kg) / 0.453592).toFixed(1)} lb` : '-'}</dd>
               </dl></div>
               <div className="bio-card"><h3>Notas</h3><p>{selected.notas || 'Sin notas registradas.'}</p></div>
             </div>
@@ -202,8 +220,9 @@ async function login(e) {
       <label>Foto del jugador<input type="file" accept="image/*" onChange={(e)=>subirFoto(e.target.files?.[0])} /></label>
         <label>Fecha nacimiento<input type="date" value={form.fecha_nacimiento ?? ''} onChange={e=>setForm({...form,fecha_nacimiento:e.target.value})}/></label>
         <label>Número<input type="number" value={form.numero ?? ''} onChange={e=>setForm({...form,numero:e.target.value})}/></label>
-        <label>Estatura cm<input type="number" value={form.estatura_cm ?? ''} onChange={e=>setForm({...form,estatura_cm:e.target.value})}/></label>
-        <label>Peso kg<input type="number" step="0.1" value={form.peso_kg ?? ''} onChange={e=>setForm({...form,peso_kg:e.target.value})}/></label>
+        <label>Estatura pies<input type="number" min="0" value={form.estatura_cm ?? ''} onChange={e=>setForm({...form,estatura_cm:e.target.value})}/></label>
+        <label>Estatura pulgadas<input type="number" min="0" max="11" value={form.estatura_pulgadas ?? ''} onChange={e=>setForm({...form,estatura_pulgadas:e.target.value})}/></label>
+        <label>Peso libras<input type="number" step="0.1" value={form.peso_kg ?? ''} onChange={e=>setForm({...form,peso_kg:e.target.value})}/></label>
         <label className="wide">Notas<textarea rows="4" value={form.notas ?? ''} onChange={e=>setForm({...form,notas:e.target.value})}/></label>
       </div><button className="primary full">Guardar jugador</button></form></div>}
   </div>
