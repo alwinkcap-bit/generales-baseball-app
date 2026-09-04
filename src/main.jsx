@@ -55,7 +55,7 @@ function openNew() {
     setEditorOpen(true)
   }
 function openEdit(p) {
-function openEdit(p) {
+
   const pies = p.estatura_cm ? Math.floor(Number(p.estatura_cm)) : ''
   const pulgadas = p.estatura_cm
     ? Math.round((Number(p.estatura_cm) - Math.floor(Number(p.estatura_cm))) * 12)
@@ -75,7 +75,7 @@ function openEdit(p) {
 
   setEditorOpen(true)
 }   
-  }
+  
   async function subirFoto(file) {
   if (!file) return
 
