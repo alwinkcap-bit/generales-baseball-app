@@ -50,17 +50,40 @@ function App() {
     if (!q) return players
     return players.filter(p => `${p.nombre} ${p.apellido} ${p.numero ?? ''} ${p.categoria ?? ''} ${p.posicion ?? ''}`.toLowerCase().includes(q))
   }, [players, query])
-
-  function openNew() {
+function openNew() {
     setForm(blankPlayer)
     setEditorOpen(true)
   }
-
-  function openEdit(p) {
+function openEdit(p) {
     setForm({ ...blankPlayer, ...p })
     setEditorOpen(true)
   }
+  async function subirFoto(file) {
+  if (!file) return
 
+  const extension = file.name.split('.').pop()
+  const nombreArchivo = `${Date.now()}.${extension}`
+
+  const { error } = await supabase.storage
+    .from('fotos-jugadores')
+    .upload(nombreArchivo, file)
+
+  if (error) {
+    alert('Error al subir la foto: ' + error.message)
+    return
+  }
+
+  const { data } = supabase.storage
+    .from('fotos-jugadores')
+    .getPublicUrl(nombreArchivo)
+
+  setForm(prev => ({
+    ...prev,
+    foto_url: data.publicUrl
+  }))
+
+  alert('Foto cargada correctamente')
+}
   async function savePlayer(e) {
     e.preventDefault()
     setMessage('')
@@ -175,7 +198,8 @@ async function login(e) {
     {editorOpen && <div className="modal-backdrop"><form className="modal editor" onSubmit={savePlayer}>
       <button type="button" className="close" onClick={()=>setEditorOpen(false)}>×</button><h3>{form.id?'Editar jugador':'Nuevo jugador'}</h3>
       <div className="form-grid">
-        {['nombre','apellido','categoria','posicion','batea','lanza','foto_url','estado'].map(k=><label key={k}>{k.replace('_',' ')}<input value={form[k] ?? ''} onChange={e=>setForm({...form,[k]:e.target.value})} required={k==='nombre'} /></label>)}
+        {['nombre','apellido','categoria','posicion','batea','lanza','estado'].map(k=><label key={k}>{k.replace('_',' ')}<input value={form[k] ?? ''} onChange={e=>setForm({...form,[k]:e.target.value})} required={k==='nombre'} /></label>)}
+      <label>Foto del jugador<input type="file" accept="image/*" onChange={(e)=>subirFoto(e.target.files?.[0])} /></label>
         <label>Fecha nacimiento<input type="date" value={form.fecha_nacimiento ?? ''} onChange={e=>setForm({...form,fecha_nacimiento:e.target.value})}/></label>
         <label>Número<input type="number" value={form.numero ?? ''} onChange={e=>setForm({...form,numero:e.target.value})}/></label>
         <label>Estatura cm<input type="number" value={form.estatura_cm ?? ''} onChange={e=>setForm({...form,estatura_cm:e.target.value})}/></label>
