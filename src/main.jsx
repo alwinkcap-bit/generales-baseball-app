@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { supabase } from './supabase'
 import './styles.css'
-
+import Inicio from './Inicio'
 const blankPlayer = {
   nombre: '', apellido: '', fecha_nacimiento: '', categoria: '', posicion: '', numero: '',
   batea: 'R', lanza: 'R', estatura_cm: '', estatura_pulgadas: '', peso_kg: '', foto_url: '', estado: 'Activo', notas: ''
@@ -19,6 +19,7 @@ function edad(fecha) {
 }
 
 function App() {
+  const [vista, setVista] = useState('inicio')
   const [players, setPlayers] = useState([])
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
@@ -151,9 +152,34 @@ async function login(e) {
 }
 
   async function logout() { await supabase.auth.signOut() }
-
+if (vista === 'inicio') {
+  return (
+    <div>
+      <Inicio />
+      <button
+        onClick={() => setVista('admin')}
+        style={{
+          position: 'fixed',
+          top: '12px',
+          right: '12px',
+          zIndex: 9999,
+          padding: '10px 14px',
+          borderRadius: '8px',
+          border: 'none',
+          background: '#f2b93b',
+          color: '#081b30',
+          fontWeight: 'bold',
+          cursor: 'pointer'
+        }}
+      >
+        Panel
+      </button>
+    </div>
+  )
+}
   return <div className="app-shell">
     <header className="topbar">
+      <button className="ghost" onClick={() => setVista('inicio')}>Inicio público</button>
       <div>
         <div className="eyebrow">Generales de Chitré</div>
         <h1>Baseball Academy</h1>
