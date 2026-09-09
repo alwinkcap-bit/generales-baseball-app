@@ -1,6 +1,8 @@
 
 import React from 'react';
 import './inicio.css';
+import logoGenerales from './public/logo-generales.png';
+import equipoGenerales from './public/equipo-generales.jpg';
 
 export default function Inicio() {
   const whatsapp = 'https://wa.me/50763776387';
@@ -17,7 +19,8 @@ export default function Inicio() {
 
       <main>
         <section className="inicio-hero">
-          <div className="inicio-hero-contenido">
+
+  <div className="inicio-hero-contenido">
             <span className="inicio-etiqueta">FORMANDO FUTUROS CAMPEONES</span>
             <h1>
               GENERALES<br />
@@ -34,6 +37,18 @@ export default function Inicio() {
               </a>
             </div>
           </div>
+          <div className="inicio-hero-imagen">
+  <img
+    src={equipoGenerales}
+    alt="Equipo Generales de Chitré"
+    className="inicio-foto-equipo"
+  />
+  <img
+    src={logoGenerales}
+    alt="Logo Generales de Chitré"
+    className="inicio-logo-portada"
+  />
+</div>
         </section>
 
         <section className="inicio-valores">
