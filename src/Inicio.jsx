@@ -73,7 +73,7 @@ export default function Inicio() {
           </div>
         </section>
 
-        <section className="inicio-ubicacion">
+        <section id="noticias" className="inicio-ubicacion">
           <span className="inicio-etiqueta">NUESTRA CASA</span>
           <h2>Estadio Pepe Osorio</h2>
           <p>Calle Abajo de Chitré, Herrera, Panamá.</p>
