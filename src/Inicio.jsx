@@ -81,6 +81,7 @@ export default function Inicio() {
             📍 CÓMO LLEGAR
           </a>
         </section>
+        <div id="mas"></div>
       </main>
 
       <nav className="inicio-nav">
