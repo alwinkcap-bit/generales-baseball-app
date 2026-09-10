@@ -14,7 +14,7 @@ export default function Inicio() {
           <span>GENERALES DE CHITRÉ</span>
           <strong>BASEBALL ACADEMY</strong>
         </div>
-        <span className="inicio-menu">☰</span>
+        
       </header>
 
       <main>
