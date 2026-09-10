@@ -52,6 +52,7 @@ export default function Inicio() {
         </section>
 
         <section id="programas" className="inicio-valores">
+        <h2>PROGRAMAS DE FORMACIÓN</h2> 
           <div><span>🏅</span><strong>DISCIPLINA</strong><small>En el terreno y en la vida</small></div>
           <div><span>⚾</span><strong>FORMACIÓN</strong><small>Desarrollo integral</small></div>
           <div><span>🏃</span><strong>DESARROLLO</strong><small>Talento y aprendizaje</small></div>
