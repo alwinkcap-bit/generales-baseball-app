@@ -58,7 +58,7 @@ export default function Inicio() {
           <div><span>🏃</span><strong>DESARROLLO</strong><small>Talento y aprendizaje</small></div>
           <div><span>🏆</span><strong>VALORES</strong><small>Respeto y compañerismo</small></div>
           <div className="programas-categorias">
-  <div className="categoria-card">
+  <div className="categoria-card categoria-activa">
   <strong>4–5 AÑOS</strong>
   <small>INICIACIÓN</small>
 </div>

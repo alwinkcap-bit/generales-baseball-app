@@ -325,6 +325,14 @@
     font-size: 9px;
   }
 }
+.inicio-valores .categoria-activa {
+  background: var(--dorado);
+  color: var(--azul);
+}
+.inicio-valores .categoria-activa strong,
+.inicio-valores .categoria-activa small {
+  color: var(--azul);
+}
 .inicio-hero {
   display: grid;
   grid-template-columns: 1fr 1.15fr;
