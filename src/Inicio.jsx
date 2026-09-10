@@ -51,7 +51,7 @@ export default function Inicio() {
 </div>
         </section>
 
-        <section className="inicio-valores">
+        <section id="programas" className="inicio-valores">
           <div><span>🏅</span><strong>DISCIPLINA</strong><small>En el terreno y en la vida</small></div>
           <div><span>⚾</span><strong>FORMACIÓN</strong><small>Desarrollo integral</small></div>
           <div><span>🏃</span><strong>DESARROLLO</strong><small>Talento y aprendizaje</small></div>
