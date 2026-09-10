@@ -145,6 +145,11 @@
   padding: 20px 12px 25px;
   color: white;
   text-align: center;
+}.inicio-valores .programas-categorias {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
 }
 
 .inicio-valores div {
