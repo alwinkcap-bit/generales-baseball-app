@@ -150,6 +150,12 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+}.inicio-valores .categoria-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--dorado);
+  border-radius: 10px;
+  padding: 14px 8px;
+  font-weight: bold;
 }
 
 .inicio-valores div {
