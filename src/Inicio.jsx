@@ -12,7 +12,7 @@ export default function Inicio() {
       <header className="inicio-header">
         <div className="inicio-marca">
           <span>GENERALES DE CHITRÉ</span>
-          <strong>Baseball Academy</strong>
+          <strong>BASEBALL ACADEMY</strong>
         </div>
         <span className="inicio-menu">☰</span>
       </header>
@@ -23,7 +23,7 @@ export default function Inicio() {
   <div className="inicio-hero-contenido">
             <span className="inicio-etiqueta">FORMANDO FUTUROS CAMPEONES</span>
             <h1>
-              GENERALES<br />
+              GENERALES DE CHITRÉ<br />
               <span>BASEBALL</span><br />
               ACADEMY
             </h1>
