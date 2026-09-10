@@ -172,7 +172,7 @@ if (vista === 'inicio') {
           cursor: 'pointer'
         }}
       >
-        Panel
+        Panel Administrativo
       </button>
     </div>
   )

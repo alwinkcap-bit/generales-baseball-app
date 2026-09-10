@@ -8,7 +8,7 @@ export default function Inicio() {
   const whatsapp = 'https://wa.me/50763776387';
 
   return (
-    <div className="inicio-app">
+  <div id="inicio" className="inicio-app"> 
       <header className="inicio-header">
         <div className="inicio-marca">
           <span>GENERALES DE CHITRÉ</span>
