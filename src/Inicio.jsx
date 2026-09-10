@@ -58,7 +58,7 @@ export default function Inicio() {
           <div><span>🏆</span><strong>VALORES</strong><small>Respeto y compañerismo</small></div>
         </section>
 
-        <section className="inicio-bienvenida">
+        <section id="galeria" className="inicio-bienvenida">
           <span className="inicio-etiqueta">NUESTRA ACADEMIA</span>
           <h2>Más que béisbol,<br />una familia.</h2>
           <p>
