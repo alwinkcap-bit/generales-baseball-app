@@ -373,6 +373,11 @@
 }
 
 @media (max-width: 800px) {
+    .inicio-header {
+    position: relative;
+    flex-direction: column;
+    gap: 12px;
+  }
   .inicio-hero {
     grid-template-columns: 1fr;
   }

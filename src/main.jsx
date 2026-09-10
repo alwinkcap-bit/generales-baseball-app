@@ -159,7 +159,7 @@ if (vista === 'inicio') {
       <button
         onClick={() => setVista('admin')}
         style={{
-          position: 'fixed',
+          position: 'absolute',
           top: '12px',
           right: '12px',
           zIndex: 9999,
