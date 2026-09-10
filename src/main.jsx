@@ -157,6 +157,7 @@ if (vista === 'inicio') {
     <div>
       <Inicio />
       <button
+      className="inicio-admin-btn"
         onClick={() => setVista('admin')}
         style={{
           position: 'absolute',

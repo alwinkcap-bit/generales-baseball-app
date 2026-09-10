@@ -378,6 +378,10 @@
     flex-direction: column;
     gap: 12px;
   }
+  .inicio-admin-btn {
+  top: 70px !important;
+  right: 12px !important;
+}
   .inicio-hero {
     grid-template-columns: 1fr;
   }
