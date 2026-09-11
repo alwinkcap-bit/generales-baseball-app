@@ -221,7 +221,7 @@ export default function Inicio() {
           </div>
         </section>
 
-        <section id="noticias" className="inicio-ubicacion">
+        <section id="ubicacion" className="inicio-ubicacion">
           <span className="inicio-etiqueta">NUESTRA CASA</span>
           <h2>Estadio Pepe Osorio</h2>
           <p>Calle Abajo de Chitré, Herrera, Panamá.</p>
@@ -229,6 +229,13 @@ export default function Inicio() {
             📍 CÓMO LLEGAR
           </a>
         </section>
+        <section id="noticias" className="inicio-noticias">
+  <span className="inicio-etiqueta">ACTUALIDAD</span>
+  <h2>NOTICIAS</h2>
+  <p>
+    Mantente informado sobre juegos, actividades y novedades de Generales de Chitré.
+  </p>
+</section>
         <section id="galeria" className="inicio-galeria">
   <h2>GALERÍA</h2>
   <p>
