@@ -304,8 +304,17 @@ export default function Inicio() {
   <p>
     Calle Abajo de Chitré, Herrera, Panamá.
   </p>
+  <a
+  className="noticia-boton"
+  href="https://www.google.com/maps/search/?api=1&query=Estadio+Pepe+Osorio+Chitr%C3%A9+Herrera+Panam%C3%A1"
+  target="_blank"
+  rel="noreferrer"
+>
+  ABRIR EN GOOGLE MAPS
+</a>
 </div>
   <a
+  
     className="noticia-boton"
     href="https://wa.me/50763776387"
     target="_blank"
