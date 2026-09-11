@@ -1,11 +1,12 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import './inicio.css';
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
 
 export default function Inicio() {
   const whatsapp = 'https://wa.me/50763776387';
+  const [categoriaActiva, setCategoriaActiva] = useState('4-5');
 
   return (
   <div id="inicio" className="inicio-app"> 
@@ -58,19 +59,32 @@ export default function Inicio() {
           <div><span>🏃</span><strong>DESARROLLO</strong><small>Talento y aprendizaje</small></div>
           <div><span>🏆</span><strong>VALORES</strong><small>Respeto y compañerismo</small></div>
           <div className="programas-categorias">
-  <div className="categoria-card categoria-activa">
+  <div
+  className={`categoria-card ${categoriaActiva === '4-5' ? 'categoria-activa' : ''}`}
+  onClick={() => setCategoriaActiva('4-5')}
+>
   <strong>4–5 AÑOS</strong>
   <small>INICIACIÓN</small>
 </div>
-  <div className="categoria-card">
+<div
+  className={`categoria-card ${categoriaActiva === '6' ? 'categoria-activa' : ''}`}
+  onClick={() => setCategoriaActiva('6')}
+>  
   <strong>6 AÑOS</strong>
   <small>FUNDAMENTOS</small>
 </div>
-  <div className="categoria-card">
+<div
+  className={`categoria-card ${categoriaActiva === '7' ? 'categoria-activa' : ''}`}
+  onClick={() => setCategoriaActiva('7')}
+>
+
   <strong>7 AÑOS</strong>
   <small>DESARROLLO</small>
 </div>
-  <div className="categoria-card">
+  <div
+  className={`categoria-card ${categoriaActiva === '8' ? 'categoria-activa' : ''}`}
+  onClick={() => setCategoriaActiva('8')}
+>
   <strong>8 AÑOS</strong>
   <small>PREPARACIÓN</small>
 </div>
