@@ -283,6 +283,31 @@ export default function Inicio() {
   <h2>MÁS</h2>
   <p>
     Conoce nuestros horarios, ubicación, contacto y más información de Generales de Chitré.
+    <div className="mas-card">
+  <span>HORARIOS DE ENTRENAMIENTO</span>
+  <h3>Prácticas semanales</h3>
+  <p>
+    Lunes, miércoles y viernes<br />
+    4:45 p. m. y 6:00 p. m.<br />
+    Estadio Pepe Osorio de Chitré
+  </p>
+</div>
+<div className="mas-card">
+  <span>CONTACTO</span>
+  <h3>Comunícate con nosotros</h3>
+  <p>
+    WhatsApp: +507 6377-6387
+  </p>
+
+  <a
+    className="noticia-boton"
+    href="https://wa.me/50763776387"
+    target="_blank"
+    rel="noreferrer"
+  >
+    ESCRIBIR POR WHATSAPP
+  </a>
+</div>
   </p>
 </section>
       </main>
