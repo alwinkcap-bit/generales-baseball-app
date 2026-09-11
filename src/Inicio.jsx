@@ -102,6 +102,24 @@ export default function Inicio() {
     <li>Aprender los fundamentos básicos del béisbol.</li>
     <li>Desarrollar disciplina y diversión mediante el juego.</li>
   </ul>
+)}{categoriaActiva === '6' && (
+  <ul className="programa-objetivos">
+    <li>Fortalecer los fundamentos de bateo y fildeo.</li>
+    <li>Mejorar lanzamiento, recepción y coordinación.</li>
+    <li>Aprender posiciones básicas y trabajo en equipo.</li>
+  </ul>
+)}{categoriaActiva === '7' && (
+  <ul className="programa-objetivos">
+    <li>Perfeccionar bateo, fildeo y lanzamiento.</li>
+    <li>Desarrollar coordinación avanzada y reacción.</li>
+    <li>Comprender situaciones básicas de juego y toma de decisiones.</li>
+  </ul>
+)}{categoriaActiva === '8' && (
+  <ul className="programa-objetivos">
+    <li>Consolidar la técnica de bateo, fildeo y lanzamiento.</li>
+    <li>Mejorar la comprensión de posiciones y situaciones de juego.</li>
+    <li>Prepararse para competir aplicando disciplina, estrategia y trabajo en equipo.</li>
+  </ul>
 )}
 <p>
   {categoriaActiva === '4-5' && 'Coordinación, juego, motricidad y primeros fundamentos del béisbol.'}
