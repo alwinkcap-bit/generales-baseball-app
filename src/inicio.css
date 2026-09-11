@@ -405,3 +405,14 @@
     bottom: 15px;
   }
 }
+.programa-objetivos {
+  max-width: 500px;
+  margin: 20px auto;
+  padding-left: 30px;
+  text-align: left;
+}
+
+.programa-objetivos li {
+  margin-bottom: 10px;
+  line-height: 1.4;
+}

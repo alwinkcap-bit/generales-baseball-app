@@ -96,7 +96,14 @@ export default function Inicio() {
   {categoriaActiva === '7' && 'Programa 7 años'}
   {categoriaActiva === '8' && 'Programa 8 años'}
 </h3>
-  <p>
+{categoriaActiva === '4-5' && (
+  <ul className="programa-objetivos">
+    <li>Mejorar coordinación y motricidad.</li>
+    <li>Aprender los fundamentos básicos del béisbol.</li>
+    <li>Desarrollar disciplina y diversión mediante el juego.</li>
+  </ul>
+)}
+<p>
   {categoriaActiva === '4-5' && 'Coordinación, juego, motricidad y primeros fundamentos del béisbol.'}
   {categoriaActiva === '6' && 'Fundamentos básicos de bateo, fildeo, lanzamiento y trabajo en equipo.'}
   {categoriaActiva === '7' && 'Desarrollo técnico, coordinación avanzada y situaciones básicas de juego.'}
