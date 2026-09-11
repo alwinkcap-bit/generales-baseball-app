@@ -206,7 +206,7 @@ export default function Inicio() {
 </div>
         </section>
 
-        <section id="galeria" className="inicio-bienvenida">
+        <section id="academia" className="inicio-bienvenida">
           <span className="inicio-etiqueta">NUESTRA ACADEMIA</span>
           <h2>Más que béisbol,<br />una familia.</h2>
           <p>
