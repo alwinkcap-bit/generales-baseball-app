@@ -117,6 +117,15 @@ export default function Inicio() {
     </p>
   </div>
 )}
+{categoriaActiva === '6' && (
+  <div className="programa-extra">
+    <strong>Metodología de entrenamiento</strong>
+    <p>
+      Entrenamientos con ejercicios técnicos de bateo, fildeo, lanzamiento y
+      recepción, combinados con juegos que fortalecen la coordinación y el trabajo en equipo.
+    </p>
+  </div>
+)}
 {categoriaActiva === '7' && (
   <ul className="programa-objetivos">
     <li>Perfeccionar bateo, fildeo y lanzamiento.</li>
@@ -139,6 +148,16 @@ export default function Inicio() {
     </p>
   </div>
 )}
+{categoriaActiva === '8' && (
+  <div className="programa-extra">
+    <strong>Metodología de entrenamiento</strong>
+    <p>
+      Entrenamientos enfocados en perfeccionar la técnica ofensiva y defensiva,
+      practicar situaciones reales de juego y fortalecer la disciplina,
+      estrategia y trabajo en equipo.
+    </p>
+  </div>
+)}
 {categoriaActiva === '7' && (
   <div className="programa-extra">
     <strong>¿Qué aprenderá el niño?</strong>
@@ -148,12 +167,31 @@ export default function Inicio() {
     </p>
   </div>
 )}
+{categoriaActiva === '7' && (
+  <div className="programa-extra">
+    <strong>Metodología de entrenamiento</strong>
+    <p>
+      Entrenamientos técnicos con ejercicios de bateo, fildeo y lanzamiento,
+      combinados con situaciones de juego para desarrollar coordinación,
+      reacción y toma de decisiones.
+    </p>
+  </div>
+)}
 {categoriaActiva === '4-5' && (
   <div className="programa-extra">
     <strong>¿Qué aprenderá el niño?</strong>
     <p>
       A través de juegos y ejercicios sencillos, aprenderá coordinación,
       control corporal, trabajo en equipo y los primeros fundamentos del béisbol.
+    </p>
+  </div>
+)}
+{categoriaActiva === '4-5' && (
+  <div className="programa-extra">
+    <strong>Metodología de entrenamiento</strong>
+    <p>
+      Entrenamientos basados en juegos, ejercicios de coordinación y actividades
+      sencillas que permiten aprender béisbol de forma divertida y progresiva.
     </p>
   </div>
 )}
