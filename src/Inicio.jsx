@@ -108,7 +108,16 @@ export default function Inicio() {
     <li>Mejorar lanzamiento, recepción y coordinación.</li>
     <li>Aprender posiciones básicas y trabajo en equipo.</li>
   </ul>
-)}{categoriaActiva === '7' && (
+)}{categoriaActiva === '6' && (
+  <div className="programa-extra">
+    <strong>¿Qué aprenderá el niño?</strong>
+    <p>
+      Aprenderá fundamentos de bateo, fildeo y lanzamiento, además de mejorar
+      su coordinación, recepción y trabajo en equipo.
+    </p>
+  </div>
+)}
+{categoriaActiva === '7' && (
   <ul className="programa-objetivos">
     <li>Perfeccionar bateo, fildeo y lanzamiento.</li>
     <li>Desarrollar coordinación avanzada y reacción.</li>
@@ -120,6 +129,33 @@ export default function Inicio() {
     <li>Mejorar la comprensión de posiciones y situaciones de juego.</li>
     <li>Prepararse para competir aplicando disciplina, estrategia y trabajo en equipo.</li>
   </ul>
+)}{categoriaActiva === '8' && (
+  <div className="programa-extra">
+    <strong>¿Qué aprenderá el niño?</strong>
+    <p>
+      Consolidará su técnica de bateo, fildeo y lanzamiento, comprenderá mejor
+      las situaciones de juego y se preparará para competir con disciplina,
+      estrategia y trabajo en equipo.
+    </p>
+  </div>
+)}
+{categoriaActiva === '7' && (
+  <div className="programa-extra">
+    <strong>¿Qué aprenderá el niño?</strong>
+    <p>
+      Desarrollará mejor su técnica de bateo, fildeo y lanzamiento, aprenderá
+      situaciones básicas de juego y mejorará la toma de decisiones en el terreno.
+    </p>
+  </div>
+)}
+{categoriaActiva === '4-5' && (
+  <div className="programa-extra">
+    <strong>¿Qué aprenderá el niño?</strong>
+    <p>
+      A través de juegos y ejercicios sencillos, aprenderá coordinación,
+      control corporal, trabajo en equipo y los primeros fundamentos del béisbol.
+    </p>
+  </div>
 )}
 <p>
   {categoriaActiva === '4-5' && 'Coordinación, juego, motricidad y primeros fundamentos del béisbol.'}
