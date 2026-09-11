@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './inicio.css';
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
+import fotoGaleria1 from './public/1000297390.png';
 
 export default function Inicio() {
   const whatsapp = 'https://wa.me/50763776387';
@@ -227,6 +228,19 @@ export default function Inicio() {
             📍 CÓMO LLEGAR
           </a>
         </section>
+        <section id="galeria" className="inicio-galeria">
+  <h2>GALERÍA</h2>
+  <p>
+    Momentos de entrenamientos, juegos y actividades de Generales de Chitré.
+  </p>
+  <div className="galeria-grid">
+  <div className="galeria-item">
+  <img src="/src/public/1000297390.png" alt="Generales de Chitré Baseball Academy" />
+</div>
+  <div className="galeria-item">FOTO 2</div>
+  <div className="galeria-item">FOTO 3</div>
+</div>
+</section>
         <div id="mas"></div>
       </main>
 
@@ -234,6 +248,7 @@ export default function Inicio() {
         <a className="activo" href="#inicio"><span>⌂</span>Inicio</a>
         <a href="#programas"><span>⚾</span>Programas</a>
         <a href="#galeria"><span>▧</span>Galería</a>
+        
         <a href="#noticias"><span>▤</span>Noticias</a>
         <a href="#mas"><span>•••</span>Más</a>
       </nav>
