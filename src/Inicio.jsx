@@ -89,6 +89,20 @@ export default function Inicio() {
   <small>PREPARACIÓN</small>
 </div>
 </div>
+<div className="programa-detalle">
+  <h3>
+  {categoriaActiva === '4-5' && 'Programa 4–5 años'}
+  {categoriaActiva === '6' && 'Programa 6 años'}
+  {categoriaActiva === '7' && 'Programa 7 años'}
+  {categoriaActiva === '8' && 'Programa 8 años'}
+</h3>
+  <p>
+  {categoriaActiva === '4-5' && 'Coordinación, juego, motricidad y primeros fundamentos del béisbol.'}
+  {categoriaActiva === '6' && 'Fundamentos básicos de bateo, fildeo, lanzamiento y trabajo en equipo.'}
+  {categoriaActiva === '7' && 'Desarrollo técnico, coordinación avanzada y situaciones básicas de juego.'}
+  {categoriaActiva === '8' && 'Preparación más completa para competir, mejorar técnica y comprender mejor el juego.'}
+</p>
+</div>
         </section>
 
         <section id="galeria" className="inicio-bienvenida">
