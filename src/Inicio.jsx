@@ -4,7 +4,7 @@ import './inicio.css';
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
 import fotoGaleria1 from './public/1000297390.png';
-
+import fotoGaleria2 from './public/1000250736.png';
 export default function Inicio() {
   const whatsapp = 'https://wa.me/50763776387';
   const [categoriaActiva, setCategoriaActiva] = useState('4-5');
@@ -235,9 +235,11 @@ export default function Inicio() {
   </p>
   <div className="galeria-grid">
   <div className="galeria-item">
-  <img src="/src/public/1000297390.png" alt="Generales de Chitré Baseball Academy" />
+  <img src={fotoGaleria1} alt="Generales de Chitré Baseball Academy" />
 </div>
-  <div className="galeria-item">FOTO 2</div>
+  <div className="galeria-item">
+  <img src={fotoGaleria2} alt="Beneficios de Generales de Chitré" />
+</div>
   <div className="galeria-item">FOTO 3</div>
 </div>
 </section>
