@@ -235,6 +235,14 @@ export default function Inicio() {
   <p>
     Mantente informado sobre juegos, actividades y novedades de Generales de Chitré.
   </p>
+ <div className="noticia-card">
+  <span>ACADEMIA</span>
+  <h3>Generales de Chitré sigue formando nuevos talentos</h3>
+  <p>
+    Continuamos trabajando en la formación deportiva, disciplina,
+    compañerismo y desarrollo de nuestros niños.
+  </p>
+</div> 
 </section>
         <section id="galeria" className="inicio-galeria">
   <h2>GALERÍA</h2>
