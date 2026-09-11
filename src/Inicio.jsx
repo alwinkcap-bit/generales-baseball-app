@@ -278,7 +278,13 @@ export default function Inicio() {
 </div>
 </div>
 </section>
-        <div id="mas"></div>
+        <section id="mas" className="inicio-mas">
+  <span className="inicio-etiqueta">INFORMACIÓN</span>
+  <h2>MÁS</h2>
+  <p>
+    Conoce nuestros horarios, ubicación, contacto y más información de Generales de Chitré.
+  </p>
+</section>
       </main>
 
       <nav className="inicio-nav">
