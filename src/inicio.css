@@ -416,3 +416,39 @@
   margin-bottom: 10px;
   line-height: 1.4;
 }
+.programa-extra {
+  max-width: 620px;
+  margin: 16px auto;
+  padding: 18px 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  text-align: left;
+}
+
+.programa-extra strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.programa-extra p {
+  margin: 0;
+  line-height: 1.5;
+}
+@media (max-width: 800px) {
+  .programa-detalle {
+    display: block !important;
+    width: 100% !important;
+  }.inicio-valores {
+  grid-template-columns: 1fr !important;
+}
+
+  .programa-objetivos,
+  .programa-extra {
+    width: 90% !important;
+    max-width: none !important;
+    box-sizing: border-box !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
