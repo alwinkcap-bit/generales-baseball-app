@@ -247,9 +247,18 @@ export default function Inicio() {
   <span>INSCRIPCIONES ABIERTAS</span>
   <h3>Forma parte de Generales de Chitré Baseball Academy</h3>
   <p>
+
     Recibimos niños de 4 a 8 años para aprender béisbol, disciplina,
     compañerismo y fundamentos deportivos en un ambiente formativo.
   </p>
+ <a
+  className="noticia-boton"
+  href="https://wa.me/50763776387"
+  target="_blank"
+  rel="noreferrer"
+>
+  SOLICITAR INFORMACIÓN
+</a> 
 </div>
 </section>
         <section id="galeria" className="inicio-galeria">

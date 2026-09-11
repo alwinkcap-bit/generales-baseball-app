@@ -536,3 +536,14 @@
   margin: 0;
   line-height: 1.5;
 }
+.noticia-boton {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 12px 18px;
+  background: #f2b93b;
+  color: #081b30 !important;
+  text-decoration: none;
+  font-weight: 800;
+  border-radius: 8px;
+  text-align: center;
+}
