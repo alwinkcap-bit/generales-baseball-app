@@ -298,7 +298,13 @@ export default function Inicio() {
   <p>
     WhatsApp: +507 6377-6387
   </p>
-
+<div className="mas-card">
+  <span>UBICACIÓN</span>
+  <h3>Estadio Pepe Osorio</h3>
+  <p>
+    Calle Abajo de Chitré, Herrera, Panamá.
+  </p>
+</div>
   <a
     className="noticia-boton"
     href="https://wa.me/50763776387"
