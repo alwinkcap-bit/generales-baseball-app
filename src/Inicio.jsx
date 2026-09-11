@@ -243,6 +243,14 @@ export default function Inicio() {
     compañerismo y desarrollo de nuestros niños.
   </p>
 </div> 
+<div className="noticia-card">
+  <span>INSCRIPCIONES ABIERTAS</span>
+  <h3>Forma parte de Generales de Chitré Baseball Academy</h3>
+  <p>
+    Recibimos niños de 4 a 8 años para aprender béisbol, disciplina,
+    compañerismo y fundamentos deportivos en un ambiente formativo.
+  </p>
+</div>
 </section>
         <section id="galeria" className="inicio-galeria">
   <h2>GALERÍA</h2>
