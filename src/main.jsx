@@ -19,6 +19,7 @@ function edad(fecha) {
 }
 
 function App() {
+  const [tabActiva, setTabActiva] = useState('resumen');
   const [vista, setVista] = useState('inicio')
   const [players, setPlayers] = useState([])
   const [query, setQuery] = useState('')
@@ -204,21 +205,99 @@ if (vista === 'inicio') {
                 {session && <div className="admin-actions"><button onClick={()=>openEdit(selected)}>Editar</button><button className="danger" onClick={()=>deletePlayer(selected)}>Eliminar</button></div>}
               </div>
             </div>
-            <div className="tabs"><b>Resumen</b><span>Estadísticas</span><span>Historial</span><span>Premios</span></div>
-            <div className="summary-grid">
-              <div className="bio-card"><h3>Información</h3><dl>
-               <dt>Fecha de nacimiento</dt>
-<dd>
-  {selected.fecha_nacimiento
-    ? selected.fecha_nacimiento.split('-').reverse().join('/')
-    : '—'}
-</dd>
-                <dt>Categoría</dt><dd>{selected.categoria || '—'}</dd>
-              <dt>Estatura</dt><dd>{selected.estatura_cm ? `${Math.floor(Number(selected.estatura_cm))}' ${Math.round((Number(selected.estatura_cm) - Math.floor(Number(selected.estatura_cm))) * 12)}"` : '-'}</dd>
-              <dt>Peso</dt><dd>{selected.peso_kg ? `${(Number(selected.peso_kg) / 0.453592).toFixed(1)} lb` : '-'}</dd>
-              </dl></div>
-              <div className="bio-card"><h3>Notas</h3><p>{selected.notas || 'Sin notas registradas.'}</p></div>
-            </div>
+            <div className="tabs"><button
+  type="button"
+  className={tabActiva === 'resumen' ? 'tab-activa' : ''}
+  onClick={() => setTabActiva('resumen')}
+>
+  Resumen
+</button>
+
+<button
+  type="button"
+  className={tabActiva === 'estadisticas' ? 'tab-activa' : ''}
+  onClick={() => setTabActiva('estadisticas')}
+>
+  Estadísticas
+</button><span>Historial</span><span>Premios</span></div>
+          {tabActiva === 'resumen' ? (
+  <div className="summary-grid">
+    <div className="bio-card">
+      <h3>Información</h3>
+      <dl>
+        <dt>Fecha de nacimiento</dt>
+        <dd>
+          {selected.fecha_nacimiento
+            ? selected.fecha_nacimiento.split('-').reverse().join('/')
+            : '—'}
+        </dd>
+
+        <dt>Categoría</dt>
+        <dd>{selected.categoria || '—'}</dd>
+
+        <dt>Estatura</dt>
+        <dd>
+          {selected.estatura_cm
+            ? `${Math.floor(Number(selected.estatura_cm))}' ${Math.round((Number(selected.estatura_cm) - Math.floor(Number(selected.estatura_cm))) * 12)}"`
+            : '-'}
+        </dd>
+
+        <dt>Peso</dt>
+        <dd>
+          {selected.peso_kg
+            ? `${(Number(selected.peso_kg) / 0.453592).toFixed(1)} lb`
+            : '-'}
+        </dd>
+      </dl>
+    </div>
+
+    <div className="bio-card">
+      <h3>Notas</h3>
+      <p>{selected.notas || 'Sin notas registradas.'}</p>
+    </div>
+  </div>
+) : (
+  <div className="summary-grid">
+    <div className="bio-card">
+      <h3>Estadísticas</h3>
+      <div className="stats-grid">
+  <div className="stat-card">
+    <strong>0</strong>
+    <span>Juegos</span>
+  </div>
+
+  <div className="stat-card">
+    <strong>0</strong>
+    <span>Turnos al bate</span>
+  </div>
+
+  <div className="stat-card">
+    <strong>0</strong>
+    <span>Hits</span>
+  </div>
+
+  <div className="stat-card">
+    <strong>0</strong>
+    <span>Carreras</span>
+  </div>
+
+  <div className="stat-card">
+    <strong>0</strong>
+    <span>RBI</span>
+  </div>
+
+  <div className="stat-card">
+    <strong>0</strong>
+    <span>Home Runs</span>
+  </div>
+</div>
+<div className="stat-card">
+  <strong>.000</strong>
+  <span>AVG</span>
+</div>
+    </div>
+  </div>
+)}
           </>}
         </section>
       </section>
