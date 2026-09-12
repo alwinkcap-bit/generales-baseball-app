@@ -10,7 +10,7 @@ export default function Inicio({ onAdmin }) {
   const [seccionActiva, setSeccionActiva] = useState('inicio');
   const whatsapp = 'https://wa.me/50763776387';
   const [categoriaActiva, setCategoriaActiva] = useState('4-5');
-
+  const [imagenAmpliada, setImagenAmpliada] = useState(null);
   return (
   <div id="inicio" className="inicio-app"> 
       <header className="inicio-header">
@@ -269,16 +269,48 @@ export default function Inicio({ onAdmin }) {
   </p>
   <div className="galeria-grid">
   <div className="galeria-item">
-  <img src={fotoGaleria1} alt="Generales de Chitré Baseball Academy" />
+  <img
+  src={fotoGaleria1}
+  alt="Generales de Chitré Baseball Academy"
+  onClick={() => setImagenAmpliada(fotoGaleria1)}
+/>
 </div>
   <div className="galeria-item">
-  <img src={fotoGaleria2} alt="Beneficios de Generales de Chitré" />
+  <img
+  src={fotoGaleria2}
+  alt="Beneficios de Generales de Chitré"
+  onClick={() => setImagenAmpliada(fotoGaleria2)}
+/>
 </div>
   <div className="galeria-item">
-  <img src={fotoGaleria3} alt="Generales de Chitré Baseball Academy" />
+  <img
+  src={fotoGaleria3}
+  alt="Generales de Chitré Baseball Academy"
+  onClick={() => setImagenAmpliada(fotoGaleria3)}
+/>
 </div>
 </div>
 </section>
+{imagenAmpliada && (
+  <div
+    className="imagen-modal"
+    onClick={() => setImagenAmpliada(null)}
+  >
+    <button
+      className="imagen-modal-cerrar"
+      onClick={() => setImagenAmpliada(null)}
+      aria-label="Cerrar imagen"
+    >
+      ×
+    </button>
+
+    <img
+      src={imagenAmpliada}
+      alt="Imagen ampliada de Generales de Chitré"
+      onClick={(e) => e.stopPropagation()}
+    />
+  </div>
+)}
         <section id="mas" className="inicio-mas">
   <span className="inicio-etiqueta">INFORMACIÓN</span>
   <h2>MÁS</h2>

@@ -490,6 +490,7 @@
 @media (max-width: 800px) {
   .galeria-grid {
     grid-template-columns: 1fr;
+    padding-bottom: 90px;
   }
 
   .galeria-item {
@@ -596,4 +597,43 @@
 .inicio-noticias .noticia-card,
 .inicio-mas .mas-card {
   text-align: left;
+}
+.galeria-item img {
+  cursor: pointer;
+}
+
+.imagen-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 18, 35, 0.94);
+}
+
+.imagen-modal img {
+  display: block;
+  max-width: 95%;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.55);
+}
+
+.imagen-modal-cerrar {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: #f5b800;
+  color: #001a33;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 40px;
+  cursor: pointer;
 }
