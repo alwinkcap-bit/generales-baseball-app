@@ -7,6 +7,7 @@ import fotoGaleria1 from './public/1000297390.png';
 import fotoGaleria2 from './public/1000250736.png';
 import fotoGaleria3 from './public/1000350600.png';
 export default function Inicio({ onAdmin }) {
+  const [seccionActiva, setSeccionActiva] = useState('inicio');
   const whatsapp = 'https://wa.me/50763776387';
   const [categoriaActiva, setCategoriaActiva] = useState('4-5');
 
@@ -343,12 +344,42 @@ export default function Inicio({ onAdmin }) {
       </main>
 
       <nav className="inicio-nav">
-        <a className="activo" href="#inicio"><span>⌂</span>Inicio</a>
-        <a href="#programas"><span>⚾</span>Programas</a>
-        <a href="#galeria"><span>▧</span>Galería</a>
+      <a
+  className={seccionActiva === 'inicio' ? 'activo' : ''}
+  href="#inicio"
+  onClick={() => setSeccionActiva('inicio')}
+>
+  <span>⌂</span>Inicio
+</a>
+<a
+  className={seccionActiva === 'programas' ? 'activo' : ''}
+  href="#programas"
+  onClick={() => setSeccionActiva('programas')}
+>
+  <span>⚾</span>Programas
+</a>
+        <a
+  className={seccionActiva === 'galeria' ? 'activo' : ''}
+  href="#galeria"
+  onClick={() => setSeccionActiva('galeria')}
+>
+  <span>▧</span>Galería
+</a>
         
-        <a href="#noticias"><span>▤</span>Noticias</a>
-        <a href="#mas"><span>•••</span>Más</a>
+        <a
+  className={seccionActiva === 'noticias' ? 'activo' : ''}
+  href="#noticias"
+  onClick={() => setSeccionActiva('noticias')}
+>
+  <span>▤</span>Noticias
+</a>
+       <a
+  className={seccionActiva === 'mas' ? 'activo' : ''}
+  href="#mas"
+  onClick={() => setSeccionActiva('mas')}
+>
+  <span>•••</span>Más
+</a>
       </nav>
     </div>
   );
