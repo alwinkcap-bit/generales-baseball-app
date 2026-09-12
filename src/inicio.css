@@ -142,7 +142,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   background: var(--azul);
-  padding: 20px 12px 25px;
+  padding: 12px 12px 18px;
   color: white;
   text-align: center;
 }.inicio-valores .programas-categorias {
