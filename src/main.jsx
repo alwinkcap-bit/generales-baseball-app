@@ -112,7 +112,14 @@ function openEdit(p) {
       categoria: form.categoria || null, posicion: form.posicion || null, numero: form.numero === '' ? null : Number(form.numero),
       batea: form.batea || null, lanza: form.lanza || null, estatura_cm: form.estatura_cm === '' ? null : Number(form.estatura_cm) + (Number(form.estatura_pulgadas || 0) / 12),
       peso_kg: form.peso_kg === '' ? null : Number(form.peso_kg) * 0.453592, foto_url: form.foto_url || null,
-      estado: form.estado || null, notas: form.notas || null
+      estado: form.estado || null,
+notas: form.notas || null,
+juegos: Number(form.juegos || 0),
+turnos_bate: Number(form.turnos_bate || 0),
+hits: Number(form.hits || 0),
+carreras: Number(form.carreras || 0),
+rbi: Number(form.rbi || 0),
+home_runs: Number(form.home_runs || 0)
     }
     let result
     if (form.id) result = await supabase.from('jugadores').update(payload).eq('id', form.id).select().single()
@@ -262,37 +269,41 @@ if (vista === 'inicio') {
       <h3>Estadísticas</h3>
       <div className="stats-grid">
   <div className="stat-card">
-    <strong>0</strong>
+    <strong>{selected.juegos ?? 0}</strong>
     <span>Juegos</span>
   </div>
 
   <div className="stat-card">
-    <strong>0</strong>
+    <strong>{selected.turnos_bate ?? 0}</strong>
     <span>Turnos al bate</span>
   </div>
 
   <div className="stat-card">
-    <strong>0</strong>
+    <strong>{selected.hits ?? 0}</strong>
     <span>Hits</span>
   </div>
 
   <div className="stat-card">
-    <strong>0</strong>
+    <strong>{selected.carreras ?? 0}</strong>
     <span>Carreras</span>
   </div>
 
   <div className="stat-card">
-    <strong>0</strong>
+    <strong>{selected.rbi ?? 0}</strong>
     <span>RBI</span>
   </div>
 
   <div className="stat-card">
-    <strong>0</strong>
+    <strong>{selected.home_runs ?? 0}</strong>
     <span>Home Runs</span>
   </div>
 </div>
 <div className="stat-card">
-  <strong>.000</strong>
+  <strong>
+  {Number(selected.turnos_bate) > 0
+    ? (Number(selected.hits || 0) / Number(selected.turnos_bate)).toFixed(3).replace(/^0/, '')
+    : '.000'}
+</strong>
   <span>AVG</span>
 </div>
     </div>
@@ -331,6 +342,17 @@ if (vista === 'inicio') {
         <label>Estatura '<input type="number" min="0" value={form.estatura_cm ?? ''} onChange={e=>setForm({...form,estatura_cm:e.target.value})}/></label>
         <label>Estatura "<input type="number" min="0" max="11" value={form.estatura_pulgadas ?? ''} onChange={e=>setForm({...form,estatura_pulgadas:e.target.value})}/></label>
         <label>Peso libras<input type="number" step="0.1" value={form.peso_kg ?? ''} onChange={e=>setForm({...form,peso_kg:e.target.value})}/></label>
+        <label>Juegos<input type="number" min="0" value={form.juegos ?? 0} onChange={e=>setForm({...form,juegos:e.target.value})}/></label>
+
+<label>Turnos al bate<input type="number" min="0" value={form.turnos_bate ?? 0} onChange={e=>setForm({...form,turnos_bate:e.target.value})}/></label>
+
+<label>Hits<input type="number" min="0" value={form.hits ?? 0} onChange={e=>setForm({...form,hits:e.target.value})}/></label>
+
+<label>Carreras<input type="number" min="0" value={form.carreras ?? 0} onChange={e=>setForm({...form,carreras:e.target.value})}/></label>
+
+<label>RBI<input type="number" min="0" value={form.rbi ?? 0} onChange={e=>setForm({...form,rbi:e.target.value})}/></label>
+
+<label>Home Runs<input type="number" min="0" value={form.home_runs ?? 0} onChange={e=>setForm({...form,home_runs:e.target.value})}/></label>
         <label className="wide">Notas<textarea rows="4" value={form.notas ?? ''} onChange={e=>setForm({...form,notas:e.target.value})}/></label>
       </div><button className="primary full">Guardar jugador</button></form></div>}
   </div>
