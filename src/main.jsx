@@ -30,7 +30,8 @@ function App() {
   const [form, setForm] = useState(blankPlayer)
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(true)
-
+const [historial, setHistorial] = useState([]);
+const [loadingHistorial, setLoadingHistorial] = useState(false);
   async function loadPlayers() {
     setLoading(true)
     const { data, error } = await supabase.from('jugadores').select('*').order('nombre')
@@ -39,7 +40,29 @@ function App() {
     if (!selected && data?.length) setSelected(data[0])
     setLoading(false)
   }
+async function loadHistorial(jugadorId) {
+  if (!jugadorId) {
+    setHistorial([]);
+    return;
+  }
 
+  setLoadingHistorial(true);
+
+  const { data, error } = await supabase
+    .from('historial_jugadores')
+    .select('*')
+    .eq('jugador_id', jugadorId)
+    .order('fecha', { ascending: false });
+
+  if (error) {
+    console.error(error);
+    setHistorial([]);
+  } else {
+    setHistorial(data || []);
+  }
+
+  setLoadingHistorial(false);
+}
   useEffect(() => {
     loadPlayers()
     supabase.auth.getSession().then(({ data }) => setSession(data.session))
@@ -190,7 +213,14 @@ if (vista === 'inicio') {
         <aside className="roster">
           <div className="section-title">Jugadores <span>{filtered.length}</span></div>
           {loading ? <div className="empty">Cargando...</div> : filtered.length === 0 ? <div className="empty">No hay jugadores todavía.</div> : filtered.map(p =>
-            <button className={`player-card ${selected?.id===p.id?'active':''}`} key={p.id} onClick={()=>setSelected(p)}>
+<button
+  className={`player-card ${selected?.id===p.id?'active':''}`}
+  key={p.id}
+  onClick={() => {
+    setSelected(p);
+    loadHistorial(p.id);
+  }}
+>
               <div className="avatar">{p.foto_url ? <img src={p.foto_url} alt=""/> : `${p.nombre?.[0]||''}${p.apellido?.[0]||''}`}</div>
               <div className="player-card-info"><strong>{p.nombre} {p.apellido}</strong><span>#{p.numero ?? '—'} · {p.posicion || 'Sin posición'} · {p.categoria || 'Sin categoría'}</span></div>
             </button>)}
@@ -318,20 +348,30 @@ if (vista === 'inicio') {
   <div className="summary-grid">
     <div className="bio-card">
       <h3>Historial</h3>
-      <div className="historial-list">
-  <div className="historial-item">
-    <strong>10/10/2026</strong>
-    <span>Torneo</span>
-    <p>Campeones de Herrera</p>
-    <small>Participó en la categoría Bim Bim.</small>
-  </div>
+<div className="historial-list">
+  {loadingHistorial ? (
+    <p>Cargando historial...</p>
+  ) : historial.length === 0 ? (
+    <p>No hay registros en el historial de este jugador.</p>
+  ) : (
+    historial.map(item => (
+      <div className="historial-item" key={item.id}>
+        <strong>
+          {item.fecha
+            ? item.fecha.split('-').reverse().join('/')
+            : 'Sin fecha'}
+        </strong>
 
-  <div className="historial-item">
-    <strong>16/10/2026</strong>
-    <span>Juego</span>
-    <p>Segunda jornada</p>
-    <small>Participación registrada con la academia.</small>
-  </div>
+        <span>{item.tipo || 'Actividad'}</span>
+
+        <p>{item.titulo || 'Sin título'}</p>
+
+        {item.observacion && (
+          <small>{item.observacion}</small>
+        )}
+      </div>
+    ))
+  )}
 </div>
     </div>
   </div>
