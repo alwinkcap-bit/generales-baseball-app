@@ -214,7 +214,7 @@ if (vista === 'inicio') {
     : '—'}
 </dd>
                 <dt>Categoría</dt><dd>{selected.categoria || '—'}</dd>
-               <dt>Estatura</dt><dd>{selected.estatura_cm ? `${Math.floor(Number(selected.estatura_cm))} pies ${Math.round((Number(selected.estatura_cm) - Math.floor(Number(selected.estatura_cm))) * 12)} pulgadas` : '-'}</dd>
+              <dt>Estatura</dt><dd>{selected.estatura_cm ? `${Math.floor(Number(selected.estatura_cm))}' ${Math.round((Number(selected.estatura_cm) - Math.floor(Number(selected.estatura_cm))) * 12)}"` : '-'}</dd>
               <dt>Peso</dt><dd>{selected.peso_kg ? `${(Number(selected.peso_kg) / 0.453592).toFixed(1)} lb` : '-'}</dd>
               </dl></div>
               <div className="bio-card"><h3>Notas</h3><p>{selected.notas || 'Sin notas registradas.'}</p></div>
@@ -249,8 +249,8 @@ if (vista === 'inicio') {
       <label>Foto del jugador<input type="file" accept="image/*" onChange={(e)=>subirFoto(e.target.files?.[0])} /></label>
         <label>Fecha nacimiento<input type="date" value={form.fecha_nacimiento ?? ''} onChange={e=>setForm({...form,fecha_nacimiento:e.target.value})}/></label>
         <label>Número<input type="number" value={form.numero ?? ''} onChange={e=>setForm({...form,numero:e.target.value})}/></label>
-        <label>Estatura pies<input type="number" min="0" value={form.estatura_cm ?? ''} onChange={e=>setForm({...form,estatura_cm:e.target.value})}/></label>
-        <label>Estatura pulgadas<input type="number" min="0" max="11" value={form.estatura_pulgadas ?? ''} onChange={e=>setForm({...form,estatura_pulgadas:e.target.value})}/></label>
+        <label>Estatura '<input type="number" min="0" value={form.estatura_cm ?? ''} onChange={e=>setForm({...form,estatura_cm:e.target.value})}/></label>
+        <label>Estatura "<input type="number" min="0" max="11" value={form.estatura_pulgadas ?? ''} onChange={e=>setForm({...form,estatura_pulgadas:e.target.value})}/></label>
         <label>Peso libras<input type="number" step="0.1" value={form.peso_kg ?? ''} onChange={e=>setForm({...form,peso_kg:e.target.value})}/></label>
         <label className="wide">Notas<textarea rows="4" value={form.notas ?? ''} onChange={e=>setForm({...form,notas:e.target.value})}/></label>
       </div><button className="primary full">Guardar jugador</button></form></div>}
