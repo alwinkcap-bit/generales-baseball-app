@@ -127,3 +127,39 @@
   color: #64748b;
   font-weight: 700;
 }
+.historial-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.historial-item {
+  background: #ffffff;
+  border: 1px solid rgba(8, 27, 48, 0.12);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.historial-item strong {
+  display: block;
+  color: #081b30;
+  margin-bottom: 4px;
+}
+
+.historial-item span {
+  display: inline-block;
+  color: #d99f22;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.historial-item p {
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.historial-item small {
+  color: #64748b;
+  line-height: 1.4;
+}

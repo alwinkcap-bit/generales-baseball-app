@@ -226,7 +226,13 @@ if (vista === 'inicio') {
   onClick={() => setTabActiva('estadisticas')}
 >
   Estadísticas
-</button><span>Historial</span><span>Premios</span></div>
+</button><button
+  type="button"
+  className={tabActiva === 'historial' ? 'tab-activa' : ''}
+  onClick={() => setTabActiva('historial')}
+>
+  Historial
+</button><span>Premios</span></div>
           {tabActiva === 'resumen' ? (
   <div className="summary-grid">
     <div className="bio-card">
@@ -263,7 +269,7 @@ if (vista === 'inicio') {
       <p>{selected.notas || 'Sin notas registradas.'}</p>
     </div>
   </div>
-) : (
+) : tabActiva === 'estadisticas' ? (
   <div className="summary-grid">
     <div className="bio-card">
       <h3>Estadísticas</h3>
@@ -305,6 +311,27 @@ if (vista === 'inicio') {
     : '.000'}
 </strong>
   <span>AVG</span>
+</div>
+    </div>
+  </div>
+) : (
+  <div className="summary-grid">
+    <div className="bio-card">
+      <h3>Historial</h3>
+      <div className="historial-list">
+  <div className="historial-item">
+    <strong>10/10/2026</strong>
+    <span>Torneo</span>
+    <p>Campeones de Herrera</p>
+    <small>Participó en la categoría Bim Bim.</small>
+  </div>
+
+  <div className="historial-item">
+    <strong>16/10/2026</strong>
+    <span>Juego</span>
+    <p>Segunda jornada</p>
+    <small>Participación registrada con la academia.</small>
+  </div>
 </div>
     </div>
   </div>
