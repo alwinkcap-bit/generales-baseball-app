@@ -155,26 +155,8 @@ async function login(e) {
 if (vista === 'inicio') {
   return (
     <div>
-      <Inicio />
-      <button
-      className="inicio-admin-btn"
-        onClick={() => setVista('admin')}
-        style={{
-          position: 'absolute',
-          top: '12px',
-          right: '12px',
-          zIndex: 9999,
-          padding: '10px 14px',
-          borderRadius: '8px',
-          border: 'none',
-          background: '#f2b93b',
-          color: '#081b30',
-          fontWeight: 'bold',
-          cursor: 'pointer'
-        }}
-      >
-        Panel Administrativo
-      </button>
+      <Inicio onAdmin={() => setVista('admin')} />
+      
     </div>
   )
 }

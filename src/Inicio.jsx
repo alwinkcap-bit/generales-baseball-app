@@ -6,7 +6,7 @@ import equipoGenerales from './public/equipo-generales.jpg';
 import fotoGaleria1 from './public/1000297390.png';
 import fotoGaleria2 from './public/1000250736.png';
 import fotoGaleria3 from './public/1000350600.png';
-export default function Inicio() {
+export default function Inicio({ onAdmin }) {
   const whatsapp = 'https://wa.me/50763776387';
   const [categoriaActiva, setCategoriaActiva] = useState('4-5');
 
@@ -322,6 +322,21 @@ export default function Inicio() {
   >
     ESCRIBIR POR WHATSAPP
   </a>
+</div>
+<div className="mas-card">
+  <span>ADMINISTRACIÓN</span>
+  <h3>Panel Administrativo</h3>
+  <p>
+    Acceso exclusivo para la gestión interna de la academia.
+  </p>
+
+  <button
+    className="noticia-boton"
+    onClick={onAdmin}
+    type="button"
+  >
+    ABRIR PANEL ADMINISTRATIVO
+  </button>
 </div>
   </p>
 </section>
