@@ -207,7 +207,12 @@ if (vista === 'inicio') {
             <div className="tabs"><b>Resumen</b><span>Estadísticas</span><span>Historial</span><span>Premios</span></div>
             <div className="summary-grid">
               <div className="bio-card"><h3>Información</h3><dl>
-                <dt>Fecha de nacimiento</dt><dd>{selected.fecha_nacimiento || '—'}</dd>
+               <dt>Fecha de nacimiento</dt>
+<dd>
+  {selected.fecha_nacimiento
+    ? selected.fecha_nacimiento.split('-').reverse().join('/')
+    : '—'}
+</dd>
                 <dt>Categoría</dt><dd>{selected.categoria || '—'}</dd>
                <dt>Estatura</dt><dd>{selected.estatura_cm ? `${Math.floor(Number(selected.estatura_cm))} pies ${Math.round((Number(selected.estatura_cm) - Math.floor(Number(selected.estatura_cm))) * 12)} pulgadas` : '-'}</dd>
               <dt>Peso</dt><dd>{selected.peso_kg ? `${(Number(selected.peso_kg) / 0.453592).toFixed(1)} lb` : '-'}</dd>

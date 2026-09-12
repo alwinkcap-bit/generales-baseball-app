@@ -60,3 +60,13 @@
     white-space: nowrap;
   }
 }
+@media (max-width: 600px) {
+  .info-list > div {
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(8, 27, 48, 0.08);
+  }
+
+  .info-list > div:last-child {
+    border-bottom: none;
+  }
+}
