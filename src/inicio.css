@@ -588,10 +588,11 @@
   padding-bottom: 110px;
 }
   
-}
 .inicio-mas {
   padding-top: 24px;
+  padding-bottom: 110px;
 }
+
 .inicio-noticias > p,
 .inicio-mas > p {
   max-width: 500px;

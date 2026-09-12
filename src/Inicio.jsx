@@ -316,6 +316,7 @@ export default function Inicio({ onAdmin }) {
   <h2>MÁS</h2>
   <p>
     Conoce nuestros horarios, ubicación, contacto y más información de Generales de Chitré.
+    </p>
     <div className="mas-card">
   <span>HORARIOS DE ENTRENAMIENTO</span>
   <h3>Prácticas semanales</h3>
@@ -331,6 +332,7 @@ export default function Inicio({ onAdmin }) {
   <p>
     WhatsApp: +507 6377-6387
   </p>
+ </div> 
 <div className="mas-card">
   <span>UBICACIÓN</span>
   <h3>Estadio Pepe Osorio</h3>
@@ -355,7 +357,7 @@ export default function Inicio({ onAdmin }) {
   >
     ESCRIBIR POR WHATSAPP
   </a>
-</div>
+
 <div className="mas-card">
   <span>ADMINISTRACIÓN</span>
   <h3>Panel Administrativo</h3>
@@ -371,7 +373,6 @@ export default function Inicio({ onAdmin }) {
     ABRIR PANEL ADMINISTRATIVO
   </button>
 </div>
-  </p>
 </section>
       </main>
 
