@@ -580,7 +580,9 @@
   padding: 40px 24px;
   text-align: center;
 }
-
+.inicio-noticias {
+  padding-top: 24px;
+}
 .inicio-noticias > p,
 .inicio-mas > p {
   max-width: 500px;
