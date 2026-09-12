@@ -215,7 +215,18 @@ if (vista === 'inicio') {
       </section>
     </main>
 
-    <nav className="bottom-nav"><button>⌂<span>Inicio</span></button><button>⚾<span>Jugadores</span></button><button onClick={()=>session?openNew():setLoginOpen(true)}>＋<span>{session?'Agregar':'Admin'}</span></button></nav>
+    <nav className="bottom-nav"><button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+  ⌂<span>Inicio</span>
+</button><button
+  onClick={() =>
+    document.querySelector('.roster')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    })
+  }
+>
+  ⚾<span>Jugadores</span>
+</button><button onClick={()=>session?openNew():setLoginOpen(true)}>＋<span>{session?'Agregar':'Admin'}</span></button></nav>
 
     {loginOpen && <div className="modal-backdrop"><form className="modal" onSubmit={login}>
       <button type="button" className="close" onClick={()=>setLoginOpen(false)}>×</button><h3>Administrador</h3>
