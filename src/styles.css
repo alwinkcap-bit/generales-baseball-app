@@ -47,3 +47,16 @@
       linear-gradient(180deg, #0b2942 0%, #061a2c 100%) !important;
   }
 }
+@media (max-width: 600px) {
+  .player-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin: 8px 0 10px;
+  }
+
+  .player-meta span {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+}

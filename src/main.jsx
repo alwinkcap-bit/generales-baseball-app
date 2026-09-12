@@ -195,7 +195,11 @@ if (vista === 'inicio') {
               <div className="hero-info">
                 <div className="number-chip">#{selected.numero ?? '—'}</div>
                 <h2>{selected.nombre} {selected.apellido}</h2>
-                <p>{selected.posicion || '—'} &nbsp; B/T: {selected.batea || '—'}/{selected.lanza || '—'} &nbsp; Edad: {edad(selected.fecha_nacimiento) || '—'}</p>
+              <div className="player-meta">
+  <span>{selected.posicion || '—'}</span>
+  <span>B/T: {selected.batea || '—'}/{selected.lanza || '—'}</span>
+  <span>Edad: {edad(selected.fecha_nacimiento) || '—'}</span>
+</div>
                 <div className={`status ${String(selected.estado).toLowerCase()==='activo'?'ok':''}`}>{selected.estado || 'Sin estado'}</div>
                 {session && <div className="admin-actions"><button onClick={()=>openEdit(selected)}>Editar</button><button className="danger" onClick={()=>deletePlayer(selected)}>Eliminar</button></div>}
               </div>
