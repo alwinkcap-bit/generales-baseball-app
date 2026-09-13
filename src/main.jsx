@@ -32,6 +32,15 @@ function App() {
   const [loading, setLoading] = useState(true)
 const [historial, setHistorial] = useState([]);
 const [loadingHistorial, setLoadingHistorial] = useState(false);
+const [premios, setPremios] = useState([]);
+const [loadingPremios, setLoadingPremios] = useState(false);
+const [premioFormOpen, setPremioFormOpen] = useState(false);
+const [premioForm, setPremioForm] = useState({
+  premio: '',
+  fecha: '',
+  descripcion: ''
+});
+const [savingPremio, setSavingPremio] = useState(false);
   async function loadPlayers() {
     setLoading(true)
     const { data, error } = await supabase.from('jugadores').select('*').order('nombre')
@@ -45,6 +54,7 @@ async function loadHistorial(jugadorId) {
     setHistorial([]);
     return;
   }
+
 
   setLoadingHistorial(true);
 
@@ -62,6 +72,86 @@ async function loadHistorial(jugadorId) {
   }
 
   setLoadingHistorial(false);
+}
+async function loadPremios(jugadorId) {
+  if (!jugadorId) {
+    setPremios([]);
+    return;
+  }
+
+  setLoadingPremios(true);
+
+  const { data, error } = await supabase
+    .from('premios')
+    .select('id, premio, fecha, descripcion')
+    .eq('jugador_id', jugadorId)
+    .order('fecha', { ascending: false });
+
+  if (error) {
+    console.error('Error al cargar premios:', error);
+    setPremios([]);
+  } else {
+    setPremios(data || []);
+  }
+
+  setLoadingPremios(false);
+}
+async function savePremio(e) {
+  e.preventDefault();
+
+  const nombre = premioForm.premio.trim();
+
+  if (!session || !selected?.id || !nombre) {
+    setMessage('Selecciona un jugador y escribe el nombre del premio.');
+    return;
+  }
+
+  setSavingPremio(true);
+
+  const { error } = await supabase.from('premios').insert({
+    jugador_id: selected.id,
+    premio: nombre,
+    fecha: premioForm.fecha || null,
+    descripcion: premioForm.descripcion.trim() || null
+  });
+
+  setSavingPremio(false);
+
+  if (error) {
+    setMessage(`No se pudo guardar el premio: ${error.message}`);
+    return;
+  }
+
+  setPremioForm({ premio: '', fecha: '', descripcion: '' });
+  setPremioFormOpen(false);
+  await loadPremios(selected.id);
+}
+async function eliminarPremio(item) {
+  if (!session || !selected?.id || !item?.id) return;
+
+  const confirmar = window.confirm(
+    `¿Eliminar el premio "${item.premio}" de ${selected.nombre}?`
+  );
+  if (!confirmar) return;
+
+  const { data, error } = await supabase
+    .from('premios')
+    .delete()
+    .eq('id', item.id)
+    .eq('jugador_id', selected.id)
+    .select('id');
+
+  if (error) {
+    setMessage(`No se pudo eliminar el premio: ${error.message}`);
+    return;
+  }
+
+  if (!data?.length) {
+    setMessage('No se eliminó ningún premio. Comprueba el acceso de administrador.');
+    return;
+  }
+
+  await loadPremios(selected.id);
 }
   useEffect(() => {
     loadPlayers()
@@ -219,6 +309,7 @@ if (vista === 'inicio') {
   onClick={() => {
     setSelected(p);
     loadHistorial(p.id);
+    loadPremios(p.id);
   }}
 >
               <div className="avatar">{p.foto_url ? <img src={p.foto_url} alt=""/> : `${p.nombre?.[0]||''}${p.apellido?.[0]||''}`}</div>
@@ -262,7 +353,13 @@ if (vista === 'inicio') {
   onClick={() => setTabActiva('historial')}
 >
   Historial
-</button><span>Premios</span></div>
+</button><button
+  type="button"
+  className={tabActiva === 'premios' ? 'tab-active' : ''}
+  onClick={() => setTabActiva('premios')}
+>
+  Premios
+</button></div>
           {tabActiva === 'resumen' ? (
   <div className="summary-grid">
     <div className="bio-card">
@@ -344,7 +441,7 @@ if (vista === 'inicio') {
 </div>
     </div>
   </div>
-) : (
+) : tabActiva === 'historial' ? (
   <div className="summary-grid">
     <div className="bio-card">
       <h3>Historial</h3>
@@ -373,6 +470,93 @@ if (vista === 'inicio') {
     ))
   )}
 </div>
+    </div>
+  </div>
+  ) : (
+  <div className="summary-grid">
+    <div className="bio-card">
+      <h3>Premios</h3>
+      {session && (
+  <button
+    type="button"
+    className="primary"
+    onClick={() => setPremioFormOpen(true)}
+  >
+    Agregar premio
+  </button>
+)}
+{session && premioFormOpen && (
+  <form onSubmit={savePremio}>
+    <label>
+      Premio
+      <input
+        type="text"
+        value={premioForm.premio}
+        onChange={(e) =>
+          setPremioForm({ ...premioForm, premio: e.target.value })
+        }
+        required
+      />
+    </label>
+
+    <label>
+      Fecha
+      <input
+        type="date"
+        value={premioForm.fecha}
+        onChange={(e) =>
+          setPremioForm({ ...premioForm, fecha: e.target.value })
+        }
+      />
+    </label>
+
+    <label>
+      Descripción
+      <textarea
+        value={premioForm.descripcion}
+        onChange={(e) =>
+          setPremioForm({ ...premioForm, descripcion: e.target.value })
+        }
+      />
+    </label>
+
+    <button type="submit" className="primary" disabled={savingPremio}>
+      {savingPremio ? 'Guardando...' : 'Guardar premio'}
+    </button>
+    <button
+      type="button"
+      onClick={() => setPremioFormOpen(false)}
+    >
+      Cancelar
+    </button>
+  </form>
+)}
+
+      {loadingPremios ? (
+  <p>Cargando premios...</p>
+) : premios.length === 0 ? (
+  <p>Este jugador aún no tiene premios registrados.</p>
+) : (
+  premios.map((item) => (
+    <div className="historial-item" key={item.id}>
+      <strong>{item.premio}</strong>
+      <span>
+        {item.fecha
+          ? item.fecha.split('-').reverse().join('/')
+          : 'Sin fecha'}
+      </span>
+      {item.descripcion && <p>{item.descripcion}</p>}
+      {session && (
+  <button
+    type="button"
+    onClick={() => eliminarPremio(item)}
+  >
+    Eliminar premio
+  </button>
+)}
+    </div>
+  ))
+)}
     </div>
   </div>
 )}
