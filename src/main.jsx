@@ -40,6 +40,7 @@ const [historialForm, setHistorialForm] = useState({
   observacion: ''
 });
 const [savingHistorial, setSavingHistorial] = useState(false);
+const [editingHistorialId, setEditingHistorialId] = useState(null);
 const [premios, setPremios] = useState([]);
 const [loadingPremios, setLoadingPremios] = useState(false);
 const [premioFormOpen, setPremioFormOpen] = useState(false);
@@ -100,13 +101,24 @@ async function saveHistorial(e) {
 
   setSavingHistorial(true);
 
-  const { error } = await supabase.from('historial_jugadores').insert({
-    jugador_id: selected.id,
-    fecha,
-    tipo,
-    titulo,
-    observacion: historialForm.observacion.trim() || null
-  });
+  const valores = {
+  fecha,
+  tipo,
+  titulo,
+  observacion: historialForm.observacion.trim() || null
+};
+
+const { data, error } = editingHistorialId
+  ? await supabase
+      .from('historial_jugadores')
+      .update(valores)
+      .eq('id', editingHistorialId)
+      .eq('jugador_id', selected.id)
+      .select('id')
+  : await supabase
+      .from('historial_jugadores')
+      .insert({ jugador_id: selected.id, ...valores })
+      .select('id');
 
   setSavingHistorial(false);
 
@@ -114,8 +126,12 @@ async function saveHistorial(e) {
     setMessage(`No se pudo guardar el historial: ${error.message}`);
     return;
   }
-
+if (!data?.length) {
+  setMessage('No se guardó ningún registro. Comprueba el acceso.');
+  return;
+}
   setHistorialForm({ fecha: '', tipo: '', titulo: '', observacion: '' });
+  setEditingHistorialId(null);
   setHistorialFormOpen(false);
   await loadHistorial(selected.id);
 }
@@ -522,7 +538,11 @@ if (vista === 'inicio') {
   <button
     type="button"
     className="primary"
-    onClick={() => setHistorialFormOpen(true)}
+    onClick={() => {
+  setEditingHistorialId(null);
+  setHistorialForm({ fecha: '', tipo: '', titulo: '', observacion: '' });
+  setHistorialFormOpen(true);
+}}
   >
     Agregar registro
   </button>
@@ -577,7 +597,11 @@ if (vista === 'inicio') {
     </label>
 
     <button type="submit" className="primary" disabled={savingHistorial}>
-      {savingHistorial ? 'Guardando...' : 'Guardar registro'}
+      {savingHistorial
+  ? 'Guardando...'
+  : editingHistorialId
+    ? 'Guardar cambios'
+    : 'Guardar registro'}
     </button>
     <button type="button" onClick={() => setHistorialFormOpen(false)}>
       Cancelar
@@ -605,6 +629,23 @@ if (vista === 'inicio') {
         {item.observacion && (
           <small>{item.observacion}</small>
         )}
+        {session && (
+  <button
+    type="button"
+    onClick={() => {
+      setEditingHistorialId(item.id);
+      setHistorialForm({
+        fecha: item.fecha || '',
+        tipo: item.tipo || '',
+        titulo: item.titulo || '',
+        observacion: item.observacion || ''
+      });
+      setHistorialFormOpen(true);
+    }}
+  >
+    Editar registro
+  </button>
+)}
         {session && (
   <button
     type="button"
