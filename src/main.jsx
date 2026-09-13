@@ -355,7 +355,7 @@ if (vista === 'inicio') {
   Historial
 </button><button
   type="button"
-  className={tabActiva === 'premios' ? 'tab-active' : ''}
+  className={tabActiva === 'premios' ? 'tab-activa' : ''}
   onClick={() => setTabActiva('premios')}
 >
   Premios
