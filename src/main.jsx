@@ -32,6 +32,14 @@ function App() {
   const [loading, setLoading] = useState(true)
 const [historial, setHistorial] = useState([]);
 const [loadingHistorial, setLoadingHistorial] = useState(false);
+const [historialFormOpen, setHistorialFormOpen] = useState(false);
+const [historialForm, setHistorialForm] = useState({
+  fecha: '',
+  tipo: '',
+  titulo: '',
+  observacion: ''
+});
+const [savingHistorial, setSavingHistorial] = useState(false);
 const [premios, setPremios] = useState([]);
 const [loadingPremios, setLoadingPremios] = useState(false);
 const [premioFormOpen, setPremioFormOpen] = useState(false);
@@ -72,6 +80,71 @@ async function loadHistorial(jugadorId) {
   }
 
   setLoadingHistorial(false);
+}
+async function saveHistorial(e) {
+  e.preventDefault();
+
+  if (!session || !selected?.id) {
+    setMessage('Selecciona un jugador e inicia sesión como administrador.');
+    return;
+  }
+
+  const fecha = historialForm.fecha;
+  const tipo = historialForm.tipo.trim();
+  const titulo = historialForm.titulo.trim();
+
+  if (!fecha || !tipo || !titulo) {
+    setMessage('Completa la fecha, el tipo y el título.');
+    return;
+  }
+
+  setSavingHistorial(true);
+
+  const { error } = await supabase.from('historial_jugadores').insert({
+    jugador_id: selected.id,
+    fecha,
+    tipo,
+    titulo,
+    observacion: historialForm.observacion.trim() || null
+  });
+
+  setSavingHistorial(false);
+
+  if (error) {
+    setMessage(`No se pudo guardar el historial: ${error.message}`);
+    return;
+  }
+
+  setHistorialForm({ fecha: '', tipo: '', titulo: '', observacion: '' });
+  setHistorialFormOpen(false);
+  await loadHistorial(selected.id);
+}
+async function eliminarHistorial(item) {
+  if (!session || !selected?.id || !item?.id) return;
+
+  const confirmar = window.confirm(
+    `¿Eliminar "${item.titulo || 'este registro'}" del historial de ${selected.nombre}?`
+  );
+  if (!confirmar) return;
+
+  const { data, error } = await supabase
+    .from('historial_jugadores')
+    .delete()
+    .eq('id', item.id)
+    .eq('jugador_id', selected.id)
+    .select('id');
+
+  if (error) {
+    setMessage(`No se pudo eliminar el registro: ${error.message}`);
+    return;
+  }
+
+  if (!data?.length) {
+    setMessage('No se eliminó ningún registro. Comprueba el acceso.');
+    return;
+  }
+
+  await loadHistorial(selected.id);
 }
 async function loadPremios(jugadorId) {
   if (!jugadorId) {
@@ -445,6 +518,72 @@ if (vista === 'inicio') {
   <div className="summary-grid">
     <div className="bio-card">
       <h3>Historial</h3>
+      {session && (
+  <button
+    type="button"
+    className="primary"
+    onClick={() => setHistorialFormOpen(true)}
+  >
+    Agregar registro
+  </button>
+)}
+{session && historialFormOpen && (
+  <form onSubmit={saveHistorial}>
+    <label>
+      Fecha
+      <input
+        type="date"
+        value={historialForm.fecha}
+        onChange={(e) =>
+          setHistorialForm({ ...historialForm, fecha: e.target.value })
+        }
+        required
+      />
+    </label>
+
+    <label>
+      Tipo de actividad
+      <input
+        type="text"
+        placeholder="Entrenamiento, juego o evaluación"
+        value={historialForm.tipo}
+        onChange={(e) =>
+          setHistorialForm({ ...historialForm, tipo: e.target.value })
+        }
+        required
+      />
+    </label>
+
+    <label>
+      Título
+      <input
+        type="text"
+        value={historialForm.titulo}
+        onChange={(e) =>
+          setHistorialForm({ ...historialForm, titulo: e.target.value })
+        }
+        required
+      />
+    </label>
+
+    <label>
+      Observación
+      <textarea
+        value={historialForm.observacion}
+        onChange={(e) =>
+          setHistorialForm({ ...historialForm, observacion: e.target.value })
+        }
+      />
+    </label>
+
+    <button type="submit" className="primary" disabled={savingHistorial}>
+      {savingHistorial ? 'Guardando...' : 'Guardar registro'}
+    </button>
+    <button type="button" onClick={() => setHistorialFormOpen(false)}>
+      Cancelar
+    </button>
+  </form>
+)}
 <div className="historial-list">
   {loadingHistorial ? (
     <p>Cargando historial...</p>
@@ -466,6 +605,14 @@ if (vista === 'inicio') {
         {item.observacion && (
           <small>{item.observacion}</small>
         )}
+        {session && (
+  <button
+    type="button"
+    onClick={() => eliminarHistorial(item)}
+  >
+    Eliminar registro
+  </button>
+)}
       </div>
     ))
   )}
