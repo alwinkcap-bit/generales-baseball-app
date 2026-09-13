@@ -27,3 +27,9 @@ jobs:
 
       - name: Compilar aplicación
         run: npm run build
+
+      - name: Guardar compilación de prueba
+        uses: actions/upload-artifact@v4
+        with:
+          name: generales-nuevo-diseno
+          path: dist/

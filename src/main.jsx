@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { supabase } from './supabase'
 import './styles.css'
-
+import Inicio from './Inicio'
 const blankPlayer = {
   nombre: '', apellido: '', fecha_nacimiento: '', categoria: '', posicion: '', numero: '',
   batea: 'R', lanza: 'R', estatura_cm: '', estatura_pulgadas: '', peso_kg: '', foto_url: '', estado: 'Activo', notas: ''
@@ -19,6 +19,8 @@ function edad(fecha) {
 }
 
 function App() {
+  const [tabActiva, setTabActiva] = useState('resumen');
+  const [vista, setVista] = useState('inicio')
   const [players, setPlayers] = useState([])
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
@@ -28,7 +30,26 @@ function App() {
   const [form, setForm] = useState(blankPlayer)
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(true)
-
+const [historial, setHistorial] = useState([]);
+const [loadingHistorial, setLoadingHistorial] = useState(false);
+const [historialFormOpen, setHistorialFormOpen] = useState(false);
+const [historialForm, setHistorialForm] = useState({
+  fecha: '',
+  tipo: '',
+  titulo: '',
+  observacion: ''
+});
+const [savingHistorial, setSavingHistorial] = useState(false);
+const [editingHistorialId, setEditingHistorialId] = useState(null);
+const [premios, setPremios] = useState([]);
+const [loadingPremios, setLoadingPremios] = useState(false);
+const [premioFormOpen, setPremioFormOpen] = useState(false);
+const [premioForm, setPremioForm] = useState({
+  premio: '',
+  fecha: '',
+  descripcion: ''
+});
+const [savingPremio, setSavingPremio] = useState(false);
   async function loadPlayers() {
     setLoading(true)
     const { data, error } = await supabase.from('jugadores').select('*').order('nombre')
@@ -37,7 +58,190 @@ function App() {
     if (!selected && data?.length) setSelected(data[0])
     setLoading(false)
   }
+async function loadHistorial(jugadorId) {
+  if (!jugadorId) {
+    setHistorial([]);
+    return;
+  }
 
+
+  setLoadingHistorial(true);
+
+  const { data, error } = await supabase
+    .from('historial_jugadores')
+    .select('*')
+    .eq('jugador_id', jugadorId)
+    .order('fecha', { ascending: false });
+
+  if (error) {
+    console.error(error);
+    setHistorial([]);
+  } else {
+    setHistorial(data || []);
+  }
+
+  setLoadingHistorial(false);
+}
+async function saveHistorial(e) {
+  e.preventDefault();
+
+  if (!session || !selected?.id) {
+    setMessage('Selecciona un jugador e inicia sesión como administrador.');
+    return;
+  }
+
+  const fecha = historialForm.fecha;
+  const tipo = historialForm.tipo.trim();
+  const titulo = historialForm.titulo.trim();
+
+  if (!fecha || !tipo || !titulo) {
+    setMessage('Completa la fecha, el tipo y el título.');
+    return;
+  }
+
+  setSavingHistorial(true);
+
+  const valores = {
+  fecha,
+  tipo,
+  titulo,
+  observacion: historialForm.observacion.trim() || null
+};
+
+const { data, error } = editingHistorialId
+  ? await supabase
+      .from('historial_jugadores')
+      .update(valores)
+      .eq('id', editingHistorialId)
+      .eq('jugador_id', selected.id)
+      .select('id')
+  : await supabase
+      .from('historial_jugadores')
+      .insert({ jugador_id: selected.id, ...valores })
+      .select('id');
+
+  setSavingHistorial(false);
+
+  if (error) {
+    setMessage(`No se pudo guardar el historial: ${error.message}`);
+    return;
+  }
+if (!data?.length) {
+  setMessage('No se guardó ningún registro. Comprueba el acceso.');
+  return;
+}
+  setHistorialForm({ fecha: '', tipo: '', titulo: '', observacion: '' });
+  setEditingHistorialId(null);
+  setHistorialFormOpen(false);
+  await loadHistorial(selected.id);
+}
+async function eliminarHistorial(item) {
+  if (!session || !selected?.id || !item?.id) return;
+
+  const confirmar = window.confirm(
+    `¿Eliminar "${item.titulo || 'este registro'}" del historial de ${selected.nombre}?`
+  );
+  if (!confirmar) return;
+
+  const { data, error } = await supabase
+    .from('historial_jugadores')
+    .delete()
+    .eq('id', item.id)
+    .eq('jugador_id', selected.id)
+    .select('id');
+
+  if (error) {
+    setMessage(`No se pudo eliminar el registro: ${error.message}`);
+    return;
+  }
+
+  if (!data?.length) {
+    setMessage('No se eliminó ningún registro. Comprueba el acceso.');
+    return;
+  }
+
+  await loadHistorial(selected.id);
+}
+async function loadPremios(jugadorId) {
+  if (!jugadorId) {
+    setPremios([]);
+    return;
+  }
+
+  setLoadingPremios(true);
+
+  const { data, error } = await supabase
+    .from('premios')
+    .select('id, premio, fecha, descripcion')
+    .eq('jugador_id', jugadorId)
+    .order('fecha', { ascending: false });
+
+  if (error) {
+    console.error('Error al cargar premios:', error);
+    setPremios([]);
+  } else {
+    setPremios(data || []);
+  }
+
+  setLoadingPremios(false);
+}
+async function savePremio(e) {
+  e.preventDefault();
+
+  const nombre = premioForm.premio.trim();
+
+  if (!session || !selected?.id || !nombre) {
+    setMessage('Selecciona un jugador y escribe el nombre del premio.');
+    return;
+  }
+
+  setSavingPremio(true);
+
+  const { error } = await supabase.from('premios').insert({
+    jugador_id: selected.id,
+    premio: nombre,
+    fecha: premioForm.fecha || null,
+    descripcion: premioForm.descripcion.trim() || null
+  });
+
+  setSavingPremio(false);
+
+  if (error) {
+    setMessage(`No se pudo guardar el premio: ${error.message}`);
+    return;
+  }
+
+  setPremioForm({ premio: '', fecha: '', descripcion: '' });
+  setPremioFormOpen(false);
+  await loadPremios(selected.id);
+}
+async function eliminarPremio(item) {
+  if (!session || !selected?.id || !item?.id) return;
+
+  const confirmar = window.confirm(
+    `¿Eliminar el premio "${item.premio}" de ${selected.nombre}?`
+  );
+  if (!confirmar) return;
+
+  const { data, error } = await supabase
+    .from('premios')
+    .delete()
+    .eq('id', item.id)
+    .eq('jugador_id', selected.id)
+    .select('id');
+
+  if (error) {
+    setMessage(`No se pudo eliminar el premio: ${error.message}`);
+    return;
+  }
+
+  if (!data?.length) {
+    setMessage('No se eliminó ningún premio. Comprueba el acceso de administrador.');
+    return;
+  }
+
+  await loadPremios(selected.id);
+}
   useEffect(() => {
     loadPlayers()
     supabase.auth.getSession().then(({ data }) => setSession(data.session))
@@ -110,7 +314,14 @@ function openEdit(p) {
       categoria: form.categoria || null, posicion: form.posicion || null, numero: form.numero === '' ? null : Number(form.numero),
       batea: form.batea || null, lanza: form.lanza || null, estatura_cm: form.estatura_cm === '' ? null : Number(form.estatura_cm) + (Number(form.estatura_pulgadas || 0) / 12),
       peso_kg: form.peso_kg === '' ? null : Number(form.peso_kg) * 0.453592, foto_url: form.foto_url || null,
-      estado: form.estado || null, notas: form.notas || null
+      estado: form.estado || null,
+notas: form.notas || null,
+juegos: Number(form.juegos || 0),
+turnos_bate: Number(form.turnos_bate || 0),
+hits: Number(form.hits || 0),
+carreras: Number(form.carreras || 0),
+rbi: Number(form.rbi || 0),
+home_runs: Number(form.home_runs || 0)
     }
     let result
     if (form.id) result = await supabase.from('jugadores').update(payload).eq('id', form.id).select().single()
@@ -151,9 +362,17 @@ async function login(e) {
 }
 
   async function logout() { await supabase.auth.signOut() }
-
+if (vista === 'inicio') {
+  return (
+    <div>
+      <Inicio onAdmin={() => setVista('admin')} />
+      
+    </div>
+  )
+}
   return <div className="app-shell">
     <header className="topbar">
+      <button className="ghost" onClick={() => setVista('inicio')}>Inicio público</button>
       <div>
         <div className="eyebrow">Generales de Chitré</div>
         <h1>Baseball Academy</h1>
@@ -173,7 +392,15 @@ async function login(e) {
         <aside className="roster">
           <div className="section-title">Jugadores <span>{filtered.length}</span></div>
           {loading ? <div className="empty">Cargando...</div> : filtered.length === 0 ? <div className="empty">No hay jugadores todavía.</div> : filtered.map(p =>
-            <button className={`player-card ${selected?.id===p.id?'active':''}`} key={p.id} onClick={()=>setSelected(p)}>
+<button
+  className={`player-card ${selected?.id===p.id?'active':''}`}
+  key={p.id}
+  onClick={() => {
+    setSelected(p);
+    loadHistorial(p.id);
+    loadPremios(p.id);
+  }}
+>
               <div className="avatar">{p.foto_url ? <img src={p.foto_url} alt=""/> : `${p.nombre?.[0]||''}${p.apellido?.[0]||''}`}</div>
               <div className="player-card-info"><strong>{p.nombre} {p.apellido}</strong><span>#{p.numero ?? '—'} · {p.posicion || 'Sin posición'} · {p.categoria || 'Sin categoría'}</span></div>
             </button>)}
@@ -186,27 +413,358 @@ async function login(e) {
               <div className="hero-info">
                 <div className="number-chip">#{selected.numero ?? '—'}</div>
                 <h2>{selected.nombre} {selected.apellido}</h2>
-                <p>{selected.posicion || '—'} &nbsp; B/T: {selected.batea || '—'}/{selected.lanza || '—'} &nbsp; Edad: {edad(selected.fecha_nacimiento) || '—'}</p>
+              <div className="player-meta">
+  <span>{selected.posicion || '—'}</span>
+  <span>B/T: {selected.batea || '—'}/{selected.lanza || '—'}</span>
+  <span>Edad: {edad(selected.fecha_nacimiento) || '—'}</span>
+</div>
                 <div className={`status ${String(selected.estado).toLowerCase()==='activo'?'ok':''}`}>{selected.estado || 'Sin estado'}</div>
                 {session && <div className="admin-actions"><button onClick={()=>openEdit(selected)}>Editar</button><button className="danger" onClick={()=>deletePlayer(selected)}>Eliminar</button></div>}
               </div>
             </div>
-            <div className="tabs"><b>Resumen</b><span>Estadísticas</span><span>Historial</span><span>Premios</span></div>
-            <div className="summary-grid">
-              <div className="bio-card"><h3>Información</h3><dl>
-                <dt>Fecha de nacimiento</dt><dd>{selected.fecha_nacimiento || '—'}</dd>
-                <dt>Categoría</dt><dd>{selected.categoria || '—'}</dd>
-               <dt>Estatura</dt><dd>{selected.estatura_cm ? `${Math.floor(Number(selected.estatura_cm))} pies ${Math.round((Number(selected.estatura_cm) - Math.floor(Number(selected.estatura_cm))) * 12)} pulgadas` : '-'}</dd>
-              <dt>Peso</dt><dd>{selected.peso_kg ? `${(Number(selected.peso_kg) / 0.453592).toFixed(1)} lb` : '-'}</dd>
-              </dl></div>
-              <div className="bio-card"><h3>Notas</h3><p>{selected.notas || 'Sin notas registradas.'}</p></div>
-            </div>
+            <div className="tabs"><button
+  type="button"
+  className={tabActiva === 'resumen' ? 'tab-activa' : ''}
+  onClick={() => setTabActiva('resumen')}
+>
+  Resumen
+</button>
+
+<button
+  type="button"
+  className={tabActiva === 'estadisticas' ? 'tab-activa' : ''}
+  onClick={() => setTabActiva('estadisticas')}
+>
+  Estadísticas
+</button><button
+  type="button"
+  className={tabActiva === 'historial' ? 'tab-activa' : ''}
+  onClick={() => setTabActiva('historial')}
+>
+  Historial
+</button><button
+  type="button"
+  className={tabActiva === 'premios' ? 'tab-activa' : ''}
+  onClick={() => setTabActiva('premios')}
+>
+  Premios
+</button></div>
+          {tabActiva === 'resumen' ? (
+  <div className="summary-grid">
+    <div className="bio-card">
+      <h3>Información</h3>
+      <dl>
+        <dt>Fecha de nacimiento</dt>
+        <dd>
+          {selected.fecha_nacimiento
+            ? selected.fecha_nacimiento.split('-').reverse().join('/')
+            : '—'}
+        </dd>
+
+        <dt>Categoría</dt>
+        <dd>{selected.categoria || '—'}</dd>
+
+        <dt>Estatura</dt>
+        <dd>
+          {selected.estatura_cm
+            ? `${Math.floor(Number(selected.estatura_cm))}' ${Math.round((Number(selected.estatura_cm) - Math.floor(Number(selected.estatura_cm))) * 12)}"`
+            : '-'}
+        </dd>
+
+        <dt>Peso</dt>
+        <dd>
+          {selected.peso_kg
+            ? `${(Number(selected.peso_kg) / 0.453592).toFixed(1)} lb`
+            : '-'}
+        </dd>
+      </dl>
+    </div>
+
+    <div className="bio-card">
+      <h3>Notas</h3>
+      <p>{selected.notas || 'Sin notas registradas.'}</p>
+    </div>
+  </div>
+) : tabActiva === 'estadisticas' ? (
+  <div className="summary-grid">
+    <div className="bio-card">
+      <h3>Estadísticas</h3>
+      <div className="stats-grid">
+  <div className="stat-card">
+    <strong>{selected.juegos ?? 0}</strong>
+    <span>Juegos</span>
+  </div>
+
+  <div className="stat-card">
+    <strong>{selected.turnos_bate ?? 0}</strong>
+    <span>Turnos al bate</span>
+  </div>
+
+  <div className="stat-card">
+    <strong>{selected.hits ?? 0}</strong>
+    <span>Hits</span>
+  </div>
+
+  <div className="stat-card">
+    <strong>{selected.carreras ?? 0}</strong>
+    <span>Carreras</span>
+  </div>
+
+  <div className="stat-card">
+    <strong>{selected.rbi ?? 0}</strong>
+    <span>RBI</span>
+  </div>
+
+  <div className="stat-card">
+    <strong>{selected.home_runs ?? 0}</strong>
+    <span>Home Runs</span>
+  </div>
+</div>
+<div className="stat-card">
+  <strong>
+  {Number(selected.turnos_bate) > 0
+    ? (Number(selected.hits || 0) / Number(selected.turnos_bate)).toFixed(3).replace(/^0/, '')
+    : '.000'}
+</strong>
+  <span>AVG</span>
+</div>
+    </div>
+  </div>
+) : tabActiva === 'historial' ? (
+  <div className="summary-grid">
+    <div className="bio-card">
+      <h3>Historial</h3>
+      {session && (
+  <button
+    type="button"
+    className="primary"
+    onClick={() => {
+  setEditingHistorialId(null);
+  setHistorialForm({ fecha: '', tipo: '', titulo: '', observacion: '' });
+  setHistorialFormOpen(true);
+}}
+  >
+    Agregar registro
+  </button>
+)}
+{session && historialFormOpen && (
+  <form onSubmit={saveHistorial}>
+    <label>
+      Fecha
+      <input
+        type="date"
+        value={historialForm.fecha}
+        onChange={(e) =>
+          setHistorialForm({ ...historialForm, fecha: e.target.value })
+        }
+        required
+      />
+    </label>
+
+    <label>
+      Tipo de actividad
+      <input
+        type="text"
+        placeholder="Entrenamiento, juego o evaluación"
+        value={historialForm.tipo}
+        onChange={(e) =>
+          setHistorialForm({ ...historialForm, tipo: e.target.value })
+        }
+        required
+      />
+    </label>
+
+    <label>
+      Título
+      <input
+        type="text"
+        value={historialForm.titulo}
+        onChange={(e) =>
+          setHistorialForm({ ...historialForm, titulo: e.target.value })
+        }
+        required
+      />
+    </label>
+
+    <label>
+      Observación
+      <textarea
+        value={historialForm.observacion}
+        onChange={(e) =>
+          setHistorialForm({ ...historialForm, observacion: e.target.value })
+        }
+      />
+    </label>
+
+    <button type="submit" className="primary" disabled={savingHistorial}>
+      {savingHistorial
+  ? 'Guardando...'
+  : editingHistorialId
+    ? 'Guardar cambios'
+    : 'Guardar registro'}
+    </button>
+    <button type="button" onClick={() => setHistorialFormOpen(false)}>
+      Cancelar
+    </button>
+  </form>
+)}
+<div className="historial-list">
+  {loadingHistorial ? (
+    <p>Cargando historial...</p>
+  ) : historial.length === 0 ? (
+    <p>No hay registros en el historial de este jugador.</p>
+  ) : (
+    historial.map(item => (
+      <div className="historial-item" key={item.id}>
+        <strong>
+          {item.fecha
+            ? item.fecha.split('-').reverse().join('/')
+            : 'Sin fecha'}
+        </strong>
+
+        <span>{item.tipo || 'Actividad'}</span>
+
+        <p>{item.titulo || 'Sin título'}</p>
+
+        {item.observacion && (
+          <small>{item.observacion}</small>
+        )}
+        {session && (
+  <button
+    type="button"
+    onClick={() => {
+      setEditingHistorialId(item.id);
+      setHistorialForm({
+        fecha: item.fecha || '',
+        tipo: item.tipo || '',
+        titulo: item.titulo || '',
+        observacion: item.observacion || ''
+      });
+      setHistorialFormOpen(true);
+    }}
+  >
+    Editar registro
+  </button>
+)}
+        {session && (
+  <button
+    type="button"
+    onClick={() => eliminarHistorial(item)}
+  >
+    Eliminar registro
+  </button>
+)}
+      </div>
+    ))
+  )}
+</div>
+    </div>
+  </div>
+  ) : (
+  <div className="summary-grid">
+    <div className="bio-card">
+      <h3>Premios</h3>
+      {session && (
+  <button
+    type="button"
+    className="primary"
+    onClick={() => setPremioFormOpen(true)}
+  >
+    Agregar premio
+  </button>
+)}
+{session && premioFormOpen && (
+  <form onSubmit={savePremio}>
+    <label>
+      Premio
+      <input
+        type="text"
+        value={premioForm.premio}
+        onChange={(e) =>
+          setPremioForm({ ...premioForm, premio: e.target.value })
+        }
+        required
+      />
+    </label>
+
+    <label>
+      Fecha
+      <input
+        type="date"
+        value={premioForm.fecha}
+        onChange={(e) =>
+          setPremioForm({ ...premioForm, fecha: e.target.value })
+        }
+      />
+    </label>
+
+    <label>
+      Descripción
+      <textarea
+        value={premioForm.descripcion}
+        onChange={(e) =>
+          setPremioForm({ ...premioForm, descripcion: e.target.value })
+        }
+      />
+    </label>
+
+    <button type="submit" className="primary" disabled={savingPremio}>
+      {savingPremio ? 'Guardando...' : 'Guardar premio'}
+    </button>
+    <button
+      type="button"
+      onClick={() => setPremioFormOpen(false)}
+    >
+      Cancelar
+    </button>
+  </form>
+)}
+
+      {loadingPremios ? (
+  <p>Cargando premios...</p>
+) : premios.length === 0 ? (
+  <p>Este jugador aún no tiene premios registrados.</p>
+) : (
+  premios.map((item) => (
+    <div className="historial-item" key={item.id}>
+      <strong>{item.premio}</strong>
+      <span>
+        {item.fecha
+          ? item.fecha.split('-').reverse().join('/')
+          : 'Sin fecha'}
+      </span>
+      {item.descripcion && <p>{item.descripcion}</p>}
+      {session && (
+  <button
+    type="button"
+    onClick={() => eliminarPremio(item)}
+  >
+    Eliminar premio
+  </button>
+)}
+    </div>
+  ))
+)}
+    </div>
+  </div>
+)}
           </>}
         </section>
       </section>
     </main>
 
-    <nav className="bottom-nav"><button>⌂<span>Inicio</span></button><button>⚾<span>Jugadores</span></button><button onClick={()=>session?openNew():setLoginOpen(true)}>＋<span>{session?'Agregar':'Admin'}</span></button></nav>
+    <nav className="bottom-nav"><button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+  ⌂<span>Inicio</span>
+</button><button
+  onClick={() =>
+    document.querySelector('.roster')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    })
+  }
+>
+  ⚾<span>Jugadores</span>
+</button><button onClick={()=>session?openNew():setLoginOpen(true)}>＋<span>{session?'Agregar':'Admin'}</span></button></nav>
 
     {loginOpen && <div className="modal-backdrop"><form className="modal" onSubmit={login}>
       <button type="button" className="close" onClick={()=>setLoginOpen(false)}>×</button><h3>Administrador</h3>
@@ -217,12 +775,23 @@ async function login(e) {
       <button type="button" className="close" onClick={()=>setEditorOpen(false)}>×</button><h3>{form.id?'Editar jugador':'Nuevo jugador'}</h3>
       <div className="form-grid">
         {['nombre','apellido','categoria','posicion','batea','lanza','estado'].map(k=><label key={k}>{k.replace('_',' ')}<input value={form[k] ?? ''} onChange={e=>setForm({...form,[k]:e.target.value})} required={k==='nombre'} /></label>)}
-      <label>Foto del jugador<input type="file" accept="image/*" onChange={(e)=>subirFoto(e.target.files?.[0])} /></label>
+      <label className="wide">Foto del jugador<input type="file" accept="image/*" onChange={(e)=>subirFoto(e.target.files?.[0])} /></label>
         <label>Fecha nacimiento<input type="date" value={form.fecha_nacimiento ?? ''} onChange={e=>setForm({...form,fecha_nacimiento:e.target.value})}/></label>
         <label>Número<input type="number" value={form.numero ?? ''} onChange={e=>setForm({...form,numero:e.target.value})}/></label>
-        <label>Estatura pies<input type="number" min="0" value={form.estatura_cm ?? ''} onChange={e=>setForm({...form,estatura_cm:e.target.value})}/></label>
-        <label>Estatura pulgadas<input type="number" min="0" max="11" value={form.estatura_pulgadas ?? ''} onChange={e=>setForm({...form,estatura_pulgadas:e.target.value})}/></label>
+        <label>Estatura '<input type="number" min="0" value={form.estatura_cm ?? ''} onChange={e=>setForm({...form,estatura_cm:e.target.value})}/></label>
+        <label>Estatura "<input type="number" min="0" max="11" value={form.estatura_pulgadas ?? ''} onChange={e=>setForm({...form,estatura_pulgadas:e.target.value})}/></label>
         <label>Peso libras<input type="number" step="0.1" value={form.peso_kg ?? ''} onChange={e=>setForm({...form,peso_kg:e.target.value})}/></label>
+        <label>Juegos<input type="number" min="0" value={form.juegos ?? 0} onChange={e=>setForm({...form,juegos:e.target.value})}/></label>
+
+<label>Turnos al bate<input type="number" min="0" value={form.turnos_bate ?? 0} onChange={e=>setForm({...form,turnos_bate:e.target.value})}/></label>
+
+<label>Hits<input type="number" min="0" value={form.hits ?? 0} onChange={e=>setForm({...form,hits:e.target.value})}/></label>
+
+<label>Carreras<input type="number" min="0" value={form.carreras ?? 0} onChange={e=>setForm({...form,carreras:e.target.value})}/></label>
+
+<label>RBI<input type="number" min="0" value={form.rbi ?? 0} onChange={e=>setForm({...form,rbi:e.target.value})}/></label>
+
+<label>Home Runs<input type="number" min="0" value={form.home_runs ?? 0} onChange={e=>setForm({...form,home_runs:e.target.value})}/></label>
         <label className="wide">Notas<textarea rows="4" value={form.notas ?? ''} onChange={e=>setForm({...form,notas:e.target.value})}/></label>
       </div><button className="primary full">Guardar jugador</button></form></div>}
   </div>
