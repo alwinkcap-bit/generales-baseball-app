@@ -362,11 +362,23 @@ async function login(e) {
   }
 
   setSession(data.session)
+  await loadPlayers()
   setLoginOpen(false)
   alert('Administrador conectado correctamente')
 }
 
-  async function logout() { await supabase.auth.signOut() }
+  async function logout() {
+  const { error } = await supabase.auth.signOut()
+  if (error) {
+    setMessage(`No se pudo cerrar sesión: ${error.message}`)
+    return
+  }
+  setSession(null)
+  setPlayers([])
+  setSelected(null)
+  setHistorial([])
+  setPremios([])
+}
 if (vista === 'inicio') {
   return (
     <div>
