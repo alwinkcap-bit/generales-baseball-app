@@ -222,14 +222,17 @@ export default function Inicio({ onAdmin }) {
           </div>
         </section>
 
-        <section id="ubicacion" className="inicio-ubicacion">
-          <span className="inicio-etiqueta">NUESTRA CASA</span>
-          <h2>Estadio Pepe Osorio</h2>
-          <p>Calle Abajo de Chitré, Herrera, Panamá.</p>
-          <a href="https://www.google.com/maps/search/?api=1&query=Estadio+Pepe+Osorio+Chitre" target="_blank" rel="noreferrer">
-            📍 CÓMO LLEGAR
-          </a>
-        </section>
+      <section id="historia" className="inicio-ubicacion">
+  <span className="inicio-etiqueta">NUESTRA HISTORIA</span>
+  <h2>Un equipo, una familia, un legado</h2>
+  <p>
+    Generales de Chitré Baseball Academy nació el 30 de enero de 2025
+    de una convicción: el béisbol también enseña valores para la vida.
+    Su fundador, Alwin Pérez, junto a los entrenadores Rubén Almanza,
+    Esteban Córdoba y Jesús Muñoz, comparte con cada niño lo aprendido
+    a lo largo de sus trayectorias en este deporte.
+  </p>
+</section>
         <section id="noticias" className="inicio-noticias">
   <span className="inicio-etiqueta">ACTUALIDAD</span>
   <h2>NOTICIAS</h2>
