@@ -25,6 +25,11 @@ function App() {
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
   const [session, setSession] = useState(null)
+  const adminIds = [
+  '8b718847-f2ad-43a4-a26f-4a695138dcb8',
+  '57a0147a-6c4b-4dcb-99d6-a4989fa8f731',
+]
+const isAdmin = adminIds.includes(session?.user?.id)
   const [loginOpen, setLoginOpen] = useState(false)
   const [editorOpen, setEditorOpen] = useState(false)
   const [form, setForm] = useState(blankPlayer)
@@ -85,7 +90,7 @@ async function loadHistorial(jugadorId) {
 async function saveHistorial(e) {
   e.preventDefault();
 
-  if (!session || !selected?.id) {
+  if (!isAdmin || !selected?.id) {
     setMessage('Selecciona un jugador e inicia sesión como administrador.');
     return;
   }
@@ -136,7 +141,7 @@ if (!data?.length) {
   await loadHistorial(selected.id);
 }
 async function eliminarHistorial(item) {
-  if (!session || !selected?.id || !item?.id) return;
+  if (!isAdmin || !selected?.id || !item?.id) return;
 
   const confirmar = window.confirm(
     `¿Eliminar "${item.titulo || 'este registro'}" del historial de ${selected.nombre}?`
@@ -190,7 +195,7 @@ async function savePremio(e) {
 
   const nombre = premioForm.premio.trim();
 
-  if (!session || !selected?.id || !nombre) {
+  if (!isAdmin || !selected?.id || !nombre) {
     setMessage('Selecciona un jugador y escribe el nombre del premio.');
     return;
   }
@@ -216,7 +221,7 @@ async function savePremio(e) {
   await loadPremios(selected.id);
 }
 async function eliminarPremio(item) {
-  if (!session || !selected?.id || !item?.id) return;
+  if (!isAdmin || !selected?.id || !item?.id) return;
 
   const confirmar = window.confirm(
     `¿Eliminar el premio "${item.premio}" de ${selected.nombre}?`
@@ -357,11 +362,23 @@ async function login(e) {
   }
 
   setSession(data.session)
+  await loadPlayers()
   setLoginOpen(false)
   alert('Administrador conectado correctamente')
 }
 
-  async function logout() { await supabase.auth.signOut() }
+  async function logout() {
+  const { error } = await supabase.auth.signOut()
+  if (error) {
+    setMessage(`No se pudo cerrar sesión: ${error.message}`)
+    return
+  }
+  setSession(null)
+  setPlayers([])
+  setSelected(null)
+  setHistorial([])
+  setPremios([])
+}
 if (vista === 'inicio') {
   return (
     <div>
@@ -383,7 +400,7 @@ if (vista === 'inicio') {
     <main>
       <section className="search-row">
         <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Buscar por nombre, número, categoría..." />
-        {session && <button className="primary" onClick={openNew}>+ Jugador</button>}
+        {isAdmin && <button className="primary" onClick={openNew}>+ Jugador</button>}
       </section>
 
       {message && <div className="message">{message}</div>}
@@ -419,7 +436,7 @@ if (vista === 'inicio') {
   <span>Edad: {edad(selected.fecha_nacimiento) || '—'}</span>
 </div>
                 <div className={`status ${String(selected.estado).toLowerCase()==='activo'?'ok':''}`}>{selected.estado || 'Sin estado'}</div>
-                {session && <div className="admin-actions"><button onClick={()=>openEdit(selected)}>Editar</button><button className="danger" onClick={()=>deletePlayer(selected)}>Eliminar</button></div>}
+                {isAdmin && <div className="admin-actions"><button onClick={()=>openEdit(selected)}>Editar</button><button className="danger" onClick={()=>deletePlayer(selected)}>Eliminar</button></div>}
               </div>
             </div>
             <div className="tabs"><button
@@ -534,7 +551,7 @@ if (vista === 'inicio') {
   <div className="summary-grid">
     <div className="bio-card">
       <h3>Historial</h3>
-      {session && (
+      {isAdmin && (
   <button
     type="button"
     className="primary"
@@ -547,7 +564,7 @@ if (vista === 'inicio') {
     Agregar registro
   </button>
 )}
-{session && historialFormOpen && (
+{isAdmin && historialFormOpen && (
   <form onSubmit={saveHistorial}>
     <label>
       Fecha
@@ -629,7 +646,7 @@ if (vista === 'inicio') {
         {item.observacion && (
           <small>{item.observacion}</small>
         )}
-        {session && (
+        {isAdmin && (
   <button
     type="button"
     onClick={() => {
@@ -646,7 +663,7 @@ if (vista === 'inicio') {
     Editar registro
   </button>
 )}
-        {session && (
+        {isAdmin && (
   <button
     type="button"
     onClick={() => eliminarHistorial(item)}
@@ -664,7 +681,7 @@ if (vista === 'inicio') {
   <div className="summary-grid">
     <div className="bio-card">
       <h3>Premios</h3>
-      {session && (
+      {isAdmin && (
   <button
     type="button"
     className="primary"
@@ -673,7 +690,7 @@ if (vista === 'inicio') {
     Agregar premio
   </button>
 )}
-{session && premioFormOpen && (
+{isAdmin && premioFormOpen && (
   <form onSubmit={savePremio}>
     <label>
       Premio
@@ -734,7 +751,7 @@ if (vista === 'inicio') {
           : 'Sin fecha'}
       </span>
       {item.descripcion && <p>{item.descripcion}</p>}
-      {session && (
+      {isAdmin && (
   <button
     type="button"
     onClick={() => eliminarPremio(item)}
@@ -764,7 +781,7 @@ if (vista === 'inicio') {
   }
 >
   ⚾<span>Jugadores</span>
-</button><button onClick={()=>session?openNew():setLoginOpen(true)}>＋<span>{session?'Agregar':'Admin'}</span></button></nav>
+</button><button onClick={()=>isAdmin?openNew():setLoginOpen(true)}>＋<span>{isAdmin?'Agregar':'Admin'}</span></button></nav>
 
     {loginOpen && <div className="modal-backdrop"><form className="modal" onSubmit={login}>
       <button type="button" className="close" onClick={()=>setLoginOpen(false)}>×</button><h3>Administrador</h3>
