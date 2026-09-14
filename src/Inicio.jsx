@@ -33,13 +33,15 @@ export default function Inicio({ onAdmin }) {
             </h1>
             <p>UN EQUIPO,<br />UNA FAMILIA,<br />UN LEGADO</p>
             <div className="inicio-acciones">
-              <a href={whatsapp} target="_blank" rel="noreferrer" className="inicio-boton dorado">
-                ⚾ INSCRÍBETE AHORA
-              </a>
-              <a href={whatsapp} target="_blank" rel="noreferrer" className="inicio-boton contorno">
-                ☎ CONTACTAR POR WHATSAPP
-              </a>
-            </div>
+  <a
+    href="https://docs.google.com/forms/d/e/1FAIpQLScwSVSY9Ra3mrQV4qX8gda0U8lgSitkXQAcd0Kt1Ibq9O9ZHA/viewform?usp=preview"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inicio-boton dorado"
+  >
+    ⚾ INSCRÍBETE AHORA
+  </a>
+</div>
           </div>
           <div className="inicio-hero-imagen">
   <img
