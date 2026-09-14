@@ -41,6 +41,28 @@ export default function Inicio({ onAdmin }) {
   >
     ⚾ INSCRÍBETE AHORA
   </a>
+  <a
+  href="https://www.instagram.com/generales_baseball_chitre/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inicio-boton contorno"
+>
+  <svg
+  width="22"
+  height="22"
+  viewBox="0 0 24 24"
+  fill="none"
+  aria-hidden="true"
+  style={{ verticalAlign: 'middle', marginRight: 8 }}
+>
+  <rect x="2" y="2" width="20" height="20" rx="6"
+    stroke="#F3B83B" strokeWidth="2" />
+  <circle cx="12" cy="12" r="4"
+    stroke="white" strokeWidth="2" />
+  <circle cx="18" cy="6" r="1.2" fill="#F3B83B" />
+</svg>
+SÍGUENOS EN INSTAGRAM
+</a>
 </div>
           </div>
           <div className="inicio-hero-imagen">
