@@ -247,12 +247,24 @@ async function eliminarPremio(item) {
 
   await loadPremios(selected.id);
 }
-  useEffect(() => {
-    loadPlayers()
-    supabase.auth.getSession().then(({ data }) => setSession(data.session))
-    const { data: auth } = supabase.auth.onAuthStateChange((_event, s) => setSession(s))
-    return () => auth.subscription.unsubscribe()
-  }, [])
+useEffect(() => {
+  supabase.auth.getSession().then(({ data }) => {
+    setSession(data.session)
+
+    if (data.session) {
+      loadPlayers()
+    } else {
+      setPlayers([])
+      setSelected(null)
+    }
+  })
+
+  const { data: auth } = supabase.auth.onAuthStateChange((_event, s) => {
+    setSession(s)
+  })
+
+  return () => auth.subscription.unsubscribe()
+}, [])
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase().trim()
