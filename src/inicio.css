@@ -643,3 +643,22 @@
   line-height: 40px;
   cursor: pointer;
 }
+#reto-digital h2,
+#reto-digital h3,
+#reto-digital p {
+  color: #ffffff;
+}
+
+#reto-digital button {
+  background: #ffffff;
+  color: #102236;
+  border: 2px solid #d6a52f;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#reto-digital button:focus-visible {
+  outline: 3px solid #102236;
+  outline-offset: 2px;
+}

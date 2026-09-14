@@ -6,11 +6,52 @@ import equipoGenerales from './public/equipo-generales.jpg';
 import fotoGaleria1 from './public/1000297390.png';
 import fotoGaleria2 from './public/1000250736.png';
 import fotoGaleria3 from './public/1000350600.png';
+const preguntasReto = [
+  {
+    pregunta: '¿Cuántas bases tiene un campo de béisbol?',
+    opciones: ['Dos', 'Tres', 'Cuatro'],
+    correcta: 2,
+  },
+  {
+    pregunta: '¿Con qué se golpea la pelota?',
+    opciones: ['Con un bate', 'Con un guante', 'Con un casco'],
+    correcta: 0,
+  },
+  {
+    pregunta: '¿Qué usamos para proteger la cabeza al batear?',
+    opciones: ['Una gorra', 'Un casco', 'Un guante'],
+    correcta: 1,
+  },
+  {
+    pregunta: 'Si un compañero se equivoca, ¿qué hacemos?',
+    opciones: ['Nos burlamos', 'Lo animamos', 'Lo ignoramos'],
+    correcta: 1,
+  },
+  {
+    pregunta: '¿Qué hacemos cuando el entrenador explica?',
+    opciones: ['Escuchamos con atención', 'Interrumpimos', 'Nos alejamos'],
+    correcta: 0,
+  },
+];
 export default function Inicio({ onAdmin }) {
   const [seccionActiva, setSeccionActiva] = useState('inicio');
   const whatsapp = 'https://wa.me/50763776387';
   const [categoriaActiva, setCategoriaActiva] = useState('4-5');
   const [imagenAmpliada, setImagenAmpliada] = useState(null);
+  const [preguntaActual, setPreguntaActual] = useState(0);
+const [respuestasCorrectas, setRespuestasCorrectas] = useState(0);
+const [retoTerminado, setRetoTerminado] = useState(false);
+const responderReto = (opcionElegida) => {
+  if (opcionElegida === preguntasReto[preguntaActual].correcta) {
+    setRespuestasCorrectas((total) => total + 1);
+  }
+
+  if (preguntaActual === preguntasReto.length - 1) {
+    setRetoTerminado(true);
+  } else {
+    setPreguntaActual((actual) => actual + 1);
+  }
+};
   return (
   <div id="inicio" className="inicio-app"> 
       <header className="inicio-header">
@@ -78,8 +119,38 @@ SÍGUENOS EN INSTAGRAM
   />
 </div>
         </section>
-
         <section id="programas" className="inicio-valores">
+          <section id="reto-digital" style={{ padding: '32px 20px', textAlign: 'center', background: '#102236' }}>
+  <span style={{ color: '#b98213', fontWeight: 'bold' }}>RETO DIGITAL</span>
+  <h2>Aprende jugando ⚾</h2>
+
+  {retoTerminado ? (
+    <>
+      <h3>{respuestasCorrectas >= 3 ? '🏅 ¡Ganaste tu primera insignia!' : '¡Buen intento!'}</h3>
+      <p>Respondiste bien {respuestasCorrectas} de {preguntasReto.length} preguntas.</p>
+      <button onClick={() => {
+        setPreguntaActual(0);
+        setRespuestasCorrectas(0);
+        setRetoTerminado(false);
+      }}>
+        JUGAR DE NUEVO
+      </button>
+    </>
+  ) : (
+    <>
+      <p>Pregunta {preguntaActual + 1} de {preguntasReto.length}</p>
+      <h3>{preguntasReto[preguntaActual].pregunta}</h3>
+      <div style={{ display: 'grid', gap: 10, maxWidth: 360, margin: '20px auto' }}>
+        {preguntasReto[preguntaActual].opciones.map((opcion, indice) => (
+          <button key={opcion} onClick={() => responderReto(indice)} style={{ padding: 12 }}>
+            {opcion}
+          </button>
+        ))}
+      </div>
+    </>
+  )}
+</section>
+<section id="programas" className="inicio-valores"></section>
         <h2>PROGRAMAS DE FORMACIÓN</h2> 
           <div><span>🏅</span><strong>DISCIPLINA</strong><small>En el terreno y en la vida</small></div>
           <div><span>⚾</span><strong>FORMACIÓN</strong><small>Desarrollo integral</small></div>
