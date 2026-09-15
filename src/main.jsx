@@ -34,6 +34,8 @@ const isAdmin = adminIds.includes(session?.user?.id)
   const [registroOpen, setRegistroOpen] = useState(false)
   const [acudientesOpen, setAcudientesOpen] = useState(false)
   const [cuentaOpen, setCuentaOpen] = useState(false)
+  const [recuperarOpen, setRecuperarOpen] = useState(false)
+const [nuevaClaveOpen, setNuevaClaveOpen] = useState(false)
 const [acudientes, setAcudientes] = useState([])
 const [vinculaciones, setVinculaciones] = useState([])
   const [editorOpen, setEditorOpen] = useState(false)
@@ -365,9 +367,13 @@ useEffect(() => {
     }
   })
 
-  const { data: auth } = supabase.auth.onAuthStateChange((_event, s) => {
-    setSession(s)
-  })
+ const { data: auth } = supabase.auth.onAuthStateChange((event, s) => {
+  setSession(s)
+
+  if (event === 'PASSWORD_RECOVERY') {
+    setNuevaClaveOpen(true)
+  }
+})
 
   return () => auth.subscription.unsubscribe()
 }, [])
@@ -527,6 +533,76 @@ if (error) {
   } else {
     setMessage('Revisa tu correo para confirmar la cuenta. Después podrás iniciar sesión.')
   }
+}
+async function enviarRecuperacion(e) {
+  e.preventDefault()
+  setMessage('')
+
+  const formData = new FormData(e.currentTarget)
+  const email = String(formData.get('email') || '')
+    .trim()
+    .toLowerCase()
+
+  if (!email) {
+    setMessage('Escribe tu correo electrónico.')
+    return
+  }
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo:
+      'https://alwinkcap-bit.github.io/generales-baseball-app/'
+  })
+
+  if (error) {
+    setMessage(`No se pudo enviar el enlace: ${error.message}`)
+    return
+  }
+
+  setRecuperarOpen(false)
+  setMessage(
+    'Revisa tu correo. Recibirás un enlace para cambiar tu contraseña.'
+  )
+}
+
+async function actualizarClave(e) {
+  e.preventDefault()
+  setMessage('')
+
+  const formData = new FormData(e.currentTarget)
+  const password = String(formData.get('password') || '')
+const confirmacion = String(
+  formData.get('confirmacion') || ''
+)
+  if (password.length < 8) {
+    setMessage('La nueva contraseña debe tener al menos 8 caracteres.')
+    return
+  }
+if (password !== confirmacion) {
+  setMessage('Las contraseñas no coinciden.')
+  return
+}
+  const { error } = await supabase.auth.updateUser({
+    password
+  })
+
+  if (error) {
+    setMessage(`No se pudo actualizar la contraseña: ${error.message}`)
+    return
+  }
+
+  setNuevaClaveOpen(false)
+
+  await supabase.auth.signOut()
+
+  setSession(null)
+  setPlayers([])
+  setSelected(null)
+  setHistorial([])
+  setPremios([])
+
+  setMessage(
+    'Contraseña actualizada. Ya puedes iniciar sesión con la nueva contraseña.'
+  )
 }
   async function logout() {
   const { error } = await supabase.auth.signOut()
@@ -1020,6 +1096,103 @@ if (vista === 'inicio') {
         }}
       >
         Crear cuenta de acudiente
+      </button>
+      <button
+  type="button"
+  className="ghost"
+  onClick={() => {
+    setLoginOpen(false)
+    setRecuperarOpen(true)
+  }}
+>
+  Olvidé mi contraseña
+</button>
+    </form>
+  </div>
+)}
+{recuperarOpen && (
+  <div className="modal-backdrop">
+    <form className="modal" onSubmit={enviarRecuperacion}>
+      <button
+        type="button"
+        className="close"
+        onClick={() => setRecuperarOpen(false)}
+      >
+        ×
+      </button>
+
+      <h3>Recuperar contraseña</h3>
+
+      <p>
+        Escribe el correo de tu cuenta y te enviaremos un enlace
+        para crear una contraseña nueva.
+      </p>
+
+      <label>
+        Correo
+        <input name="email" type="email" required />
+      </label>
+
+      <button className="primary full">
+        Enviar enlace
+      </button>
+
+      <button
+        type="button"
+        className="ghost"
+        onClick={() => {
+          setRecuperarOpen(false)
+          setLoginOpen(true)
+        }}
+      >
+        Volver a iniciar sesión
+      </button>
+    </form>
+  </div>
+)}
+{nuevaClaveOpen && (
+  <div className="modal-backdrop">
+    <form className="modal" onSubmit={actualizarClave}>
+      <button
+        type="button"
+        className="close"
+        onClick={async () => {
+          setNuevaClaveOpen(false)
+          await supabase.auth.signOut()
+          setSession(null)
+        }}
+      >
+        ×
+      </button>
+
+      <h3>Nueva contraseña</h3>
+
+      <p>
+        Escribe y confirma la contraseña nueva.
+      </p>
+
+      <label>
+        Nueva contraseña
+        <input
+          name="password"
+          type="password"
+          minLength={8}
+          required
+        />
+      </label>
+
+      <label>
+        Confirmar contraseña
+        <input
+          name="confirmacion"
+          type="password"
+          minLength={8}
+          required
+        />
+      </label>
+
+      <button className="primary full">
+        Guardar contraseña
       </button>
     </form>
   </div>
