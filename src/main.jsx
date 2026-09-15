@@ -38,6 +38,7 @@ const isAdmin = adminIds.includes(session?.user?.id)
 const [nuevaClaveOpen, setNuevaClaveOpen] = useState(false)
 const [acudientes, setAcudientes] = useState([])
 const [vinculaciones, setVinculaciones] = useState([])
+const [fotoAmpliada, setFotoAmpliada] = useState(null)
   const [editorOpen, setEditorOpen] = useState(false)
   const [form, setForm] = useState(blankPlayer)
   const [message, setMessage] = useState('')
@@ -675,7 +676,17 @@ if (vista === 'inicio') {
         <section className="profile">
           {!selected ? <div className="empty hero-empty">Selecciona un jugador para ver su ficha.</div> : <>
             <div className="hero">
-              <div className="hero-photo">{selected.foto_url ? <img src={selected.foto_url} alt=""/> : <div className="photo-placeholder">FOTO</div>}</div>
+              <div className="hero-photo">{selected.foto_url ? <button
+  type="button"
+  className="foto-perfil-button"
+  onClick={() => setFotoAmpliada(selected.foto_url)}
+  aria-label="Ampliar foto del jugador"
+>
+  <img
+    src={selected.foto_url}
+    alt={`${selected.nombre} ${selected.apellido || ''}`}
+  />
+</button> : <div className="photo-placeholder">FOTO</div>}</div>
               <div className="hero-info">
                 <div className="number-chip">#{selected.numero ?? '—'}</div>
                 <h2>{selected.nombre} {selected.apellido}</h2>
@@ -1061,7 +1072,41 @@ if (vista === 'inicio') {
 )}
 
 </nav>
+{fotoAmpliada && (
+  <div
+    className="foto-modal-backdrop"
+    onClick={() => setFotoAmpliada(null)}
+  >
+    <div
+      className="foto-modal"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        className="foto-modal-cerrar"
+        onClick={() => setFotoAmpliada(null)}
+        aria-label="Cerrar foto"
+      >
+        ×
+      </button>
 
+      <img
+        src={fotoAmpliada}
+        alt="Foto ampliada del jugador"
+      />
+
+      <a
+        className="foto-descargar"
+        href={fotoAmpliada}
+        download
+        target="_blank"
+        rel="noreferrer"
+      >
+        Descargar foto
+      </a>
+    </div>
+  </div>
+)}
     {loginOpen && (
   <div className="modal-backdrop">
     <form className="modal login-modal" onSubmit={login}>
