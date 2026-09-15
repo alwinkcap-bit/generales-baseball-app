@@ -1064,7 +1064,7 @@ if (vista === 'inicio') {
 
     {loginOpen && (
   <div className="modal-backdrop">
-    <form className="modal" onSubmit={login}>
+    <form className="modal login-modal" onSubmit={login}>
       <button
         type="button"
         className="close"
@@ -1199,7 +1199,7 @@ if (vista === 'inicio') {
 )}
 {registroOpen && (
   <div className="modal-backdrop">
-    <form className="modal" onSubmit={registrarAcudiente}>
+    <form className="modal registro-modal" onSubmit={registrarAcudiente}>
       <button
         type="button"
         className="close"
@@ -1243,7 +1243,7 @@ if (vista === 'inicio') {
 )}
 {cuentaOpen && session && !isAdmin && (
   <div className="modal-backdrop">
-    <div className="modal">
+    <div className="modal cuenta-modal">
       <button
         type="button"
         className="close"
@@ -1252,19 +1252,34 @@ if (vista === 'inicio') {
         ×
       </button>
 
-      <h3>Mi cuenta</h3>
+  <div className="cuenta-encabezado">
+  <div className="cuenta-avatar">👤</div>
 
-      <p>
-        <strong>
-          {session.user.user_metadata?.nombre || 'Acudiente'}
-        </strong>
-      </p>
+  <div>
+    <span>Cuenta de acudiente</span>
+    <h3>
+      {session.user.user_metadata?.nombre || 'Acudiente'}
+    </h3>
+  </div>
+</div>
 
-      <div className="empty">
-        {players.length > 0
-          ? `${players.length} jugador(es) vinculado(s)`
-          : 'Tu cuenta está pendiente de vinculación.'}
-      </div>
+<div
+  className={`cuenta-estado ${
+    players.length > 0 ? 'activo' : 'pendiente'
+  }`}
+>
+  <strong>
+    {players.length > 0
+      ? 'Cuenta vinculada'
+      : 'Pendiente de vinculación'}
+  </strong>
+
+  <p>
+    {players.length > 0
+      ? `Tienes ${players.length} jugador(es) vinculado(s).`
+      : 'La academia debe vincular tu cuenta con tu jugador.'}
+  </p>
+</div>
 
       <button
         type="button"
@@ -1281,7 +1296,7 @@ if (vista === 'inicio') {
 )}
 {acudientesOpen && (
   <div className="modal-backdrop">
-    <div className="modal">
+    <div className="modal acudientes-modal">
       <button
         type="button"
         className="close"
