@@ -31,6 +31,10 @@ function App() {
 ]
 const isAdmin = adminIds.includes(session?.user?.id)
   const [loginOpen, setLoginOpen] = useState(false)
+  const [registroOpen, setRegistroOpen] = useState(false)
+  const [acudientesOpen, setAcudientesOpen] = useState(false)
+const [acudientes, setAcudientes] = useState([])
+const [vinculaciones, setVinculaciones] = useState([])
   const [editorOpen, setEditorOpen] = useState(false)
   const [form, setForm] = useState(blankPlayer)
   const [message, setMessage] = useState('')
@@ -55,14 +59,115 @@ const [premioForm, setPremioForm] = useState({
   descripcion: ''
 });
 const [savingPremio, setSavingPremio] = useState(false);
-  async function loadPlayers() {
-    setLoading(true)
-    const { data, error } = await supabase.from('jugadores').select('*').order('nombre')
-    if (error) setMessage(error.message)
-    setPlayers(data || [])
-    if (!selected && data?.length) setSelected(data[0])
-    setLoading(false)
+async function loadPlayers() {
+  setLoading(true)
+
+  const { data, error } = await supabase
+    .from('jugadores')
+    .select('*')
+    .order('nombre')
+
+  if (error) setMessage(error.message)
+
+  setPlayers(data || [])
+
+  if (!selected && data?.length) {
+    setSelected(data[0])
   }
+
+  setLoading(false)
+}
+
+async function loadAcudientes() {
+  const [perfilesResult, vinculacionesResult] = await Promise.all([
+    supabase
+      .from('perfiles_acudientes')
+      .select('id, nombre, email, created_at')
+      .order('created_at', { ascending: false }),
+
+    supabase
+      .from('acudiente_jugadores')
+      .select('id, acudiente_id, jugador_id, created_at')
+  ])
+
+  const error = perfilesResult.error || vinculacionesResult.error
+
+  if (error) {
+    setMessage(`No se pudieron cargar los acudientes: ${error.message}`)
+    return
+  }
+
+  setAcudientes(perfilesResult.data || [])
+  setVinculaciones(vinculacionesResult.data || [])
+}
+
+async function abrirAcudientes() {
+  if (!isAdmin) {
+    setMessage('Solo los administradores pueden gestionar acudientes.')
+    return
+  }
+
+  await loadAcudientes()
+  setAcudientesOpen(true)
+} 
+
+async function vincularAcudiente(e, acudienteId) {
+  e.preventDefault()
+
+  if (!isAdmin) {
+    setMessage('Solo los administradores pueden vincular jugadores.')
+    return
+  }
+
+  const formData = new FormData(e.currentTarget)
+  const jugadorId = Number(formData.get('jugador_id'))
+
+  if (!jugadorId) {
+    setMessage('Selecciona un jugador.')
+    return
+  }
+
+  const { error } = await supabase
+    .from('acudiente_jugadores')
+    .insert({
+      acudiente_id: acudienteId,
+      jugador_id: jugadorId
+    })
+
+  if (error) {
+    setMessage(`No se pudo vincular: ${error.message}`)
+    return
+  }
+
+  setMessage('Jugador vinculado correctamente.')
+  await loadAcudientes()
+}
+
+async function desvincularJugador(vinculacionId) {
+  if (!isAdmin) {
+    setMessage('Solo los administradores pueden desvincular jugadores.')
+    return
+  }
+
+  const confirmar = window.confirm(
+    '¿Seguro que deseas desvincular este jugador del acudiente?'
+  )
+
+  if (!confirmar) return
+
+  const { error } = await supabase
+    .from('acudiente_jugadores')
+    .delete()
+    .eq('id', vinculacionId)
+
+  if (error) {
+    setMessage(`No se pudo desvincular: ${error.message}`)
+    return
+  }
+
+  setMessage('Jugador desvinculado correctamente.')
+  await loadAcudientes()
+}
 async function loadHistorial(jugadorId) {
   if (!jugadorId) {
     setHistorial([]);
@@ -376,9 +481,52 @@ async function login(e) {
   setSession(data.session)
   await loadPlayers()
   setLoginOpen(false)
-  alert('Administrador conectado correctamente')
+  alert('Sesión iniciada correctamente')
+}
+async function registrarAcudiente(e) {
+  e.preventDefault()
+  setMessage('')
+
+  const fd = new FormData(e.currentTarget)
+  const nombre = String(fd.get('nombre') || '').trim()
+  const email = String(fd.get('email') || '').trim().toLowerCase()
+  const password = String(fd.get('password') || '')
+
+  if (!nombre || !email || password.length < 8) {
+    setMessage('Completa tus datos y usa una contraseña de al menos 8 caracteres.')
+    return
+  }
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: { nombre },
+      emailRedirectTo: 'https://alwinkcap-bit.github.io/generales-baseball-app/'
+    }
+  })
+
+if (error) {
+  const detalle =
+    typeof error?.message === 'string'
+      ? error.message
+      : error?.message?.message || error?.code || JSON.stringify(error)
+
+  console.error('Error al crear acudiente:', error)
+  setMessage(`No se pudo crear la cuenta: ${detalle}`)
+  return
 }
 
+  setRegistroOpen(false)
+
+  if (data.session) {
+    setSession(data.session)
+    await loadPlayers()
+    setMessage('Cuenta creada. Un administrador debe vincularte con tu jugador.')
+  } else {
+    setMessage('Revisa tu correo para confirmar la cuenta. Después podrás iniciar sesión.')
+  }
+}
   async function logout() {
   const { error } = await supabase.auth.signOut()
   if (error) {
@@ -793,13 +941,190 @@ if (vista === 'inicio') {
   }
 >
   ⚾<span>Jugadores</span>
-</button><button onClick={()=>isAdmin?openNew():setLoginOpen(true)}>＋<span>{isAdmin?'Agregar':'Admin'}</span></button></nav>
+</button>
 
-    {loginOpen && <div className="modal-backdrop"><form className="modal" onSubmit={login}>
-      <button type="button" className="close" onClick={()=>setLoginOpen(false)}>×</button><h3>Administrador</h3>
-      <label>Correo<input name="email" type="email" required /></label><label>Contraseña<input name="password" type="password" required /></label>
-      <button className="primary full">Entrar</button></form></div>}
+<button onClick={() => isAdmin ? openNew() : setLoginOpen(true)}>
+  ➕
+  <span>{isAdmin ? 'Agregar' : 'Admin'}</span>
+</button>
 
+{isAdmin && (
+  <button onClick={abrirAcudientes}>
+    👥
+    <span>Acudientes</span>
+  </button>
+)}
+
+</nav>
+
+    {loginOpen && (
+  <div className="modal-backdrop">
+    <form className="modal" onSubmit={login}>
+      <button
+        type="button"
+        className="close"
+        onClick={() => setLoginOpen(false)}
+      >
+        ×
+      </button>
+
+      <h3>Iniciar sesión</h3>
+
+      <label>
+        Correo
+        <input name="email" type="email" required />
+      </label>
+
+      <label>
+        Contraseña
+        <input name="password" type="password" required />
+      </label>
+
+      <button className="primary full">Entrar</button>
+
+      <button
+        type="button"
+        className="ghost"
+        onClick={() => {
+          setLoginOpen(false)
+          setRegistroOpen(true)
+        }}
+      >
+        Crear cuenta de acudiente
+      </button>
+    </form>
+  </div>
+)}
+{registroOpen && (
+  <div className="modal-backdrop">
+    <form className="modal" onSubmit={registrarAcudiente}>
+      <button
+        type="button"
+        className="close"
+        onClick={() => setRegistroOpen(false)}
+      >
+        ×
+      </button>
+
+      <h3>Cuenta de acudiente</h3>
+      <p>Podrás ver a tus jugadores cuando la academia los vincule con tu cuenta.</p>
+
+      <label>
+        Nombre completo
+        <input name="nombre" type="text" required />
+      </label>
+
+      <label>
+        Correo
+        <input name="email" type="email" required />
+      </label>
+
+      <label>
+        Contraseña
+        <input name="password" type="password" minLength={8} required />
+      </label>
+
+      <button className="primary full">Crear cuenta</button>
+
+      <button
+        type="button"
+        className="ghost"
+        onClick={() => {
+          setRegistroOpen(false)
+          setLoginOpen(true)
+        }}
+      >
+        Ya tengo una cuenta
+      </button>
+    </form>
+  </div>
+)}
+{acudientesOpen && (
+  <div className="modal-backdrop">
+    <div className="modal">
+      <button
+        type="button"
+        className="close"
+        onClick={() => setAcudientesOpen(false)}
+      >
+        ×
+      </button>
+
+      <h3>Solicitudes de acudientes</h3>
+
+      {acudientes.length === 0 ? (
+        <p>No hay cuentas de acudientes registradas.</p>
+      ) : (
+        acudientes.map((acudiente) => {
+          const asignados = vinculaciones.filter(
+            (vinculacion) => vinculacion.acudiente_id === acudiente.id
+          )
+
+          return (
+            <div className="acudiente-item" key={acudiente.id}>
+              <strong>{acudiente.nombre}</strong>
+              <span>{acudiente.email}</span>
+              <small>
+                {asignados.length > 0
+                  ? `${asignados.length} jugador(es) vinculado(s)`
+                  : 'Pendiente de vinculación'}
+              </small>
+              {asignados.map((vinculacion) => {
+  const jugadorVinculado = players.find(
+    (jugador) =>
+      Number(jugador.id) === Number(vinculacion.jugador_id)
+  )
+
+  return (
+    <div className="vinculacion-item" key={vinculacion.id}>
+      <span>
+        {jugadorVinculado
+          ? `${jugadorVinculado.nombre} ${jugadorVinculado.apellido}`
+          : `Jugador #${vinculacion.jugador_id}`}
+      </span>
+
+      <button
+        type="button"
+        className="ghost"
+        onClick={() => desvincularJugador(vinculacion.id)}
+      >
+        Desvincular
+      </button>
+    </div>
+  )
+})}
+              <form onSubmit={(e) => vincularAcudiente(e, acudiente.id)}>
+  <select name="jugador_id" defaultValue="" required>
+    <option value="" disabled>
+      Seleccionar jugador
+    </option>
+
+    {players
+  .filter(
+    (jugador) =>
+      !asignados.some(
+        (vinculacion) =>
+          Number(vinculacion.jugador_id) === Number(jugador.id)
+      )
+  )
+  .map((jugador) => (
+      <option key={jugador.id} value={jugador.id}>
+        {jugador.nombre} {jugador.apellido}
+      </option>
+    ))}
+  </select>
+
+  <button type="submit" className="primary">
+    Vincular
+  </button>
+</form>
+            </div>
+          )
+        })
+      )}
+    </div>
+  </div>
+)}
     {editorOpen && <div className="modal-backdrop"><form className="modal editor" onSubmit={savePlayer}>
       <button type="button" className="close" onClick={()=>setEditorOpen(false)}>×</button><h3>{form.id?'Editar jugador':'Nuevo jugador'}</h3>
       <div className="form-grid">
