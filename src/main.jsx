@@ -565,7 +565,19 @@ if (vista === 'inicio') {
       </section>
 
       {message && <div className="message">{message}</div>}
+{session && !isAdmin && players.length === 0 && (
+  <section className="acudiente-pendiente">
+    <div className="acudiente-pendiente-icono">⏳</div>
 
+    <div>
+      <h3>Cuenta pendiente de vinculación</h3>
+      <p>
+        Tu registro fue recibido correctamente. La academia debe
+        vincular tu cuenta con tu jugador para que puedas ver su ficha.
+      </p>
+    </div>
+  </section>
+)}
       <section className="content-grid">
         <aside className="roster">
           <div className="section-title">Jugadores <span>{filtered.length}</span></div>
