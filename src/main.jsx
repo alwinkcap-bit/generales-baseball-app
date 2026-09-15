@@ -33,6 +33,7 @@ const isAdmin = adminIds.includes(session?.user?.id)
   const [loginOpen, setLoginOpen] = useState(false)
   const [registroOpen, setRegistroOpen] = useState(false)
   const [acudientesOpen, setAcudientesOpen] = useState(false)
+  const [cuentaOpen, setCuentaOpen] = useState(false)
 const [acudientes, setAcudientes] = useState([])
 const [vinculaciones, setVinculaciones] = useState([])
   const [editorOpen, setEditorOpen] = useState(false)
@@ -943,9 +944,25 @@ if (vista === 'inicio') {
   ⚾<span>Jugadores</span>
 </button>
 
-<button onClick={() => isAdmin ? openNew() : setLoginOpen(true)}>
-  ➕
-  <span>{isAdmin ? 'Agregar' : 'Admin'}</span>
+<button
+  onClick={() => {
+    if (isAdmin) {
+      openNew()
+      return
+    }
+
+    if (session) {
+      setCuentaOpen(true)
+      return
+    }
+
+    setLoginOpen(true)
+  }}
+>
+  {isAdmin ? '➕' : session ? '👤' : '🔒'}
+  <span>
+    {isAdmin ? 'Agregar' : session ? 'Mi cuenta' : 'Admin'}
+  </span>
 </button>
 
 {isAdmin && (
@@ -1037,6 +1054,44 @@ if (vista === 'inicio') {
         Ya tengo una cuenta
       </button>
     </form>
+  </div>
+)}
+{cuentaOpen && session && !isAdmin && (
+  <div className="modal-backdrop">
+    <div className="modal">
+      <button
+        type="button"
+        className="close"
+        onClick={() => setCuentaOpen(false)}
+      >
+        ×
+      </button>
+
+      <h3>Mi cuenta</h3>
+
+      <p>
+        <strong>
+          {session.user.user_metadata?.nombre || 'Acudiente'}
+        </strong>
+      </p>
+
+      <div className="empty">
+        {players.length > 0
+          ? `${players.length} jugador(es) vinculado(s)`
+          : 'Tu cuenta está pendiente de vinculación.'}
+      </div>
+
+      <button
+        type="button"
+        className="primary full"
+        onClick={() => {
+          setCuentaOpen(false)
+          logout()
+        }}
+      >
+        Cerrar sesión
+      </button>
+    </div>
   </div>
 )}
 {acudientesOpen && (
