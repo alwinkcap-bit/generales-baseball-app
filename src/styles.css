@@ -215,3 +215,126 @@
     font-size: 21px;
   }
 }
+.acudientes-modal {
+  width: min(92vw, 620px);
+  max-height: 82vh;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.acudientes-modal > h3 {
+  margin: 0 38px 18px 0;
+  color: #102a46;
+  font-size: 22px;
+}
+
+.acudiente-item {
+  display: grid;
+  gap: 9px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #f5f8fc;
+  border: 1px solid #d7e0ea;
+  border-left: 4px solid #e0b23f;
+  border-radius: 14px;
+}
+
+.acudiente-item > strong {
+  color: #102a46;
+  font-size: 17px;
+  text-transform: capitalize;
+}
+
+.acudiente-item > span {
+  color: #536579;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.acudiente-item > small {
+  width: fit-content;
+  padding: 5px 9px;
+  color: #70530b;
+  background: #fff4cf;
+  border: 1px solid #efd77f;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.acudiente-item form {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.acudiente-item select {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  padding: 0 10px;
+  color: #102a46;
+  background: #ffffff;
+  border: 1px solid #bcc9d6;
+  border-radius: 10px;
+}
+
+.acudiente-item form .primary {
+  width: auto;
+  min-height: 42px;
+  padding: 0 16px;
+  margin: 0;
+}
+
+.vinculacion-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  color: #17324f;
+  background: #ffffff;
+  border: 1px solid #d8e1eb;
+  border-radius: 10px;
+}
+
+.vinculacion-item span {
+  font-weight: 700;
+}
+
+.vinculacion-item .ghost {
+  width: auto;
+  padding: 7px 10px;
+  margin: 0;
+  color: #a22b2b;
+  border-color: #e7b2b2;
+}
+
+@media (max-width: 600px) {
+  .acudientes-modal {
+    width: calc(100vw - 28px);
+    padding: 18px;
+  }
+
+  .acudiente-item {
+    padding: 13px;
+  }
+
+  .acudiente-item form {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .acudiente-item form .primary {
+    width: 100%;
+  }
+
+  .vinculacion-item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .vinculacion-item .ghost {
+    width: 100%;
+  }
+}

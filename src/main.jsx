@@ -1281,7 +1281,7 @@ if (vista === 'inicio') {
 )}
 {acudientesOpen && (
   <div className="modal-backdrop">
-    <div className="modal">
+    <div className="modal acudientes-modal">
       <button
         type="button"
         className="close"
