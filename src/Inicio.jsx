@@ -256,14 +256,12 @@ const responderReto = (opcionElegida) => {
             </h1>
             <p>UN EQUIPO,<br />UNA FAMILIA,<br />UN LEGADO</p>
             <div className="inicio-acciones">
-  <a
-    href="https://docs.google.com/forms/d/e/1FAIpQLScwSVSY9Ra3mrQV4qX8gda0U8lgSitkXQAcd0Kt1Ibq9O9ZHA/viewform?usp=preview"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inicio-boton dorado"
-  >
-    ⚾ INSCRÍBETE AHORA
-  </a>
+ <a
+  href="https://docs.google.com/forms/d/e/1FAIpQLScwSVSY9Ra3mrQV4qX8gda0U8lgSitkXQACd0Kt1Ibq9O9ZHA/viewform?usp=preview"
+  className="inicio-boton dorado"
+>
+  ⚾ INSCRÍBETE AHORA
+</a>
   <a
   href="https://www.instagram.com/generales_baseball_chitre/"
   target="_blank"
@@ -527,11 +525,11 @@ SÍGUENOS EN INSTAGRAM
 <div className="noticia-card">
   <span>INSCRIPCIONES ABIERTAS</span>
   <h3>Forma parte de Generales de Chitré Baseball Academy</h3>
-  <p>
-
-    Recibimos niños de 4 a 8 años para aprender béisbol, disciplina,
-    compañerismo y fundamentos deportivos en un ambiente formativo.
-  </p>
+<p>
+  Recibimos niños de 4 a 8 años que deseen aprender a jugar béisbol o
+  desarrollar, de manera sencilla y divertida, los fundamentos básicos
+  del juego. ¡No dudes en contactarnos!
+</p>
  <a
   className="noticia-boton"
   href="https://wa.me/50763776387"
@@ -695,6 +693,7 @@ SÍGUENOS EN INSTAGRAM
     </form>
   </div>
 )}
+
 {imagenAmpliada && (
   <div
     className="imagen-modal"
