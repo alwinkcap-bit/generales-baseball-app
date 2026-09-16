@@ -717,17 +717,17 @@
 .producto-imagen {
   display: grid;
   place-items: center;
-  aspect-ratio: 4 / 3;
+  
   color: #e0b23f;
   font-size: 58px;
-  background: #0d2944;
+  background: #eef3f8;
   overflow: hidden;
 }
 
 .producto-imagen img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
 }
 
 .producto-info {

@@ -925,6 +925,13 @@ SÍGUENOS EN INSTAGRAM
 >
   <span>▤</span>Noticias
 </a>
+<a
+  className={seccionActiva === 'tienda' ? 'activo' : ''}
+  href="#tienda"
+  onClick={() => setSeccionActiva('tienda')}
+>
+  <span>🛍️</span>Tienda
+</a>
        <a
   className={seccionActiva === 'mas' ? 'activo' : ''}
   href="#mas"
