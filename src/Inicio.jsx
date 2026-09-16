@@ -1,6 +1,8 @@
 
-import React, { useState } from 'react';
+
 import './inicio.css';
+import React, { useEffect, useState } from 'react';
+import { supabase } from './supabase';
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
 import fotoGaleria1 from './public/1000297390.png';
@@ -33,7 +35,7 @@ const preguntasReto = [
     correcta: 0,
   },
 ];
-export default function Inicio({ onAdmin }) {
+export default function Inicio({ onAdmin, isAdmin }) {
   const [seccionActiva, setSeccionActiva] = useState('inicio');
   const whatsapp = 'https://wa.me/50763776387';
   const [categoriaActiva, setCategoriaActiva] = useState('4-5');
@@ -41,6 +43,186 @@ export default function Inicio({ onAdmin }) {
   const [preguntaActual, setPreguntaActual] = useState(0);
 const [respuestasCorrectas, setRespuestasCorrectas] = useState(0);
 const [retoTerminado, setRetoTerminado] = useState(false);
+const [productos, setProductos] = useState([])
+const [loadingTienda, setLoadingTienda] = useState(true)
+const [productoFormOpen, setProductoFormOpen] = useState(false)
+const [productoEditando, setProductoEditando] = useState(null)
+const [guardandoProducto, setGuardandoProducto] = useState(false)
+const [productoForm, setProductoForm] = useState({
+  nombre: '',
+  descripcion: '',
+  precio: '',
+  disponible: true,
+  imagen: null
+})
+async function loadProductos() {
+  setLoadingTienda(true)
+
+  const { data, error } = await supabase
+    .from('productos_tienda')
+    .select('id, nombre, descripcion, precio, imagen_path, disponible, created_at')
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('No se pudo cargar la tienda:', error)
+    setProductos([])
+    setLoadingTienda(false)
+    return
+  }
+
+  const productosConImagen = (data || []).map((producto) => {
+    if (!producto.imagen_path) return producto
+
+    const { data: imagenData } = supabase.storage
+      .from('productos-tienda')
+      .getPublicUrl(producto.imagen_path)
+
+    return {
+      ...producto,
+      imagen_url: imagenData.publicUrl
+    }
+  })
+
+  setProductos(productosConImagen)
+  setLoadingTienda(false)
+}
+async function guardarProducto(e) {
+  e.preventDefault()
+
+  const nombre = productoForm.nombre.trim()
+  const precio = Number(productoForm.precio)
+
+  if (!nombre) {
+    window.alert('Escribe el nombre del producto.')
+    return
+  }
+
+  if (!Number.isFinite(precio) || precio < 0) {
+    window.alert('Escribe un precio válido.')
+    return
+  }
+
+  setGuardandoProducto(true)
+
+  let imagenPath = productoEditando?.imagen_path || null
+  let nuevaImagenPath = null
+
+  if (productoForm.imagen) {
+    const archivo = productoForm.imagen
+
+    if (!archivo.type.startsWith('image/')) {
+      window.alert('Selecciona un archivo de imagen.')
+      setGuardandoProducto(false)
+      return
+    }
+
+    if (archivo.size > 10 * 1024 * 1024) {
+      window.alert('La imagen no puede superar los 10 MB.')
+      setGuardandoProducto(false)
+      return
+    }
+
+    const extension =
+      archivo.name.split('.').pop()?.toLowerCase() || 'jpg'
+
+    nuevaImagenPath =
+      `${crypto.randomUUID()}.${extension}`
+
+    const { error: uploadError } = await supabase.storage
+      .from('productos-tienda')
+      .upload(nuevaImagenPath, archivo, {
+        cacheControl: '3600',
+        upsert: false,
+        contentType: archivo.type
+      })
+
+    if (uploadError) {
+      window.alert(
+        `No se pudo subir la imagen: ${uploadError.message}`
+      )
+      setGuardandoProducto(false)
+      return
+    }
+
+    imagenPath = nuevaImagenPath
+  }
+
+  const datosProducto = {
+    nombre,
+    descripcion: productoForm.descripcion.trim() || null,
+    precio,
+    disponible: productoForm.disponible,
+    imagen_path: imagenPath
+  }
+
+  const resultado = productoEditando
+    ? await supabase
+        .from('productos_tienda')
+        .update(datosProducto)
+        .eq('id', productoEditando.id)
+    : await supabase
+        .from('productos_tienda')
+        .insert(datosProducto)
+
+  if (resultado.error) {
+    if (nuevaImagenPath) {
+      await supabase.storage
+        .from('productos-tienda')
+        .remove([nuevaImagenPath])
+    }
+
+    window.alert(
+      `No se pudo guardar el producto: ${resultado.error.message}`
+    )
+    setGuardandoProducto(false)
+    return
+  }
+
+  if (
+    productoEditando?.imagen_path &&
+    nuevaImagenPath &&
+    productoEditando.imagen_path !== nuevaImagenPath
+  ) {
+    await supabase.storage
+      .from('productos-tienda')
+      .remove([productoEditando.imagen_path])
+  }
+
+  await loadProductos()
+  setProductoFormOpen(false)
+  setProductoEditando(null)
+  setGuardandoProducto(false)
+}
+async function eliminarProducto(producto) {
+  const confirmar = window.confirm(
+    `¿Deseas eliminar el producto ${producto.nombre}?`
+  )
+
+  if (!confirmar) return
+
+  const { error } = await supabase
+    .from('productos_tienda')
+    .delete()
+    .eq('id', producto.id)
+
+  if (error) {
+    window.alert(
+      `No se pudo eliminar el producto: ${error.message}`
+    )
+    return
+  }
+
+  if (producto.imagen_path) {
+    await supabase.storage
+      .from('productos-tienda')
+      .remove([producto.imagen_path])
+  }
+
+  await loadProductos()
+}
+useEffect(() => {
+  loadProductos()
+}, [])
 const responderReto = (opcionElegida) => {
   if (opcionElegida === preguntasReto[preguntaActual].correcta) {
     setRespuestasCorrectas((total) => total + 1);
@@ -389,6 +571,130 @@ SÍGUENOS EN INSTAGRAM
 </div>
 </div>
 </section>
+{productoFormOpen && (
+  <div className="tienda-modal-backdrop">
+    <form
+      className="tienda-modal"
+      onSubmit={guardarProducto}
+    >
+      <button
+        type="button"
+        className="tienda-modal-cerrar"
+        onClick={() => {
+          setProductoFormOpen(false)
+          setProductoEditando(null)
+        }}
+        aria-label="Cerrar"
+      >
+        ×
+      </button>
+
+      <h3>
+        {productoEditando
+          ? 'Editar producto'
+          : 'Agregar producto'}
+      </h3>
+
+      <label>
+        Nombre
+        <input
+          type="text"
+          value={productoForm.nombre}
+          onChange={(e) =>
+            setProductoForm({
+              ...productoForm,
+              nombre: e.target.value
+            })
+          }
+          required
+        />
+      </label>
+
+      <label>
+        Descripción
+        <textarea
+          value={productoForm.descripcion}
+          onChange={(e) =>
+            setProductoForm({
+              ...productoForm,
+              descripcion: e.target.value
+            })
+          }
+          rows="3"
+        />
+      </label>
+
+      <label>
+        Precio
+        <input
+          type="number"
+          min="0"
+          step="0.01"
+          value={productoForm.precio}
+          onChange={(e) =>
+            setProductoForm({
+              ...productoForm,
+              precio: e.target.value
+            })
+          }
+          required
+        />
+      </label>
+
+      <label>
+        Imagen
+        <input
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          onChange={(e) =>
+            setProductoForm({
+              ...productoForm,
+              imagen: e.target.files?.[0] || null
+            })
+          }
+        />
+      </label>
+
+      <label className="tienda-disponible">
+        <input
+          type="checkbox"
+          checked={productoForm.disponible}
+          onChange={(e) =>
+            setProductoForm({
+              ...productoForm,
+              disponible: e.target.checked
+            })
+          }
+        />
+        Producto disponible
+      </label>
+
+      <button
+        type="submit"
+        className="tienda-guardar"
+        disabled={guardandoProducto}
+      >
+        {guardandoProducto
+          ? 'Guardando...'
+          : 'Guardar producto'}
+      </button>
+
+      {productoEditando && (
+        <button
+          type="button"
+          className="tienda-eliminar"
+          onClick={async () => {
+            await eliminarProducto(productoEditando)
+            setProductoFormOpen(false)
+            setProductoEditando(null)
+          }}
+        >
+          Eliminar producto
+        </button>
+      )}
+    </form>
+  </div>
+)}
 {imagenAmpliada && (
   <div
     className="imagen-modal"
@@ -409,6 +715,121 @@ SÍGUENOS EN INSTAGRAM
     />
   </div>
 )}
+<section id="tienda" className="inicio-tienda">
+  <div className="tienda-encabezado">
+    <div>
+      <span className="inicio-etiqueta">TIENDA</span>
+      <h2>Accesorios de la academia</h2>
+      <p>Productos disponibles de Generales de Chitré.</p>
+    </div>
+
+    {isAdmin && (
+      <button
+        type="button"
+        className="tienda-agregar"
+        onClick={() => {
+          setProductoEditando(null)
+          setProductoForm({
+            nombre: '',
+            descripcion: '',
+            precio: '',
+            disponible: true,
+            imagen: null
+          })
+          setProductoFormOpen(true)
+        }}
+      >
+        + Agregar producto
+      </button>
+    )}
+  </div>
+
+  {loadingTienda ? (
+    <p className="tienda-vacia">Cargando productos...</p>
+  ) : productos.filter(
+      (producto) => isAdmin || producto.disponible
+    ).length === 0 ? (
+    <p className="tienda-vacia">
+      No hay productos disponibles en este momento.
+    </p>
+  ) : (
+    <div className="tienda-grid">
+      {productos
+        .filter((producto) => isAdmin || producto.disponible)
+        .map((producto) => (
+          <article className="producto-card" key={producto.id}>
+            <div className="producto-imagen">
+              {producto.imagen_url ? (
+                <img
+                  src={producto.imagen_url}
+                  alt={producto.nombre}
+                />
+              ) : (
+                <span>⚾</span>
+              )}
+            </div>
+
+            <div className="producto-info">
+              <h3>{producto.nombre}</h3>
+
+              {producto.descripcion && (
+                <p>{producto.descripcion}</p>
+              )}
+
+              <strong>
+                ${Number(producto.precio).toFixed(2)}
+              </strong>
+
+              {isAdmin && (
+                <span
+                  className={`producto-estado ${
+                    producto.disponible
+                      ? 'disponible'
+                      : 'agotado'
+                  }`}
+                >
+                  {producto.disponible
+                    ? 'Disponible'
+                    : 'No disponible'}
+                </span>
+              )}
+
+              <a
+                className="producto-whatsapp"
+                href={`https://wa.me/50763776387?text=${encodeURIComponent(
+                  `Hola, me interesa el producto ${producto.nombre} de Generales de Chitré.`
+                )}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Pedir por WhatsApp
+              </a>
+
+              {isAdmin && (
+                <button
+                  type="button"
+                  className="producto-editar"
+                  onClick={() => {
+                    setProductoEditando(producto)
+                    setProductoForm({
+                      nombre: producto.nombre,
+                      descripcion: producto.descripcion || '',
+                      precio: producto.precio,
+                      disponible: producto.disponible,
+                      imagen: null
+                    })
+                    setProductoFormOpen(true)
+                  }}
+                >
+                  Editar producto
+                </button>
+              )}
+            </div>
+          </article>
+        ))}
+    </div>
+  )}
+</section>
         <section id="mas" className="inicio-mas">
   <span className="inicio-etiqueta">INFORMACIÓN</span>
   <h2>MÁS</h2>

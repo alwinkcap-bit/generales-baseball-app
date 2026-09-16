@@ -758,7 +758,10 @@ if (password !== confirmacion) {
 if (vista === 'inicio') {
   return (
     <div>
-      <Inicio onAdmin={() => setVista('admin')} />
+      <Inicio
+  onAdmin={() => setVista('admin')}
+  isAdmin={isAdmin}
+/>
       
     </div>
   )
