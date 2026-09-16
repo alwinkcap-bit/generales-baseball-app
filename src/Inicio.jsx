@@ -256,14 +256,12 @@ const responderReto = (opcionElegida) => {
             </h1>
             <p>UN EQUIPO,<br />UNA FAMILIA,<br />UN LEGADO</p>
             <div className="inicio-acciones">
-  <a
-    href="https://docs.google.com/forms/d/e/1FAIpQLScwSVSY9Ra3mrQV4qX8gda0U8lgSitkXQAcd0Kt1Ibq9O9ZHA/viewform?usp=preview"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inicio-boton dorado"
-  >
-    ⚾ INSCRÍBETE AHORA
-  </a>
+ <a
+  href="https://docs.google.com/forms/d/e/1FAIpQLScwSVSY9Ra3mrQV4qX8gda0U8lgSitkXQACd0Kt1Ibq9O9ZHA/viewform?usp=preview"
+  className="inicio-boton dorado"
+>
+  ⚾ INSCRÍBETE AHORA
+</a>
   <a
   href="https://www.instagram.com/generales_baseball_chitre/"
   target="_blank"
@@ -695,6 +693,7 @@ SÍGUENOS EN INSTAGRAM
     </form>
   </div>
 )}
+
 {imagenAmpliada && (
   <div
     className="imagen-modal"
