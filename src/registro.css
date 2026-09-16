@@ -1,0 +1,156 @@
+.registro-pagina {
+  min-height: 100vh;
+  padding: 20px 14px 50px;
+  background: #dceef2;
+  color: #081b30;
+}
+
+.registro-contenedor {
+  width: min(100%, 720px);
+  margin: 0 auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(8, 27, 48, 0.15);
+  display: block !important;
+position: relative;
+z-index: 10;
+visibility: visible !important;
+opacity: 1 !important;
+}
+
+.registro-volver {
+  width: 100%;
+  margin-bottom: 22px;
+  padding: 13px;
+  border: 0;
+  border-radius: 12px;
+  background: #081b30;
+  color: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.registro-encabezado span {
+  color: #c88b00;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.registro-encabezado h1 {
+  margin: 7px 0;
+  font-size: clamp(28px, 6vw, 42px);
+}
+
+.registro-encabezado p {
+  margin-bottom: 24px;
+  color: #52657a;
+  line-height: 1.5;
+}
+
+.registro-formulario {
+  display: grid;
+  gap: 18px;
+}
+
+.registro-formulario label {
+  display: grid;
+  gap: 7px;
+  font-weight: 800;
+}
+
+.registro-formulario input,
+.registro-formulario select,
+.registro-formulario textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #c7d2df;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #081b30;
+  font: inherit;
+}
+
+.registro-formulario textarea {
+  min-height: 95px;
+  resize: vertical;
+}
+
+.registro-formulario input:focus,
+.registro-formulario select:focus,
+.registro-formulario textarea:focus {
+  outline: 3px solid rgba(232, 183, 53, 0.3);
+  border-color: #e8b735;
+}
+
+.registro-autorizacion {
+  grid-template-columns: auto 1fr !important;
+  align-items: start;
+  line-height: 1.4;
+}
+
+.registro-autorizacion input {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+}
+
+.registro-error {
+  margin: 0;
+  padding: 12px;
+  border-radius: 10px;
+  background: #fee2e2;
+  color: #991b1b;
+  font-weight: 700;
+}
+
+.registro-enviar,
+.registro-exito button {
+  width: 100%;
+  padding: 15px;
+  border: 0;
+  border-radius: 12px;
+  background: #e8b735;
+  color: #081b30;
+  font-size: 17px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.registro-enviar:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.registro-exito {
+  width: min(100%, 560px);
+  margin: 80px auto 0;
+  padding: 35px 24px;
+  border-radius: 20px;
+  background: #ffffff;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(8, 27, 48, 0.15);
+}
+
+.registro-exito-icono {
+  display: grid;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 18px;
+  place-items: center;
+  border-radius: 50%;
+  background: #22a35a;
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.registro-exito p {
+  color: #52657a;
+  line-height: 1.5;
+}
+
+.registro-exito button {
+  margin-top: 18px;
+}

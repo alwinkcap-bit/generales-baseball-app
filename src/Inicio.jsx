@@ -35,7 +35,7 @@ const preguntasReto = [
     correcta: 0,
   },
 ];
-export default function Inicio({ onAdmin, isAdmin }) {
+export default function Inicio({ onAdmin, isAdmin, onRegistro }) {
   const [seccionActiva, setSeccionActiva] = useState('inicio');
   const whatsapp = 'https://wa.me/50763776387';
   const [categoriaActiva, setCategoriaActiva] = useState('4-5');
@@ -256,12 +256,13 @@ const responderReto = (opcionElegida) => {
             </h1>
             <p>UN EQUIPO,<br />UNA FAMILIA,<br />UN LEGADO</p>
             <div className="inicio-acciones">
- <a
-  href="https://docs.google.com/forms/d/e/1FAIpQLScwSVSY9Ra3mrQV4qX8gda0U8lgSitkXQACd0Kt1Ibq9O9ZHA/viewform?usp=preview"
+ <button
+  type="button"
   className="inicio-boton dorado"
+  onClick={onRegistro}
 >
   ⚾ INSCRÍBETE AHORA
-</a>
+</button>
   <a
   href="https://www.instagram.com/generales_baseball_chitre/"
   target="_blank"
