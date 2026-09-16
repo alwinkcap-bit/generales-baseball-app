@@ -214,6 +214,102 @@ async function loadGaleria(jugadorId) {
   setGaleria(fotosConUrl.filter(Boolean))
   setLoadingGaleria(false)
 }
+async function eliminarFotoGaleria(foto) {
+  const confirmar = window.confirm(
+    '¿Deseas eliminar esta fotografía de la galería?'
+  )
+
+  if (!confirmar) return
+
+  setLoadingGaleria(true)
+
+  const { error: registroError } = await supabase
+    .from('galeria_jugadores')
+    .delete()
+    .eq('id', foto.id)
+
+  if (registroError) {
+    setMessage(`No se pudo eliminar la fotografía: ${registroError.message}`)
+    setLoadingGaleria(false)
+    return
+  }
+
+  const { error: storageError } = await supabase.storage
+    .from('galeria-jugadores')
+    .remove([foto.storage_path])
+
+  if (storageError) {
+    setMessage(
+      `La fotografía se retiró de la galería, pero el archivo no pudo limpiarse: ${storageError.message}`
+    )
+  } else {
+    setMessage('Fotografía eliminada correctamente.')
+  }
+
+  await loadGaleria(selected.id)
+}
+async function subirFotoGaleria(e) {
+  const archivo = e.target.files?.[0]
+
+  if (!archivo || !selected) return
+
+  if (!archivo.type.startsWith('image/')) {
+    setMessage('Selecciona un archivo de imagen.')
+    e.target.value = ''
+    return
+  }
+
+  if (archivo.size > 10 * 1024 * 1024) {
+    setMessage('La fotografía no puede superar los 10 MB.')
+    e.target.value = ''
+    return
+  }
+
+  setSubiendoGaleria(true)
+
+  const extension = archivo.name.split('.').pop()?.toLowerCase() || 'jpg'
+  const storagePath =
+    `${selected.id}/${crypto.randomUUID()}.${extension}`
+
+  const { error: uploadError } = await supabase.storage
+    .from('galeria-jugadores')
+    .upload(storagePath, archivo, {
+      cacheControl: '3600',
+      upsert: false,
+      contentType: archivo.type
+    })
+
+  if (uploadError) {
+    setMessage(`No se pudo subir la fotografía: ${uploadError.message}`)
+    setSubiendoGaleria(false)
+    e.target.value = ''
+    return
+  }
+
+  const { error: registroError } = await supabase
+    .from('galeria_jugadores')
+    .insert({
+      jugador_id: selected.id,
+      storage_path: storagePath,
+      titulo: archivo.name
+    })
+
+  if (registroError) {
+    await supabase.storage
+      .from('galeria-jugadores')
+      .remove([storagePath])
+
+    setMessage(`No se pudo guardar la fotografía: ${registroError.message}`)
+    setSubiendoGaleria(false)
+    e.target.value = ''
+    return
+  }
+
+  await loadGaleria(selected.id)
+  setMessage('Fotografía agregada correctamente.')
+  setSubiendoGaleria(false)
+  e.target.value = ''
+}
 async function loadHistorial(jugadorId) {
   if (!jugadorId) {
     setHistorial([]);
@@ -708,7 +804,11 @@ if (vista === 'inicio') {
     setSelected(p);
     loadHistorial(p.id);
     loadPremios(p.id);
-    loadGaleria(p.id);
+    if (session) {
+  loadGaleria(p.id);
+} else {
+  setGaleria([]);
+}
   }}
 >
               <div className="avatar">{p.foto_url ? <img src={p.foto_url} alt=""/> : `${p.nombre?.[0]||''}${p.apellido?.[0]||''}`}</div>
@@ -770,13 +870,15 @@ if (vista === 'inicio') {
   Premios
 </button>
 
-<button
-  type="button"
-  className={tabActiva === 'galeria' ? 'tab-activa' : ''}
-  onClick={() => setTabActiva('galeria')}
->
-  Galería
-</button>
+{session && (
+  <button
+    type="button"
+    className={tabActiva === 'galeria' ? 'tab-activa' : ''}
+    onClick={() => setTabActiva('galeria')}
+  >
+    Galería
+  </button>
+)}
 </div>
           {tabActiva === 'resumen' ? (
   <div className="summary-grid">
@@ -1080,7 +1182,24 @@ if (vista === 'inicio') {
   <div className="summary-grid">
     <div className="bio-card galeria-panel">
       <h3>Galería</h3>
+{isAdmin && (
+  <label
+    className={`galeria-subir ${
+      subiendoGaleria ? 'disabled' : ''
+    }`}
+  >
+    <input
+      type="file"
+      accept="image/jpeg,image/png,image/webp"
+      onChange={subirFotoGaleria}
+      disabled={subiendoGaleria}
+    />
 
+    {subiendoGaleria
+      ? 'Subiendo fotografía...'
+      : '+ Subir fotografía'}
+  </label>
+)}
       {loadingGaleria ? (
         <p>Cargando fotografías...</p>
       ) : galeria.length === 0 ? (
@@ -1088,17 +1207,31 @@ if (vista === 'inicio') {
       ) : (
         <div className="galeria-jugador-grid">
           {galeria.map((foto) => (
-            <button
-              type="button"
-              className="galeria-jugador-foto"
-              key={foto.id}
-              onClick={() => setFotoAmpliada(foto.url)}
-            >
-              <img
-                src={foto.url}
-                alt={foto.titulo || 'Fotografía del jugador'}
-              />
-            </button>
+           <div
+  className="galeria-jugador-item"
+  key={foto.id}
+>
+  <button
+    type="button"
+    className="galeria-jugador-foto"
+    onClick={() => setFotoAmpliada(foto.url)}
+  >
+    <img
+      src={foto.url}
+      alt={foto.titulo || 'Fotografía del jugador'}
+    />
+  </button>
+
+  {isAdmin && (
+    <button
+      type="button"
+      className="galeria-eliminar"
+      onClick={() => eliminarFotoGaleria(foto)}
+    >
+      Eliminar
+    </button>
+  )}
+</div>
           ))}
         </div>
       )}
