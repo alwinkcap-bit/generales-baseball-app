@@ -831,9 +831,10 @@ if (vista === 'inicio') {
   <button
   type="button"
   className="ghost"
-  onClick={() => setJugadoresOpen(true)}
+  onClick={() => setJugadoresOpen(!jugadoresOpen)}
 >
-  Jugadores
+  <span className="acceso-icono">👥</span>
+<span>{jugadoresOpen ? 'Cerrar jugadores' : 'Jugadores'}</span>
 </button>
 
 {isAdmin && (
@@ -858,7 +859,8 @@ if (vista === 'inicio') {
       }
     }}
   >
-    Inscripciones
+    <span className="acceso-icono">📝</span>
+<span>Inscripciones</span>
   </button>
 )}
       </section>
