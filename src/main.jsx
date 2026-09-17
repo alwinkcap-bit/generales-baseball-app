@@ -23,6 +23,10 @@ function App() {
   const [tabActiva, setTabActiva] = useState('resumen');
   const [vista, setVista] = useState('inicio')
   const [players, setPlayers] = useState([])
+  const [inscripciones, setInscripciones] = useState([])
+const [loadingInscripciones, setLoadingInscripciones] = useState(false)
+const [inscripcionesOpen, setInscripcionesOpen] = useState(false)
+const [jugadoresOpen, setJugadoresOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(null)
   const [session, setSession] = useState(null)
@@ -85,7 +89,46 @@ async function loadPlayers() {
 
   setLoading(false)
 }
+async function loadInscripciones() {
+  if (!isAdmin) return
 
+  setLoadingInscripciones(true)
+
+  const { data, error } = await supabase
+    .from('inscripciones')
+    .select('*')
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    setMessage(`No se pudieron cargar las inscripciones: ${error.message}`)
+    setInscripciones([])
+  } else {
+    setInscripciones(data || [])
+  }
+
+  setLoadingInscripciones(false)
+}
+async function cambiarEstadoInscripcion(id, estado) {
+  if (!isAdmin) return
+
+  const { error } = await supabase
+    .from('inscripciones')
+    .update({ estado })
+    .eq('id', id)
+
+  if (error) {
+    setMessage(`No se pudo actualizar el estado: ${error.message}`)
+    return
+  }
+
+  setInscripciones((anteriores) =>
+    anteriores.map((inscripcion) =>
+      inscripcion.id === id
+        ? { ...inscripcion, estado }
+        : inscripcion
+    )
+  )
+}
 async function loadAcudientes() {
   const [perfilesResult, vinculacionesResult] = await Promise.all([
     supabase
@@ -785,9 +828,133 @@ if (vista === 'inicio') {
     <main>
       <section className="search-row">
         <input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Buscar por nombre, número, categoría..." />
-        {isAdmin && <button className="primary" onClick={openNew}>+ Jugador</button>}
-      </section>
+  <button
+  type="button"
+  className="ghost"
+  onClick={() => setJugadoresOpen(!jugadoresOpen)}
+>
+  <span className="acceso-icono">👥</span>
+<span>{jugadoresOpen ? 'Cerrar jugadores' : 'Jugadores'}</span>
+</button>
 
+{isAdmin && (
+  <button
+    type="button"
+    className="primary"
+    onClick={openNew}
+  >
+    + Jugador
+  </button>
+)} 
+        {isAdmin && (
+  <button
+    type="button"
+    className="ghost"
+    onClick={async () => {
+      const abrir = !inscripcionesOpen
+      setInscripcionesOpen(abrir)
+
+      if (abrir) {
+        await loadInscripciones()
+      }
+    }}
+  >
+    <span className="acceso-icono">📝</span>
+<span>Inscripciones</span>
+  </button>
+)}
+      </section>
+{isAdmin && inscripcionesOpen && (
+  <div
+    className="inscripciones-modal-fondo"
+    onClick={() => setInscripcionesOpen(false)}
+  >
+    <section
+      className="inscripciones-panel"
+      onClick={(e) => e.stopPropagation()}
+    >
+    <div className="inscripciones-titulo">
+      <div>
+        <span>ADMINISTRACIÓN</span>
+        <h2>Inscripciones recibidas</h2>
+      </div>
+
+      <button
+        type="button"
+        className="ghost"
+        onClick={loadInscripciones}
+      >
+        Actualizar
+      </button>
+    </div>
+
+    {loadingInscripciones ? (
+      <p>Cargando inscripciones...</p>
+    ) : inscripciones.length === 0 ? (
+      <p>No hay inscripciones registradas.</p>
+    ) : (
+      <div className="inscripciones-lista">
+        {inscripciones.map((inscripcion) => (
+          <article className="inscripcion-card" key={inscripcion.id}>
+            <div className="inscripcion-card-cabecera">
+              <div>
+                <span className={`inscripcion-estado ${inscripcion.estado}`}>
+                  {inscripcion.estado}
+                </span>
+                <h3>{inscripcion.nombre_nino}</h3>
+              </div>
+
+              <strong>
+                {inscripcion.fecha_nacimiento
+                  ? inscripcion.fecha_nacimiento.split('-').reverse().join('/')
+                  : 'Sin fecha'}
+              </strong>
+            </div>
+
+            <div className="inscripcion-datos">
+              <p><b>Acudiente:</b> {inscripcion.nombre_acudiente}</p>
+              <p><b>Teléfono:</b> {inscripcion.telefono}</p>
+              <p><b>Correo:</b> {inscripcion.correo || 'No indicado'}</p>
+              <p><b>Categoría:</b> {inscripcion.categoria || 'No indicada'}</p>
+              <p><b>Posición:</b> {inscripcion.posicion || 'No indicada'}</p>
+              <p><b>Escuela:</b> {inscripcion.escuela || 'No indicada'}</p>
+              <p><b>Residencia:</b> {inscripcion.residencia}</p>
+              <p>
+                <b>Condición médica o alergia:</b>{' '}
+                {inscripcion.condicion_medica || 'No indicada'}
+              </p>
+              <p>
+                <b>Experiencia:</b>{' '}
+                {inscripcion.experiencia || 'No indicada'}
+              </p>
+              <p>
+                <b>Academia anterior:</b>{' '}
+                {inscripcion.academia_anterior || 'Ninguna'}
+              </p>
+            </div>
+            <div className="inscripcion-acciones">
+  <label>
+    Estado
+    <select
+      value={inscripcion.estado}
+      onChange={(e) =>
+        cambiarEstadoInscripcion(inscripcion.id, e.target.value)
+      }
+    >
+      <option value="pendiente">Pendiente</option>
+      <option value="contactado">Contactado</option>
+      <option value="inscrito">Inscrito</option>
+      <option value="rechazado">Rechazado</option>
+    </select>
+  </label>
+</div>
+          </article>
+        ))}
+      </div>
+    )}
+    </section>
+  </div>
+)}
       {message && <div className="message">{message}</div>}
 {session && !isAdmin && players.length === 0 && (
   <section className="acudiente-pendiente">
@@ -803,7 +970,15 @@ if (vista === 'inicio') {
   </section>
 )}
       <section className="content-grid">
-        <aside className="roster">
+        {jugadoresOpen && (
+  <div
+    className="jugadores-modal-fondo"
+    onClick={() => setJugadoresOpen(false)}
+  >
+    <aside
+      className="roster jugadores-modal"
+      onClick={(e) => e.stopPropagation()}
+    >
           <div className="section-title">Jugadores <span>{filtered.length}</span></div>
           {loading ? <div className="empty">Cargando...</div> : filtered.length === 0 ? <div className="empty">No hay jugadores todavía.</div> : filtered.map(p =>
 <button
@@ -824,6 +999,8 @@ if (vista === 'inicio') {
               <div className="player-card-info"><strong>{p.nombre} {p.apellido}</strong><span>#{p.numero ?? '—'} · {p.posicion || 'Sin posición'} · {p.categoria || 'Sin categoría'}</span></div>
             </button>)}
         </aside>
+          </div>
+)}
 
         <section className="profile">
           {!selected ? <div className="empty hero-empty">Selecciona un jugador para ver su ficha.</div> : <>
