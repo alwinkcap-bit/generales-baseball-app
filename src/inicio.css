@@ -929,3 +929,23 @@
   background: #fff1f1;
   border: 1px solid #e7b2b2;
 }
+.galeria-item {
+  position: relative;
+}
+
+.galeria-nombre {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(5, 21, 34, 0.88);
+  color: #f2bf2f;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+}

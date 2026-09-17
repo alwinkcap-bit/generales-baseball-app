@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from './supabase';
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
-import fotoGaleria1 from './public/1000297390.png';
+import fotoGaleria1 from './public/5377e677-e754-4efb-8324-aade75e00490.png';
 import fotoGaleria2 from './public/1000250736.png';
 import fotoGaleria3 from './public/1000350600.png';
 const preguntasReto = [
@@ -36,6 +36,29 @@ const preguntasReto = [
   },
 ];
 export default function Inicio({ onAdmin, isAdmin, onRegistro }) {
+ const [imagenesGaleriaPublica, setImagenesGaleriaPublica] = useState([])
+
+useEffect(() => {
+  let activo = true
+
+  async function cargarGaleriaPublica() {
+    const { data, error } = await supabase
+      .from('galeria_publica')
+      .select('id, titulo, imagen_url, created_at')
+      .order('orden', { ascending: true })
+      .order('created_at', { ascending: false })
+
+    if (!error && activo) {
+      setImagenesGaleriaPublica(data || [])
+    }
+  }
+
+  cargarGaleriaPublica()
+
+  return () => {
+    activo = false
+  }
+}, []) 
   const [seccionActiva, setSeccionActiva] = useState('inicio');
   const whatsapp = 'https://wa.me/50763776387';
   const [categoriaActiva, setCategoriaActiva] = useState('4-5');
@@ -550,9 +573,10 @@ SÍGUENOS EN INSTAGRAM
   <div className="galeria-item">
   <img
   src={fotoGaleria1}
-  alt="Generales de Chitré Baseball Academy"
+  alt="Cumpleañeros de Generales de Chitré"
   onClick={() => setImagenAmpliada(fotoGaleria1)}
 />
+<span className="galeria-nombre">🎂 Cumpleañeros</span>
 </div>
   <div className="galeria-item">
   <img
@@ -568,6 +592,20 @@ SÍGUENOS EN INSTAGRAM
   onClick={() => setImagenAmpliada(fotoGaleria3)}
 />
 </div>
+{imagenesGaleriaPublica.map((imagen) => (
+  <div className="galeria-item" key={imagen.id}>
+    <img
+      src={imagen.imagen_url}
+      alt={imagen.titulo}
+      loading="lazy"
+      onClick={() => setImagenAmpliada(imagen.imagen_url)}
+    />
+
+    <span className="galeria-nombre">
+      🖼️ {imagen.titulo}
+    </span>
+  </div>
+))}
 </div>
 </section>
 {productoFormOpen && (
