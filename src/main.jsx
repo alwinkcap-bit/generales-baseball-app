@@ -5,6 +5,7 @@ import './styles.css'
 import Inicio from './Inicio'
 import Registro from './Registro';
 import EntrenadoresAdmin from './EntrenadoresAdmin'
+import EntrenadoresPublicos from './EntrenadoresPublicos'
 const blankPlayer = {
   nombre: '', apellido: '', fecha_nacimiento: '', categoria: '', posicion: '', numero: '',
   batea: 'R', lanza: 'R', estatura_cm: '', estatura_pulgadas: '', peso_kg: '', foto_url: '', estado: 'Activo', notas: ''
@@ -931,11 +932,37 @@ if (vista === 'entrenadores-admin' && isAdmin) {
     />
   )
 }
+if (vista === 'entrenadores') {
+  return (
+    <div className="app-shell">
+      <header className="topbar">
+        <button
+          type="button"
+          className="ghost"
+          onClick={() => setVista('inicio')}
+          
+        >
+          ← Volver
+        </button>
+
+        <div>
+          <div className="eyebrow">Generales de Chitré</div>
+          <h1>Nuestros entrenadores</h1>
+        </div>
+      </header>
+
+      <main>
+        <EntrenadoresPublicos />
+      </main>
+    </div>
+  )
+}
 if (vista === 'inicio') {
   return (
     <div>
       <Inicio
   onAdmin={() => setVista('admin')}
+  onEntrenadores={() => setVista('entrenadores')}
   isAdmin={isAdmin}
   onRegistro={() => setVista('registro')}
 />

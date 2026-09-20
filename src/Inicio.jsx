@@ -35,7 +35,12 @@ const preguntasReto = [
     correcta: 0,
   },
 ];
-export default function Inicio({ onAdmin, isAdmin, onRegistro }) {
+export default function Inicio({
+  onAdmin,
+  onEntrenadores,
+  isAdmin,
+  onRegistro,
+}) {
   const [tiendaOpen, setTiendaOpen] = useState(false)
   const [programasOpen, setProgramasOpen] = useState(false)
   const [galeriaOpen, setGaleriaOpen] = useState(false)
@@ -1055,6 +1060,20 @@ SÍGUENOS EN INSTAGRAM
 )}
 </section>
 <section className="gestion-acceso-seccion">
+  <button
+  type="button"
+  className="tienda-acceso"
+  onClick={onEntrenadores}
+>
+  <span className="tienda-acceso-icono">⚾</span>
+
+  <span>
+    <strong>Nuestros entrenadores</strong>
+    <small>Conoce al equipo técnico de la Academia</small>
+  </span>
+
+  <b>Ver perfiles →</b>
+</button>
   <button
     type="button"
     className="tienda-acceso"
