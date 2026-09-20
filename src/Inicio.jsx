@@ -7,6 +7,7 @@ import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
 import fotoGaleria2 from './public/1000250736.png';
 import fotoGaleria3 from './public/1000350600.png';
+import EntrenadoresPublicos from './EntrenadoresPublicos'
 const preguntasReto = [
   {
     pregunta: '¿Cuántas bases tiene un campo de béisbol?',
@@ -1008,6 +1009,9 @@ SÍGUENOS EN INSTAGRAM
       </div>
   </div>
 )}
+
+<EntrenadoresPublicos />
+
 </section>
         <section id="mas" className="inicio-mas">
           <button

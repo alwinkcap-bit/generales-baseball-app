@@ -1,0 +1,161 @@
+.entrenadores-admin {
+  min-height: 100vh;
+  background: #eaf5f7;
+}
+
+.entrenadores-admin main {
+  width: min(720px, calc(100% - 32px));
+  margin: 24px auto;
+}
+
+.entrenadores-admin .panel {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
+  background: #0b2942;
+  border: 1px solid rgba(218, 174, 66, 0.45);
+  border-radius: 18px;
+  color: #ffffff;
+  box-shadow: 0 14px 35px rgba(0, 20, 38, 0.18);
+}
+
+.entrenadores-admin .panel h2 {
+  margin: 0 0 4px;
+  color: #ffffff;
+}
+
+.entrenadores-admin .panel label {
+  display: grid;
+  gap: 7px;
+  color: #f4c95d;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.entrenadores-admin .panel input,
+.entrenadores-admin .panel textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #b8c8d3;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #10283c;
+  font: inherit;
+  line-height: 1.4;
+}
+
+.entrenadores-admin .panel textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.entrenadores-admin .panel input:focus,
+.entrenadores-admin .panel textarea:focus {
+  outline: 3px solid rgba(244, 201, 93, 0.3);
+  border-color: #f4c95d;
+}
+
+.entrenadores-admin .panel label:has(input[type="checkbox"]) {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+}
+
+.entrenadores-admin .panel input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: #e7b836;
+}
+
+.entrenadores-admin form.panel > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.entrenadores-admin .card {
+  padding: 20px;
+  border: 1px solid rgba(244, 201, 93, 0.45);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.entrenadores-admin .card h2 {
+  margin-top: 0;
+}
+
+.entrenadores-admin button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.entrenadores-admin .primary {
+  background: #e7b836;
+  color: #09233a;
+}
+
+.entrenadores-admin .ghost {
+  background: #ffffff;
+  color: #09233a;
+}
+
+.entrenadores-admin button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+@media (max-width: 600px) {
+  .entrenadores-admin main {
+    width: min(100% - 20px, 720px);
+    margin-top: 14px;
+  }
+
+  .entrenadores-admin .panel {
+    padding: 18px 14px;
+    border-radius: 14px;
+  }
+
+  .entrenadores-admin form.panel > div {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .entrenadores-admin form.panel > div button {
+    width: 100%;
+  }
+}
+.entrenadores-admin .entrenador-foto-preview {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+  border: 4px solid #e7b836;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.entrenadores-admin input[type="file"] {
+  cursor: pointer;
+}
+
+.entrenadores-admin input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #e7b836;
+  color: #09233a;
+  font-weight: 700;
+  cursor: pointer;
+}

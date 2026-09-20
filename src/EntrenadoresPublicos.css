@@ -1,0 +1,81 @@
+.entrenadores-publicos {
+  width: min(100%, 900px);
+  margin: 40px auto 0;
+  padding: 28px 20px;
+  text-align: center;
+}
+
+.entrenadores-publicos h2 {
+  margin: 8px 0 24px;
+  color: #ffffff;
+}
+
+.entrenadores-publicos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 22px;
+}
+
+.entrenador-publico-card {
+  overflow: hidden;
+  border: 1px solid rgba(231, 184, 54, 0.55);
+  border-radius: 18px;
+  background: #0b2942;
+  color: #ffffff;
+  box-shadow: 0 14px 30px rgba(0, 15, 30, 0.22);
+}
+
+.entrenador-publico-foto {
+  display: block;
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  object-position: center top;
+  background: #dbe6ec;
+}
+
+.entrenador-publico-contenido {
+  padding: 22px;
+}
+
+.entrenador-publico-contenido h3 {
+  margin: 0 0 8px;
+  color: #f4c95d;
+  font-size: 1.4rem;
+}
+
+.entrenador-publico-contenido strong {
+  display: block;
+  margin-bottom: 14px;
+  color: #ffffff;
+}
+
+.entrenador-publico-contenido p {
+  margin: 8px 0;
+  line-height: 1.55;
+  color: #e7eef3;
+}
+
+.entrenador-publico-biografia {
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.entrenadores-cargando {
+  padding: 24px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .entrenadores-publicos {
+    padding: 24px 12px;
+  }
+
+  .entrenadores-publicos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .entrenador-publico-foto {
+    height: 260px;
+  }
+}

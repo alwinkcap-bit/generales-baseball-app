@@ -4,6 +4,7 @@ import { supabase } from './supabase'
 import './styles.css'
 import Inicio from './Inicio'
 import Registro from './Registro';
+import EntrenadoresAdmin from './EntrenadoresAdmin'
 const blankPlayer = {
   nombre: '', apellido: '', fecha_nacimiento: '', categoria: '', posicion: '', numero: '',
   batea: 'R', lanza: 'R', estatura_cm: '', estatura_pulgadas: '', peso_kg: '', foto_url: '', estado: 'Activo', notas: ''
@@ -923,7 +924,13 @@ if (password !== confirmacion) {
 if (vista === 'registro') {
   return <Registro onVolver={() => setVista('inicio')} />;
 }
-
+if (vista === 'entrenadores-admin' && isAdmin) {
+  return (
+    <EntrenadoresAdmin
+      onVolver={() => setVista('admin')}
+    />
+  )
+}
 if (vista === 'inicio') {
   return (
     <div>
@@ -967,6 +974,17 @@ if (vista === 'inicio') {
     + Jugador
   </button>
 )} 
+
+{isAdmin && (
+  <button
+    type="button"
+    className="ghost"
+    onClick={() => setVista('entrenadores-admin')}
+  >
+    <span className="acceso-icono">⚾</span>
+    <span>Perfiles de entrenadores</span>
+  </button>
+)}
         {isAdmin && (
   <button
     type="button"
