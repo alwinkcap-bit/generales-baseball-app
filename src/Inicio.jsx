@@ -7,7 +7,6 @@ import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
 import fotoGaleria2 from './public/1000250736.png';
 import fotoGaleria3 from './public/1000350600.png';
-import EntrenadoresPublicos from './EntrenadoresPublicos'
 const preguntasReto = [
   {
     pregunta: '¿Cuántas bases tiene un campo de béisbol?',
@@ -1015,7 +1014,6 @@ SÍGUENOS EN INSTAGRAM
   </div>
 )}
 
-<EntrenadoresPublicos />
 
 </section>
         <section id="mas" className="inicio-mas">
@@ -1055,6 +1053,70 @@ SÍGUENOS EN INSTAGRAM
   <p>
     Conoce nuestros horarios, ubicación, contacto y más información de Generales de Chitré.
     </p>
+    <div className="mas-informacion-contenido">
+
+  <article>
+    <h3>🕒 Horarios de entrenamiento</h3>
+    <p>Lunes, miércoles y viernes</p>
+    <p>Primer grupo: 4:45 p. m.</p>
+    <p>Segundo grupo: 6:00 p. m.</p>
+  </article>
+
+  <article>
+    <h3>📍 Ubicación</h3>
+    <p>Estadio Pepe Osorio, Calle Abajo de Chitré, Herrera.</p>
+
+<a
+  className="ubicacion-enlace"
+  href="https://www.google.com/maps/search/?api=1&query=Estadio+Pepe+Osorio+Chitre+Herrera"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <svg
+  className="boton-enlace-icono"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    fill="currentColor"
+    d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"
+  />
+</svg>
+
+<span>Cómo llegar al estadio</span>
+</a>
+  </article>
+
+  <article>
+    <h3>📱 Contacto</h3>
+    <p>WhatsApp: 6377-6387</p>
+
+<a
+  className="whatsapp-enlace"
+  href="https://wa.me/50763776387"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <svg
+  className="boton-enlace-icono"
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+>
+  <path
+    fill="currentColor"
+    d="M12 2a9.84 9.84 0 0 0-8.45 14.87L2 22l5.27-1.5A9.94 9.94 0 1 0 12 2Zm0 17.95a8 8 0 0 1-4.08-1.11l-.29-.17-3.13.89.92-3.05-.19-.31A8 8 0 1 1 12 19.95Zm4.39-5.99c-.24-.12-1.42-.7-1.64-.78-.22-.08-.38-.12-.54.12-.16.24-.62.78-.76.94-.14.16-.28.18-.52.06a6.55 6.55 0 0 1-1.93-1.19 7.23 7.23 0 0 1-1.34-1.67c-.14-.24-.01-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.47-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.1 3.62.57.25 1.02.39 1.37.5.58.18 1.1.16 1.51.1.46-.07 1.42-.58 1.62-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"
+  />
+</svg>
+
+<span>Contáctanos por WhatsApp</span>
+</a>
+  </article>
+
+  <article>
+    <h3> Nuestro lema</h3>
+    <p>“Un equipo, una familia, un legado”.</p>
+  </article>
+</div>
     </div>
   </div>
 )}
