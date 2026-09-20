@@ -288,10 +288,15 @@ async function subirImagenGaleriaPublica(e) {
   const { error: insertError } = await supabase
     .from('galeria_publica')
     .insert({
-      titulo: tituloGaleriaPublica.trim() || 'Galería',
-      imagen_url: publicUrlData.publicUrl,
-      storage_path: storagePath
-    })
+  titulo: tituloGaleriaPublica.trim() || 'Galería',
+  imagen_url: publicUrlData.publicUrl,
+  storage_path: storagePath,
+  orden:
+    Math.max(
+      0,
+      ...galeriaPublica.map((imagen) => Number(imagen.orden) || 0)
+    ) + 1
+})
 
   if (insertError) {
     await supabase.storage
@@ -340,6 +345,29 @@ async function eliminarImagenGaleriaPublica(imagen) {
     setMessage('Imagen eliminada correctamente.')
   }
 
+  await loadGaleriaPublica()
+}
+async function guardarOrdenGaleriaPublica(id, nuevoOrden) {
+  const ordenNumero = Number(nuevoOrden)
+
+  if (!Number.isInteger(ordenNumero) || ordenNumero < 1) {
+    setMessage('El orden debe ser un número mayor o igual a 1.')
+    return
+  }
+
+  setMessage('Guardando orden...')
+
+  const { error } = await supabase
+    .from('galeria_publica')
+    .update({ orden: ordenNumero })
+    .eq('id', id)
+
+  if (error) {
+    setMessage(`No se pudo guardar el orden: ${error.message}`)
+    return
+  }
+
+  setMessage('Orden actualizado correctamente.')
   await loadGaleriaPublica()
 }
 async function loadGaleria(jugadorId) {
@@ -932,6 +960,7 @@ if (vista === 'entrenadores-admin' && isAdmin) {
     />
   )
 }
+
 if (vista === 'entrenadores') {
   return (
     <div className="app-shell">
@@ -1209,6 +1238,17 @@ if (vista === 'inicio') {
 
               <div>
                 <strong>{imagen.titulo}</strong>
+                <label className="galeria-publica-orden">
+  Orden
+  <input
+    type="number"
+    min="1"
+    defaultValue={imagen.orden || 1}
+    onBlur={(e) =>
+      guardarOrdenGaleriaPublica(imagen.id, e.target.value)
+    }
+  />
+</label>
                 <button
                   type="button"
                   className="danger"

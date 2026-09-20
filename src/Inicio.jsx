@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from './supabase';
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
+import fotoGaleria1 from './public/1000297390.png';
 import fotoGaleria2 from './public/1000250736.png';
 import fotoGaleria3 from './public/1000350600.png';
 const preguntasReto = [
@@ -675,7 +676,7 @@ SÍGUENOS EN INSTAGRAM
         </button>
 
         <h2>GALERÍA</h2>
-  <h2>GALERÍA</h2>
+
   <p>
     Momentos de entrenamientos, juegos y actividades de Generales de Chitré.
   </p>
