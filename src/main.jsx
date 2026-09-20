@@ -47,6 +47,12 @@ const [fotoAmpliada, setFotoAmpliada] = useState(null)
 const [galeria, setGaleria] = useState([])
 const [loadingGaleria, setLoadingGaleria] = useState(false)
 const [subiendoGaleria, setSubiendoGaleria] = useState(false)
+const [galeriaPublicaOpen, setGaleriaPublicaOpen] = useState(false)
+const [galeriaPublica, setGaleriaPublica] = useState([])
+const [loadingGaleriaPublica, setLoadingGaleriaPublica] = useState(false)
+const [subiendoGaleriaPublica, setSubiendoGaleriaPublica] = useState(false)
+const [archivoGaleriaPublica, setArchivoGaleriaPublica] = useState(null)
+const [tituloGaleriaPublica, setTituloGaleriaPublica] = useState('')
   const [editorOpen, setEditorOpen] = useState(false)
   const [form, setForm] = useState(blankPlayer)
   const [message, setMessage] = useState('')
@@ -218,6 +224,121 @@ async function desvincularJugador(vinculacionId) {
 
   setMessage('Jugador desvinculado correctamente.')
   await loadAcudientes()
+}
+
+async function loadGaleriaPublica() {
+  setLoadingGaleriaPublica(true)
+
+  const { data, error } = await supabase
+    .from('galeria_publica')
+    .select('*')
+    .order('orden', { ascending: true })
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    setMessage(`No se pudo cargar la galería pública: ${error.message}`)
+    setGaleriaPublica([])
+  } else {
+    setGaleriaPublica(data || [])
+  }
+
+  setLoadingGaleriaPublica(false)
+}
+async function subirImagenGaleriaPublica(e) {
+  e.preventDefault()
+
+  if (!archivoGaleriaPublica) {
+    setMessage('Selecciona una imagen.')
+    return
+  }
+
+  if (!archivoGaleriaPublica.type.startsWith('image/')) {
+    setMessage('El archivo seleccionado no es una imagen.')
+    return
+  }
+
+  setSubiendoGaleriaPublica(true)
+  setMessage('')
+
+  const extension =
+    archivoGaleriaPublica.name.split('.').pop()?.toLowerCase() || 'jpg'
+
+  const storagePath =
+    `${Date.now()}-${crypto.randomUUID()}.${extension}`
+
+  const { error: uploadError } = await supabase.storage
+    .from('galeria-publica')
+    .upload(storagePath, archivoGaleriaPublica, {
+      cacheControl: '3600',
+      upsert: false
+    })
+
+  if (uploadError) {
+    setMessage(`No se pudo subir la imagen: ${uploadError.message}`)
+    setSubiendoGaleriaPublica(false)
+    return
+  }
+
+  const { data: publicUrlData } = supabase.storage
+    .from('galeria-publica')
+    .getPublicUrl(storagePath)
+
+  const { error: insertError } = await supabase
+    .from('galeria_publica')
+    .insert({
+      titulo: tituloGaleriaPublica.trim() || 'Galería',
+      imagen_url: publicUrlData.publicUrl,
+      storage_path: storagePath
+    })
+
+  if (insertError) {
+    await supabase.storage
+      .from('galeria-publica')
+      .remove([storagePath])
+
+    setMessage(`No se pudo guardar la imagen: ${insertError.message}`)
+    setSubiendoGaleriaPublica(false)
+    return
+  }
+
+  setTituloGaleriaPublica('')
+  setArchivoGaleriaPublica(null)
+  setMessage('Imagen publicada correctamente.')
+  await loadGaleriaPublica()
+  setSubiendoGaleriaPublica(false)
+}
+async function eliminarImagenGaleriaPublica(imagen) {
+  const confirmar = window.confirm(
+    `¿Eliminar "${imagen.titulo}" de la galería pública?`
+  )
+
+  if (!confirmar) return
+
+  setMessage('')
+
+  const { error: deleteRowError } = await supabase
+    .from('galeria_publica')
+    .delete()
+    .eq('id', imagen.id)
+
+  if (deleteRowError) {
+    setMessage(`No se pudo eliminar: ${deleteRowError.message}`)
+    return
+  }
+
+  const { error: deleteFileError } = await supabase.storage
+    .from('galeria-publica')
+    .remove([imagen.storage_path])
+
+  if (deleteFileError) {
+    setMessage(
+      `Se eliminó el registro, pero no el archivo: ${deleteFileError.message}`
+    )
+  } else {
+    setMessage('Imagen eliminada correctamente.')
+  }
+
+  await loadGaleriaPublica()
 }
 async function loadGaleria(jugadorId) {
   if (!jugadorId) {
@@ -863,6 +984,20 @@ if (vista === 'inicio') {
 <span>Inscripciones</span>
   </button>
 )}
+{isAdmin && (
+  <button
+    type="button"
+    className="ghost"
+    onClick={async () => {
+      setGaleriaPublicaOpen(true)
+      await loadGaleriaPublica()
+    }}
+  >
+    <span className="acceso-icono">🖼️</span>
+    <span>Galería pública</span>
+  </button>
+)}
+
       </section>
 {isAdmin && inscripcionesOpen && (
   <div
@@ -952,6 +1087,97 @@ if (vista === 'inicio') {
         ))}
       </div>
     )}
+    </section>
+  </div>
+)}
+{isAdmin && galeriaPublicaOpen && (
+  <div
+    className="modal-backdrop"
+    onClick={() => setGaleriaPublicaOpen(false)}
+  >
+    <section
+      className="modal galeria-publica-modal"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        className="close"
+        onClick={() => setGaleriaPublicaOpen(false)}
+        aria-label="Cerrar"
+      >
+        ×
+      </button>
+
+      <h3>🖼️ Galería pública</h3>
+      <p>Agrega imágenes que aparecerán en la página principal.</p>
+
+      <form
+        className="galeria-publica-form"
+        onSubmit={subirImagenGaleriaPublica}
+      >
+        <label>
+          Título de la imagen
+          <input
+            type="text"
+            value={tituloGaleriaPublica}
+            onChange={(e) => setTituloGaleriaPublica(e.target.value)}
+            placeholder="Ejemplo: Cumpleañeros"
+          />
+        </label>
+
+        <label>
+          Seleccionar imagen
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={(e) =>
+              setArchivoGaleriaPublica(e.target.files?.[0] || null)
+            }
+            required
+          />
+        </label>
+
+        <button
+          type="submit"
+          className="primary full"
+          disabled={subiendoGaleriaPublica}
+        >
+          {subiendoGaleriaPublica ? 'Publicando...' : 'Publicar imagen'}
+        </button>
+      </form>
+
+      <div className="galeria-publica-lista">
+        {loadingGaleriaPublica ? (
+          <p>Cargando imágenes...</p>
+        ) : galeriaPublica.length === 0 ? (
+          <p>Todavía no hay imágenes publicadas desde el panel.</p>
+        ) : (
+          galeriaPublica.map((imagen) => (
+            <article
+              className="galeria-publica-item"
+              key={imagen.id}
+            >
+              <img
+                src={imagen.imagen_url}
+                alt={imagen.titulo}
+              />
+
+              <div>
+                <strong>{imagen.titulo}</strong>
+                <button
+                  type="button"
+                  className="danger"
+                  onClick={() =>
+                    eliminarImagenGaleriaPublica(imagen)
+                  }
+                >
+                  Eliminar
+                </button>
+              </div>
+            </article>
+          ))
+        )}
+      </div>
     </section>
   </div>
 )}
