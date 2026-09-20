@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from './supabase';
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
-import fotoGaleria1 from './public/5377e677-e754-4efb-8324-aade75e00490.png';
 import fotoGaleria2 from './public/1000250736.png';
 import fotoGaleria3 from './public/1000350600.png';
 const preguntasReto = [
