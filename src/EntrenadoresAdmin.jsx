@@ -34,11 +34,35 @@ const {
     setCargando(false)
   }
 
-  function editarEntrenador(entrenador) {
-    setMensaje('')
-    setFormulario({ ...entrenador })
-  }
+ function editarEntrenador(entrenador) {
+  setMensaje('')
+  setFormulario({ ...entrenador })
+}
 
+function nuevoEntrenador() {
+  setMensaje('')
+
+  setFormulario({
+    id: null,
+    nombre: '',
+    cargo: '',
+    especialidad: '',
+    experiencia: '',
+    biografia: '',
+    foto_url: '',
+    telefono: '',
+    activo: true,
+    orden: entrenadores.length + 1,
+  })
+
+  setTimeout(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
+    document
+      .querySelector('.entrenadores-admin')
+      ?.scrollTo({ top: 0, behavior: 'smooth' })
+  }, 0)
+}
   function cambiarCampo(e) {
     const { name, value, type, checked } = e.target
 
@@ -105,12 +129,24 @@ async function subirFoto(e) {
       orden: Number(formulario.orden) || 1,
     }
 
-    const { data, error } = await supabase
-  .from('perfiles_entrenadores')
-  .update(cambios)
-  .eq('id', formulario.id)
-  .select()
-  .single()
+   let resultado
+
+if (formulario.id) {
+  resultado = await supabase
+    .from('perfiles_entrenadores')
+    .update(cambios)
+    .eq('id', formulario.id)
+    .select()
+    .single()
+} else {
+  resultado = await supabase
+    .from('perfiles_entrenadores')
+    .insert(cambios)
+    .select()
+    .single()
+}
+
+const { data, error } = resultado
 
     if (error) {
   setMensaje(`No se pudo guardar: ${error.message}`)
@@ -144,7 +180,15 @@ async function subirFoto(e) {
         {formulario ? (
           <form className="panel" onSubmit={guardarEntrenador}>
             <h2>Editar perfil</h2>
-
+<label>
+  Nombre
+  <input
+    name="nombre"
+    value={formulario.nombre || ''}
+    onChange={cambiarCampo}
+    required
+  />
+</label>
            <label>
   Foto del entrenador
   <input
@@ -265,6 +309,13 @@ async function subirFoto(e) {
           <p>Cargando entrenadores...</p>
         ) : (
           <section className="panel">
+            <button
+  type="button"
+  className="primary"
+  onClick={nuevoEntrenador}
+>
+  + Agregar entrenador
+</button>
             {entrenadores.length === 0 ? (
               <p>No hay perfiles registrados.</p>
             ) : (
