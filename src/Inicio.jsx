@@ -36,6 +36,11 @@ const preguntasReto = [
   },
 ];
 export default function Inicio({ onAdmin, isAdmin, onRegistro }) {
+  const [tiendaOpen, setTiendaOpen] = useState(false)
+  const [programasOpen, setProgramasOpen] = useState(false)
+  const [galeriaOpen, setGaleriaOpen] = useState(false)
+  const [noticiasOpen, setNoticiasOpen] = useState(false)
+  const [masOpen, setMasOpen] = useState(false)
  const [imagenesGaleriaPublica, setImagenesGaleriaPublica] = useState([])
 
 useEffect(() => {
@@ -353,8 +358,40 @@ SÍGUENOS EN INSTAGRAM
       </div>
     </>
   )}
+  </section>
+<section id="programas" className="programas-acceso-seccion">
+  <button
+    type="button"
+    className="tienda-acceso"
+    onClick={() => setProgramasOpen(true)}
+  >
+    <span className="tienda-acceso-icono">⚾</span>
+
+    <span>
+      <strong>Programas de formación</strong>
+      <small>Ver categorías y metodología</small>
+    </span>
+
+    <b>Entrar →</b>
+  </button>
 </section>
-<section id="programas" className="inicio-valores"></section>
+{programasOpen && (
+  <div
+    className="tienda-ventana-fondo"
+    onClick={() => setProgramasOpen(false)}
+  >
+    <div
+      className="tienda-ventana"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        className="tienda-ventana-cerrar"
+        onClick={() => setProgramasOpen(false)}
+        aria-label="Cerrar programas"
+      >
+        ×
+      </button>
         <h2>PROGRAMAS DE FORMACIÓN</h2> 
           <div><span>🏅</span><strong>DISCIPLINA</strong><small>En el terreno y en la vida</small></div>
           <div><span>⚾</span><strong>FORMACIÓN</strong><small>Desarrollo integral</small></div>
@@ -504,9 +541,10 @@ SÍGUENOS EN INSTAGRAM
   {categoriaActiva === '8' && 'Preparación más completa para competir, mejorar técnica y comprender mejor el juego.'}
 </p>
 </div>
-        </section>
-
-        <section id="academia" className="inicio-bienvenida">
+    </div>
+  </div>
+)}        </section>
+    <section id="academia" className="inicio-bienvenida">
           <span className="inicio-etiqueta">NUESTRA ACADEMIA</span>
           <h2>Más que béisbol,<br />una familia.</h2>
           <p>
@@ -533,6 +571,37 @@ SÍGUENOS EN INSTAGRAM
   </p>
 </section>
         <section id="noticias" className="inicio-noticias">
+          <button
+  type="button"
+  className="tienda-acceso"
+  onClick={() => setNoticiasOpen(true)}
+>
+  <span className="tienda-acceso-icono">📰</span>
+
+  <span>
+    <strong>Noticias</strong>
+    <small>Ver novedades de la academia</small>
+  </span>
+
+  <b>Entrar →</b>
+</button>
+{noticiasOpen && (
+  <div
+    className="tienda-ventana-fondo"
+    onClick={() => setNoticiasOpen(false)}
+  >
+    <div
+      className="tienda-ventana"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        className="tienda-ventana-cerrar"
+        onClick={() => setNoticiasOpen(false)}
+        aria-label="Cerrar noticias"
+      >
+        ×
+      </button>
   <span className="inicio-etiqueta">ACTUALIDAD</span>
   <h2>NOTICIAS</h2>
   <p>
@@ -563,8 +632,45 @@ SÍGUENOS EN INSTAGRAM
   SOLICITAR INFORMACIÓN
 </a> 
 </div>
+    </div>
+  </div>
+)}
 </section>
-        <section id="galeria" className="inicio-galeria">
+
+<section id="galeria" className="inicio-galeria">
+          <button
+  type="button"
+  className="tienda-acceso"
+  onClick={() => setGaleriaOpen(true)}
+>
+  <span className="tienda-acceso-icono">📸</span>
+
+  <span>
+    <strong>Galería</strong>
+    <small>Ver fotos de la academia</small>
+  </span>
+
+  <b>Entrar →</b>
+</button>
+
+  {galeriaOpen && (
+    <div
+      className="tienda-ventana-fondo"
+      onClick={() => setGaleriaOpen(false)}
+    >
+      <div
+        className="tienda-ventana"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          className="tienda-ventana-cerrar"
+          onClick={() => setGaleriaOpen(false)}
+        >
+          ×
+        </button>
+
+        <h2>GALERÍA</h2>
   <h2>GALERÍA</h2>
   <p>
     Momentos de entrenamientos, juegos y actividades de Generales de Chitré.
@@ -607,6 +713,9 @@ SÍGUENOS EN INSTAGRAM
   </div>
 ))}
 </div>
+      </div>
+    </div>
+  )}
 </section>
 {productoFormOpen && (
   <div className="tienda-modal-backdrop">
@@ -754,6 +863,36 @@ SÍGUENOS EN INSTAGRAM
   </div>
 )}
 <section id="tienda" className="inicio-tienda">
+  <button
+  type="button"
+  className="tienda-acceso"
+  onClick={() => setTiendaOpen(true)}
+>
+  <span className="tienda-acceso-icono">🛍️</span>
+  <span>
+    <strong>Tienda Generales</strong>
+    <small>Ver productos disponibles</small>
+  </span>
+  <b>Entrar →</b>
+</button>
+
+{tiendaOpen && (
+  <div
+    className="tienda-ventana-fondo"
+    onClick={() => setTiendaOpen(false)}
+  >
+    <div
+      className="tienda-ventana"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        className="tienda-ventana-cerrar"
+        onClick={() => setTiendaOpen(false)}
+        aria-label="Cerrar tienda"
+      >
+        ×
+      </button>
   <div className="tienda-encabezado">
     <div>
       <span className="inicio-etiqueta">TIENDA</span>
@@ -867,69 +1006,68 @@ SÍGUENOS EN INSTAGRAM
         ))}
     </div>
   )}
+      </div>
+  </div>
+)}
 </section>
         <section id="mas" className="inicio-mas">
+          <button
+  type="button"
+  className="tienda-acceso"
+  onClick={() => setMasOpen(true)}
+>
+  <span className="tienda-acceso-icono">ℹ️</span>
+
+  <span>
+    <strong>Más información</strong>
+    <small>Horarios, contacto y ubicación</small>
+  </span>
+
+  <b>Entrar →</b>
+</button>
+{masOpen && (
+  <div
+    className="tienda-ventana-fondo"
+    onClick={() => setMasOpen(false)}
+  >
+    <div
+      className="tienda-ventana"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        className="tienda-ventana-cerrar"
+        onClick={() => setMasOpen(false)}
+        aria-label="Cerrar información"
+      >
+        ×
+      </button>
   <span className="inicio-etiqueta">INFORMACIÓN</span>
   <h2>MÁS</h2>
   <p>
     Conoce nuestros horarios, ubicación, contacto y más información de Generales de Chitré.
     </p>
-    <div className="mas-card">
-  <span>HORARIOS DE ENTRENAMIENTO</span>
-  <h3>Prácticas semanales</h3>
-  <p>
-    Lunes, miércoles y viernes<br />
-    4:45 p. m. y 6:00 p. m.<br />
-    Estadio Pepe Osorio de Chitré
-  </p>
-</div>
-<div className="mas-card">
-  <span>CONTACTO</span>
-  <h3>Comunícate con nosotros</h3>
-  <p>
-    WhatsApp: +507 6377-6387
-  </p>
- </div> 
-<div className="mas-card">
-  <span>UBICACIÓN</span>
-  <h3>Estadio Pepe Osorio</h3>
-  <p>
-    Calle Abajo de Chitré, Herrera, Panamá.
-  </p>
-  <a
-  className="noticia-boton"
-  href="https://www.google.com/maps/search/?api=1&query=Estadio+Pepe+Osorio+Chitr%C3%A9+Herrera+Panam%C3%A1"
-  target="_blank"
-  rel="noreferrer"
->
-  ABRIR EN GOOGLE MAPS
-</a>
-</div>
-  <a
-  
-    className="noticia-boton"
-    href="https://wa.me/50763776387"
-    target="_blank"
-    rel="noreferrer"
-  >
-    ESCRIBIR POR WHATSAPP
-  </a>
-
-<div className="mas-card">
-  <span>ADMINISTRACIÓN</span>
-  <h3>Panel Administrativo</h3>
-  <p>
-    Acceso exclusivo para la gestión interna de la academia.
-  </p>
-
+    </div>
+  </div>
+)}
+</section>
+<section className="gestion-acceso-seccion">
   <button
-    className="noticia-boton"
-    onClick={onAdmin}
     type="button"
+    className="tienda-acceso"
+    onClick={onAdmin}
   >
-    ABRIR PANEL ADMINISTRATIVO
+    <span className="tienda-acceso-icono">🔐</span>
+
+    <span>
+      <strong>Gestión de la Academia</strong>
+      <small>
+        Perfiles de jugadores y sus datos. Acceso exclusivo para miembros de la academia y entrenadores.
+      </small>
+    </span>
+
+    <b>Entrar →</b>
   </button>
-</div>
 </section>
       </main>
 
