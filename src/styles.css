@@ -1028,3 +1028,19 @@
     padding-bottom: 82px;
   }
 }
+.bottom-nav .bottom-nav-icon {
+  color: #f2bd25;
+  font-size: 20px;
+  line-height: 1;
+  filter:
+    grayscale(1)
+    sepia(1)
+    saturate(8)
+    brightness(1.2);
+  text-shadow: 0 0 7px rgba(242, 189, 37, 0.45);
+  transition: transform 0.18s ease;
+}
+
+.bottom-nav button:active .bottom-nav-icon {
+  transform: scale(0.88);
+}

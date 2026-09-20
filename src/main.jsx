@@ -1761,7 +1761,8 @@ if (vista === 'inicio') {
     </main>
 
     <nav className="bottom-nav"><button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-  ⌂<span>Inicio</span>
+  <span className="bottom-nav-icon">⌂</span>
+<span>Inicio</span>
 </button><button
   onClick={() =>
     document.querySelector('.roster')?.scrollIntoView({
@@ -1770,7 +1771,8 @@ if (vista === 'inicio') {
     })
   }
 >
-  ⚾<span>Jugadores</span>
+ <span className="bottom-nav-icon">⚾</span>
+<span>Jugadores</span> 
 </button>
 
 <button
@@ -1788,7 +1790,9 @@ if (vista === 'inicio') {
     setLoginOpen(true)
   }}
 >
+  <span className="bottom-nav-icon">
   {isAdmin ? '➕' : session ? '👤' : '🔒'}
+</span>
   <span>
     {isAdmin ? 'Agregar' : session ? 'Mi cuenta' : 'Admin'}
   </span>
@@ -1796,8 +1800,8 @@ if (vista === 'inicio') {
 
 {isAdmin && (
   <button onClick={abrirAcudientes}>
-    👥
-    <span>Acudientes</span>
+    <span className="bottom-nav-icon">👥</span>
+<span>Acudientes</span>
   </button>
 )}
 
