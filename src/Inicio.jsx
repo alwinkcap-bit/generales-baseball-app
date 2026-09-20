@@ -5,9 +5,6 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from './supabase';
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
-import fotoGaleria1 from './public/1000297390.png';
-import fotoGaleria2 from './public/1000250736.png';
-import fotoGaleria3 from './public/1000350600.png';
 const preguntasReto = [
   {
     pregunta: '¿Cuántas bases tiene un campo de béisbol?',
@@ -681,28 +678,7 @@ SÍGUENOS EN INSTAGRAM
     Momentos de entrenamientos, juegos y actividades de Generales de Chitré.
   </p>
   <div className="galeria-grid">
-  <div className="galeria-item">
-  <img
-  src={fotoGaleria1}
-  alt="Cumpleañeros de Generales de Chitré"
-  onClick={() => setImagenAmpliada(fotoGaleria1)}
-/>
-<span className="galeria-nombre">🎂 Cumpleañeros</span>
-</div>
-  <div className="galeria-item">
-  <img
-  src={fotoGaleria2}
-  alt="Beneficios de Generales de Chitré"
-  onClick={() => setImagenAmpliada(fotoGaleria2)}
-/>
-</div>
-  <div className="galeria-item">
-  <img
-  src={fotoGaleria3}
-  alt="Generales de Chitré Baseball Academy"
-  onClick={() => setImagenAmpliada(fotoGaleria3)}
-/>
-</div>
+ 
 {imagenesGaleriaPublica.map((imagen) => (
   <div className="galeria-item" key={imagen.id}>
     <img

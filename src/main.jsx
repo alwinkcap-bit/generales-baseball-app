@@ -474,12 +474,21 @@ async function subirFotoGaleria(e) {
       contentType: archivo.type
     })
 
-  if (uploadError) {
-    setMessage(`No se pudo subir la fotografía: ${uploadError.message}`)
-    setSubiendoGaleria(false)
-    e.target.value = ''
-    return
-  }
+ if (uploadError) {
+  console.error('Error al subir fotografía:', uploadError)
+
+  window.alert(
+    `No se pudo subir la fotografía: ${uploadError.message}`
+  )
+
+  setMessage(
+    `No se pudo subir la fotografía: ${uploadError.message}`
+  )
+
+  setSubiendoGaleria(false)
+  e.target.value = ''
+  return
+}
 
   const { error: registroError } = await supabase
     .from('galeria_jugadores')
@@ -489,16 +498,25 @@ async function subirFotoGaleria(e) {
       titulo: archivo.name
     })
 
-  if (registroError) {
-    await supabase.storage
-      .from('galeria-jugadores')
-      .remove([storagePath])
+ if (registroError) {
+  console.error('Error al registrar fotografía:', registroError)
 
-    setMessage(`No se pudo guardar la fotografía: ${registroError.message}`)
-    setSubiendoGaleria(false)
-    e.target.value = ''
-    return
-  }
+  await supabase.storage
+    .from('galeria-jugadores')
+    .remove([storagePath])
+
+  window.alert(
+    `No se pudo guardar la fotografía: ${registroError.message}`
+  )
+
+  setMessage(
+    `No se pudo guardar la fotografía: ${registroError.message}`
+  )
+
+  setSubiendoGaleria(false)
+  e.target.value = ''
+  return
+}
 
   await loadGaleria(selected.id)
   setMessage('Fotografía agregada correctamente.')
@@ -654,9 +672,11 @@ async function savePremio(e) {
   setSavingPremio(false);
 
   if (error) {
-    setMessage(`No se pudo guardar el premio: ${error.message}`);
-    return;
-  }
+  console.error('Error al guardar premio:', error);
+  window.alert(`No se pudo guardar el premio: ${error.message}`);
+  setMessage(`No se pudo guardar el premio: ${error.message}`);
+  return;
+}
 
   setPremioForm({ premio: '', fecha: '', descripcion: '' });
   setPremioFormOpen(false);
@@ -1430,7 +1450,7 @@ if (vista === 'inicio') {
 
   <div className="stat-card">
     <strong>{selected.hits ?? 0}</strong>
-    <span>Hits</span>
+    <span>Imparables</span>
   </div>
 
   <div className="stat-card">
@@ -1445,7 +1465,7 @@ if (vista === 'inicio') {
 
   <div className="stat-card">
     <strong>{selected.home_runs ?? 0}</strong>
-    <span>Home Runs</span>
+    <span>Jonrones</span>
   </div>
 </div>
 <div className="stat-card">
@@ -1454,7 +1474,7 @@ if (vista === 'inicio') {
     ? (Number(selected.hits || 0) / Number(selected.turnos_bate)).toFixed(3).replace(/^0/, '')
     : '.000'}
 </strong>
-  <span>AVG</span>
+  <span>Promedio</span>
 </div>
     </div>
   </div>
@@ -2149,13 +2169,13 @@ if (vista === 'inicio') {
 
 <label>Turnos al bate<input type="number" min="0" value={form.turnos_bate ?? 0} onChange={e=>setForm({...form,turnos_bate:e.target.value})}/></label>
 
-<label>Hits<input type="number" min="0" value={form.hits ?? 0} onChange={e=>setForm({...form,hits:e.target.value})}/></label>
+<label>Imparables<input type="number" min="0" value={form.hits ?? 0} onChange={e=>setForm({...form,hits:e.target.value})}/></label>
 
 <label>Carreras<input type="number" min="0" value={form.carreras ?? 0} onChange={e=>setForm({...form,carreras:e.target.value})}/></label>
 
 <label>RBI<input type="number" min="0" value={form.rbi ?? 0} onChange={e=>setForm({...form,rbi:e.target.value})}/></label>
 
-<label>Home Runs<input type="number" min="0" value={form.home_runs ?? 0} onChange={e=>setForm({...form,home_runs:e.target.value})}/></label>
+<label>Jonrones<input type="number" min="0" value={form.home_runs ?? 0} onChange={e=>setForm({...form,home_runs:e.target.value})}/></label>
         <label className="wide">Notas<textarea rows="4" value={form.notas ?? ''} onChange={e=>setForm({...form,notas:e.target.value})}/></label>
       </div><button className="primary full">Guardar jugador</button></form></div>}
   </div>
