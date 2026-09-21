@@ -1,17 +1,51 @@
 import React, { useState } from 'react'
 import './MemoriaBeisbol.css'
 
-const parejasNivel1 = [
+const conceptos = [
   { nombre: 'Pelota', icono: '⚾' },
   { nombre: 'Bate', icono: '🏏' },
   { nombre: 'Guante', icono: '🧤' },
   { nombre: 'Gorra', icono: '🧢' },
   { nombre: 'Trofeo', icono: '🏆' },
   { nombre: 'Estadio', icono: '🏟️' },
+  { nombre: 'Árbitro', icono: '👨‍⚖️' },
+  { nombre: 'Base', icono: '⬜' },
+  { nombre: 'Carrera', icono: '🏃' },
+  { nombre: 'Equipo', icono: '👥' },
+  { nombre: 'Entrenador', icono: '📋' },
+  { nombre: 'Uniforme', icono: '👕' },
+  { nombre: 'Casco', icono: '⛑️' },
+  { nombre: 'Marcador', icono: '🔢' },
+  { nombre: 'Banderín', icono: '🚩' },
+  { nombre: 'Medalla', icono: '🥇' },
+  { nombre: 'Hidratación', icono: '💧' },
+  { nombre: 'Fuerza', icono: '💪' },
+  { nombre: 'Respeto', icono: '🤝' },
+  { nombre: 'Disciplina', icono: '⏱️' },
+  { nombre: 'Precisión', icono: '🎯' },
+  { nombre: 'Velocidad', icono: '⚡' },
+  { nombre: 'Victoria', icono: '⭐' },
+  { nombre: 'Defensa', icono: '🛡️' },
+  { nombre: 'Ataque', icono: '🔥' },
+  { nombre: 'Corredor', icono: '🏃‍♂️' },
+  { nombre: 'Afición', icono: '📣' },
+  { nombre: 'Calendario', icono: '📅' },
+  { nombre: 'Academia', icono: '🏫' },
+  { nombre: 'Campeón', icono: '👑' },
 ]
 
-function crearCartas() {
-  return [...parejasNivel1, ...parejasNivel1]
+function obtenerParejas(nivel) {
+  const inicio = ((nivel - 1) * 7) % conceptos.length
+
+  return Array.from({ length: 6 }, (_, indice) => {
+    return conceptos[(inicio + indice) % conceptos.length]
+  })
+}
+
+function crearCartas(nivel) {
+  const parejas = obtenerParejas(nivel)
+
+  return [...parejas, ...parejas]
     .map((pareja, indice) => ({
       ...pareja,
       id: `${pareja.nombre}-${indice}`,
@@ -21,10 +55,19 @@ function crearCartas() {
 }
 
 export default function MemoriaBeisbol({ onCerrar }) {
-  const [cartas, setCartas] = useState(crearCartas)
+  const [nivel, setNivel] = useState(1)
+  const [cartas, setCartas] = useState(() => crearCartas(1))
   const [seleccionadas, setSeleccionadas] = useState([])
   const [movimientos, setMovimientos] = useState(0)
   const [bloqueado, setBloqueado] = useState(false)
+
+  const prepararNivel = (nuevoNivel) => {
+    setNivel(nuevoNivel)
+    setCartas(crearCartas(nuevoNivel))
+    setSeleccionadas([])
+    setMovimientos(0)
+    setBloqueado(false)
+  }
 
   const elegirCarta = (carta) => {
     if (
@@ -62,13 +105,17 @@ export default function MemoriaBeisbol({ onCerrar }) {
   }
 
   const reiniciar = () => {
-    setCartas(crearCartas())
-    setSeleccionadas([])
-    setMovimientos(0)
-    setBloqueado(false)
+    prepararNivel(nivel)
   }
 
-  const completado = cartas.every((carta) => carta.encontrada)
+  const siguienteNivel = () => {
+    if (nivel < 30) {
+      prepararNivel(nivel + 1)
+    }
+  }
+
+  const completado =
+    cartas.length > 0 && cartas.every((carta) => carta.encontrada)
 
   return (
     <div className="memoria-ventana-fondo">
@@ -84,7 +131,9 @@ export default function MemoriaBeisbol({ onCerrar }) {
 
         <p className="memoria-etiqueta">JUEGO EDUCATIVO</p>
         <h2>🧠 Memoria de Béisbol</h2>
-        <p>Nivel 1 de 30 · Movimientos: {movimientos}</p>
+        <p>
+          Nivel {nivel} de 30 · Movimientos: {movimientos}
+        </p>
 
         <div className="memoria-tablero">
           {cartas.map((carta) => {
@@ -114,8 +163,27 @@ export default function MemoriaBeisbol({ onCerrar }) {
 
         {completado && (
           <div className="memoria-completado">
-            <strong>🎉 ¡Nivel completado!</strong>
-            <span>Encontraste todas las parejas.</span>
+            <strong>
+              {nivel === 30
+                ? '🏆 ¡Completaste los 30 niveles!'
+                : '🎉 ¡Nivel completado!'}
+            </strong>
+
+            <span>
+              {nivel === 30
+                ? 'Eres un campeón de la memoria.'
+                : 'Encontraste todas las parejas.'}
+            </span>
+
+            {nivel < 30 && (
+              <button
+                type="button"
+                className="memoria-siguiente"
+                onClick={siguienteNivel}
+              >
+                Siguiente nivel →
+              </button>
+            )}
           </div>
         )}
 
