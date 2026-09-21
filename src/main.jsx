@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { supabase } from './supabase'
 import './styles.css'
 import Inicio from './Inicio'
+import Bienvenida from './Bienvenida'
 import Registro from './Registro';
 import EntrenadoresAdmin from './EntrenadoresAdmin'
 import EntrenadoresPublicos from './EntrenadoresPublicos'
@@ -24,6 +25,7 @@ function edad(fecha) {
 function App() {
   const [tabActiva, setTabActiva] = useState('resumen');
   const [vista, setVista] = useState('inicio')
+  const [bienvenidaOpen, setBienvenidaOpen] = useState(true)
   const [players, setPlayers] = useState([])
   const [inscripciones, setInscripciones] = useState([])
 const [loadingInscripciones, setLoadingInscripciones] = useState(false)
@@ -968,6 +970,13 @@ if (password !== confirmacion) {
   setSelected(null)
   setHistorial([])
   setPremios([])
+}
+if (bienvenidaOpen) {
+  return (
+    <Bienvenida
+      onEntrar={() => setBienvenidaOpen(false)}
+    />
+  )
 }
 if (vista === 'registro') {
   return <Registro onVolver={() => setVista('inicio')} />;

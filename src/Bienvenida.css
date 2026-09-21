@@ -1,0 +1,294 @@
+.bienvenida {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 30px 18px;
+  overflow: hidden;
+  color: white;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 25%, rgba(255, 184, 0, 0.2), transparent 30%),
+    linear-gradient(145deg, #020c17 0%, #081b30 48%, #0e3654 100%);
+  box-sizing: border-box;
+}
+
+.bienvenida::before,
+.bienvenida::after {
+  position: absolute;
+  content: "";
+  width: 340px;
+  height: 340px;
+  border: 2px solid rgba(255, 184, 0, 0.16);
+  border-radius: 50%;
+}
+
+.bienvenida::before {
+  top: -190px;
+  left: -130px;
+}
+
+.bienvenida::after {
+  right: -150px;
+  bottom: -210px;
+}
+
+.bienvenida-luces {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      115deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.04) 50%,
+      transparent 75%
+    );
+  animation: bienvenidaLuz 5s ease-in-out infinite;
+}
+
+.bienvenida-contenido {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 580px);
+  padding: 36px 28px;
+  background: rgba(4, 23, 40, 0.72);
+  border: 2px solid #ffb800;
+  border-radius: 28px;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.45),
+    0 0 40px rgba(255, 184, 0, 0.12);
+  backdrop-filter: blur(8px);
+  animation: bienvenidaEntrada 0.8s ease both;
+}
+
+.bienvenida-logo {
+  width: min(220px, 55vw);
+  max-height: 230px;
+  object-fit: contain;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.45));
+  animation: bienvenidaLogo 3s ease-in-out infinite;
+}
+
+.bienvenida-etiqueta {
+  display: block;
+  margin-bottom: 12px;
+  color: #ffb800;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 5px;
+}
+
+.bienvenida h1 {
+  margin: 0;
+  font-size: clamp(32px, 6vw, 56px);
+  line-height: 0.98;
+  text-transform: uppercase;
+  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.45);
+}
+
+.bienvenida h1 small {
+  display: block;
+  margin-top: 13px;
+  color: #ffb800;
+  font-size: 0.42em;
+  letter-spacing: 4px;
+}
+
+.bienvenida-lema {
+  margin: 23px 0;
+  font-size: clamp(16px, 3vw, 21px);
+  font-style: italic;
+  font-weight: 700;
+}
+
+.bienvenida-boton {
+  width: min(100%, 360px);
+  min-height: 56px;
+  padding: 13px 22px;
+  color: #071827;
+  font-size: 15px;
+  font-weight: 950;
+  letter-spacing: 1px;
+  background: linear-gradient(145deg, #ffd76a, #ffb800);
+  border: 2px solid white;
+  border-radius: 15px;
+  box-shadow: 0 10px 24px rgba(255, 184, 0, 0.25);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bienvenida-boton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(255, 184, 0, 0.4);
+}
+
+.bienvenida-pie {
+  position: absolute;
+  z-index: 2;
+  bottom: 18px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+@keyframes bienvenidaEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bienvenidaLogo {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes bienvenidaLuz {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateX(-20%);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: translateX(20%);
+  }
+}
+
+@media (max-width: 600px) {
+  .bienvenida {
+    padding: 15px 12px;
+  }
+
+  .bienvenida-contenido {
+    padding: 28px 16px;
+    border-radius: 22px;
+  }
+
+  .bienvenida-logo {
+    width: min(180px, 48vw);
+    margin-bottom: 14px;
+  }
+
+  .bienvenida-etiqueta {
+    font-size: 11px;
+    letter-spacing: 4px;
+  }
+
+  .bienvenida-pie {
+    bottom: 10px;
+    font-size: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bienvenida-contenido,
+  .bienvenida-logo,
+  .bienvenida-luces {
+    animation: none;
+  }
+}
+/* BIENVENIDA AUTOMÁTICA SIN VENTANA */
+.bienvenida-contenido {
+  padding: 20px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+.bienvenida-etiqueta {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.bienvenida-logo {
+  display: block;
+  width: min(280px, 68vw);
+  margin: 0 auto 24px;
+}
+
+.bienvenida h1 {
+  font-size: clamp(30px, 7vw, 58px);
+}
+
+.bienvenida h1 small {
+  font-size: 0.4em;
+}
+/* ENTRADA ESPECIAL DEL LOGO */
+.bienvenida {
+  animation: despedirBienvenida 5s ease both;
+}
+
+.bienvenida-logo {
+  animation: entradaLogo 1.6s cubic-bezier(0.2, 0.9, 0.3, 1.2) both !important;
+}
+
+.bienvenida-etiqueta {
+  animation: aparecerTexto 0.8s ease 0.5s both;
+}
+
+.bienvenida h1 {
+  animation: aparecerTexto 0.9s ease 1s both;
+}
+
+@keyframes entradaLogo {
+  0% {
+    opacity: 0;
+    transform: scale(0.35) translateY(35px);
+    filter: blur(10px) drop-shadow(0 0 0 transparent);
+  }
+
+  65% {
+    opacity: 1;
+    transform: scale(1.1) translateY(-5px);
+    filter: blur(0) drop-shadow(0 0 30px rgba(255, 184, 0, 0.65));
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0) drop-shadow(0 12px 20px rgba(0, 0, 0, 0.45));
+  }
+}
+
+@keyframes aparecerTexto {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes despedirBienvenida {
+  0%,
+  88% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
