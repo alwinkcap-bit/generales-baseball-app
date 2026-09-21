@@ -333,6 +333,10 @@ export default function SopaLetras({ onCerrar }) {
                   <button
                     type="button"
                     key={clave}
+                    style={{
+  gridColumn: indiceColumna + 1,
+  gridRow: indiceFila + 1
+}}
                     className={[
                       'sopa-celda',
                       seleccionada ? 'seleccionada' : '',
