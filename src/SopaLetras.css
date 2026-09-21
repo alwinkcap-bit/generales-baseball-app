@@ -398,3 +398,41 @@
 .sopa-tablero {
   grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
 }
+/* TAMAÑO EQUILIBRADO DE SOPA DE LETRAS */
+.sopa-ventana {
+  width: min(94vw, 860px);
+  max-height: 92vh;
+  padding: 22px;
+}
+
+.sopa-tablero {
+  width: min(100%, 520px) !important;
+}
+
+@media (max-width: 600px) {
+  .sopa-ventana {
+    width: 100%;
+    min-height: 100vh;
+    max-height: 100vh;
+    padding: 12px 8px 82px;
+  }
+
+  .sopa-tablero {
+    width: min(100%, 390px) !important;
+    gap: 3px;
+    padding: 6px;
+  }
+
+  .sopa-celda {
+    font-size: clamp(13px, 3.8vw, 17px) !important;
+    border-radius: 5px;
+  }
+
+  .sopa-encabezado h2 {
+    font-size: 24px;
+  }
+
+  .sopa-palabras {
+    width: min(100%, 390px) !important;
+  }
+}

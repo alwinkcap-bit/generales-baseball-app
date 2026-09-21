@@ -282,3 +282,45 @@
   display: block;
   transform: none;
 }
+/* TAMAÑO EQUILIBRADO DEL JUEGO DE MEMORIA */
+.memoria-juego {
+  width: min(94vw, 760px);
+  min-height: auto;
+  padding: 54px 24px 30px;
+}
+
+.memoria-juego .memoria-tablero {
+  grid-template-columns: repeat(4, minmax(0, 108px)) !important;
+  gap: 12px;
+  margin: 20px auto;
+}
+
+@media (max-width: 600px) {
+  .memoria-ventana-fondo {
+    padding: 5px;
+  }
+
+  .memoria-juego {
+    width: 100%;
+    min-height: calc(100vh - 10px);
+    padding: 62px 10px 25px;
+  }
+
+  .memoria-juego .memoria-tablero {
+    grid-template-columns: repeat(3, minmax(0, 94px)) !important;
+    gap: 9px;
+    margin: 18px auto;
+  }
+
+  .memoria-juego .memoria-carta {
+    border-radius: 13px;
+  }
+
+  .memoria-carta > span {
+    font-size: clamp(27px, 8vw, 38px);
+  }
+
+  .memoria-carta small {
+    font-size: 9px;
+  }
+}

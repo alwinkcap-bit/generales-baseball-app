@@ -340,6 +340,7 @@ SÍGUENOS EN INSTAGRAM
     </>
   )}
   </section>
+
 <section className="juegos-acceso-seccion">
   <button
     type="button"
@@ -577,7 +578,23 @@ SÍGUENOS EN INSTAGRAM
     a lo largo de sus trayectorias en este deporte.
   </p>
 </section>
-        <section id="noticias" className="inicio-noticias">
+<section className="programas-acceso-seccion">
+  <button
+    type="button"
+    className="tienda-acceso"
+    onClick={() => setProgramasOpen(true)}
+  >
+    <span className="tienda-acceso-icono">⚾</span>
+
+    <span>
+      <strong>Programas de formación</strong>
+      <small>Ver categorías y metodología</small>
+    </span>
+
+    <b>Entrar →</b>
+  </button>
+</section>
+        <section className="programas-acceso-seccion inicio-noticias">
           <button
   type="button"
   className="tienda-acceso"
