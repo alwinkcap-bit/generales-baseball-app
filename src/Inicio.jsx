@@ -597,7 +597,7 @@ SÍGUENOS EN INSTAGRAM
         <section className="programas-acceso-seccion inicio-noticias">
           <button
   type="button"
-  className="tienda-acceso"
+  className="tienda-acceso gestion-acceso"
   onClick={() => setNoticiasOpen(true)}
 >
   <span className="tienda-acceso-icono">📰</span>
@@ -1135,6 +1135,7 @@ SÍGUENOS EN INSTAGRAM
 
   <b>Ver perfiles →</b>
 </button>
+<div style={{ height: '16px' }}></div>
   <button
     type="button"
     className="tienda-acceso"

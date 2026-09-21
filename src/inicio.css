@@ -1484,3 +1484,73 @@
     font-size: 13px;
   }
 }
+/* ALINEAR BOTONES PRINCIPALES */
+.programas-acceso-seccion,
+#noticias,
+#galeria,
+#tienda,
+#mas {
+  width: calc(100% - 32px) !important;
+  max-width: none !important;
+  margin: 24px 16px !important;
+}
+
+.programas-acceso-seccion .tienda-acceso,
+#noticias .tienda-acceso,
+#galeria .tienda-acceso,
+#tienda .tienda-acceso,
+#mas .tienda-acceso {
+  width: 100% !important;
+  min-height: 84px !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+/* IGUALAR DISTANCIA ENTRE BOTONES */
+#noticias,
+#galeria,
+#tienda,
+#mas {
+  margin-top: 18px !important;
+  margin-bottom: 18px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  min-height: auto !important;
+}
+/* UNIFICAR TODOS LOS BOTONES PRINCIPALES */
+section:has(> .tienda-acceso) {
+  width: calc(100% - 32px) !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 16px auto !important;
+  padding: 0 !important;
+  box-sizing: border-box;
+}
+
+section:has(> .tienda-acceso) > .tienda-acceso {
+  width: 100% !important;
+  min-height: 84px !important;
+  height: 84px !important;
+  margin: 0 !important;
+  padding: 14px 18px !important;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  section:has(> .tienda-acceso) {
+    width: calc(100% - 24px) !important;
+    margin: 12px auto !important;
+  }
+
+  section:has(> .tienda-acceso) > .tienda-acceso {
+    min-height: 84px !important;
+    height: 84px !important;
+  }
+}
+/* SEPARAR ENTRENADORES Y GESTIÓN */
+.tienda-acceso + .tienda-acceso {
+  margin-top: 16px !important;
+}
+/* SEPARACIÓN DEL BOTÓN GESTIÓN */
+section:has(> .tienda-acceso) > .tienda-acceso.gestion-acceso {
+  margin-top: 16px !important;
+}
