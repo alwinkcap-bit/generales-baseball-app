@@ -295,3 +295,9 @@
     font-size: 12px;
   }
 }
+/* CORRECCIÓN DE LA CUADRÍCULA */
+.inicio-valores .sopa-tablero {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: stretch;
+}
