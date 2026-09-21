@@ -5,69 +5,280 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 24px;
-  background:
-    radial-gradient(circle at top left, rgba(245, 179, 1, 0.18), transparent 35%),
-    rgba(2, 12, 24, 0.94);
+  padding: 18px;
   overflow-y: auto;
+  background:
+    radial-gradient(circle at 50% 110%, rgba(31, 125, 65, 0.55), transparent 42%),
+    linear-gradient(rgba(2, 12, 24, 0.88), rgba(2, 12, 24, 0.96)),
+    repeating-linear-gradient(
+      90deg,
+      #176b3a 0,
+      #176b3a 55px,
+      #1d7b44 55px,
+      #1d7b44 110px
+    );
 }
 
 .memoria-juego {
   position: relative;
   width: min(900px, 100%);
-  min-height: 520px;
+  min-height: calc(100vh - 36px);
   margin: auto;
-  padding: 55px 30px 40px;
+  padding: 58px 28px 35px;
+  overflow: hidden;
   color: white;
   text-align: center;
-  background: linear-gradient(145deg, #0c2944, #071827);
+  background:
+    radial-gradient(circle at top, rgba(30, 84, 129, 0.45), transparent 40%),
+    linear-gradient(145deg, #0d2944, #061522);
   border: 2px solid #f5b301;
-  border-radius: 24px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+  border-radius: 26px;
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.65),
+    inset 0 0 35px rgba(245, 179, 1, 0.06);
+}
+
+.memoria-juego::before {
+  content: "";
+  position: absolute;
+  top: -130px;
+  left: 50%;
+  width: 420px;
+  height: 250px;
+  border: 2px solid rgba(245, 179, 1, 0.12);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .memoria-cerrar {
   position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 46px;
-  height: 46px;
+  top: 17px;
+  right: 17px;
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  padding: 0;
   color: #071827;
-  font-size: 22px;
+  font-size: 25px;
   font-weight: 900;
-  background: #f5b301;
+  line-height: 1;
+  background: linear-gradient(145deg, #ffd663, #f5b301);
   border: none;
   border-radius: 50%;
+  box-shadow: 0 6px 16px rgba(245, 179, 1, 0.3);
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.memoria-cerrar:hover {
+  transform: scale(1.08);
 }
 
 .memoria-etiqueta {
-  margin: 0 0 12px;
+  position: relative;
+  margin: 0 0 10px;
   color: #f5b301;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 900;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
 }
 
 .memoria-juego h2 {
-  margin: 0 0 14px;
+  position: relative;
+  margin: 0 0 10px;
   color: white;
-  font-size: clamp(28px, 5vw, 44px);
+  font-size: clamp(27px, 5vw, 44px);
+  line-height: 1.15;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
 }
 
-.memoria-juego p {
+.memoria-juego > p:not(.memoria-etiqueta) {
+  position: relative;
+  display: inline-block;
+  margin: 5px 0 8px;
+  padding: 8px 16px;
   color: white;
-  font-size: 17px;
+  font-size: 16px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(245, 179, 1, 0.25);
+  border-radius: 999px;
+}
+
+.memoria-juego .memoria-tablero {
+  position: relative;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 105px)) !important;
+  justify-content: center;
+  width: 100% !important;
+  margin: 24px auto;
+  gap: 11px;
+}
+
+.memoria-juego .memoria-carta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100% !important;
+  min-width: 0 !important;
+  aspect-ratio: 1;
+  padding: 6px;
+  overflow: hidden;
+  color: #f5b301;
+  background:
+    radial-gradient(circle at 30% 20%, #1e527d, transparent 42%),
+    linear-gradient(145deg, #123d62, #071827);
+  border: 2px solid #f5b301;
+  border-radius: 17px;
+  box-shadow:
+    0 8px 16px rgba(0, 0, 0, 0.38),
+    inset 0 0 18px rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+}
+
+.memoria-carta:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 12px 20px rgba(0, 0, 0, 0.45),
+    0 0 14px rgba(245, 179, 1, 0.2);
+}
+
+.memoria-carta > span {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(28px, 7vw, 45px);
+  font-weight: 1000;
+  line-height: 1;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+}
+
+.memoria-carta small {
+  position: relative;
+  z-index: 1;
+  margin-top: 7px;
+  color: #071827;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.memoria-carta-visible {
+  color: #071827;
+  background:
+    radial-gradient(circle at 30% 20%, #ffe699, transparent 40%),
+    linear-gradient(145deg, #ffd86b, #f5b301) !important;
+  border-color: white !important;
+  transform: rotateY(180deg);
+  box-shadow:
+    0 10px 22px rgba(245, 179, 1, 0.38),
+    inset 0 0 18px rgba(255, 255, 255, 0.4) !important;
+}
+
+.memoria-carta-visible > span,
+.memoria-carta-visible small {
+  transform: rotateY(180deg);
+}
+
+.memoria-carta:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.memoria-completado {
+  display: grid;
+  gap: 5px;
+  width: min(100%, 560px);
+  margin: 18px auto;
+  padding: 17px;
+  color: #071827;
+  background: linear-gradient(145deg, #ffe183, #f5b301);
+  border: 2px solid white;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(245, 179, 1, 0.3);
+  animation: memoria-celebrar 0.55s ease;
+}
+
+.memoria-completado strong {
+  font-size: 20px;
+}
+
+.memoria-reiniciar {
+  padding: 13px 25px;
+  color: #071827;
+  font-size: 15px;
+  font-weight: 900;
+  background: linear-gradient(145deg, #ffd663, #f5b301);
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: 13px;
+  box-shadow: 0 7px 17px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.memoria-reiniciar:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes memoria-celebrar {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (min-width: 700px) {
+  .memoria-juego .memoria-tablero {
+    grid-template-columns: repeat(4, minmax(0, 125px)) !important;
+    gap: 15px;
+  }
 }
 
 @media (max-width: 600px) {
   .memoria-ventana-fondo {
-    padding: 10px;
+    padding: 7px;
   }
 
   .memoria-juego {
-    min-height: calc(100vh - 20px);
-    padding: 70px 18px 30px;
-    border-radius: 18px;
+    min-height: calc(100vh - 14px);
+    padding: 67px 12px 28px;
+    border-radius: 19px;
   }
+
+  .memoria-cerrar {
+    top: 13px;
+    right: 13px;
+  }
+
+  .memoria-juego .memoria-tablero {
+    gap: 9px;
+  }
+
+  .memoria-juego .memoria-carta {
+    border-radius: 14px;
+  }
+
+  .memoria-carta small {
+    font-size: 9px;
+  }
+}
+.memoria-carta-visible {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.memoria-carta-visible > span,
+.memoria-carta-visible small {
+  display: block;
+  transform: none;
 }
