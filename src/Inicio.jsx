@@ -4,35 +4,9 @@ import './inicio.css';
 import React, { useEffect, useState } from 'react';
 import { supabase } from './supabase';
 import SopaLetras from './SopaLetras'
+import preguntasReto from './PreguntasReto'
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
-const preguntasReto = [
-  {
-    pregunta: '¿Cuántas bases tiene un campo de béisbol?',
-    opciones: ['Dos', 'Tres', 'Cuatro'],
-    correcta: 2,
-  },
-  {
-    pregunta: '¿Con qué se golpea la pelota?',
-    opciones: ['Con un bate', 'Con un guante', 'Con un casco'],
-    correcta: 0,
-  },
-  {
-    pregunta: '¿Qué usamos para proteger la cabeza al batear?',
-    opciones: ['Una gorra', 'Un casco', 'Un guante'],
-    correcta: 1,
-  },
-  {
-    pregunta: 'Si un compañero se equivoca, ¿qué hacemos?',
-    opciones: ['Nos burlamos', 'Lo animamos', 'Lo ignoramos'],
-    correcta: 1,
-  },
-  {
-    pregunta: '¿Qué hacemos cuando el entrenador explica?',
-    opciones: ['Escuchamos con atención', 'Interrumpimos', 'Nos alejamos'],
-    correcta: 0,
-  },
-];
 export default function Inicio({
   onAdmin,
   onEntrenadores,
