@@ -43,6 +43,7 @@ export default function Inicio({
   const [galeriaOpen, setGaleriaOpen] = useState(false)
   const [noticiasOpen, setNoticiasOpen] = useState(false)
   const [masOpen, setMasOpen] = useState(false)
+  const [sopaLetrasOpen, setSopaLetrasOpen] = useState(false)
  const [imagenesGaleriaPublica, setImagenesGaleriaPublica] = useState([])
 
 useEffect(() => {
@@ -361,7 +362,7 @@ SÍGUENOS EN INSTAGRAM
     </>
   )}
   </section>
-<section id="programas" className="programas-acceso-seccion">
+<section className="programas-acceso-seccion">
   <button
     type="button"
     className="tienda-acceso"
@@ -375,6 +376,22 @@ SÍGUENOS EN INSTAGRAM
     </span>
 
     <b>Entrar →</b>
+  </button>
+</section>
+<section className="juegos-acceso-seccion">
+  <button
+    type="button"
+    className="juego-acceso"
+    onClick={() => setSopaLetrasOpen(true)}
+  >
+    <span className="juego-acceso-icono">🔎</span>
+
+    <span className="juego-acceso-texto">
+      <strong>Sopa de letras</strong>
+      <small>100 niveles con palabras de béisbol</small>
+    </span>
+
+    <b>Jugar →</b>
   </button>
 </section>
 {programasOpen && (

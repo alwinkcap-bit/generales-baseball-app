@@ -34,7 +34,6 @@ const [jugadoresOpen, setJugadoresOpen] = useState(false)
   const [session, setSession] = useState(null)
   const adminIds = [
   '8b718847-f2ad-43a4-a26f-4a695138dcb8',
-  '57a0147a-6c4b-4dcb-99d6-a4989fa8f731',
 ]
 const isAdmin = adminIds.includes(session?.user?.id)
   const [loginOpen, setLoginOpen] = useState(false)

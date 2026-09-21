@@ -1223,3 +1223,139 @@
   padding-left: 45px;
   padding-right: 45px;
 }
+/* ADAPTACIÓN EXCLUSIVA PARA TABLET */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .inicio-valores {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 24px;
+    padding: 40px 6% 110px;
+  }
+
+  .inicio-valores > #reto-digital,
+  .inicio-valores > .programas-acceso-seccion {
+    width: min(100%, 680px);
+  }
+
+  .programas-acceso-seccion .tienda-acceso {
+    width: 100%;
+  }
+}
+
+/* ADAPTACIÓN EXCLUSIVA PARA COMPUTADORA */
+@media (min-width: 1025px) {
+  .inicio-valores {
+    grid-template-columns: minmax(380px, 460px) minmax(420px, 540px);
+    justify-content: center;
+    align-items: start;
+    gap: 32px;
+    padding: 48px 6% 120px;
+  }
+
+  .inicio-valores > #reto-digital,
+  .inicio-valores > .programas-acceso-seccion {
+    width: 100%;
+  }
+
+  .inicio-valores > #reto-digital {
+    border: 1px solid rgba(242, 185, 59, 0.45);
+    border-radius: 18px;
+  }
+
+  .programas-acceso-seccion .tienda-acceso {
+    width: 100%;
+    min-height: 132px;
+  }
+}
+/* ACCESO A JUEGOS EDUCATIVOS */
+.juegos-acceso-seccion {
+  width: 100%;
+}
+
+.juego-acceso {
+  width: 100%;
+  min-height: 132px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--dorado);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #123451, #0a2238);
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
+}
+
+.juego-acceso:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.32);
+}
+
+.juego-acceso-icono {
+  flex: 0 0 50px;
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--dorado);
+  font-size: 25px;
+}
+
+.juego-acceso-texto {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.juego-acceso-texto strong {
+  color: var(--dorado);
+  font-size: 18px;
+}
+
+.juego-acceso-texto small {
+  color: white;
+  font-size: 13px;
+}
+
+.juego-acceso b {
+  color: var(--dorado);
+  white-space: nowrap;
+}
+
+/* UBICACIÓN EN TABLET */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .inicio-valores > .juegos-acceso-seccion {
+    width: min(100%, 680px);
+  }
+}
+
+/* UBICACIÓN EN COMPUTADORA */
+@media (min-width: 1025px) {
+  .inicio-valores > .juegos-acceso-seccion {
+    grid-column: 2;
+    width: 100%;
+    margin-top: -300px;
+  }
+}
+
+/* PROTECCIÓN DE LA VISTA MÓVIL */
+@media (max-width: 600px) {
+  .juego-acceso {
+    min-height: 110px;
+    padding: 14px;
+  }
+
+  .juego-acceso-icono {
+    flex-basis: 44px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .juego-acceso-texto strong {
+    font-size: 16px;
+  }
+}
