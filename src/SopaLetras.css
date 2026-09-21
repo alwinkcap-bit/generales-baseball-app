@@ -295,9 +295,102 @@
     font-size: 12px;
   }
 }
-/* CORRECCIÓN DE LA CUADRÍCULA */
-.inicio-valores .sopa-tablero {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  align-items: stretch;
+/* CORRECCIÓN DEFINITIVA DEL TABLERO */
+.sopa-tablero {
+  display: grid !important;
+  grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+  grid-auto-flow: row !important;
+  flex-direction: initial !important;
+  align-items: stretch !important;
+  justify-items: stretch !important;
+}
+
+.sopa-tablero .sopa-celda {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+/* CONTENIDO ORGANIZADO VERTICALMENTE */
+.sopa-contenido {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 18px !important;
+}
+
+/* FONDO MÁS ILUSTRADO */
+.sopa-ventana {
+  background:
+    radial-gradient(
+      circle at 8% 15%,
+      rgba(242, 185, 59, 0.22),
+      transparent 23%
+    ),
+    radial-gradient(
+      circle at 92% 80%,
+      rgba(37, 112, 165, 0.35),
+      transparent 28%
+    ),
+    linear-gradient(145deg, #061522, #0d2c47 55%, #081b30);
+}
+
+/* MARCA DE AGUA DEL JUEGO */
+.sopa-ventana::before {
+  content: "GENERALES BASEBALL PUZZLES";
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  width: 90%;
+  transform: translate(-50%, -50%) rotate(-12deg);
+  color: #f2b93b;
+  font-size: clamp(38px, 7vw, 90px);
+  font-weight: 950;
+  line-height: 1.05;
+  letter-spacing: 5px;
+  text-align: center;
+  opacity: 0.055;
+  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* LISTADO HORIZONTAL DE PALABRAS */
+.sopa-palabras {
+  width: min(100%, 760px) !important;
+  margin: 0 auto !important;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(18, 52, 81, 0.96),
+      rgba(8, 27, 48, 0.96)
+    ) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.sopa-palabras > div {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+.sopa-palabras span {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border: 1px solid rgba(242, 185, 59, 0.35);
+  background: linear-gradient(145deg, #1b4567, #123451);
+  color: white;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.22);
+}
+
+/* TELÉFONOS */
+@media (max-width: 600px) {
+  .sopa-palabras > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .sopa-ventana::before {
+    right: 10px;
+    font-size: 100px;
+  }
 }
