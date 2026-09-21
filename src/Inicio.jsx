@@ -7,6 +7,7 @@ import SopaLetras from './SopaLetras'
 import preguntasReto from './PreguntasReto'
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
+
 export default function Inicio({
   onAdmin,
   onEntrenadores,
@@ -19,6 +20,7 @@ export default function Inicio({
   const [noticiasOpen, setNoticiasOpen] = useState(false)
   const [masOpen, setMasOpen] = useState(false)
   const [sopaLetrasOpen, setSopaLetrasOpen] = useState(false)
+  const [memoriaOpen, setMemoriaOpen] = useState(false)
  const [imagenesGaleriaPublica, setImagenesGaleriaPublica] = useState([])
 
 useEffect(() => {
@@ -337,22 +339,6 @@ SÍGUENOS EN INSTAGRAM
     </>
   )}
   </section>
-<section className="programas-acceso-seccion">
-  <button
-    type="button"
-    className="tienda-acceso"
-    onClick={() => setProgramasOpen(true)}
-  >
-    <span className="tienda-acceso-icono">⚾</span>
-
-    <span>
-      <strong>Programas de formación</strong>
-      <small>Ver categorías y metodología</small>
-    </span>
-
-    <b>Entrar →</b>
-  </button>
-</section>
 <section className="juegos-acceso-seccion">
   <button
     type="button"
@@ -364,6 +350,40 @@ SÍGUENOS EN INSTAGRAM
     <span className="juego-acceso-texto">
       <strong>Sopa de letras</strong>
       <small>100 niveles con palabras de béisbol</small>
+    </span>
+
+    <b>Jugar →</b>
+  </button>
+
+  <button
+    type="button"
+    className="juego-acceso"
+    onClick={() => setMemoriaOpen(true)}
+  >
+    <span className="juego-acceso-icono">🧠</span>
+
+    <span className="juego-acceso-texto">
+      <strong>Memoria de Béisbol</strong>
+      <small>30 niveles para encontrar parejas</small>
+    </span>
+
+    <b>Jugar →</b>
+  </button>
+</section>
+
+<section className="memoria-acceso-seccion">
+  <button
+    type="button"
+    className="juego-acceso"
+    onClick={() =>
+      window.alert('Memoria de Béisbol: próximamente')
+    }
+  >
+    <span className="juego-acceso-icono">🧠</span>
+
+    <span className="juego-acceso-texto">
+      <strong>Memoria de Béisbol</strong>
+      <small>30 niveles para encontrar parejas</small>
     </span>
 
     <b>Jugar →</b>
