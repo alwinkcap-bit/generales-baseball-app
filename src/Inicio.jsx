@@ -4,6 +4,7 @@ import './inicio.css';
 import React, { useEffect, useState } from 'react';
 import { supabase } from './supabase';
 import SopaLetras from './SopaLetras'
+import MemoriaBeisbol from './MemoriaBeisbol'
 import preguntasReto from './PreguntasReto'
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
@@ -371,28 +372,14 @@ SÍGUENOS EN INSTAGRAM
   </button>
 </section>
 
-<section className="memoria-acceso-seccion">
-  <button
-    type="button"
-    className="juego-acceso"
-    onClick={() =>
-      window.alert('Memoria de Béisbol: próximamente')
-    }
-  >
-    <span className="juego-acceso-icono">🧠</span>
-
-    <span className="juego-acceso-texto">
-      <strong>Memoria de Béisbol</strong>
-      <small>30 niveles para encontrar parejas</small>
-    </span>
-
-    <b>Jugar →</b>
-  </button>
-</section>
-
 {sopaLetrasOpen && (
   <SopaLetras
     onCerrar={() => setSopaLetrasOpen(false)}
+  />
+)}
+{memoriaOpen && (
+  <MemoriaBeisbol
+    onCerrar={() => setMemoriaOpen(false)}
   />
 )}
 {programasOpen && (
