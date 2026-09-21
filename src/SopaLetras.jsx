@@ -79,7 +79,7 @@ function mismaCelda(a, b) {
 }
 
 function crearNivel(numeroNivel) {
-  const tamaño = 12
+  const tamaño = 10
   const aleatorio = crearAleatorio(numeroNivel * 7919 + 37)
 
   const tablero = Array.from(

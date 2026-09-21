@@ -394,3 +394,7 @@
     font-size: 100px;
   }
 }
+/* TABLERO DE 10 COLUMNAS */
+.sopa-tablero {
+  grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
+}
