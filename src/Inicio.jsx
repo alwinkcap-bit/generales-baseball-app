@@ -3,6 +3,7 @@
 import './inicio.css';
 import React, { useEffect, useState } from 'react';
 import { supabase } from './supabase';
+import SopaLetras from './SopaLetras'
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
 const preguntasReto = [
@@ -394,6 +395,12 @@ SÍGUENOS EN INSTAGRAM
     <b>Jugar →</b>
   </button>
 </section>
+
+{sopaLetrasOpen && (
+  <SopaLetras
+    onCerrar={() => setSopaLetrasOpen(false)}
+  />
+)}
 {programasOpen && (
   <div
     className="tienda-ventana-fondo"
