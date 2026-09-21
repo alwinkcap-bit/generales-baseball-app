@@ -1554,3 +1554,16 @@ section:has(> .tienda-acceso) > .tienda-acceso {
 section:has(> .tienda-acceso) > .tienda-acceso.gestion-acceso {
   margin-top: 16px !important;
 }
+/* AMPLIAR GESTIÓN SOLAMENTE EN MÓVIL */
+@media (max-width: 600px) {
+  button.tienda-acceso.gestion-acceso {
+    height: 118px !important;
+    min-height: 118px !important;
+    padding: 16px 14px !important;
+  }
+
+  button.tienda-acceso.gestion-acceso small {
+    white-space: normal;
+    line-height: 1.35;
+  }
+}
