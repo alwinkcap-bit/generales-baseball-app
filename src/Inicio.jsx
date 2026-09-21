@@ -3,6 +3,7 @@
 import './inicio.css';
 import React, { useEffect, useState } from 'react';
 import { supabase } from './supabase';
+import SopaLetras from './SopaLetras'
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
 const preguntasReto = [
@@ -43,6 +44,7 @@ export default function Inicio({
   const [galeriaOpen, setGaleriaOpen] = useState(false)
   const [noticiasOpen, setNoticiasOpen] = useState(false)
   const [masOpen, setMasOpen] = useState(false)
+  const [sopaLetrasOpen, setSopaLetrasOpen] = useState(false)
  const [imagenesGaleriaPublica, setImagenesGaleriaPublica] = useState([])
 
 useEffect(() => {
@@ -361,7 +363,7 @@ SÍGUENOS EN INSTAGRAM
     </>
   )}
   </section>
-<section id="programas" className="programas-acceso-seccion">
+<section className="programas-acceso-seccion">
   <button
     type="button"
     className="tienda-acceso"
@@ -377,6 +379,28 @@ SÍGUENOS EN INSTAGRAM
     <b>Entrar →</b>
   </button>
 </section>
+<section className="juegos-acceso-seccion">
+  <button
+    type="button"
+    className="juego-acceso"
+    onClick={() => setSopaLetrasOpen(true)}
+  >
+    <span className="juego-acceso-icono">🔎</span>
+
+    <span className="juego-acceso-texto">
+      <strong>Sopa de letras</strong>
+      <small>100 niveles con palabras de béisbol</small>
+    </span>
+
+    <b>Jugar →</b>
+  </button>
+</section>
+
+{sopaLetrasOpen && (
+  <SopaLetras
+    onCerrar={() => setSopaLetrasOpen(false)}
+  />
+)}
 {programasOpen && (
   <div
     className="tienda-ventana-fondo"
