@@ -8,6 +8,7 @@ import MemoriaBeisbol from './MemoriaBeisbol'
 import preguntasReto from './PreguntasReto'
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
+import ScoreboardGenerales from './ScoreboardGenerales'
 
 export default function Inicio({
   onAdmin,
@@ -22,6 +23,7 @@ export default function Inicio({
   const [masOpen, setMasOpen] = useState(false)
   const [sopaLetrasOpen, setSopaLetrasOpen] = useState(false)
   const [memoriaOpen, setMemoriaOpen] = useState(false)
+  const [scoreboardOpen, setScoreboardOpen] = useState(false)
  const [imagenesGaleriaPublica, setImagenesGaleriaPublica] = useState([])
 
 useEffect(() => {
@@ -372,6 +374,11 @@ SÍGUENOS EN INSTAGRAM
     <b>Jugar →</b>
   </button>
 </section>
+{scoreboardOpen && (
+  <ScoreboardGenerales
+    onCerrar={() => setScoreboardOpen(false)}
+  />
+)}
 
 {sopaLetrasOpen && (
   <SopaLetras
@@ -594,6 +601,23 @@ SÍGUENOS EN INSTAGRAM
     <b>Entrar →</b>
   </button>
 </section>
+<section className="scoreboard-acceso-seccion">
+  <button
+    type="button"
+    className="tienda-acceso"
+    onClick={() => setScoreboardOpen(true)}
+  >
+    <span className="tienda-acceso-icono">📊</span>
+
+    <span>
+      <strong>Scoreboard Generales</strong>
+      <small>Marcador para transmisiones en vivo</small>
+    </span>
+
+    <b>Abrir →</b>
+  </button>
+</section>
+
         <section className="programas-acceso-seccion inicio-noticias">
           <button
   type="button"
