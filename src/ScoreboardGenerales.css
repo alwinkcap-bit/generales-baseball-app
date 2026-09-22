@@ -2292,3 +2292,105 @@
     font-size: 19px !important;
   }
 }
+/* CORRECCIÓN COMPLETA DE DESPLAZAMIENTO EN MÓVIL */
+@media (max-width: 700px) {
+  .scoreboard-fondo {
+    display: block !important;
+    padding: 8px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scoreboard {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 auto !important;
+    padding: 16px 8px 28px !important;
+    border-radius: 16px !important;
+  }
+
+  /* TABLERO DE NUEVE ENTRADAS */
+  .scoreboard-linea-contenedor {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 14px 0 !important;
+    padding: 0 0 5px !important;
+    overflow-x: scroll !important;
+    overflow-y: hidden !important;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
+    scrollbar-width: thin;
+    scrollbar-color: #ffb800 #061725;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scoreboard-linea {
+    width: 690px !important;
+    min-width: 690px !important;
+    max-width: none !important;
+  }
+
+  /* VENTANA DE LA HOJA DE ANOTACIÓN */
+  .scoreboard .lineups-fondo {
+    display: block !important;
+    padding: 8px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scoreboard .lineups-ventana {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    margin: 0 auto !important;
+    padding: 14px 8px 24px !important;
+    overflow: visible !important;
+  }
+
+  /* TABLA DE LA HOJA DE ANOTACIÓN */
+  .scoreboard .hoja-tabla-contenedor {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 62vh !important;
+    max-height: 62vh !important;
+    padding-bottom: 6px !important;
+    overflow-x: scroll !important;
+    overflow-y: scroll !important;
+    overscroll-behavior: contain;
+    touch-action: pan-x pan-y;
+    scrollbar-width: thin;
+    scrollbar-color: #ffb800 #061a2e;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scoreboard .hoja-tabla {
+    width: 980px !important;
+    min-width: 980px !important;
+    max-width: none !important;
+  }
+
+  /* BARRAS VISIBLES EN CHROME Y ANDROID */
+  .scoreboard-linea-contenedor::-webkit-scrollbar,
+  .scoreboard .hoja-tabla-contenedor::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  .scoreboard-linea-contenedor::-webkit-scrollbar-track,
+  .scoreboard .hoja-tabla-contenedor::-webkit-scrollbar-track {
+    background: #061725;
+    border-radius: 20px;
+  }
+
+  .scoreboard-linea-contenedor::-webkit-scrollbar-thumb,
+  .scoreboard .hoja-tabla-contenedor::-webkit-scrollbar-thumb {
+    background: #ffb800;
+    border-radius: 20px;
+  }
+}
