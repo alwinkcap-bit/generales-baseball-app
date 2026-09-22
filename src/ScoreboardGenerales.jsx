@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './ScoreboardGenerales.css'
 import logoGenerales from './public/logo-generales.png'
+import { supabase } from './supabase'
 
 export default function ScoreboardGenerales({ onCerrar }) {
   const [visitante, setVisitante] = useState(0)
@@ -52,6 +53,146 @@ const [nombreVisitante, setNombreVisitante] = useState('Visitante')
 const [nombreLocal, setNombreLocal] = useState('Generales')
 const [logoVisitante, setLogoVisitante] = useState('')
 const [logoLocal, setLogoLocal] = useState(logoGenerales)
+const [transmisionId, setTransmisionId] = useState(null)
+const [codigoTransmision, setCodigoTransmision] = useState('')
+const [transmisionActiva, setTransmisionActiva] = useState(false)
+
+function obtenerEstadoTransmision() {
+  return {
+    nombreVisitante,
+    nombreLocal,
+    visitante,
+    local,
+    inning,
+    parte,
+    bolas,
+    strikes,
+    outs,
+    primeraBase: Boolean(primeraBase),
+    segundaBase: Boolean(segundaBase),
+    terceraBase: Boolean(terceraBase),
+    carrerasVisitante,
+    carrerasLocal,
+    hitsVisitante,
+    erroresVisitante,
+    hitsLocal,
+    erroresLocal,
+    estadoPartido
+  }
+}
+
+async function iniciarTransmision() {
+  const {
+    data: { user },
+    error: usuarioError
+  } = await supabase.auth.getUser()
+
+  if (usuarioError || !user) {
+    window.alert('Debes iniciar sesión para transmitir.')
+    return
+  }
+
+  const { data, error } = await supabase
+    .from('transmisiones_vivo')
+    .upsert(
+      {
+        owner_id: user.id,
+        activa: true,
+        estado: obtenerEstadoTransmision(),
+        updated_at: new Date().toISOString()
+      },
+      {
+        onConflict: 'owner_id'
+      }
+    )
+    .select('id, codigo')
+    .single()
+
+  if (error) {
+    console.error(error)
+    window.alert('No se pudo iniciar la transmisión.')
+    return
+  }
+
+  setTransmisionId(data.id)
+  setCodigoTransmision(data.codigo)
+  setTransmisionActiva(true)
+}
+
+async function detenerTransmision() {
+  if (!transmisionId) return
+
+  const { error } = await supabase
+    .from('transmisiones_vivo')
+    .update({
+      activa: false,
+      updated_at: new Date().toISOString()
+    })
+    .eq('id', transmisionId)
+
+  if (error) {
+    console.error(error)
+    window.alert('No se pudo detener la transmisión.')
+    return
+  }
+
+  setTransmisionActiva(false)
+}
+
+async function copiarEnlaceTransmision() {
+  if (!codigoTransmision) return
+
+  const enlace = `${window.location.origin}${window.location.pathname}?transmision=${codigoTransmision}`
+
+  try {
+    await navigator.clipboard.writeText(enlace)
+    window.alert('Enlace de transmisión copiado.')
+  } catch {
+    window.prompt('Copia este enlace:', enlace)
+  }
+}
+
+useEffect(() => {
+  if (!transmisionActiva || !transmisionId) return
+
+  const temporizador = window.setTimeout(async () => {
+    const { error } = await supabase
+      .from('transmisiones_vivo')
+      .update({
+        estado: obtenerEstadoTransmision(),
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', transmisionId)
+
+    if (error) {
+      console.error('Error sincronizando transmisión:', error)
+    }
+  }, 250)
+
+  return () => window.clearTimeout(temporizador)
+}, [
+  transmisionActiva,
+  transmisionId,
+  nombreVisitante,
+  nombreLocal,
+  visitante,
+  local,
+  inning,
+  parte,
+  bolas,
+  strikes,
+  outs,
+  primeraBase,
+  segundaBase,
+  terceraBase,
+  carrerasVisitante,
+  carrerasLocal,
+  hitsVisitante,
+  erroresVisitante,
+  hitsLocal,
+  erroresLocal,
+  estadoPartido
+])
 function cargarLogoVisitante(evento) {
   const archivo = evento.target.files?.[0]
 
@@ -945,7 +1086,40 @@ const estadisticasLocal = calcularEstadisticasBateo(
           </button>
         </div>
 
-       <div className="scoreboard-acciones">
+   <div className="scoreboard-acciones">
+  {!transmisionActiva ? (
+    <button
+      type="button"
+      className="scoreboard-transmision-iniciar"
+      onClick={iniciarTransmision}
+    >
+      🔴 Iniciar transmisión
+    </button>
+  ) : (
+    <>
+      <span className="scoreboard-transmision-estado">
+        <i></i>
+        EN VIVO
+      </span>
+
+      <button
+        type="button"
+        className="scoreboard-transmision-enlace"
+        onClick={copiarEnlaceTransmision}
+      >
+        🔗 Copiar enlace
+      </button>
+
+      <button
+        type="button"
+        className="scoreboard-transmision-detener"
+        onClick={detenerTransmision}
+      >
+        ⏹ Finalizar transmisión
+      </button>
+    </>
+  )}
+
   <button
     type="button"
     className="scoreboard-lineups-boton"
@@ -953,13 +1127,15 @@ const estadisticasLocal = calcularEstadisticasBateo(
   >
     📋 Lineups del partido
   </button>
-<button
-  type="button"
-  className="scoreboard-reporte-boton"
-  onClick={() => setReporteOpen(true)}
->
-  📊 Resumen del juego
-</button>
+
+  <button
+    type="button"
+    className="scoreboard-reporte-boton"
+    onClick={() => setReporteOpen(true)}
+  >
+    📊 Resumen del juego
+  </button>
+
   <button
     type="button"
     className="scoreboard-reiniciar-boton"

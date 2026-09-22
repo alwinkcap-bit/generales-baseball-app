@@ -7,6 +7,7 @@ import Bienvenida from './Bienvenida'
 import Registro from './Registro';
 import EntrenadoresAdmin from './EntrenadoresAdmin'
 import EntrenadoresPublicos from './EntrenadoresPublicos'
+import PantallaTransmision from './PantallaTransmision'
 const blankPlayer = {
   nombre: '', apellido: '', fecha_nacimiento: '', categoria: '', posicion: '', numero: '',
   batea: 'R', lanza: 'R', estatura_cm: '', estatura_pulgadas: '', peso_kg: '', foto_url: '', estado: 'Activo', notas: ''
@@ -2193,4 +2194,12 @@ if (vista === 'inicio') {
   </div>
 }
 
-createRoot(document.getElementById('root')).render(<App />)
+const codigoTransmision = new URLSearchParams(
+  window.location.search
+).get('transmision')
+
+createRoot(document.getElementById('root')).render(
+  codigoTransmision
+    ? <PantallaTransmision codigo={codigoTransmision} />
+    : <App />
+)
