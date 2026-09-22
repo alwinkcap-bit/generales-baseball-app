@@ -374,7 +374,7 @@ SÍGUENOS EN INSTAGRAM
     <b>Jugar →</b>
   </button>
 </section>
-{scoreboardOpen && (
+{scoreboardOpen && isAdmin && (
   <ScoreboardGenerales
     onCerrar={() => setScoreboardOpen(false)}
   />
@@ -605,16 +605,29 @@ SÍGUENOS EN INSTAGRAM
   <button
     type="button"
     className="tienda-acceso"
-    onClick={() => setScoreboardOpen(true)}
+    onClick={() => {
+  if (isAdmin) {
+    setScoreboardOpen(true)
+  } else {
+    window.alert(
+      'Acceso restringido. Debes iniciar sesión como administrador.'
+    )
+    onAdmin()
+  }
+}}
   >
     <span className="tienda-acceso-icono">📊</span>
 
     <span>
       <strong>Scoreboard Generales</strong>
-      <small>Marcador para transmisiones en vivo</small>
+      <small>
+  {isAdmin
+    ? 'Marcador privado para transmisiones'
+    : '🔒 Acceso exclusivo para usuarios autorizados'}
+</small>
     </span>
 
-    <b>Abrir →</b>
+    <b>{isAdmin ? 'Abrir →' : 'Acceder 🔒'}</b>
   </button>
 </section>
 
