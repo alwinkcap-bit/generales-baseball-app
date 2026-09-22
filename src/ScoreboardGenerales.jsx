@@ -25,6 +25,7 @@ const [segundaBase, setSegundaBase] = useState(null)
 const [terceraBase, setTerceraBase] = useState(null)
 const [estadoPartido, setEstadoPartido] = useState('Por comenzar')
 const [lineupsOpen, setLineupsOpen] = useState(false)
+const [reporteOpen, setReporteOpen] = useState(false)
 const [lineupActivo, setLineupActivo] = useState('visitante')
 const [lineupVisitante, setLineupVisitante] = useState(
   Array.from({ length: 20 }, () => ({
@@ -332,7 +333,8 @@ setTerceraBase(false)
       bateador: bateadorActual,
       jugada: jugadaActual,
       entrada: inning,
-      parte
+parte,
+carrerasImpulsadas: carrerasAnotadas
     }
   ])
 
@@ -393,6 +395,150 @@ const bateadorActual =
   jugadoresEnTurno.length > 0
     ? jugadoresEnTurno[indiceTurno % jugadoresEnTurno.length]
     : null
+function calcularEstadisticasBateo(lineup, equipo) {
+  function formatearPromedio(valor) {
+    if (!Number.isFinite(valor) || valor <= 0) return '.000'
+
+    return valor
+      .toFixed(3)
+      .replace(/^0/, '')
+  }
+
+  return lineup
+    .filter((jugador) => (jugador.nombre || '').trim() !== '')
+    .map((jugador) => {
+      const jugadas = (jugador.entradas || []).filter(Boolean)
+
+      const contar = (...tipos) =>
+        jugadas.filter((jugada) => tipos.includes(jugada)).length
+
+      const sencillos = contar('1B')
+      const dobles = contar('2B')
+      const triples = contar('3B')
+      const jonrones = contar('HR')
+      const basesPorBolas = contar('BB')
+      const sacrificios = contar('SF')
+      const ponches = contar('K', 'ꓘ')
+
+      const hits =
+        sencillos +
+        dobles +
+        triples +
+        jonrones
+
+      const turnos = Math.max(
+        0,
+        jugadas.length - basesPorBolas - sacrificios
+      )
+
+     const carreras = (jugador.recorridos || []).filter(
+  (recorrido) => recorrido === 4
+).length
+
+      const carrerasImpulsadas = historialJugadas
+        .filter(
+          (registro) =>
+            registro.equipo === equipo &&
+            registro.bateador?.id === jugador.id
+        )
+        .reduce(
+          (total, registro) =>
+            total + (registro.carrerasImpulsadas || 0),
+          0
+        )
+
+      const promedio =
+        turnos > 0
+          ? hits / turnos
+          : 0
+
+      const oportunidadesDeEmbase =
+        turnos + basesPorBolas + sacrificios
+
+      const porcentajeEmbase =
+        oportunidadesDeEmbase > 0
+          ? (hits + basesPorBolas) / oportunidadesDeEmbase
+          : 0
+
+      const basesTotales =
+        sencillos +
+        dobles * 2 +
+        triples * 3 +
+        jonrones * 4
+
+      const slugging =
+        turnos > 0
+          ? basesTotales / turnos
+          : 0
+
+      const ops = porcentajeEmbase + slugging
+
+      return {
+        id: jugador.id,
+        numero: jugador.numero,
+        nombre: jugador.nombre,
+        posicion: jugador.posicion,
+        turnos,
+        carreras,
+        hits,
+        impulsadas: carrerasImpulsadas,
+        basesPorBolas,
+        ponches,
+        sencillos,
+        dobles,
+        triples,
+        jonrones,
+        promedio: formatearPromedio(promedio),
+        ops: formatearPromedio(ops)
+      }
+    })
+}
+async function guardarReportePDF() {
+  const elemento = document.getElementById('reporte-oficial-juego')
+
+  if (!elemento) return
+
+  const modulo = await import('html2pdf.js')
+  const html2pdf = modulo.default
+
+  const nombreArchivo = `resumen-${
+    nombreVisitante || 'visitante'
+  }-vs-${nombreLocal || 'local'}.pdf`
+
+  await html2pdf()
+    .set({
+      margin: 8,
+      filename: nombreArchivo,
+      image: {
+        type: 'jpeg',
+        quality: 0.98
+      },
+      html2canvas: {
+        scale: 2,
+        useCORS: true
+      },
+      jsPDF: {
+        unit: 'mm',
+        format: 'letter',
+        orientation: 'portrait'
+      }
+    })
+    .from(elemento)
+    .save()
+}
+
+function imprimirReporte() {
+  window.print()
+}
+const estadisticasVisitante = calcularEstadisticasBateo(
+  lineupVisitante,
+  'visitante'
+)
+
+const estadisticasLocal = calcularEstadisticasBateo(
+  lineupLocal,
+  'local'
+)
   return (
     <div className="scoreboard-fondo">
       <section className="scoreboard">
@@ -807,7 +953,13 @@ const bateadorActual =
   >
     📋 Lineups del partido
   </button>
-
+<button
+  type="button"
+  className="scoreboard-reporte-boton"
+  onClick={() => setReporteOpen(true)}
+>
+  📊 Resumen del juego
+</button>
   <button
     type="button"
     className="scoreboard-reiniciar-boton"
@@ -816,6 +968,231 @@ const bateadorActual =
     Reiniciar juego
   </button>
 </div>
+{reporteOpen && (
+  <div className="reporte-fondo">
+    <section className="reporte-ventana">
+      <div className="reporte-acciones no-imprimir">
+        <button type="button" onClick={guardarReportePDF}>
+          📥 Guardar PDF
+        </button>
+
+        <button type="button" onClick={imprimirReporte}>
+          🖨️ Imprimir
+        </button>
+
+        <button
+          type="button"
+          className="reporte-cerrar"
+          onClick={() => setReporteOpen(false)}
+        >
+          ×
+        </button>
+      </div>
+
+      <article id="reporte-oficial-juego" className="reporte-documento">
+        <header className="reporte-encabezado">
+          <img src={logoGenerales} alt="Generales de Chitré" />
+
+          <div>
+            <small>GENERales DE CHITRÉ BASEBALL ACADEMY</small>
+            <h2>Resumen oficial del juego</h2>
+            <p>Estadio Pepe Osorio · Chitré, Herrera</p>
+          </div>
+        </header>
+
+        <section className="reporte-resultado">
+          <div>
+            <small>VISITANTE</small>
+            <strong>{nombreVisitante || 'Visitante'}</strong>
+            <b>{visitante}</b>
+          </div>
+
+          <span>FINAL</span>
+
+          <div>
+            <small>LOCAL</small>
+            <strong>{nombreLocal || 'Generales'}</strong>
+            <b>{local}</b>
+          </div>
+        </section>
+
+        <section className="reporte-seccion">
+          <h3>Resultado por entradas</h3>
+
+          <div className="reporte-tabla-contenedor">
+            <table className="reporte-linea">
+              <thead>
+                <tr>
+                  <th>Equipo</th>
+
+                  {Array.from({ length: 9 }, (_, indice) => (
+                    <th key={indice}>{indice + 1}</th>
+                  ))}
+
+                  <th>R</th>
+                  <th>H</th>
+                  <th>E</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <th>{nombreVisitante || 'Visitante'}</th>
+
+                  {carrerasVisitante.map((cantidad, indice) => (
+                    <td key={indice}>{cantidad}</td>
+                  ))}
+
+                  <td>{visitante}</td>
+                  <td>{hitsVisitante}</td>
+                  <td>{erroresVisitante}</td>
+                </tr>
+
+                <tr>
+                  <th>{nombreLocal || 'Generales'}</th>
+
+                  {carrerasLocal.map((cantidad, indice) => (
+                    <td key={indice}>{cantidad}</td>
+                  ))}
+
+                  <td>{local}</td>
+                  <td>{hitsLocal}</td>
+                  <td>{erroresLocal}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {[
+          {
+            clave: 'visitante',
+            nombre: nombreVisitante || 'Visitante',
+            jugadores: estadisticasVisitante
+          },
+          {
+            clave: 'local',
+            nombre: nombreLocal || 'Generales',
+            jugadores: estadisticasLocal
+          }
+        ].map(({ clave, nombre, jugadores }) => (
+          <section className="reporte-seccion" key={clave}>
+            <h3>Bateadores — {nombre}</h3>
+
+            <div className="reporte-tabla-contenedor">
+              <table className="reporte-bateadores">
+                <thead>
+                  <tr>
+                    <th>Bateador</th>
+                    <th>POS.</th>
+                    <th>TB</th>
+                    <th>C</th>
+                    <th>H</th>
+                    <th>CI</th>
+                    <th>BB</th>
+                    <th>P</th>
+                    <th>PRO</th>
+<th>OPS</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {jugadores.map((jugador) => (
+                    <tr key={jugador.id}>
+                      <th>
+                        {jugador.numero
+                          ? `#${jugador.numero} `
+                          : ''}
+                        {jugador.nombre}
+                      </th>
+                      <td>{jugador.posicion || '—'}</td>
+                      <td>{jugador.turnos}</td>
+                      <td>{jugador.carreras}</td>
+                      <td>{jugador.hits}</td>
+                      <td>{jugador.impulsadas}</td>
+                      <td>{jugador.basesPorBolas}</td>
+                      <td>{jugador.ponches}</td>
+                      <td>{jugador.promedio}</td>
+<td>{jugador.ops}</td>
+                    </tr>
+                  ))}
+
+                  <tr className="reporte-totales">
+                    <th>Totales</th>
+                    <td></td>
+                    <td>
+                      {jugadores.reduce(
+                        (total, jugador) => total + jugador.turnos,
+                        0
+                      )}
+                    </td>
+                    <td>
+                      {jugadores.reduce(
+                        (total, jugador) => total + jugador.carreras,
+                        0
+                      )}
+                    </td>
+                    <td>
+                      {jugadores.reduce(
+                        (total, jugador) => total + jugador.hits,
+                        0
+                      )}
+                    </td>
+                    <td>
+                      {jugadores.reduce(
+                        (total, jugador) => total + jugador.impulsadas,
+                        0
+                      )}
+                    </td>
+                    <td>
+                      {jugadores.reduce(
+                        (total, jugador) =>
+                          total + jugador.basesPorBolas,
+                        0
+                      )}
+                    </td>
+                    <td>
+                      {jugadores.reduce(
+                        (total, jugador) => total + jugador.ponches,
+                        0
+                      )}
+                    </td>
+                    <td>—</td>
+<td>—</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        ))}
+
+        <section className="reporte-seccion reporte-jugadas">
+          <h3>Resumen de jugadas</h3>
+
+          {historialJugadas.length > 0 ? (
+            <ul>
+              {historialJugadas.map((registro, indice) => (
+                <li key={indice}>
+                  <strong>
+                    {registro.parte} de la entrada {registro.entrada}:
+                  </strong>{' '}
+                  {registro.bateador?.nombre || 'Jugador'} —{' '}
+                  {registro.jugada}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No hay jugadas registradas.</p>
+          )}
+        </section>
+
+        <footer className="reporte-pie">
+          Un equipo, una familia, un legado
+        </footer>
+      </article>
+    </section>
+  </div>
+)}
 {lineupsOpen && (
   <div className="lineups-fondo">
     <section className="lineups-ventana hoja-anotacion">

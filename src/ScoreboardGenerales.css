@@ -1875,3 +1875,420 @@
   color: #071827 !important;
   background: #ffca3a !important;
 }
+/* DATOS DEL PARTIDO HORIZONTALES Y COMPACTOS */
+.scoreboard .hoja-anotacion .hoja-datos {
+  display: grid !important;
+  grid-template-columns:
+    minmax(130px, 0.8fr)
+    minmax(130px, 0.8fr)
+    minmax(220px, 1.4fr)
+    minmax(160px, 1fr) !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  gap: 12px !important;
+  align-items: end !important;
+  margin: 0 0 14px !important;
+  padding: 12px 16px !important;
+}
+
+.scoreboard .hoja-anotacion .hoja-datos label {
+  display: grid !important;
+  grid-column: auto !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  gap: 5px !important;
+  margin: 0 !important;
+  text-align: left !important;
+}
+
+.scoreboard .hoja-anotacion .hoja-datos input {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 38px !important;
+  margin: 0 !important;
+  padding: 7px 9px !important;
+  font-size: 12px !important;
+}
+
+/* TABLETA */
+@media (max-width: 850px) {
+  .scoreboard .hoja-anotacion .hoja-datos {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* MÓVIL */
+@media (max-width: 480px) {
+  .scoreboard .hoja-anotacion .hoja-datos {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    padding: 10px !important;
+  }
+}
+/* REPORTE OFICIAL DEL JUEGO */
+.reporte-fondo {
+  position: fixed;
+  z-index: 12000;
+  inset: 0;
+  padding: 18px;
+  overflow-y: auto;
+  background: rgba(1, 12, 22, 0.94);
+  backdrop-filter: blur(5px);
+}
+
+.reporte-ventana {
+  width: min(1000px, 100%);
+  margin: 0 auto;
+}
+
+.reporte-acciones {
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  background: #071827;
+  border: 2px solid #ffb800;
+  border-radius: 12px;
+}
+
+.reporte-acciones button {
+  min-height: 42px;
+  padding: 8px 18px;
+  color: #071827;
+  font-weight: 950;
+  background: #ffb800;
+  border: 2px solid white;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.reporte-acciones .reporte-cerrar {
+  width: 42px;
+  padding: 0;
+  color: white;
+  font-size: 27px;
+  background: #bd1822;
+  border-radius: 50%;
+}
+
+.reporte-documento {
+  width: 100%;
+  margin-top: 12px;
+  padding: 30px;
+  color: #17212b;
+  font-family: Arial, sans-serif;
+  background: white;
+  border-radius: 12px;
+}
+
+.reporte-encabezado {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 15px;
+  border-bottom: 4px solid #ffb800;
+}
+
+.reporte-encabezado img {
+  width: 85px;
+  height: 85px;
+  object-fit: contain;
+}
+
+.reporte-encabezado small {
+  color: #b57b00;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 2px;
+}
+
+.reporte-encabezado h2 {
+  margin: 4px 0;
+  color: #08243b;
+  font-size: 28px;
+}
+
+.reporte-encabezado p {
+  margin: 0;
+  color: #607080;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.reporte-resultado {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 18px;
+  align-items: center;
+  margin: 20px 0;
+  padding: 18px;
+  color: white;
+  text-align: center;
+  background: #08243b;
+  border-radius: 14px;
+}
+
+.reporte-resultado div {
+  display: grid;
+  gap: 5px;
+}
+
+.reporte-resultado small {
+  color: #ffca3a;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 2px;
+}
+
+.reporte-resultado strong {
+  font-size: 20px;
+}
+
+.reporte-resultado b {
+  color: #ffca3a;
+  font-size: 44px;
+  line-height: 1;
+}
+
+.reporte-resultado > span {
+  color: #ffca3a;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.reporte-seccion {
+  margin-top: 22px;
+  break-inside: avoid;
+}
+
+.reporte-seccion h3 {
+  margin: 0 0 8px;
+  padding: 9px 12px;
+  color: white;
+  font-size: 16px;
+  background: #123f62;
+  border-left: 7px solid #ffb800;
+}
+
+.reporte-tabla-contenedor {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.reporte-documento table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.reporte-documento th,
+.reporte-documento td {
+  padding: 7px 6px;
+  text-align: center;
+  border-bottom: 1px solid #ccd5dc;
+}
+
+.reporte-documento thead th {
+  color: white;
+  background: #08243b;
+}
+
+.reporte-documento tbody th {
+  text-align: left;
+}
+
+.reporte-linea th:first-child {
+  min-width: 115px;
+  text-align: left;
+}
+
+.reporte-bateadores th:first-child {
+  width: 42%;
+  text-align: left;
+}
+
+.reporte-documento tbody tr:nth-child(even) {
+  background: #f0f4f7;
+}
+
+.reporte-totales {
+  color: #08243b;
+  font-weight: 950;
+  background: #ffdb70 !important;
+}
+
+.reporte-jugadas ul {
+  margin: 0;
+  padding: 12px 12px 12px 30px;
+  background: #f3f6f8;
+  border-radius: 8px;
+}
+
+.reporte-jugadas li {
+  margin: 6px 0;
+  font-size: 12px;
+}
+
+.reporte-pie {
+  margin-top: 25px;
+  padding-top: 12px;
+  color: #b57b00;
+  font-size: 11px;
+  font-weight: 950;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-top: 2px solid #ffb800;
+}
+
+@media (max-width: 600px) {
+  .reporte-fondo {
+    padding: 5px;
+  }
+
+  .reporte-documento {
+    padding: 14px 8px;
+  }
+
+  .reporte-encabezado img {
+    width: 55px;
+    height: 55px;
+  }
+
+  .reporte-encabezado h2 {
+    font-size: 20px;
+  }
+
+  .reporte-resultado {
+    gap: 7px;
+    padding: 13px 7px;
+  }
+
+  .reporte-resultado strong {
+    font-size: 14px;
+  }
+
+  .reporte-resultado b {
+    font-size: 34px;
+  }
+
+  .reporte-acciones button {
+    padding: 7px 9px;
+    font-size: 11px;
+  }
+}
+
+/* CONFIGURACIÓN DE IMPRESIÓN */
+@media print {
+  @page {
+    size: letter portrait;
+    margin: 8mm;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  #reporte-oficial-juego,
+  #reporte-oficial-juego * {
+    visibility: visible !important;
+  }
+
+  #reporte-oficial-juego {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #17212b !important;
+    background: white !important;
+    border-radius: 0 !important;
+  }
+
+  .no-imprimir {
+    display: none !important;
+  }
+
+  .reporte-seccion {
+    break-inside: avoid;
+  }
+}
+/* BARRA SUPERIOR DEL REPORTE */
+.scoreboard .reporte-acciones {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  padding: 10px 14px !important;
+  background: linear-gradient(135deg, #061a2e, #0d3554);
+  border-bottom: 2px solid #ffb800;
+  border-radius: 14px 14px 0 0;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.3);
+}
+
+.scoreboard .reporte-acciones button {
+  width: auto !important;
+  min-width: 125px !important;
+  height: 42px !important;
+  margin: 0 !important;
+  padding: 8px 14px !important;
+  color: #071827 !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  background: linear-gradient(145deg, #ffd45a, #ffb800) !important;
+  border: 2px solid white !important;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.28);
+  cursor: pointer;
+}
+
+.scoreboard .reporte-acciones button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.scoreboard .reporte-acciones .reporte-cerrar {
+  flex: 0 0 42px !important;
+  width: 42px !important;
+  min-width: 42px !important;
+  height: 42px !important;
+  padding: 0 !important;
+  color: white !important;
+  font-size: 22px !important;
+  background: #c9232d !important;
+  border-radius: 50% !important;
+}
+
+/* AJUSTE PARA CELULAR */
+@media (max-width: 600px) {
+  .scoreboard .reporte-acciones {
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 8px 5px !important;
+  }
+
+  .scoreboard .reporte-acciones button {
+    min-width: 0 !important;
+    height: 38px !important;
+    padding: 6px 9px !important;
+    font-size: 11px !important;
+    white-space: nowrap;
+  }
+
+  .scoreboard .reporte-acciones .reporte-cerrar {
+    flex-basis: 38px !important;
+    width: 38px !important;
+    min-width: 38px !important;
+    height: 38px !important;
+    font-size: 19px !important;
+  }
+}
