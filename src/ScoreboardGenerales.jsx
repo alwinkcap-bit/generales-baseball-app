@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './ScoreboardGenerales.css'
+import logoGenerales from './public/logo-generales.png'
 
 export default function ScoreboardGenerales({ onCerrar }) {
   const [visitante, setVisitante] = useState(0)
@@ -19,10 +20,130 @@ const [hitsVisitante, setHitsVisitante] = useState(0)
 const [erroresVisitante, setErroresVisitante] = useState(0)
 const [hitsLocal, setHitsLocal] = useState(0)
 const [erroresLocal, setErroresLocal] = useState(0)
-const [primeraBase, setPrimeraBase] = useState(false)
-const [segundaBase, setSegundaBase] = useState(false)
-const [terceraBase, setTerceraBase] = useState(false)
+const [primeraBase, setPrimeraBase] = useState(null)
+const [segundaBase, setSegundaBase] = useState(null)
+const [terceraBase, setTerceraBase] = useState(null)
 const [estadoPartido, setEstadoPartido] = useState('Por comenzar')
+const [lineupsOpen, setLineupsOpen] = useState(false)
+const [lineupActivo, setLineupActivo] = useState('visitante')
+const [lineupVisitante, setLineupVisitante] = useState(
+  Array.from({ length: 20 }, () => ({
+    numero: '',
+    nombre: '',
+    posicion: '',
+    entradas: Array(9).fill('')
+  }))
+)
+
+const [lineupLocal, setLineupLocal] = useState(
+  Array.from({ length: 20 }, () => ({
+    numero: '',
+    nombre: '',
+    posicion: '',
+    entradas: Array(9).fill('')
+  }))
+)
+const [turnoVisitante, setTurnoVisitante] = useState(0)
+const [turnoLocal, setTurnoLocal] = useState(0)
+const [historialJugadas, setHistorialJugadas] = useState([])
+const [jugadaActual, setJugadaActual] = useState('')
+const [nombreVisitante, setNombreVisitante] = useState('Visitante')
+const [nombreLocal, setNombreLocal] = useState('Generales')
+const [logoVisitante, setLogoVisitante] = useState('')
+const [logoLocal, setLogoLocal] = useState(logoGenerales)
+function cargarLogoVisitante(evento) {
+  const archivo = evento.target.files?.[0]
+
+  if (!archivo) return
+
+  const lector = new FileReader()
+
+  lector.onload = () => {
+    setLogoVisitante(lector.result)
+  }
+
+  lector.readAsDataURL(archivo)
+}
+
+function cargarLogoLocal(evento) {
+  const archivo = evento.target.files?.[0]
+
+  if (!archivo) return
+
+  const lector = new FileReader()
+
+  lector.onload = () => {
+    setLogoLocal(lector.result)
+  }
+
+  lector.readAsDataURL(archivo)
+}
+
+function actualizarLineup(equipo, indice, campo, valor) {
+  const actualizar =
+    equipo === 'visitante'
+      ? setLineupVisitante
+      : setLineupLocal
+
+  actualizar((jugadores) =>
+    jugadores.map((jugador, posicion) =>
+      posicion === indice
+        ? { ...jugador, [campo]: valor }
+        : jugador
+    )
+  )
+}
+
+function actualizarEntradaLineup(equipo, jugadorIndice, entradaIndice, valor) {
+  const actualizar =
+    equipo === 'visitante'
+      ? setLineupVisitante
+      : setLineupLocal
+
+  actualizar((jugadores) =>
+    jugadores.map((jugador, indice) => {
+      if (indice !== jugadorIndice) return jugador
+
+      const nuevasEntradas = [...jugador.entradas]
+      nuevasEntradas[entradaIndice] = valor
+
+      return {
+        ...jugador,
+        entradas: nuevasEntradas
+      }
+    })
+  )
+}
+
+function actualizarRecorridoLineup(
+  equipo,
+  jugadorId,
+  entradaIndice,
+  baseAlcanzada
+) {
+  const actualizar =
+    equipo === 'visitante'
+      ? setLineupVisitante
+      : setLineupLocal
+
+  actualizar((jugadores) =>
+    jugadores.map((jugador) => {
+      if (jugador.id !== jugadorId) return jugador
+
+      const nuevosRecorridos = [...jugador.recorridos]
+
+      nuevosRecorridos[entradaIndice] = Math.max(
+        nuevosRecorridos[entradaIndice] || 0,
+        baseAlcanzada
+      )
+
+      return {
+        ...jugador,
+        recorridos: nuevosRecorridos
+      }
+    })
+  )
+}
 function cambiarCarrera(equipo, cantidad) {
   if (inning < 1 || inning > 9) return
 
@@ -115,7 +236,163 @@ setPrimeraBase(false)
 setSegundaBase(false)
 setTerceraBase(false)
   }
+  function registrarJugada() {
+  if (!bateadorActual || !jugadaActual) return
 
+  let nuevaPrimera = primeraBase
+  let nuevaSegunda = segundaBase
+  let nuevaTercera = terceraBase
+  let carrerasAnotadas = 0
+  let outsNuevos = outs
+
+  if (jugadaActual === 'BB') {
+    if (nuevaPrimera) {
+      if (nuevaSegunda) {
+        if (nuevaTercera) carrerasAnotadas += 1
+        nuevaTercera = nuevaSegunda
+      }
+
+      nuevaSegunda = nuevaPrimera
+    }
+
+    nuevaPrimera = bateadorActual
+  }
+
+  if (jugadaActual === '1B' || jugadaActual === 'E') {
+    if (nuevaTercera) carrerasAnotadas += 1
+
+    nuevaTercera = nuevaSegunda
+    nuevaSegunda = nuevaPrimera
+    nuevaPrimera = bateadorActual
+  }
+
+  if (jugadaActual === '2B') {
+    if (nuevaTercera) carrerasAnotadas += 1
+    if (nuevaSegunda) carrerasAnotadas += 1
+
+    nuevaTercera = nuevaPrimera
+    nuevaSegunda = bateadorActual
+    nuevaPrimera = null
+  }
+
+  if (jugadaActual === '3B') {
+    carrerasAnotadas += [
+      nuevaPrimera,
+      nuevaSegunda,
+      nuevaTercera
+    ].filter(Boolean).length
+
+    nuevaPrimera = null
+    nuevaSegunda = null
+    nuevaTercera = bateadorActual
+  }
+
+  if (jugadaActual === 'HR') {
+    carrerasAnotadas +=
+      [
+        nuevaPrimera,
+        nuevaSegunda,
+        nuevaTercera
+      ].filter(Boolean).length + 1
+
+    nuevaPrimera = null
+    nuevaSegunda = null
+    nuevaTercera = null
+  }
+
+  if (jugadaActual === 'FC') {
+    if (nuevaPrimera) {
+      nuevaSegunda = nuevaPrimera
+    }
+
+    nuevaPrimera = bateadorActual
+  }
+
+  if (
+    jugadaActual === 'OUT' ||
+    jugadaActual === 'K' ||
+    jugadaActual === 'ꓘ'
+  ) {
+    outsNuevos = Math.min(3, outsNuevos + 1)
+  }
+
+  if (jugadaActual === 'SF') {
+    outsNuevos = Math.min(3, outsNuevos + 1)
+
+    if (nuevaTercera) {
+      carrerasAnotadas += 1
+      nuevaTercera = null
+    }
+  }
+
+  setHistorialJugadas((historial) => [
+    ...historial,
+    {
+      equipo: equipoAlBate,
+      bateador: bateadorActual,
+      jugada: jugadaActual,
+      entrada: inning,
+      parte
+    }
+  ])
+
+  setPrimeraBase(nuevaPrimera)
+  setSegundaBase(nuevaSegunda)
+  setTerceraBase(nuevaTercera)
+  setOuts(outsNuevos)
+  setBolas(0)
+  setStrikes(0)
+
+  if (carrerasAnotadas > 0) {
+    cambiarCarrera(equipoAlBate, carrerasAnotadas)
+  }
+
+  const posicionOriginal = lineupEnTurno.findIndex(
+    (jugador) => jugador === bateadorActual
+  )
+
+  if (posicionOriginal >= 0 && inning <= 9) {
+    actualizarEntradaLineup(
+      equipoAlBate,
+      posicionOriginal,
+      inning - 1,
+      jugadaActual
+    )
+  }
+
+  if (equipoAlBate === 'visitante') {
+    setTurnoVisitante(
+      (turno) => turno + 1
+    )
+  } else {
+    setTurnoLocal(
+      (turno) => turno + 1
+    )
+  }
+
+  setJugadaActual('')
+}
+const equipoAlBate =
+  parte === 'Alta' ? 'visitante' : 'local'
+
+const lineupEnTurno =
+  equipoAlBate === 'visitante'
+    ? lineupVisitante
+    : lineupLocal
+
+const jugadoresEnTurno = lineupEnTurno.filter(
+  (jugador) => jugador.nombre.trim() !== ''
+)
+
+const indiceTurno =
+  equipoAlBate === 'visitante'
+    ? turnoVisitante
+    : turnoLocal
+
+const bateadorActual =
+  jugadoresEnTurno.length > 0
+    ? jugadoresEnTurno[indiceTurno % jugadoresEnTurno.length]
+    : null
   return (
     <div className="scoreboard-fondo">
       <section className="scoreboard">
@@ -157,7 +434,26 @@ setTerceraBase(false)
         <div className="scoreboard-equipos">
           <article className="scoreboard-equipo">
             <small>VISITANTE</small>
-            <h2>Visitante</h2>
+            <label className="scoreboard-logo-selector">
+  {logoVisitante ? (
+    <img src={logoVisitante} alt={`Logo de ${nombreVisitante}`} />
+  ) : (
+    <span>＋ LOGO</span>
+  )}
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={cargarLogoVisitante}
+  />
+</label>
+            <input
+  className="scoreboard-nombre-equipo"
+  type="text"
+  value={nombreVisitante}
+  onChange={(evento) => setNombreVisitante(evento.target.value)}
+  aria-label="Nombre del equipo visitante"
+/>
             <strong>{visitante}</strong>
 
             <div className="scoreboard-controles-carrera">
@@ -181,7 +477,23 @@ setTerceraBase(false)
 
           <article className="scoreboard-equipo scoreboard-local">
             <small>LOCAL</small>
-            <h2>Generales</h2>
+
+            <label className="scoreboard-logo-selector">
+  <img src={logoLocal} alt={`Logo de ${nombreLocal}`} />
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={cargarLogoLocal}
+  />
+</label>
+            <input
+  className="scoreboard-nombre-equipo"
+  type="text"
+  value={nombreLocal}
+  onChange={(evento) => setNombreLocal(evento.target.value)}
+  aria-label="Nombre del equipo local"
+/>
             <strong>{local}</strong>
 
             <div className="scoreboard-controles-carrera">
@@ -224,7 +536,7 @@ setTerceraBase(false)
 
     <tbody>
       <tr>
-        <th>Visitante</th>
+        <th>{nombreVisitante || 'Visitante'}</th>
 
         {carrerasVisitante.map((carreras, indice) => (
           <td
@@ -245,7 +557,7 @@ setTerceraBase(false)
       </tr>
 
       <tr>
-        <th>Generales</th>
+        <th>{nombreLocal || 'Generales'}</th>
 
         {carrerasLocal.map((carreras, indice) => (
           <td
@@ -362,9 +674,13 @@ setTerceraBase(false)
         ? 'base ocupada base-segunda'
         : 'base base-segunda'
     }
-    onClick={() => setSegundaBase((actual) => !actual)}
+    onClick={() =>
+  setSegundaBase((actual) =>
+    actual ? null : bateadorActual
+  )
+}
   >
-    2
+    {segundaBase?.numero || '2'}
   </button>
 
   <button
@@ -374,9 +690,13 @@ setTerceraBase(false)
         ? 'base ocupada base-tercera'
         : 'base base-tercera'
     }
-    onClick={() => setTerceraBase((actual) => !actual)}
+   onClick={() =>
+  setTerceraBase((actual) =>
+    actual ? null : bateadorActual
+  )
+}
   >
-    3
+    {terceraBase?.numero || '3'}
   </button>
 
   <div className="base-home">⌂</div>
@@ -388,9 +708,13 @@ setTerceraBase(false)
         ? 'base ocupada base-primera'
         : 'base base-primera'
     }
-    onClick={() => setPrimeraBase((actual) => !actual)}
+    onClick={() =>
+  setPrimeraBase((actual) =>
+    actual ? null : bateadorActual
+  )
+}
   >
-    1
+   {primeraBase?.numero || '1'}
   </button>
 
   <span>CORREDORES EN BASE</span>
@@ -404,7 +728,55 @@ setTerceraBase(false)
             Siguiente mitad →
           </button>
         </div>
+<div className="scoreboard-bateador">
+  <small>BATEADOR ACTUAL</small>
 
+  {bateadorActual ? (
+    <>
+      <strong>
+        #{bateadorActual.numero || '—'} · {bateadorActual.nombre}
+      </strong>
+
+      <span>
+        {equipoAlBate === 'visitante'
+          ? nombreVisitante || 'Visitante'
+          : nombreLocal || 'Generales'}
+      </span>
+    </>
+  ) : (
+    <strong>Completa el lineup del equipo</strong>
+  )}
+  <div className="scoreboard-jugada-controles">
+  <select
+    value={jugadaActual}
+    onChange={(evento) =>
+      setJugadaActual(evento.target.value)
+    }
+    disabled={!bateadorActual}
+  >
+    <option value="">Seleccionar jugada</option>
+    <option value="BB">BB · Base por bolas</option>
+    <option value="1B">1B · Sencillo</option>
+    <option value="2B">2B · Doble</option>
+    <option value="3B">3B · Triple</option>
+    <option value="HR">HR · Jonrón</option>
+    <option value="E">E · Error</option>
+    <option value="FC">FC · Selección del fildeador</option>
+    <option value="SF">SF · Fly de sacrificio</option>
+    <option value="K">K · Ponche tirándole</option>
+    <option value="ꓘ">ꓘ · Ponche cantado</option>
+    <option value="OUT">OUT · Otro out</option>
+  </select>
+
+  <button
+    type="button"
+    onClick={registrarJugada}
+    disabled={!bateadorActual || !jugadaActual}
+  >
+    Registrar jugada
+  </button>
+</div>
+</div>
         <div className="scoreboard-conteo">
           <button type="button" onClick={sumarBola}>
             <span>BOLAS</span>
@@ -427,11 +799,225 @@ setTerceraBase(false)
           </button>
         </div>
 
-        <div className="scoreboard-acciones">
-          <button type="button" onClick={reiniciar}>
-            Reiniciar juego
-          </button>
+       <div className="scoreboard-acciones">
+  <button
+    type="button"
+    className="scoreboard-lineups-boton"
+    onClick={() => setLineupsOpen(true)}
+  >
+    📋 Lineups del partido
+  </button>
+
+  <button
+    type="button"
+    className="scoreboard-reiniciar-boton"
+    onClick={reiniciar}
+  >
+    Reiniciar juego
+  </button>
+</div>
+{lineupsOpen && (
+  <div className="lineups-fondo">
+    <section className="lineups-ventana hoja-anotacion">
+      <button
+        type="button"
+        className="lineups-cerrar"
+        onClick={() => setLineupsOpen(false)}
+        aria-label="Cerrar hoja de anotación"
+      >
+        ×
+      </button>
+
+      <header className="lineups-encabezado">
+        <span>SCOREBOOK DIGITAL</span>
+        <h2>⚾ Hoja de anotación</h2>
+      </header>
+
+      <div className="hoja-datos">
+        <label>
+          Fecha
+          <input type="date" />
+        </label>
+
+        <label>
+          Hora
+          <input type="time" />
+        </label>
+
+        <label>
+          Lugar
+          <input
+            type="text"
+            defaultValue="Estadio Pepe Osorio"
+          />
+        </label>
+
+        <label>
+          Clima
+          <input type="text" placeholder="Clima" />
+        </label>
+      </div>
+
+      <div className="lineups-pestanas">
+        <button
+          type="button"
+          className={lineupActivo === 'visitante' ? 'activa' : ''}
+          onClick={() => setLineupActivo('visitante')}
+        >
+          {nombreVisitante || 'Visitante'}
+        </button>
+
+        <button
+          type="button"
+          className={lineupActivo === 'local' ? 'activa' : ''}
+          onClick={() => setLineupActivo('local')}
+        >
+          {nombreLocal || 'Generales'}
+        </button>
+      </div>
+
+      <div className="hoja-tabla-contenedor">
+        <div className="hoja-tabla">
+          <div className="hoja-fila hoja-cabecera">
+            <span>#</span>
+            <span>N.º</span>
+            <span>LINEUP / JUGADOR</span>
+            <span>POS.</span>
+
+            {Array.from({ length: 9 }, (_, indice) => (
+              <span key={indice}>{indice + 1}</span>
+            ))}
+          </div>
+
+          {(lineupActivo === 'visitante'
+            ? lineupVisitante
+            : lineupLocal
+          ).map((jugador, jugadorIndice) => (
+            <div className="hoja-fila" key={jugadorIndice}>
+              <strong>{jugadorIndice + 1}</strong>
+
+              <input
+                value={jugador.numero}
+                onChange={(evento) =>
+                  actualizarLineup(
+                    lineupActivo,
+                    jugadorIndice,
+                    'numero',
+                    evento.target.value
+                  )
+                }
+                aria-label={`Número del jugador ${jugadorIndice + 1}`}
+              />
+<input
+  className="hoja-jugador"
+  value={jugador.nombre}
+  onChange={(evento) =>
+    actualizarLineup(
+      lineupActivo,
+      jugadorIndice,
+      'nombre',
+      evento.target.value
+    )
+  }
+  placeholder="Nombre del jugador"
+  aria-label={`Nombre del jugador ${jugadorIndice + 1}`}
+/>
+
+              <input
+                value={jugador.posicion}
+                onChange={(evento) =>
+                  actualizarLineup(
+                    lineupActivo,
+                    jugadorIndice,
+                    'posicion',
+                    evento.target.value
+                  )
+                }
+                placeholder="POS"
+                aria-label={`Posición del jugador ${jugadorIndice + 1}`}
+              />
+{jugador.entradas.map((anotacion, entradaIndice) => {
+ const recorridoAutomatico =
+  jugador.recorridos?.[entradaIndice] || 0
+
+const recorridoSegunJugada = {
+  BB: 1,
+  '1B': 1,
+  E: 1,
+  FC: 1,
+  '2B': 2,
+  '3B': 3,
+  HR: 4,
+  R: 4
+}[anotacion] || 0
+
+const recorrido = Math.max(
+  recorridoAutomatico,
+  recorridoSegunJugada
+)
+
+  return (
+    <div
+      key={entradaIndice}
+      className={`hoja-turno recorrido-${recorrido}`}
+      title={`Entrada ${entradaIndice + 1}`}
+    >
+      <div className="turno-diamante" aria-hidden="true">
+        <span className="turno-base turno-segunda">2</span>
+        <span className="turno-base turno-tercera">3</span>
+        <span className="turno-base turno-primera">1</span>
+        <span className="turno-home">⌂</span>
+      </div>
+
+      <select
+        className={`hoja-entrada ${
+          anotacion ? 'hoja-entrada-anotada' : ''
+        }`}
+        value={anotacion}
+        onChange={(evento) =>
+          actualizarEntradaLineup(
+            lineupActivo,
+            jugadorIndice,
+            entradaIndice,
+            evento.target.value
+          )
+        }
+        aria-label={`Jugador ${jugadorIndice + 1}, entrada ${
+          entradaIndice + 1
+        }`}
+      >
+        <option value="">—</option>
+        <option value="1B">1B</option>
+        <option value="2B">2B</option>
+        <option value="3B">3B</option>
+        <option value="HR">HR</option>
+        <option value="BB">BB</option>
+        <option value="K">K</option>
+        <option value="ꓘ">ꓘ</option>
+        <option value="OUT">OUT</option>
+        <option value="E">E</option>
+        <option value="FC">FC</option>
+        <option value="SF">SF</option>
+        <option value="R">R</option>
+      </select>
+    </div>
+  )
+})}
+            </div>
+          ))}
         </div>
+      </div>
+
+      <label className="hoja-notas">
+        Notas del partido
+        <textarea
+          rows="3"
+          placeholder="Observaciones, jugadas importantes o sustituciones"
+        />
+      </label>
+    </section>
+  </div>
+)}
       </section>
     </div>
   )

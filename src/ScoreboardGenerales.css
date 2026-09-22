@@ -751,9 +751,11 @@
       "estado estado"
       "equipos equipos"
       "linea linea"
-      "estadisticas bases"
-      "inning conteo"
-      "acciones acciones";
+    "inning bases"
+"bateador bases"
+"estadisticas bases"
+"conteo conteo"
+"acciones acciones";
     align-items: center;
     column-gap: 22px;
     row-gap: 18px;
@@ -769,7 +771,11 @@
   }
 
   .scoreboard-equipos {
-    grid-area: equipos;
+  grid-area: equipos;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+
   }
 
   .scoreboard-linea-contenedor {
@@ -804,6 +810,35 @@
     grid-area: acciones;
     margin: 0;
   }
+    .scoreboard-equipo {
+    padding: 12px 16px;
+  }
+
+  .scoreboard-logo-selector {
+    width: 68px;
+    height: 68px;
+    margin: 7px auto;
+  }
+
+  .scoreboard-equipo h2 {
+    min-height: 0;
+    margin: 5px 0;
+    font-size: 24px;
+  }
+
+  .scoreboard-equipo > strong {
+    font-size: 78px;
+  }
+
+  .scoreboard-controles-carrera {
+    margin-top: 10px;
+  }
+
+  .scoreboard-controles-carrera button {
+    width: 44px;
+    height: 36px;
+    font-size: 22px;
+  }
 }
 /* RESALTAR CARRERAS DE LA ENTRADA ACTUAL */
 .scoreboard-linea .equipo-bateando {
@@ -815,4 +850,1028 @@
   font-size: 22px !important;
   font-weight: 950 !important;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+/* NOMBRES EDITABLES DE LOS EQUIPOS */
+.scoreboard-nombre-equipo {
+  display: block;
+  width: 100%;
+  min-height: 42px;
+  margin: 8px 0;
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  outline: none;
+  color: #ffffff;
+  background: transparent;
+  font: inherit;
+  font-size: clamp(19px, 4vw, 30px);
+  font-weight: 900;
+  text-align: center;
+}
+
+.scoreboard-nombre-equipo:hover,
+.scoreboard-nombre-equipo:focus {
+  border-color: #ffb800;
+  background: rgba(255, 184, 0, 0.1);
+  box-shadow: 0 0 12px rgba(255, 184, 0, 0.2);
+}
+
+.scoreboard-nombre-equipo::selection {
+  color: #071a2b;
+  background: #ffb800;
+}
+
+@media (max-width: 600px) {
+  .scoreboard-nombre-equipo {
+    min-height: 34px;
+    padding: 4px;
+    font-size: 16px;
+  }
+}
+/* LOGOS DE LOS EQUIPOS */
+.scoreboard-logo-selector {
+  display: grid;
+  place-items: center;
+  width: 78px;
+  height: 78px;
+  margin: 10px auto 5px;
+  overflow: hidden;
+  border: 2px dashed rgba(255, 184, 0, 0.75);
+  border-radius: 50%;
+  color: #ffb800;
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 11px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.scoreboard-logo-selector img {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  object-fit: contain;
+}
+
+.scoreboard-logo-selector input {
+  display: none;
+}
+
+.scoreboard-logo-selector:hover {
+  border-style: solid;
+  background: rgba(255, 184, 0, 0.12);
+  box-shadow: 0 0 16px rgba(255, 184, 0, 0.3);
+}
+
+.scoreboard-logo-fijo {
+  border-style: solid;
+  cursor: default;
+}
+
+@media (max-width: 600px) {
+  .scoreboard-logo-selector {
+    width: 58px;
+    height: 58px;
+    margin-top: 7px;
+    font-size: 9px;
+  }
+}
+/* BOTONES DE ACCIONES */
+.scoreboard-acciones {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.scoreboard-acciones .scoreboard-lineups-boton {
+  color: #071827;
+  background: #ffb800;
+  border-color: white;
+}
+
+.scoreboard-acciones .scoreboard-reiniciar-boton {
+  color: white;
+  background: #bd1822;
+}
+
+/* VENTANA DE LINEUPS */
+.lineups-fondo {
+  position: fixed;
+  z-index: 5000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(1, 12, 22, 0.9);
+  backdrop-filter: blur(5px);
+}
+
+.lineups-ventana {
+  position: relative;
+  width: min(1100px, 96vw);
+  max-height: 92vh;
+  padding: 24px;
+  overflow-y: auto;
+  color: white;
+  background: #0b2c48;
+  border: 2px solid #ffb800;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+.lineups-cerrar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: #071827;
+  font-size: 30px;
+  font-weight: 950;
+  line-height: 1;
+  background: #ffb800;
+  border: 2px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.lineups-encabezado {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.lineups-encabezado span {
+  color: #ffb800;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 3px;
+}
+
+.lineups-encabezado h2 {
+  margin: 7px 50px 0;
+  font-size: 30px;
+}
+
+.lineups-equipos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+.lineup-equipo {
+  overflow: hidden;
+  background: #061a2e;
+  border: 1px solid #ffb800;
+  border-radius: 16px;
+}
+
+.lineup-equipo h3 {
+  margin: 0;
+  padding: 14px;
+  color: #ffb800;
+  text-align: center;
+  background: #123f62;
+}
+
+.lineup-titulos,
+.lineup-fila {
+  display: grid;
+  grid-template-columns: 55px 55px minmax(120px, 1fr) 65px;
+  gap: 6px;
+  align-items: center;
+}
+
+.lineup-titulos {
+  padding: 9px;
+  color: #ffb800;
+  font-size: 10px;
+  font-weight: 950;
+  text-align: center;
+}
+
+.lineup-fila {
+  padding: 6px 9px;
+  border-top: 1px solid rgba(255, 184, 0, 0.22);
+}
+
+.lineup-fila strong {
+  color: #ffb800;
+  text-align: center;
+}
+
+.lineup-fila input {
+  width: 100%;
+  min-width: 0;
+  padding: 8px 6px;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  background: #0c304e;
+  border: 1px solid rgba(255, 184, 0, 0.55);
+  border-radius: 7px;
+  outline: none;
+}
+
+.lineup-fila input:focus {
+  border-color: white;
+  box-shadow: 0 0 0 2px rgba(255, 184, 0, 0.35);
+}
+
+@media (max-width: 700px) {
+  .lineups-ventana {
+    width: 100%;
+    padding: 18px 10px;
+    border-radius: 18px;
+  }
+
+  .lineups-equipos {
+    grid-template-columns: 1fr;
+  }
+
+  .lineups-encabezado h2 {
+    margin-top: 8px;
+    font-size: 23px;
+  }
+
+  .lineup-titulos,
+  .lineup-fila {
+    grid-template-columns: 45px 45px minmax(100px, 1fr) 55px;
+    gap: 4px;
+  }
+}
+/* CORRECCIÓN DE ANCHO PARA LOS LINEUPS */
+.scoreboard .lineups-fondo {
+  position: fixed !important;
+  z-index: 9999 !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 18px !important;
+}
+
+.scoreboard .lineups-ventana {
+  display: block !important;
+  width: min(1100px, calc(100vw - 36px)) !important;
+  max-width: 1100px !important;
+  max-height: 92vh !important;
+  overflow-y: auto !important;
+}
+
+.scoreboard .lineups-equipos {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  width: 100% !important;
+  gap: 18px !important;
+}
+
+.scoreboard .lineup-titulos,
+.scoreboard .lineup-fila {
+  grid-template-columns: 55px 55px minmax(120px, 1fr) 65px !important;
+}
+
+@media (max-width: 700px) {
+  .scoreboard .lineups-equipos {
+    grid-template-columns: 1fr !important;
+  }
+
+  .scoreboard .lineup-titulos,
+  .scoreboard .lineup-fila {
+    grid-template-columns: 42px 42px minmax(0, 1fr) 50px !important;
+  }
+
+  .scoreboard .lineup-titulos {
+    font-size: 8px !important;
+  }
+}
+/* HOJA DE ANOTACIÓN DIGITAL */
+.scoreboard .hoja-anotacion {
+  width: min(1400px, calc(100vw - 28px)) !important;
+  max-width: 1400px !important;
+  padding: 22px !important;
+  background:
+    linear-gradient(rgba(10, 43, 70, 0.96), rgba(4, 25, 43, 0.98)),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255, 184, 0, 0.04) 40px
+    );
+}
+
+.hoja-datos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.hoja-datos label,
+.hoja-notas {
+  display: grid;
+  gap: 5px;
+  color: #ffbf00;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 1px;
+}
+
+.hoja-datos input,
+.hoja-notas textarea {
+  width: 100%;
+  padding: 9px;
+  color: white;
+  font-family: inherit;
+  font-weight: 700;
+  background: #061a2e;
+  border: 1px solid rgba(255, 184, 0, 0.7);
+  border-radius: 7px;
+  outline: none;
+}
+
+.lineups-pestanas {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0 14px;
+}
+
+.lineups-pestanas button {
+  min-width: 180px;
+  padding: 10px 18px;
+  color: white;
+  font-weight: 900;
+  background: #123f62;
+  border: 1px solid #ffb800;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.lineups-pestanas button.activa {
+  color: #071827;
+  background: #ffb800;
+  border-color: white;
+  box-shadow: 0 0 18px rgba(255, 184, 0, 0.3);
+}
+
+.hoja-tabla-contenedor {
+  width: 100%;
+  max-height: 58vh;
+  overflow: auto;
+  background: #061a2e;
+  border: 2px solid #ffb800;
+  border-radius: 12px;
+}
+
+.hoja-tabla {
+  min-width: 980px;
+}
+
+.scoreboard .hoja-fila {
+  display: grid !important;
+ grid-template-columns:
+  38px
+  52px
+  minmax(190px, 1fr)
+  62px
+  55px
+  repeat(9, 52px) !important;
+  gap: 0 !important;
+  width: 100% !important;
+  min-height: 42px;
+  padding: 0 !important;
+  border-bottom: 1px solid rgba(255, 184, 0, 0.28);
+}
+
+.scoreboard .hoja-fila:nth-child(odd):not(.hoja-cabecera) {
+  background: rgba(18, 63, 98, 0.3);
+}
+
+.scoreboard .hoja-cabecera {
+  position: sticky;
+  z-index: 4;
+  top: 0;
+  color: #071827;
+  background: #ffb800 !important;
+}
+
+.scoreboard .hoja-fila > span,
+.scoreboard .hoja-fila > strong {
+  display: grid !important;
+  place-items: center;
+  min-width: 0;
+  margin: 0 !important;
+  padding: 5px !important;
+  color: inherit !important;
+  font-size: 11px !important;
+  font-weight: 950 !important;
+  text-align: center;
+  border-right: 1px solid rgba(255, 184, 0, 0.3);
+}
+
+.scoreboard .hoja-fila > input {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 42px !important;
+  margin: 0 !important;
+  padding: 5px !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 750 !important;
+  text-align: center;
+  background: transparent !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(255, 184, 0, 0.3) !important;
+  border-radius: 0 !important;
+  outline: none;
+}
+
+.scoreboard .hoja-fila > input:focus {
+  color: #071827 !important;
+  background: #ffd66b !important;
+  box-shadow: inset 0 0 0 2px white !important;
+}
+
+.scoreboard .hoja-jugador {
+  text-align: left !important;
+  padding-left: 9px !important;
+}
+
+.scoreboard .hoja-entrada {
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  text-transform: uppercase;
+}
+
+.hoja-notas {
+  margin-top: 14px;
+}
+
+.hoja-notas textarea {
+  resize: vertical;
+}
+
+@media (max-width: 700px) {
+  .scoreboard .hoja-anotacion {
+    padding: 16px 8px !important;
+  }
+
+  .hoja-datos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .lineups-pestanas button {
+    min-width: 0;
+    flex: 1;
+    padding: 9px 6px;
+    font-size: 12px;
+  }
+
+  .hoja-tabla-contenedor {
+    max-height: 62vh;
+  }
+
+  .scoreboard .hoja-fila {
+    grid-template-columns:
+      35px
+      45px
+      160px
+      48px
+      repeat(9, 48px) !important;
+  }
+}
+/* SELECTORES DE JUGADAS */
+.scoreboard .hoja-fila > select.hoja-entrada {
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 42px !important;
+  margin: 0 !important;
+  padding: 2px !important;
+  color: white !important;
+  font-size: 12px !important;
+  font-weight: 950 !important;
+  text-align: center !important;
+  text-align-last: center;
+  background: #0a2943 !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(255, 184, 0, 0.3) !important;
+  border-radius: 0 !important;
+  cursor: pointer;
+  outline: none;
+}
+
+.scoreboard .hoja-fila > select.hoja-entrada-anotada {
+  color: #071827 !important;
+  background: #ffca3a !important;
+}
+
+.scoreboard .hoja-fila > select.hoja-entrada:focus {
+  box-shadow: inset 0 0 0 2px white !important;
+}
+/* ACABADO PROFESIONAL DEL SCOREBOOK */
+.scoreboard .hoja-anotacion {
+  background:
+    radial-gradient(
+      circle at top,
+      rgba(255, 184, 0, 0.12),
+      transparent 34%
+    ),
+    linear-gradient(145deg, #123f62 0%, #071d31 65%, #041522 100%) !important;
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.7),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+.scoreboard .hoja-anotacion .lineups-encabezado {
+  padding: 8px 60px 16px;
+  border-bottom: 1px solid rgba(255, 184, 0, 0.45);
+}
+
+.scoreboard .hoja-anotacion .lineups-encabezado h2 {
+  margin: 6px 0 0;
+  color: white;
+  font-size: clamp(24px, 4vw, 38px);
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.55);
+}
+
+.scoreboard .hoja-anotacion .lineups-encabezado span {
+  display: block;
+  color: #ffbf00;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 4px;
+}
+
+.scoreboard .hoja-datos {
+  padding: 12px;
+  background: rgba(3, 20, 34, 0.65);
+  border: 1px solid rgba(255, 184, 0, 0.35);
+  border-radius: 12px;
+}
+
+.scoreboard .hoja-datos input {
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.scoreboard .hoja-datos input:focus,
+.scoreboard .hoja-notas textarea:focus {
+  border-color: white;
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.2);
+}
+
+.scoreboard .lineups-pestanas {
+  padding: 5px;
+  background: rgba(3, 20, 34, 0.75);
+  border: 1px solid rgba(255, 184, 0, 0.35);
+  border-radius: 13px;
+}
+
+.scoreboard .lineups-pestanas button {
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.scoreboard .lineups-pestanas button:hover {
+  transform: translateY(-1px);
+}
+
+.scoreboard .lineups-pestanas button.activa {
+  background: linear-gradient(145deg, #ffd65a, #ffad00);
+  box-shadow:
+    0 6px 18px rgba(255, 184, 0, 0.28),
+    inset 0 0 0 1px white;
+}
+
+.scoreboard .hoja-tabla-contenedor {
+  border: 2px solid #ffb800;
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.35),
+    inset 0 0 25px rgba(255, 184, 0, 0.03);
+  scrollbar-color: #ffb800 #061a2e;
+  scrollbar-width: thin;
+}
+
+.scoreboard .hoja-cabecera {
+  color: #071827 !important;
+  background: linear-gradient(180deg, #ffd75a, #ffb000) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.scoreboard .hoja-fila:not(.hoja-cabecera) {
+  transition: background 0.16s ease;
+}
+
+.scoreboard .hoja-fila:not(.hoja-cabecera):hover {
+  background: rgba(255, 184, 0, 0.1) !important;
+}
+
+.scoreboard .hoja-fila > strong {
+  color: #ffbf00 !important;
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.scoreboard .hoja-jugador {
+  color: white !important;
+  font-weight: 850 !important;
+}
+
+.scoreboard .hoja-entrada-anotada {
+  background: linear-gradient(145deg, #ffe078, #ffb800) !important;
+  box-shadow: inset 0 0 0 1px white;
+}
+
+.scoreboard .hoja-notas {
+  padding: 12px;
+  background: rgba(3, 20, 34, 0.65);
+  border: 1px solid rgba(255, 184, 0, 0.35);
+  border-radius: 12px;
+}
+
+.scoreboard .lineups-cerrar {
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease;
+}
+
+.scoreboard .lineups-cerrar:hover {
+  color: white;
+  background: #d71920;
+  transform: rotate(90deg);
+}
+/* CONTROLES PARA REGISTRAR JUGADAS */
+.scoreboard-jugada-controles {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) auto;
+  gap: 10px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.scoreboard-jugada-controles select {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  color: white;
+  font-size: 13px;
+  font-weight: 800;
+  background: #061a2e;
+  border: 1px solid #ffb800;
+  border-radius: 9px;
+  outline: none;
+  cursor: pointer;
+}
+
+.scoreboard-jugada-controles select:focus {
+  border-color: white;
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.2);
+}
+
+.scoreboard-jugada-controles button {
+  padding: 10px 18px;
+  color: #071827;
+  font-weight: 950;
+  background: linear-gradient(145deg, #ffd85e, #ffb000);
+  border: 2px solid white;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.scoreboard-jugada-controles button:disabled,
+.scoreboard-jugada-controles select:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (max-width: 600px) {
+  .scoreboard-jugada-controles {
+    grid-template-columns: 1fr;
+  }
+
+  .scoreboard-jugada-controles button {
+    width: 100%;
+  }
+}
+/* DIAMANTE VISUAL EN LA HOJA DE ANOTACIÓN */
+.hoja-casilla {
+  display: flex;
+  min-width: 52px;
+  min-height: 58px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 3px;
+  background: #08243b;
+  border-left: 1px solid rgba(255, 184, 0, 0.28);
+}
+
+.hoja-diamante {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  margin: 2px auto 4px;
+  transform: rotate(45deg);
+}
+
+.hoja-diamante .recorrido {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.28);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.recorrido-primera,
+.recorrido-tercera {
+  width: 3px;
+  height: 100%;
+}
+
+.recorrido-segunda,
+.recorrido-home {
+  width: 100%;
+  height: 3px;
+}
+
+.recorrido-primera {
+  right: 0;
+  bottom: 0;
+}
+
+.recorrido-segunda {
+  top: 0;
+  right: 0;
+}
+
+.recorrido-tercera {
+  top: 0;
+  left: 0;
+}
+
+.recorrido-home {
+  bottom: 0;
+  left: 0;
+}
+
+/* LLEGÓ A PRIMERA */
+.jugada-1B .recorrido-primera,
+.jugada-BB .recorrido-primera,
+.jugada-E .recorrido-primera,
+.jugada-FC .recorrido-primera {
+  background: #ffb800;
+  box-shadow: 0 0 7px rgba(255, 184, 0, 0.85);
+}
+
+/* LLEGÓ A SEGUNDA */
+.jugada-2B .recorrido-primera,
+.jugada-2B .recorrido-segunda {
+  background: #ffb800;
+  box-shadow: 0 0 7px rgba(255, 184, 0, 0.85);
+}
+
+/* LLEGÓ A TERCERA */
+.jugada-3B .recorrido-primera,
+.jugada-3B .recorrido-segunda,
+.jugada-3B .recorrido-tercera {
+  background: #ffb800;
+  box-shadow: 0 0 7px rgba(255, 184, 0, 0.85);
+}
+
+/* ANOTÓ CARRERA */
+.jugada-HR .recorrido,
+.jugada-R .recorrido {
+  background: #ffb800;
+  box-shadow: 0 0 8px rgba(255, 184, 0, 0.95);
+}
+
+.hoja-casilla .hoja-entrada {
+  width: 100%;
+  min-width: 0;
+  height: 25px;
+  padding: 1px;
+  color: white;
+  font-size: 10px;
+  font-weight: 900;
+  text-align: center;
+  background: #103957;
+  border: 1px solid rgba(255, 184, 0, 0.65);
+  border-radius: 5px;
+}
+
+.hoja-casilla .hoja-entrada-anotada {
+  color: #071827;
+  background: #ffca3a;
+  border-color: white;
+}
+/* RECORRIDO INDIVIDUAL DE CADA JUGADOR */
+.scoreboard .hoja-recorrido {
+  position: relative;
+  width: 100%;
+  height: 42px;
+  border-right: 1px solid rgba(255, 184, 0, 0.3);
+}
+
+/* Línea en forma de diamante */
+.scoreboard .hoja-recorrido::before {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  content: "";
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.scoreboard .mini-base,
+.scoreboard .mini-home {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  width: 14px;
+  height: 14px;
+  place-items: center;
+  color: #9fb2c2;
+  font-size: 8px;
+  font-weight: 950;
+  line-height: 1;
+  background: #08243b;
+  border: 1px solid #7b91a3;
+  border-radius: 3px;
+}
+
+.scoreboard .mini-segunda {
+  top: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.scoreboard .mini-tercera {
+  top: 15px;
+  left: 7px;
+}
+
+.scoreboard .mini-primera {
+  top: 15px;
+  right: 7px;
+}
+
+.scoreboard .mini-home {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Llegó a primera */
+.scoreboard .recorrido-1 .mini-primera,
+
+/* Llegó a segunda */
+.scoreboard .recorrido-2 .mini-primera,
+.scoreboard .recorrido-2 .mini-segunda,
+
+/* Llegó a tercera */
+.scoreboard .recorrido-3 .mini-primera,
+.scoreboard .recorrido-3 .mini-segunda,
+.scoreboard .recorrido-3 .mini-tercera,
+
+/* Anotó carrera */
+.scoreboard .recorrido-4 .mini-primera,
+.scoreboard .recorrido-4 .mini-segunda,
+.scoreboard .recorrido-4 .mini-tercera,
+.scoreboard .recorrido-4 .mini-home {
+  color: #071827;
+  background: #ffb800;
+  border-color: white;
+  box-shadow: 0 0 7px rgba(255, 184, 0, 0.85);
+}
+/* DIAMANTE DENTRO DE CADA TURNO */
+.scoreboard .hoja-fila:not(.hoja-cabecera) {
+  min-height: 58px;
+}
+
+.scoreboard .hoja-fila:not(.hoja-cabecera) > input {
+  height: 58px !important;
+}
+
+.scoreboard .hoja-turno {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  height: 58px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid rgba(255, 184, 0, 0.3);
+}
+
+.scoreboard .turno-diamante {
+  position: relative;
+  width: 38px;
+  height: 34px;
+  flex-shrink: 0;
+}
+
+.scoreboard .turno-diamante::before {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 17px;
+  height: 17px;
+  content: "";
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.scoreboard .turno-base,
+.scoreboard .turno-home {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  width: 11px;
+  height: 11px;
+  place-items: center;
+  color: #9fb2c2;
+  font-size: 7px;
+  font-weight: 950;
+  line-height: 1;
+  background: #08243b;
+  border: 1px solid #7b91a3;
+  border-radius: 2px;
+}
+
+.scoreboard .turno-segunda {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.scoreboard .turno-tercera {
+  top: 12px;
+  left: 3px;
+}
+
+.scoreboard .turno-primera {
+  top: 12px;
+  right: 3px;
+}
+
+.scoreboard .turno-home {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* RECORRIDO HASTA PRIMERA */
+.scoreboard .hoja-turno.recorrido-1 .turno-primera,
+
+/* RECORRIDO HASTA SEGUNDA */
+.scoreboard .hoja-turno.recorrido-2 .turno-primera,
+.scoreboard .hoja-turno.recorrido-2 .turno-segunda,
+
+/* RECORRIDO HASTA TERCERA */
+.scoreboard .hoja-turno.recorrido-3 .turno-primera,
+.scoreboard .hoja-turno.recorrido-3 .turno-segunda,
+.scoreboard .hoja-turno.recorrido-3 .turno-tercera,
+
+/* CARRERA ANOTADA */
+.scoreboard .hoja-turno.recorrido-4 .turno-primera,
+.scoreboard .hoja-turno.recorrido-4 .turno-segunda,
+.scoreboard .hoja-turno.recorrido-4 .turno-tercera,
+.scoreboard .hoja-turno.recorrido-4 .turno-home {
+  color: #071827;
+  background: #ffb800;
+  border-color: white;
+  box-shadow: 0 0 5px rgba(255, 184, 0, 0.9);
+}
+
+/* SELECTOR PEQUEÑO DE LA JUGADA */
+.scoreboard .hoja-turno .hoja-entrada {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: white !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  text-align: center;
+  text-align-last: center;
+  background: #0a2943 !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(255, 184, 0, 0.35) !important;
+  border-radius: 0 !important;
+}
+
+.scoreboard .hoja-turno .hoja-entrada-anotada {
+  color: #071827 !important;
+  background: #ffca3a !important;
 }
