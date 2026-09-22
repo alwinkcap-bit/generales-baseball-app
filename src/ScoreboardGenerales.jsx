@@ -22,6 +22,7 @@ const [erroresLocal, setErroresLocal] = useState(0)
 const [primeraBase, setPrimeraBase] = useState(false)
 const [segundaBase, setSegundaBase] = useState(false)
 const [terceraBase, setTerceraBase] = useState(false)
+const [estadoPartido, setEstadoPartido] = useState('Por comenzar')
 function cambiarCarrera(equipo, cantidad) {
   if (inning < 1 || inning > 9) return
 
@@ -68,6 +69,7 @@ function cambiarCarrera(equipo, cantidad) {
     setPrimeraBase(false)
 setSegundaBase(false)
 setTerceraBase(false)
+setEstadoPartido('Por comenzar')
   }
 
   function sumarBola() {
@@ -131,6 +133,26 @@ setTerceraBase(false)
           <h1>⚾ Scoreboard Generales</h1>
           <p>Generales de Chitré Baseball Academy</p>
         </header>
+        <div className="scoreboard-estado">
+  <span
+    className={`estado-indicador estado-${estadoPartido
+      .toLowerCase()
+      .replace(' ', '-')}`}
+  ></span>
+
+  <label htmlFor="estado-partido">ESTADO DEL PARTIDO</label>
+
+  <select
+    id="estado-partido"
+    value={estadoPartido}
+    onChange={(evento) => setEstadoPartido(evento.target.value)}
+  >
+    <option>Por comenzar</option>
+    <option>En vivo</option>
+    <option>Pausado</option>
+    <option>Finalizado</option>
+  </select>
+</div>
 
         <div className="scoreboard-equipos">
           <article className="scoreboard-equipo">

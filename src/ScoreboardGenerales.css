@@ -659,3 +659,160 @@
     min-width: 100px;
   }
 }
+/* ESTADO DEL PARTIDO */
+.scoreboard-estado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: fit-content;
+  margin: 0 auto 22px;
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 184, 0, 0.55);
+  border-radius: 999px;
+  background: #071a2b;
+}
+
+.scoreboard-estado label {
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.scoreboard-estado select {
+  padding: 6px 10px;
+  border: 1px solid #ffb800;
+  border-radius: 8px;
+  outline: none;
+  color: #071a2b;
+  background: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.estado-indicador {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 12px;
+  border-radius: 50%;
+  background: #9ca3af;
+}
+
+.estado-en-vivo {
+  background: #22c55e;
+  box-shadow: 0 0 12px #22c55e;
+  animation: estadoPulso 1.3s infinite;
+}
+
+.estado-pausado {
+  background: #f59e0b;
+  box-shadow: 0 0 9px #f59e0b;
+}
+
+.estado-finalizado {
+  background: #ef4444;
+}
+
+.estado-por-comenzar {
+  background: #60a5fa;
+}
+
+@keyframes estadoPulso {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (max-width: 600px) {
+  .scoreboard-estado {
+    width: 100%;
+    gap: 7px;
+    padding: 8px;
+  }
+
+  .scoreboard-estado label {
+    font-size: 9px;
+  }
+
+  .scoreboard-estado select {
+    min-width: 0;
+    font-size: 12px;
+  }
+}
+/* DISTRIBUCIÓN HORIZONTAL DEL SCOREBOARD */
+@media (min-width: 801px) {
+  .scoreboard {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    grid-template-areas:
+      "encabezado encabezado"
+      "estado estado"
+      "equipos equipos"
+      "linea linea"
+      "estadisticas bases"
+      "inning conteo"
+      "acciones acciones";
+    align-items: center;
+    column-gap: 22px;
+    row-gap: 18px;
+  }
+
+  .scoreboard-encabezado {
+    grid-area: encabezado;
+  }
+
+  .scoreboard-estado {
+    grid-area: estado;
+    margin-bottom: 0;
+  }
+
+  .scoreboard-equipos {
+    grid-area: equipos;
+  }
+
+  .scoreboard-linea-contenedor {
+    grid-area: linea;
+    margin: 0;
+  }
+
+  .scoreboard-estadisticas {
+    grid-area: estadisticas;
+    width: 100%;
+    margin: 0;
+  }
+
+  .scoreboard-bases {
+    grid-area: bases;
+    margin: 0 auto;
+  }
+
+  .scoreboard-inning {
+    grid-area: inning;
+    width: 100%;
+    margin: 0;
+  }
+
+  .scoreboard-conteo {
+    grid-area: conteo;
+    width: 100%;
+    margin: 0;
+  }
+
+  .scoreboard-acciones {
+    grid-area: acciones;
+    margin: 0;
+  }
+}
+/* RESALTAR CARRERAS DE LA ENTRADA ACTUAL */
+.scoreboard-linea .equipo-bateando {
+  color: #061a2e !important;
+  background: linear-gradient(145deg, #ffe083, #ffb800) !important;
+  box-shadow:
+    inset 0 0 0 2px #ffffff,
+    0 0 14px rgba(255, 184, 0, 0.65) !important;
+  font-size: 22px !important;
+  font-weight: 950 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+}
