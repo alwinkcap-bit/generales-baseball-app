@@ -474,3 +474,11 @@ body:has(.transmision-mensaje) {
     transform: scale(0.88);
   }
 }
+
+.transmision-logo-equipo {
+  width: clamp(70px, 9vw, 125px);
+  height: clamp(70px, 9vw, 125px);
+  margin: 12px auto 4px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.45));
+}

@@ -61,6 +61,8 @@ function obtenerEstadoTransmision() {
   return {
     nombreVisitante,
     nombreLocal,
+    logoVisitante,
+    logoLocal,
     visitante,
     local,
     inning,
@@ -191,7 +193,9 @@ useEffect(() => {
   erroresVisitante,
   hitsLocal,
   erroresLocal,
-  estadoPartido
+  estadoPartido,
+  logoVisitante,
+  logoLocal
 ])
 function cargarLogoVisitante(evento) {
   const archivo = evento.target.files?.[0]

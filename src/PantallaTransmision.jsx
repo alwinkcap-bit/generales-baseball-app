@@ -6,6 +6,8 @@ import './PantallaTransmision.css'
 const estadoInicial = {
   nombreVisitante: 'Visitante',
   nombreLocal: 'Generales',
+  logoVisitante: '',
+  logoLocal: logoGenerales,
   visitante: 0,
   local: 0,
   inning: 1,
@@ -23,6 +25,7 @@ const estadoInicial = {
   hitsLocal: 0,
   erroresLocal: 0,
   estadoPartido: 'Por comenzar'
+
 }
 
 export default function PantallaTransmision({ codigo }) {
@@ -143,7 +146,15 @@ export default function PantallaTransmision({ codigo }) {
       <section className="transmision-marcador">
         <article>
           <small>VISITANTE</small>
-          <h2>{estado.nombreVisitante}</h2>
+          {estado.logoVisitante && (
+                <img
+                  className="transmision-logo-equipo"
+                  src={estado.logoVisitante}
+                  alt={`Logo de ${estado.nombreVisitante}`}
+                />
+              )}
+
+              <h2>{estado.nombreVisitante}</h2>
           <strong>{estado.visitante}</strong>
         </article>
 
@@ -155,7 +166,15 @@ export default function PantallaTransmision({ codigo }) {
 
         <article>
           <small>LOCAL</small>
-          <h2>{estado.nombreLocal}</h2>
+          {estado.logoLocal && (
+                <img
+                  className="transmision-logo-equipo"
+                  src={estado.logoLocal}
+                  alt={`Logo de ${estado.nombreLocal}`}
+                />
+              )}
+
+              <h2>{estado.nombreLocal}</h2>
           <strong>{estado.local}</strong>
         </article>
       </section>
