@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { QRCodeCanvas } from 'qrcode.react'
 import './ScoreboardGenerales.css'
 import logoGenerales from './public/logo-generales.png'
 import { supabase } from './supabase'
@@ -56,6 +57,7 @@ const [logoLocal, setLogoLocal] = useState(logoGenerales)
 const [transmisionId, setTransmisionId] = useState(null)
 const [codigoTransmision, setCodigoTransmision] = useState('')
 const [transmisionActiva, setTransmisionActiva] = useState(false)
+const [qrVisible, setQrVisible] = useState(false)
 
 function obtenerEstadoTransmision() {
   return {
@@ -152,6 +154,17 @@ async function copiarEnlaceTransmision() {
   } catch {
     window.prompt('Copia este enlace:', enlace)
   }
+}
+
+function descargarQrTransmision() {
+  const canvas = document.getElementById('qr-transmision')
+
+  if (!canvas) return
+
+  const enlaceDescarga = document.createElement('a')
+  enlaceDescarga.download = `transmision-${codigoTransmision}.png`
+  enlaceDescarga.href = canvas.toDataURL('image/png')
+  enlaceDescarga.click()
 }
 
 useEffect(() => {
@@ -1113,6 +1126,66 @@ const estadisticasLocal = calcularEstadisticasBateo(
       >
         🔗 Copiar enlace
       </button>
+
+      <button
+        type="button"
+        className="scoreboard-transmision-qr"
+        onClick={() => setQrVisible(true)}
+      >
+        ▣ Mostrar QR
+      </button>
+
+      {qrVisible && (
+        <div
+          className="scoreboard-qr-fondo"
+          onClick={() => setQrVisible(false)}
+        >
+          <section
+            className="scoreboard-qr-ventana"
+            onClick={(evento) => evento.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="scoreboard-qr-cerrar"
+              onClick={() => setQrVisible(false)}
+              aria-label="Cerrar código QR"
+            >
+              ×
+            </button>
+
+            <img
+              className="scoreboard-qr-logo"
+              src={logoGenerales}
+              alt="Generales de Chitré"
+            />
+
+            <h2>Transmisión en vivo</h2>
+            <p>Escanea el código para seguir el partido.</p>
+
+            <QRCodeCanvas
+              id="qr-transmision"
+              value={`${window.location.origin}${window.location.pathname}?transmision=${codigoTransmision}`}
+              size={240}
+              level="H"
+              includeMargin
+              imageSettings={{
+                src: logoGenerales,
+                width: 42,
+                height: 42,
+                excavate: true
+              }}
+            />
+
+            <button
+              type="button"
+              className="scoreboard-qr-descargar"
+              onClick={descargarQrTransmision}
+            >
+              Descargar QR
+            </button>
+          </section>
+        </div>
+      )}
 
       <button
         type="button"
