@@ -9,6 +9,7 @@ import preguntasReto from './PreguntasReto'
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
 import ScoreboardGenerales from './ScoreboardGenerales'
+import CentroPartidos from './CentroPartidos'
 
 export default function Inicio({
   onAdmin,
@@ -24,6 +25,7 @@ export default function Inicio({
   const [sopaLetrasOpen, setSopaLetrasOpen] = useState(false)
   const [memoriaOpen, setMemoriaOpen] = useState(false)
   const [scoreboardOpen, setScoreboardOpen] = useState(false)
+  const [centroPartidosOpen, setCentroPartidosOpen] = useState(false)
  const [imagenesGaleriaPublica, setImagenesGaleriaPublica] = useState([])
 
 useEffect(() => {
@@ -380,6 +382,12 @@ SÍGUENOS EN INSTAGRAM
   />
 )}
 
+{centroPartidosOpen && isAdmin && (
+  <CentroPartidos
+    onCerrar={() => setCentroPartidosOpen(false)}
+  />
+)}
+
 {sopaLetrasOpen && (
   <SopaLetras
     onCerrar={() => setSopaLetrasOpen(false)}
@@ -602,6 +610,34 @@ SÍGUENOS EN INSTAGRAM
   </button>
 </section>
 <section className="scoreboard-acceso-seccion">
+  <button
+    type="button"
+    className="tienda-acceso"
+    onClick={() => {
+      if (isAdmin) {
+        setCentroPartidosOpen(true)
+      } else {
+        window.alert(
+          'Acceso restringido. Debes iniciar sesión como administrador.'
+        )
+        onAdmin()
+      }
+    }}
+  >
+    <span className="tienda-acceso-icono">📅</span>
+
+    <span>
+      <strong>Centro de Partidos</strong>
+      <small>
+        {isAdmin
+          ? 'Programar juegos y registrar resultados'
+          : '🔒 Acceso exclusivo para usuarios autorizados'}
+      </small>
+    </span>
+
+    <b>{isAdmin ? 'Abrir →' : 'Acceder 🔒'}</b>
+  </button>
+
   <button
     type="button"
     className="tienda-acceso"
