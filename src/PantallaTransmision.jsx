@@ -8,6 +8,8 @@ const estadoInicial = {
   nombreLocal: 'Generales',
   logoVisitante: '',
   logoLocal: logoGenerales,
+  youtubeUrl: '',
+  videoActivo: false,
   visitante: 0,
   local: 0,
   inning: 1,
@@ -28,10 +30,36 @@ const estadoInicial = {
 
 }
 
+
+function obtenerIdYoutube(enlace) {
+  if (!enlace) return ''
+
+  try {
+    const url = new URL(enlace.trim())
+
+    if (url.hostname.includes('youtu.be')) {
+      return url.pathname.split('/').filter(Boolean)[0] || ''
+    }
+
+    const parametro = url.searchParams.get('v')
+    if (parametro) return parametro
+
+    const partes = url.pathname.split('/').filter(Boolean)
+    const posicion = partes.findIndex(
+      (parte) => parte === 'embed' || parte === 'live' || parte === 'shorts'
+    )
+
+    return posicion >= 0 ? partes[posicion + 1] || '' : ''
+  } catch {
+    return ''
+  }
+}
+
 export default function PantallaTransmision({ codigo }) {
   const [estado, setEstado] = useState(estadoInicial)
   const [cargando, setCargando] = useState(true)
   const [disponible, setDisponible] = useState(true)
+  const youtubeId = obtenerIdYoutube(estado.youtubeUrl)
 
   useEffect(() => {
     let activa = true
@@ -143,7 +171,31 @@ export default function PantallaTransmision({ codigo }) {
         </div>
       </header>
 
-      <section className="transmision-marcador">
+      {estado.videoActivo && youtubeId && (
+            <section className="transmision-video">
+              <div className="transmision-video-titulo">
+                <span>
+                  <i></i>
+                  VIDEO EN VIVO
+                </span>
+
+                <strong>
+                  {estado.nombreVisitante} vs. {estado.nombreLocal}
+                </strong>
+              </div>
+
+              <div className="transmision-video-marco">
+                <iframe
+                  src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1`}
+                  title="Transmisión en vivo del partido"
+                  allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </section>
+          )}
+
+          <section className="transmision-marcador">
         <article>
           <small>VISITANTE</small>
           {estado.logoVisitante && (

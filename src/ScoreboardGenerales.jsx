@@ -54,6 +54,8 @@ const [nombreVisitante, setNombreVisitante] = useState('Visitante')
 const [nombreLocal, setNombreLocal] = useState('Generales')
 const [logoVisitante, setLogoVisitante] = useState('')
 const [logoLocal, setLogoLocal] = useState(logoGenerales)
+const [youtubeUrl, setYoutubeUrl] = useState('')
+const [videoActivo, setVideoActivo] = useState(false)
 const [transmisionId, setTransmisionId] = useState(null)
 const [codigoTransmision, setCodigoTransmision] = useState('')
 const [transmisionActiva, setTransmisionActiva] = useState(false)
@@ -65,6 +67,8 @@ function obtenerEstadoTransmision() {
     nombreLocal,
     logoVisitante,
     logoLocal,
+    youtubeUrl,
+    videoActivo,
     visitante,
     local,
     inning,
@@ -208,7 +212,9 @@ useEffect(() => {
   erroresLocal,
   estadoPartido,
   logoVisitante,
-  logoLocal
+  logoLocal,
+  youtubeUrl,
+  videoActivo
 ])
 function cargarLogoVisitante(evento) {
   const archivo = evento.target.files?.[0]
@@ -734,6 +740,33 @@ const estadisticasLocal = calcularEstadisticasBateo(
     <option>Finalizado</option>
   </select>
 </div>
+
+
+        <section className="scoreboard-video-control">
+          <div>
+            <strong>VIDEO EN VIVO</strong>
+            <small>
+              Pega el enlace del video o transmisión de YouTube.
+            </small>
+          </div>
+
+          <input
+            type="url"
+            value={youtubeUrl}
+            onChange={(evento) => setYoutubeUrl(evento.target.value)}
+            placeholder="https://www.youtube.com/watch?v=..."
+            aria-label="Enlace de YouTube"
+          />
+
+          <label>
+            <input
+              type="checkbox"
+              checked={videoActivo}
+              onChange={(evento) => setVideoActivo(evento.target.checked)}
+            />
+            Mostrar video en la transmisión pública
+          </label>
+        </section>
 
         <div className="scoreboard-equipos">
           <article className="scoreboard-equipo">
