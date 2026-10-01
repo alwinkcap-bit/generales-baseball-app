@@ -1,0 +1,213 @@
+.jugadores-publicos {
+  width: min(1120px, calc(100% - 32px));
+  margin: 30px auto 100px;
+  color: #fff;
+}
+
+.jugadores-publicos-encabezado {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.jugadores-publicos-encabezado > span,
+.jugador-publico-detalle-info > small {
+  color: #f3b83b;
+  font-size: 0.73rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+}
+
+.jugadores-publicos-encabezado h2 {
+  margin: 10px 0 8px;
+  color: #fff;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.jugadores-publicos-encabezado p {
+  color: rgba(255, 255, 255, 0.67);
+}
+
+.jugadores-publicos-estado {
+  padding: 50px 22px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  border: 1px solid rgba(243, 184, 59, 0.25);
+  border-radius: 24px;
+  background: #0b2946;
+}
+
+.jugadores-publicos-error {
+  color: #ffb3b3;
+}
+
+.jugadores-publicos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+  gap: 17px;
+}
+
+.jugadores-publicos-grid button {
+  padding: 0 0 18px;
+  overflow: hidden;
+  color: #fff;
+  text-align: left;
+  border: 1px solid rgba(63, 135, 199, 0.3);
+  border-radius: 22px;
+  background: linear-gradient(145deg, #10375d, #071d34);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: 180ms ease;
+}
+
+.jugadores-publicos-grid button:hover,
+.jugadores-publicos-grid button.activo {
+  transform: translateY(-5px);
+  border-color: rgba(243, 184, 59, 0.7);
+}
+
+.jugador-publico-foto {
+  position: relative;
+  height: 230px;
+  margin-bottom: 16px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #f3b83b;
+  font-size: 3rem;
+  font-weight: 900;
+  background: #06192c;
+}
+
+.jugador-publico-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.jugador-publico-foto b {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 7px 11px;
+  color: #071a2f;
+  font-size: 0.85rem;
+  border-radius: 999px;
+  background: #f3b83b;
+}
+
+.jugadores-publicos-grid button > strong,
+.jugadores-publicos-grid button > small {
+  display: block;
+  padding: 0 17px;
+}
+
+.jugadores-publicos-grid button > strong {
+  margin-bottom: 5px;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.jugadores-publicos-grid button > small {
+  color: rgba(255, 255, 255, 0.63);
+}
+
+.jugador-publico-detalle {
+  margin-top: 30px;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: minmax(220px, 330px) 1fr;
+  gap: 30px;
+  align-items: center;
+  border: 1px solid rgba(243, 184, 59, 0.3);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(243,184,59,.13), transparent 30%),
+    linear-gradient(145deg, #10375d, #071d34);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.3);
+}
+
+.jugador-publico-detalle-foto {
+  height: 330px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-size: 4rem;
+  border-radius: 22px;
+  background: #06192c;
+}
+
+.jugador-publico-detalle-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.jugador-publico-detalle-info h3 {
+  margin: 8px 0 22px;
+  color: #fff;
+  font-size: clamp(2rem, 5vw, 3.3rem);
+}
+
+.jugador-publico-detalle-info > div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 13px;
+}
+
+.jugador-publico-detalle-info span {
+  min-height: 92px;
+  padding: 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.jugador-publico-detalle-info b {
+  color: #f3b83b;
+  font-size: 1.25rem;
+}
+
+@media (max-width: 700px) {
+  .jugadores-publicos {
+    width: calc(100% - 22px);
+    margin-top: 20px;
+  }
+
+  .jugadores-publicos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+  }
+
+  .jugador-publico-foto {
+    height: 175px;
+  }
+
+  .jugadores-publicos-grid button > strong,
+  .jugadores-publicos-grid button > small {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .jugador-publico-detalle {
+    padding: 15px;
+    grid-template-columns: 1fr;
+  }
+
+  .jugador-publico-detalle-foto {
+    height: 310px;
+  }
+}
+
+@media (max-width: 390px) {
+  .jugadores-publicos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .jugador-publico-foto {
+    height: 260px;
+  }
+}

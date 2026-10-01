@@ -14,6 +14,7 @@ import CentroPartidos from './CentroPartidos'
 export default function Inicio({
   onAdmin,
   onEntrenadores,
+  onJugadoresPublicos,
   isAdmin,
   onRegistro,
 }) {
@@ -251,9 +252,26 @@ const responderReto = (opcionElegida) => {
   <div id="inicio" className="inicio-app"> 
       <header className="inicio-header">
         <div className="inicio-marca">
-          <span>GENERALES DE CHITRÉ</span>
-          <strong>BASEBALL ACADEMY</strong>
+          <img
+            src={logoGenerales}
+            alt="Logo Generales de Chitré"
+            className="inicio-marca-logo"
+          />
+          <div>
+            <span>GENERALES DE CHITRÉ</span>
+            <strong>BASEBALL ACADEMY</strong>
+          </div>
         </div>
+
+        <button
+          type="button"
+          className="inicio-notificacion"
+          aria-label="Notificaciones"
+          onClick={() => window.alert('No tienes notificaciones nuevas.')}
+        >
+          ♢
+          <i></i>
+        </button>
         
       </header>
 
@@ -313,6 +331,89 @@ SÍGUENOS EN INSTAGRAM
   />
 </div>
         </section>
+
+        <section className="inicio-panel-rapido" aria-label="Accesos principales">
+          <button type="button" onClick={() => setProgramasOpen(true)}>
+            <span className="inicio-panel-icono">⚾</span>
+            <strong>Programas</strong>
+            <b>›</b>
+          </button>
+
+          <button type="button" onClick={onJugadoresPublicos}>
+            <span className="inicio-panel-icono">👥</span>
+            <strong>Jugadores</strong>
+            <b>›</b>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              if (isAdmin) {
+                setCentroPartidosOpen(true)
+              } else {
+                window.alert(
+                  'Debes iniciar sesión como administrador para gestionar partidos.'
+                )
+                onAdmin()
+              }
+            }}
+          >
+            <span className="inicio-panel-icono">📅</span>
+            <strong>Partidos</strong>
+            <b>›</b>
+          </button>
+
+          <button type="button" onClick={() => setNoticiasOpen(true)}>
+            <span className="inicio-panel-icono">▤</span>
+            <strong>Noticias</strong>
+            <b>›</b>
+          </button>
+
+          <button type="button" onClick={() => setGaleriaOpen(true)}>
+            <span className="inicio-panel-icono">▧</span>
+            <strong>Galería</strong>
+            <b>›</b>
+          </button>
+
+          <button
+            type="button"
+            onClick={() =>
+              document
+                .getElementById('reto-digital')
+                ?.scrollIntoView({ behavior: 'smooth' })
+            }
+          >
+            <span className="inicio-panel-icono">★</span>
+            <strong>Juegos</strong>
+            <b>›</b>
+          </button>
+        </section>
+
+        <section className="inicio-proximo-entrenamiento">
+          <div className="inicio-proximo-icono">▣</div>
+
+          <div>
+            <small>PRÓXIMO ENTRENAMIENTO</small>
+            <h2>Entrena con los Generales</h2>
+            <p>📍 Estadio Pepe Osorio</p>
+            <span>Lunes, miércoles y viernes</span>
+          </div>
+
+          <button type="button" onClick={() => setProgramasOpen(true)}>
+            Ver horarios ›
+          </button>
+        </section>
+
+        <button
+          type="button"
+          className="inicio-inscripcion-grande"
+          onClick={onRegistro}
+        >
+          <span>＋</span>
+          Inscríbete
+          <b>›</b>
+        </button>
+
         <section id="programas" className="inicio-valores">
           <section id="reto-digital" style={{ padding: '32px 20px', textAlign: 'center', background: '#102236' }}>
   <span style={{ color: '#b98213', fontWeight: 'bold' }}>RETO DIGITAL</span>
