@@ -2518,3 +2518,22 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ALINEACIÓN CORREGIDA DE LAS BASES */
+.scoreboard .scoreboard-bases .base-tercera {
+  top: 70px !important;
+  left: 12px !important;
+}
+
+.scoreboard .scoreboard-bases .base-primera {
+  top: 70px !important;
+  right: 12px !important;
+}
+
+
+/* POSICIÓN DEFINITIVA DE PRIMERA BASE */
+.scoreboard .scoreboard-bases .base-primera {
+  top: 70px !important;
+  left: 126px !important;
+  right: auto !important;
+}

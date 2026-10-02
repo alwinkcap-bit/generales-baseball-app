@@ -23,6 +23,7 @@ export default function Inicio({
   onAdmin,
   onEntrenadores,
   onJugadoresPublicos,
+  onEditarGaleria,
   isAdmin,
   onRegistro,
 }) {
@@ -40,6 +41,23 @@ export default function Inicio({
   const [scoreboardOpen, setScoreboardOpen] = useState(false)
   const [centroPartidosOpen, setCentroPartidosOpen] = useState(false)
   const [partidosPublicosOpen, setPartidosPublicosOpen] = useState(false)
+
+  const mostrarBarraPrincipal = !(
+    tiendaOpen ||
+    programasOpen ||
+    galeriaOpen ||
+    noticiasOpen ||
+    notificacionesOpen ||
+    masOpen ||
+    sopaLetrasOpen ||
+    memoriaOpen ||
+    bateoRetroOpen ||
+    retoDigitalOpen ||
+    juegosOpen ||
+    scoreboardOpen ||
+    centroPartidosOpen ||
+    partidosPublicosOpen
+  )
  const [imagenesGaleriaPublica, setImagenesGaleriaPublica] = useState([])
 
 useEffect(() => {
@@ -395,28 +413,7 @@ const responderReto = (opcionElegida) => {
 >
   ⚾ INSCRÍBETE AHORA
 </button>
-  <a
-  href="https://www.instagram.com/generales_baseball_chitre/"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="inicio-boton contorno"
->
-  <svg
-  width="22"
-  height="22"
-  viewBox="0 0 24 24"
-  fill="none"
-  aria-hidden="true"
-  style={{ verticalAlign: 'middle', marginRight: 8 }}
->
-  <rect x="2" y="2" width="20" height="20" rx="6"
-    stroke="#F3B83B" strokeWidth="2" />
-  <circle cx="12" cy="12" r="4"
-    stroke="white" strokeWidth="2" />
-  <circle cx="18" cy="6" r="1.2" fill="#F3B83B" />
-</svg>
-SÍGUENOS EN INSTAGRAM
-</a>
+
 </div>
           </div>
           <div className="inicio-hero-imagen">
@@ -434,6 +431,106 @@ SÍGUENOS EN INSTAGRAM
         </section>
 
         <Patrocinadores isAdmin={isAdmin} />
+
+
+        <section
+          className="inicio-instagram-destacado"
+          aria-label="Instagram de Generales de Chitré"
+        >
+  <a
+  href="https://www.instagram.com/generales_baseball_chitre/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inicio-boton contorno inicio-instagram-boton"
+>
+  <svg
+  width="22"
+  height="22"
+  viewBox="0 0 24 24"
+  fill="none"
+  aria-hidden="true"
+  style={{ verticalAlign: 'middle', marginRight: 8 }}
+>
+  <rect x="2" y="2" width="20" height="20" rx="6"
+    stroke="#F3B83B" strokeWidth="2" />
+  <circle cx="12" cy="12" r="4"
+    stroke="white" strokeWidth="2" />
+  <circle cx="18" cy="6" r="1.2" fill="#F3B83B" />
+</svg>
+<span className="inicio-instagram-texto">
+  <small>SÍGUENOS EN INSTAGRAM</small>
+  <strong>@generales_baseball_chitre</strong>
+</span>
+</a>
+        </section>
+
+        {(imagenesGaleriaPublica.length > 0 || isAdmin) && (
+          <section
+            className="inicio-cintillo-galeria"
+            aria-label="Momentos de Generales de Chitré"
+          >
+            <header
+              className="inicio-cintillo-encabezado inicio-cintillo-acceso"
+              onClick={() => setGaleriaOpen(true)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(evento) => {
+                if (evento.key === 'Enter' || evento.key === ' ') {
+                  setGaleriaOpen(true)
+                }
+              }}
+              title="Abrir galería completa"
+            >
+              <div>
+                <small>GALERÍA GENERALES</small>
+                <h2>Nuestros mejores momentos</h2>
+              </div>
+
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={onEditarGaleria}
+                >
+                  ✏️ Editar cintillo
+                </button>
+              )}
+            </header>
+
+            {imagenesGaleriaPublica.length > 0 ? (
+              <div className="inicio-cintillo-ventana">
+                <div className="inicio-cintillo-pista">
+                  {imagenesGaleriaPublica.map((imagen, indice) => (
+                    <button
+                      type="button"
+                      className="inicio-cintillo-foto"
+                      key={`${imagen.id}-${indice}`}
+                      onClick={() => setImagenAmpliada(imagen.imagen_url)}
+                      aria-label={`Ampliar ${imagen.titulo || 'imagen de la academia'}`}
+                    >
+                      <img
+                        src={imagen.imagen_url}
+                        alt={imagen.titulo || 'Generales de Chitré'}
+                        loading="lazy"
+                      />
+
+                      {imagen.titulo && (
+                        <span>{imagen.titulo}</span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="inicio-cintillo-vacio"
+                onClick={onEditarGaleria}
+              >
+                ＋ Agregar las primeras fotos al cintillo
+              </button>
+            )}
+          </section>
+        )}
 
         <section className="inicio-panel-rapido" aria-label="Accesos principales">
           <button type="button" onClick={() => setProgramasOpen(true)}>
@@ -463,9 +560,9 @@ SÍGUENOS EN INSTAGRAM
             <b>›</b>
           </button>
 
-          <button type="button" onClick={() => setGaleriaOpen(true)}>
-            <span className="inicio-panel-icono">▧</span>
-            <strong>Galería</strong>
+          <button type="button" onClick={() => setTiendaOpen(true)}>
+            <span className="inicio-panel-icono">🛍️</span>
+            <strong>Tienda</strong>
             <b>›</b>
           </button>
 
@@ -1399,6 +1496,7 @@ SÍGUENOS EN INSTAGRAM
 </section>
       </main>
 
+      {mostrarBarraPrincipal && (
       <nav className="inicio-nav">
         <a
           className={seccionActiva === 'inicio' ? 'activo' : ''}
@@ -1466,6 +1564,7 @@ SÍGUENOS EN INSTAGRAM
           Más
         </a>
       </nav>
+      )}
     </div>
   );
 }

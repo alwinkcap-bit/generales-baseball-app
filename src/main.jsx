@@ -1049,6 +1049,11 @@ if (vista === 'inicio') {
   onAdmin={() => setVista('admin')}
   onEntrenadores={() => setVista('entrenadores')}
   onJugadoresPublicos={() => setVista('jugadores-publicos')}
+  onEditarGaleria={() => {
+    loadGaleriaPublica()
+    setGaleriaPublicaOpen(true)
+    setVista('admin')
+  }}
   isAdmin={isAdmin}
   onRegistro={() => setVista('registro')}
 />

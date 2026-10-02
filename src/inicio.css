@@ -4603,3 +4603,517 @@ section:has(> .tienda-acceso) > .tienda-acceso:hover {
     max-height: calc(100dvh - 90px) !important;
   }
 }
+
+/* ===== ENCABEZADO MÓVIL PROFESIONAL ===== */
+@media (max-width: 600px) {
+  .inicio-app .inicio-header {
+    min-height: 92px !important;
+    padding: 14px 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    background:
+      linear-gradient(135deg, #061a2d 0%, #0b3553 55%, #071d31 100%) !important;
+    border-bottom: 2px solid #d7aa32 !important;
+    box-shadow:
+      0 8px 24px rgba(0, 12, 25, 0.35),
+      inset 0 -1px 0 rgba(255, 220, 110, 0.2) !important;
+  }
+
+  .inicio-app .inicio-marca {
+    flex: 1 !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 11px !important;
+  }
+
+  .inicio-app .inicio-marca-logo {
+    width: 48px !important;
+    height: 48px !important;
+    flex: 0 0 48px !important;
+    object-fit: contain !important;
+    filter:
+      drop-shadow(0 3px 5px rgba(0, 0, 0, 0.45))
+      drop-shadow(0 0 5px rgba(245, 193, 61, 0.2)) !important;
+  }
+
+  .inicio-app .inicio-marca > div {
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+  }
+
+  .inicio-app .inicio-marca span {
+    color: #ffffff !important;
+    font-size: clamp(0.79rem, 3.6vw, 1rem) !important;
+    line-height: 1.08 !important;
+    letter-spacing: 0.1em !important;
+    font-weight: 900 !important;
+    white-space: normal !important;
+    text-wrap: balance !important;
+  }
+
+  .inicio-app .inicio-marca strong {
+    color: #f6c945 !important;
+    font-size: clamp(0.61rem, 2.7vw, 0.78rem) !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0.14em !important;
+    white-space: normal !important;
+  }
+
+  .inicio-app .inicio-avisos-contenedor {
+    flex: 0 0 50px !important;
+    position: relative !important;
+  }
+
+  .inicio-app .inicio-notificacion {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    position: relative !important;
+    border: 1px solid rgba(246, 201, 69, 0.75) !important;
+    border-radius: 50% !important;
+    color: #ffd456 !important;
+    background:
+      radial-gradient(circle at 35% 25%, #174d6e, #08263d 68%) !important;
+    box-shadow:
+      0 6px 16px rgba(0, 0, 0, 0.35),
+      inset 0 1px 1px rgba(255, 255, 255, 0.16),
+      0 0 12px rgba(246, 201, 69, 0.16) !important;
+  }
+
+  .inicio-app .inicio-notificacion:active {
+    transform: scale(0.93) !important;
+  }
+
+  .inicio-app .inicio-campana-icono {
+    display: block !important;
+    font-size: 1.45rem !important;
+    line-height: 1 !important;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.38)) !important;
+  }
+
+  .inicio-app .inicio-campana-contador {
+    position: absolute !important;
+    top: -5px !important;
+    right: -4px !important;
+    width: 21px !important;
+    height: 21px !important;
+    display: grid !important;
+    place-items: center !important;
+    padding: 0 !important;
+    border: 2px solid #08263d !important;
+    border-radius: 50% !important;
+    color: #071a2b !important;
+    background: #ffd447 !important;
+    font-size: 0.68rem !important;
+    line-height: 1 !important;
+    font-weight: 900 !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  /* En móvil la marca ya está en el encabezado; no se repite sobre la foto */
+  .inicio-app .inicio-generales-marca {
+    display: none !important;
+  }
+
+  .inicio-app .inicio-hero {
+    padding-top: 0 !important;
+  }
+}
+
+/* ===== CINTILLO GALERÍA GENERALES ===== */
+.inicio-cintillo-galeria {
+  width: min(1120px, calc(100% - 32px));
+  margin: 22px auto;
+  padding: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(231, 184, 54, 0.58);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(30, 111, 151, 0.28), transparent 38%),
+    linear-gradient(145deg, #071c30, #0b304b 62%, #071b2d);
+  box-shadow:
+    0 16px 34px rgba(0, 12, 25, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.inicio-cintillo-encabezado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 15px;
+}
+
+.inicio-cintillo-encabezado small {
+  display: block;
+  margin-bottom: 4px;
+  color: #f2c94c;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.inicio-cintillo-encabezado h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.15rem, 2.5vw, 1.7rem);
+  line-height: 1.1;
+}
+
+.inicio-cintillo-encabezado button,
+.inicio-cintillo-vacio {
+  border: 1px solid #efc84c;
+  border-radius: 12px;
+  color: #071a2b;
+  background: linear-gradient(135deg, #ffe47c, #d9a91f);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(217, 169, 31, 0.24);
+}
+
+.inicio-cintillo-encabezado button {
+  padding: 10px 14px;
+  white-space: nowrap;
+}
+
+.inicio-cintillo-ventana {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.inicio-cintillo-ventana::before,
+.inicio-cintillo-ventana::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  width: 55px;
+  pointer-events: none;
+}
+
+.inicio-cintillo-ventana::before {
+  left: 0;
+  background: linear-gradient(90deg, #09233a, transparent);
+}
+
+.inicio-cintillo-ventana::after {
+  right: 0;
+  background: linear-gradient(-90deg, #09233a, transparent);
+}
+
+.inicio-cintillo-pista {
+  display: flex;
+  width: max-content;
+  gap: 12px;
+  animation: cintilloGaleriaMovimiento 32s linear infinite;
+}
+
+.inicio-cintillo-ventana:hover .inicio-cintillo-pista {
+  animation-play-state: paused;
+}
+
+.inicio-cintillo-foto {
+  position: relative;
+  width: 270px;
+  height: 155px;
+  flex: 0 0 270px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 214, 81, 0.44);
+  border-radius: 15px;
+  background: #061727;
+  cursor: pointer;
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.3);
+}
+
+.inicio-cintillo-foto img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 300ms ease, filter 300ms ease;
+}
+
+.inicio-cintillo-foto:hover img {
+  transform: scale(1.06);
+  filter: saturate(1.12) brightness(1.05);
+}
+
+.inicio-cintillo-foto span {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 24px 12px 10px;
+  color: #ffffff;
+  background: linear-gradient(transparent, rgba(1, 12, 22, 0.92));
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-align: left;
+}
+
+.inicio-cintillo-vacio {
+  width: 100%;
+  padding: 22px;
+}
+
+@keyframes cintilloGaleriaMovimiento {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 6px));
+  }
+}
+
+@media (max-width: 600px) {
+  .inicio-cintillo-galeria {
+    width: calc(100% - 20px);
+    margin: 14px auto;
+    padding: 14px 12px;
+    border-radius: 18px;
+  }
+
+  .inicio-cintillo-encabezado {
+    align-items: flex-end;
+    margin-bottom: 12px;
+  }
+
+  .inicio-cintillo-encabezado h2 {
+    font-size: 1.08rem;
+  }
+
+  .inicio-cintillo-encabezado button {
+    padding: 8px 9px;
+    font-size: 0.72rem;
+  }
+
+  .inicio-cintillo-foto {
+    width: 195px;
+    height: 118px;
+    flex-basis: 195px;
+    border-radius: 13px;
+  }
+
+  .inicio-cintillo-pista {
+    gap: 9px;
+    animation-duration: 27s;
+  }
+
+  .inicio-cintillo-ventana::before,
+  .inicio-cintillo-ventana::after {
+    width: 25px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inicio-cintillo-pista {
+    animation: none;
+    overflow-x: auto;
+  }
+}
+
+/* ===== CARRUSEL MANUAL TIPO INSTAGRAM ===== */
+.inicio-cintillo-ventana {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  scrollbar-width: none;
+}
+
+.inicio-cintillo-ventana:active {
+  cursor: grabbing;
+}
+
+.inicio-cintillo-ventana::-webkit-scrollbar {
+  display: none;
+}
+
+.inicio-cintillo-pista {
+  animation: none !important;
+  width: max-content;
+  padding: 2px 28px 8px 2px;
+}
+
+.inicio-cintillo-foto {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.inicio-cintillo-ventana::before {
+  display: none !important;
+}
+
+.inicio-cintillo-ventana::after {
+  position: sticky !important;
+  right: 0 !important;
+  display: block !important;
+  width: 30px !important;
+  flex: 0 0 30px;
+  background:
+    linear-gradient(
+      -90deg,
+      rgba(9, 35, 58, 0.95),
+      rgba(9, 35, 58, 0)
+    ) !important;
+}
+
+@media (max-width: 600px) {
+  .inicio-cintillo-pista {
+    padding-right: 22px;
+  }
+
+  .inicio-cintillo-foto {
+    width: 78vw;
+    max-width: 290px;
+    height: 165px;
+    flex-basis: 78vw;
+  }
+}
+
+/* ===== BOTÓN OFICIAL DE INSTAGRAM ===== */
+.inicio-instagram-boton {
+  min-height: 58px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 9px 18px !important;
+  overflow: hidden;
+  border: 1px solid rgba(255, 218, 105, 0.78) !important;
+  color: #ffffff !important;
+  background:
+    linear-gradient(
+      125deg,
+      #405de6 0%,
+      #833ab4 30%,
+      #c13584 56%,
+      #e1306c 72%,
+      #f77737 100%
+    ) !important;
+  box-shadow:
+    0 10px 22px rgba(193, 53, 132, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+}
+
+.inicio-instagram-boton:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 14px 27px rgba(193, 53, 132, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+.inicio-instagram-boton svg {
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
+  margin-right: 0 !important;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.24));
+}
+
+.inicio-instagram-boton svg rect,
+.inicio-instagram-boton svg circle {
+  stroke: #ffffff;
+}
+
+.inicio-instagram-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+  line-height: 1.05;
+}
+
+.inicio-instagram-texto small {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.inicio-instagram-texto strong {
+  color: #ffffff;
+  font-size: 0.83rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+@media (max-width: 600px) {
+  .inicio-instagram-boton {
+    width: 100%;
+    max-width: 330px;
+    min-height: 60px;
+    margin-inline: auto;
+  }
+
+  .inicio-instagram-texto strong {
+    font-size: 0.79rem;
+  }
+}
+
+/* ===== INSTAGRAM VISIBLE EN PORTADA ===== */
+.inicio-instagram-destacado {
+  width: min(1120px, calc(100% - 32px));
+  margin: 20px auto 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.inicio-instagram-destacado .inicio-instagram-boton {
+  width: min(100%, 390px);
+}
+
+@media (max-width: 600px) {
+  .inicio-instagram-destacado {
+    width: calc(100% - 24px);
+    margin: 14px auto 8px;
+  }
+
+  .inicio-instagram-destacado .inicio-instagram-boton {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}
+
+/* ACCESO A LA GALERÍA DESDE EL CINTILLO */
+.inicio-cintillo-acceso {
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.inicio-cintillo-acceso:hover {
+  background: rgba(244, 189, 43, 0.08);
+}
+
+.inicio-cintillo-acceso:focus-visible {
+  outline: 3px solid #f4bd2b;
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+.inicio-cintillo-acceso h2::after {
+  content: '  Ver galería →';
+  color: #f4bd2b;
+  font-size: 0.72rem;
+  font-weight: 900;
+  white-space: nowrap;
+}

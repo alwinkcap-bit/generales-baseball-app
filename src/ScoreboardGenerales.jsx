@@ -4,6 +4,9 @@ import './ScoreboardGenerales.css'
 import logoGenerales from './public/logo-generales.png'
 import { supabase } from './supabase'
 
+const CLAVE_PARTIDA_SCOREBOARD =
+  'generales-scoreboard-partida-v1'
+
 export default function ScoreboardGenerales({ onCerrar }) {
   const [visitante, setVisitante] = useState(0)
   const [local, setLocal] = useState(0)
@@ -60,6 +63,166 @@ const [transmisionId, setTransmisionId] = useState(null)
 const [codigoTransmision, setCodigoTransmision] = useState('')
 const [transmisionActiva, setTransmisionActiva] = useState(false)
 const [qrVisible, setQrVisible] = useState(false)
+const [estadoLocalCargado, setEstadoLocalCargado] = useState(false)
+
+
+useEffect(() => {
+  try {
+    const contenido = window.localStorage.getItem(
+      CLAVE_PARTIDA_SCOREBOARD
+    )
+
+    if (contenido) {
+      const guardado = JSON.parse(contenido)
+
+      setVisitante(Number(guardado.visitante) || 0)
+      setLocal(Number(guardado.local) || 0)
+      setInning(Number(guardado.inning) || 1)
+      setParte(guardado.parte || 'Alta')
+      setBolas(Number(guardado.bolas) || 0)
+      setStrikes(Number(guardado.strikes) || 0)
+      setOuts(Number(guardado.outs) || 0)
+
+      if (Array.isArray(guardado.carrerasVisitante)) {
+        setCarrerasVisitante(guardado.carrerasVisitante)
+      }
+
+      if (Array.isArray(guardado.carrerasLocal)) {
+        setCarrerasLocal(guardado.carrerasLocal)
+      }
+
+      setHitsVisitante(Number(guardado.hitsVisitante) || 0)
+      setErroresVisitante(Number(guardado.erroresVisitante) || 0)
+      setHitsLocal(Number(guardado.hitsLocal) || 0)
+      setErroresLocal(Number(guardado.erroresLocal) || 0)
+
+      setPrimeraBase(guardado.primeraBase || null)
+      setSegundaBase(guardado.segundaBase || null)
+      setTerceraBase(guardado.terceraBase || null)
+      setEstadoPartido(guardado.estadoPartido || 'Por comenzar')
+
+      if (Array.isArray(guardado.lineupVisitante)) {
+        setLineupVisitante(guardado.lineupVisitante)
+      }
+
+      if (Array.isArray(guardado.lineupLocal)) {
+        setLineupLocal(guardado.lineupLocal)
+      }
+
+      setTurnoVisitante(Number(guardado.turnoVisitante) || 0)
+      setTurnoLocal(Number(guardado.turnoLocal) || 0)
+
+      if (Array.isArray(guardado.historialJugadas)) {
+        setHistorialJugadas(guardado.historialJugadas)
+      }
+
+      setJugadaActual(guardado.jugadaActual || '')
+      setNombreVisitante(guardado.nombreVisitante || 'Visitante')
+      setNombreLocal(guardado.nombreLocal || 'Generales')
+
+      if (guardado.logoVisitante) {
+        setLogoVisitante(guardado.logoVisitante)
+      }
+
+      if (guardado.logoLocal) {
+        setLogoLocal(guardado.logoLocal)
+      }
+
+      setYoutubeUrl(guardado.youtubeUrl || '')
+      setVideoActivo(Boolean(guardado.videoActivo))
+      setTransmisionId(guardado.transmisionId || null)
+      setCodigoTransmision(guardado.codigoTransmision || '')
+      setTransmisionActiva(Boolean(guardado.transmisionActiva))
+    }
+  } catch (error) {
+    console.error('No se pudo recuperar la partida:', error)
+  }
+
+  setEstadoLocalCargado(true)
+}, [])
+
+useEffect(() => {
+  if (!estadoLocalCargado) return
+
+  const partida = {
+    visitante,
+    local,
+    inning,
+    parte,
+    bolas,
+    strikes,
+    outs,
+    carrerasVisitante,
+    carrerasLocal,
+    hitsVisitante,
+    erroresVisitante,
+    hitsLocal,
+    erroresLocal,
+    primeraBase,
+    segundaBase,
+    terceraBase,
+    estadoPartido,
+    lineupVisitante,
+    lineupLocal,
+    turnoVisitante,
+    turnoLocal,
+    historialJugadas,
+    jugadaActual,
+    nombreVisitante,
+    nombreLocal,
+    logoVisitante,
+    logoLocal,
+    youtubeUrl,
+    videoActivo,
+    transmisionId,
+    codigoTransmision,
+    transmisionActiva,
+    guardadoEn: new Date().toISOString()
+  }
+
+  try {
+    window.localStorage.setItem(
+      CLAVE_PARTIDA_SCOREBOARD,
+      JSON.stringify(partida)
+    )
+  } catch (error) {
+    console.error('No se pudo guardar la partida:', error)
+  }
+}, [
+  estadoLocalCargado,
+  visitante,
+  local,
+  inning,
+  parte,
+  bolas,
+  strikes,
+  outs,
+  carrerasVisitante,
+  carrerasLocal,
+  hitsVisitante,
+  erroresVisitante,
+  hitsLocal,
+  erroresLocal,
+  primeraBase,
+  segundaBase,
+  terceraBase,
+  estadoPartido,
+  lineupVisitante,
+  lineupLocal,
+  turnoVisitante,
+  turnoLocal,
+  historialJugadas,
+  jugadaActual,
+  nombreVisitante,
+  nombreLocal,
+  logoVisitante,
+  logoLocal,
+  youtubeUrl,
+  videoActivo,
+  transmisionId,
+  codigoTransmision,
+  transmisionActiva
+])
 
 function obtenerEstadoTransmision() {
   return {
@@ -384,6 +547,10 @@ setEstadoPartido('Por comenzar')
 
     if (!confirmar) return
 
+    window.localStorage.removeItem(
+      CLAVE_PARTIDA_SCOREBOARD
+    )
+
     setVisitante(0)
     setLocal(0)
     setInning(1)
@@ -408,12 +575,20 @@ setTerceraBase(false)
   let nuevaSegunda = segundaBase
   let nuevaTercera = terceraBase
   let carrerasAnotadas = 0
+  const corredoresQueAnotaron = []
   let outsNuevos = outs
+
+  function anotarCorredor(corredor) {
+    if (!corredor) return
+
+    carrerasAnotadas += 1
+    corredoresQueAnotaron.push(corredor)
+  }
 
   if (jugadaActual === 'BB') {
     if (nuevaPrimera) {
       if (nuevaSegunda) {
-        if (nuevaTercera) carrerasAnotadas += 1
+        if (nuevaTercera) anotarCorredor(nuevaTercera)
         nuevaTercera = nuevaSegunda
       }
 
@@ -424,7 +599,7 @@ setTerceraBase(false)
   }
 
   if (jugadaActual === '1B' || jugadaActual === 'E') {
-    if (nuevaTercera) carrerasAnotadas += 1
+    if (nuevaTercera) anotarCorredor(nuevaTercera)
 
     nuevaTercera = nuevaSegunda
     nuevaSegunda = nuevaPrimera
@@ -432,8 +607,8 @@ setTerceraBase(false)
   }
 
   if (jugadaActual === '2B') {
-    if (nuevaTercera) carrerasAnotadas += 1
-    if (nuevaSegunda) carrerasAnotadas += 1
+    if (nuevaTercera) anotarCorredor(nuevaTercera)
+    if (nuevaSegunda) anotarCorredor(nuevaSegunda)
 
     nuevaTercera = nuevaPrimera
     nuevaSegunda = bateadorActual
@@ -441,11 +616,11 @@ setTerceraBase(false)
   }
 
   if (jugadaActual === '3B') {
-    carrerasAnotadas += [
+    ;[
       nuevaPrimera,
       nuevaSegunda,
       nuevaTercera
-    ].filter(Boolean).length
+    ].filter(Boolean).forEach(anotarCorredor)
 
     nuevaPrimera = null
     nuevaSegunda = null
@@ -453,12 +628,13 @@ setTerceraBase(false)
   }
 
   if (jugadaActual === 'HR') {
-    carrerasAnotadas +=
-      [
-        nuevaPrimera,
-        nuevaSegunda,
-        nuevaTercera
-      ].filter(Boolean).length + 1
+    ;[
+      nuevaPrimera,
+      nuevaSegunda,
+      nuevaTercera
+    ].filter(Boolean).forEach(anotarCorredor)
+
+    anotarCorredor(bateadorActual)
 
     nuevaPrimera = null
     nuevaSegunda = null
@@ -485,22 +661,87 @@ setTerceraBase(false)
     outsNuevos = Math.min(3, outsNuevos + 1)
 
     if (nuevaTercera) {
-      carrerasAnotadas += 1
+      anotarCorredor(nuevaTercera)
       nuevaTercera = null
     }
   }
+
+  const bateadorIndice = lineupEnTurno.findIndex(
+    (jugador) => jugador === bateadorActual
+  )
+
+  const actualizarLineupConCarreras =
+    equipoAlBate === 'visitante'
+      ? setLineupVisitante
+      : setLineupLocal
+
+  actualizarLineupConCarreras((jugadores) =>
+    jugadores.map((jugador, indice) => {
+      const cantidadAnotada = corredoresQueAnotaron.filter(
+        (corredor) => {
+          if (corredor === jugador) return true
+
+          return (
+            String(corredor?.numero || '') ===
+              String(jugador.numero || '') &&
+            String(corredor?.nombre || '').trim().toLowerCase() ===
+              String(jugador.nombre || '').trim().toLowerCase() &&
+            String(corredor?.posicion || '').trim().toLowerCase() ===
+              String(jugador.posicion || '').trim().toLowerCase()
+          )
+        }
+      ).length
+
+      if (cantidadAnotada === 0) return jugador
+
+      return {
+        ...jugador,
+        carrerasAnotadas:
+          Number(jugador.carrerasAnotadas || 0) + cantidadAnotada
+      }
+    })
+  )
+
+  const carrerasImpulsadas =
+    jugadaActual === 'E'
+      ? 0
+      : carrerasAnotadas
 
   setHistorialJugadas((historial) => [
     ...historial,
     {
       equipo: equipoAlBate,
       bateador: bateadorActual,
+      bateadorIndice,
       jugada: jugadaActual,
       entrada: inning,
-parte,
-carrerasImpulsadas: carrerasAnotadas
+      parte,
+      carrerasImpulsadas
     }
   ])
+
+  const jugadaEsHit = [
+    '1B',
+    '2B',
+    '3B',
+    'HR'
+  ].includes(jugadaActual)
+
+  if (jugadaEsHit) {
+    if (equipoAlBate === 'visitante') {
+      setHitsVisitante((total) => total + 1)
+    } else {
+      setHitsLocal((total) => total + 1)
+    }
+  }
+
+  if (jugadaActual === 'E') {
+    if (equipoAlBate === 'visitante') {
+      setErroresLocal((total) => total + 1)
+    } else {
+      setErroresVisitante((total) => total + 1)
+    }
+  }
 
   setPrimeraBase(nuevaPrimera)
   setSegundaBase(nuevaSegunda)
@@ -513,9 +754,7 @@ carrerasImpulsadas: carrerasAnotadas
     cambiarCarrera(equipoAlBate, carrerasAnotadas)
   }
 
-  const posicionOriginal = lineupEnTurno.findIndex(
-    (jugador) => jugador === bateadorActual
-  )
+  const posicionOriginal = bateadorIndice
 
   if (posicionOriginal >= 0 && inning <= 9) {
     actualizarEntradaLineup(
@@ -570,8 +809,15 @@ function calcularEstadisticasBateo(lineup, equipo) {
 
   return lineup
     .filter((jugador) => (jugador.nombre || '').trim() !== '')
-    .map((jugador) => {
-      const jugadas = (jugador.entradas || []).filter(Boolean)
+    .map((jugador, jugadorIndice) => {
+      const jugadas = historialJugadas
+        .filter(
+          (registro) =>
+            registro.equipo === equipo &&
+            registro.bateadorIndice === jugadorIndice
+        )
+        .map((registro) => registro.jugada)
+        .filter(Boolean)
 
       const contar = (...tipos) =>
         jugadas.filter((jugada) => tipos.includes(jugada)).length
@@ -595,15 +841,14 @@ function calcularEstadisticasBateo(lineup, equipo) {
         jugadas.length - basesPorBolas - sacrificios
       )
 
-     const carreras = (jugador.recorridos || []).filter(
-  (recorrido) => recorrido === 4
-).length
+      const carreras =
+        Number(jugador.carrerasAnotadas || 0)
 
       const carrerasImpulsadas = historialJugadas
         .filter(
           (registro) =>
             registro.equipo === equipo &&
-            registro.bateador?.id === jugador.id
+            registro.bateadorIndice === jugadorIndice
         )
         .reduce(
           (total, registro) =>
@@ -1377,6 +1622,7 @@ const estadisticasLocal = calcularEstadisticasBateo(
                     <th>CI</th>
                     <th>BB</th>
                     <th>P</th>
+                    <th>HR</th>
                     <th>PRO</th>
 <th>OPS</th>
                   </tr>
@@ -1398,6 +1644,7 @@ const estadisticasLocal = calcularEstadisticasBateo(
                       <td>{jugador.impulsadas}</td>
                       <td>{jugador.basesPorBolas}</td>
                       <td>{jugador.ponches}</td>
+                      <td>{jugador.jonrones}</td>
                       <td>{jugador.promedio}</td>
 <td>{jugador.ops}</td>
                     </tr>
@@ -1440,6 +1687,12 @@ const estadisticasLocal = calcularEstadisticasBateo(
                     <td>
                       {jugadores.reduce(
                         (total, jugador) => total + jugador.ponches,
+                        0
+                      )}
+                    </td>
+                    <td>
+                      {jugadores.reduce(
+                        (total, jugador) => total + jugador.jonrones,
                         0
                       )}
                     </td>

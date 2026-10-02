@@ -9,6 +9,8 @@
 .patrocinadores-banner {
   position: relative;
   overflow: hidden;
+  width: 100%;
+  height: clamp(260px, 28vw, 330px);
   min-height: 260px;
   border: 2px solid rgba(231, 184, 54, 0.75);
   border-radius: 24px;
@@ -27,10 +29,14 @@
 }
 
 .patrocinadores-banner img {
+  position: absolute;
+  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
-  min-height: 260px;
+  min-height: 0;
   object-fit: cover;
+  object-position: 62% center;
   animation: patrocinadorEntrada 700ms ease both;
 }
 
@@ -480,5 +486,93 @@
   .patrocinadores-cintillo-pista,
   .patrocinadores-banner img {
     animation: none;
+  }
+}
+
+
+/* AJUSTE RESPONSIVE DEL BANNER PUBLICITARIO */
+@media (max-width: 700px) {
+  .patrocinadores-banner {
+    height: 245px;
+    min-height: 245px;
+    border-radius: 18px;
+  }
+
+  .patrocinadores-banner img {
+    object-position: 65% center;
+  }
+
+  .patrocinadores-banner-contenido {
+    left: 22px;
+    width: calc(100% - 70px);
+  }
+
+  .patrocinadores-banner-contenido h2 {
+    max-width: 290px;
+    font-size: clamp(1.65rem, 8vw, 2.25rem);
+  }
+
+  .patrocinadores-banner-contenido p {
+    max-width: 270px;
+    font-size: 0.9rem;
+  }
+}
+
+/* TEXTO COMPACTO PARA RESALTAR LA IMAGEN DEL BANNER */
+.patrocinadores-banner-contenido {
+  left: clamp(24px, 5vw, 58px);
+  width: min(390px, calc(100% - 80px));
+}
+
+.patrocinadores-banner-contenido small {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+}
+
+.patrocinadores-banner-contenido h2 {
+  max-width: 390px;
+  margin: 7px 0;
+  font-size: clamp(1.55rem, 3vw, 2.55rem);
+  line-height: 1.02;
+}
+
+.patrocinadores-banner-contenido p {
+  max-width: 350px;
+  margin: 8px 0 14px;
+  font-size: 0.9rem;
+}
+
+.patrocinadores-banner-contenido span {
+  padding: 8px 15px;
+  font-size: 0.78rem;
+}
+
+/* Degradado más corto para mostrar más imagen */
+.patrocinadores-banner-sombra {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3, 17, 32, 0.92) 0%,
+      rgba(5, 28, 49, 0.68) 28%,
+      rgba(5, 28, 49, 0.18) 58%,
+      transparent 78%
+    ),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.32), transparent 55%);
+}
+
+@media (max-width: 700px) {
+  .patrocinadores-banner-contenido {
+    left: 20px;
+    width: min(255px, calc(100% - 68px));
+  }
+
+  .patrocinadores-banner-contenido h2 {
+    max-width: 255px;
+    font-size: clamp(1.35rem, 7vw, 1.85rem);
+  }
+
+  .patrocinadores-banner-contenido p {
+    max-width: 240px;
+    font-size: 0.78rem;
   }
 }
