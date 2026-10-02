@@ -4405,3 +4405,201 @@ section:has(> .tienda-acceso) > .tienda-acceso:hover {
     font-size: 1.05rem;
   }
 }
+
+/* ===== CORRECCIÓN DEFINITIVA DEL PANEL DE AVISOS ===== */
+
+.inicio-app .inicio-header .inicio-avisos-contenedor {
+  position: relative !important;
+  display: block !important;
+  margin-left: auto !important;
+}
+
+.inicio-app .inicio-header .inicio-avisos-panel {
+  position: absolute !important;
+  z-index: 2147483600 !important;
+  top: 62px !important;
+  right: 0 !important;
+  left: auto !important;
+  display: block !important;
+  width: 390px !important;
+  max-width: calc(100vw - 24px) !important;
+  height: auto !important;
+  max-height: calc(100vh - 100px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-y: auto !important;
+  border: 2px solid #e7b836 !important;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(43, 126, 178, 0.35),
+      transparent 38%
+    ),
+    linear-gradient(155deg, #0c3554, #061a2e) !important;
+  color: #ffffff !important;
+  text-align: left !important;
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.68),
+    0 0 25px rgba(57, 221, 255, 0.18) !important;
+}
+
+.inicio-app .inicio-avisos-panel > header {
+  position: static !important;
+  display: flex !important;
+  width: auto !important;
+  min-height: 0 !important;
+  padding: 17px 18px !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14) !important;
+  background: rgba(255, 255, 255, 0.055) !important;
+  box-shadow: none !important;
+}
+
+.inicio-app .inicio-avisos-panel > header > div {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.inicio-app .inicio-avisos-panel header small {
+  display: block !important;
+  margin: 0 !important;
+  color: #f2c94c !important;
+  font-size: 0.67rem !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.13em !important;
+}
+
+.inicio-app .inicio-avisos-panel header h3 {
+  margin: 4px 0 0 !important;
+  color: white !important;
+  font-size: 1.13rem !important;
+}
+
+.inicio-app .inicio-avisos-panel header button {
+  display: grid !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  padding: 0 !important;
+  place-items: center !important;
+  border: 1px solid rgba(255,255,255,.3) !important;
+  border-radius: 50% !important;
+  background: rgba(255,255,255,.1) !important;
+  color: white !important;
+  font-size: 1.35rem !important;
+}
+
+.inicio-app .inicio-avisos-panel .inicio-aviso {
+  display: grid !important;
+  grid-template-columns: 44px minmax(0, 1fr) auto !important;
+  gap: 11px !important;
+  align-items: center !important;
+  width: auto !important;
+  min-height: 76px !important;
+  margin: 11px 12px !important;
+  padding: 12px !important;
+  border: 1px solid rgba(105, 225, 255, 0.25) !important;
+  border-radius: 14px !important;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(21, 72, 107, 0.94),
+      rgba(7, 35, 58, 0.94)
+    ) !important;
+  color: white !important;
+  text-align: left !important;
+  box-sizing: border-box !important;
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.08),
+    0 7px 16px rgba(0,0,0,.18) !important;
+}
+
+.inicio-app .inicio-avisos-panel .inicio-aviso > span {
+  position: static !important;
+  display: grid !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  padding: 0 !important;
+  place-items: center !important;
+  border: 1px solid rgba(93, 231, 255, 0.55) !important;
+  border-radius: 13px !important;
+  background: rgba(60, 206, 239, 0.12) !important;
+  font-size: 1.35rem !important;
+  line-height: 1 !important;
+  box-shadow: 0 0 12px rgba(69, 222, 255, 0.18) !important;
+}
+
+.inicio-app .inicio-avisos-panel .inicio-aviso > div {
+  display: flex !important;
+  min-width: 0 !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+.inicio-app .inicio-avisos-panel .inicio-aviso small {
+  display: block !important;
+  color: #f5cb4d !important;
+  font-size: 0.62rem !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.08em !important;
+}
+
+.inicio-app .inicio-avisos-panel .inicio-aviso strong {
+  display: block !important;
+  color: white !important;
+  font-size: 0.88rem !important;
+  line-height: 1.25 !important;
+}
+
+.inicio-app .inicio-avisos-panel .inicio-aviso p {
+  display: block !important;
+  margin: 2px 0 0 !important;
+  color: #bfd1dd !important;
+  font-size: 0.72rem !important;
+  line-height: 1.25 !important;
+}
+
+.inicio-app .inicio-avisos-panel .inicio-aviso > button {
+  width: auto !important;
+  min-width: 48px !important;
+  min-height: 34px !important;
+  padding: 7px 10px !important;
+  border: 1px solid #f2c94c !important;
+  border-radius: 9px !important;
+  background: rgba(242, 201, 76, 0.13) !important;
+  color: #ffe16a !important;
+  font-size: 0.7rem !important;
+  font-weight: 950 !important;
+}
+
+.inicio-app .inicio-avisos-panel .inicio-avisos-noticias {
+  display: block !important;
+  width: calc(100% - 24px) !important;
+  min-height: 43px !important;
+  margin: 2px 12px 13px !important;
+  padding: 11px !important;
+  border: 0 !important;
+  border-radius: 11px !important;
+  background: linear-gradient(135deg, #f5d14f, #a86a05) !important;
+  color: #071a2d !important;
+  font-size: 0.82rem !important;
+  font-weight: 950 !important;
+  text-align: center !important;
+}
+
+@media (max-width: 600px) {
+  .inicio-app .inicio-header .inicio-avisos-panel {
+    position: fixed !important;
+    top: 72px !important;
+    right: 10px !important;
+    left: 10px !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: calc(100dvh - 90px) !important;
+  }
+}
