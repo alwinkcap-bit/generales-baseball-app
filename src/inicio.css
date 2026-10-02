@@ -3915,3 +3915,493 @@ section:has(> .tienda-acceso) > .tienda-acceso:hover {
     font-size: .9rem !important;
   }
 }
+
+/* ===== ICONOS GRANDES EN NAVEGACIÓN INFERIOR ===== */
+
+.inicio-nav {
+  min-height: 76px;
+  padding: 7px 8px calc(7px + env(safe-area-inset-bottom));
+}
+
+.inicio-nav a,
+.inicio-nav button {
+  min-width: 58px;
+  gap: 4px;
+  padding: 5px 8px;
+  border-radius: 14px;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.inicio-nav a span,
+.inicio-nav button span {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  margin: 0 auto;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 13px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(35, 91, 132, 0.96),
+      rgba(6, 28, 48, 0.96)
+    );
+  color: #f4cb51;
+  font-size: 1.45rem;
+  line-height: 1;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.17),
+    0 5px 10px rgba(0, 11, 22, 0.3);
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.inicio-nav a.activo span,
+.inicio-nav button.activo span {
+  border-color: #ffe273;
+  background:
+    linear-gradient(145deg, #f5d15b, #b87808);
+  color: #071b2e;
+  transform: translateY(-3px) scale(1.08);
+  text-shadow: none;
+  box-shadow:
+    0 6px 16px rgba(219, 165, 36, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.inicio-nav a:active span,
+.inicio-nav button:active span {
+  transform: scale(0.91);
+}
+
+@media (max-width: 600px) {
+  .inicio-nav {
+    min-height: 74px;
+    gap: 2px;
+    padding-inline: 4px;
+  }
+
+  .inicio-nav a,
+  .inicio-nav button {
+    min-width: 0;
+    padding-inline: 3px;
+    font-size: 0.62rem;
+  }
+
+  .inicio-nav a span,
+  .inicio-nav button span {
+    width: 37px;
+    height: 37px;
+    font-size: 1.35rem;
+  }
+}
+
+/* IGUALAR Y AGRANDAR TODOS LOS ICONOS INFERIORES */
+.inicio-nav > a > span,
+.inicio-nav > button > span {
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  padding: 0 !important;
+  font-size: 1.55rem !important;
+  line-height: 42px !important;
+  border-radius: 14px !important;
+}
+
+.inicio-nav > a,
+.inicio-nav > button {
+  min-height: 64px !important;
+  justify-content: center !important;
+}
+
+.inicio-nav > a.activo > span,
+.inicio-nav > button.activo > span {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+}
+
+@media (max-width: 480px) {
+  .inicio-nav > a > span,
+  .inicio-nav > button > span {
+    width: 39px !important;
+    height: 39px !important;
+    min-width: 39px !important;
+    min-height: 39px !important;
+    font-size: 1.4rem !important;
+    line-height: 39px !important;
+  }
+
+  .inicio-nav > a,
+  .inicio-nav > button {
+    font-size: 0.59rem !important;
+  }
+}
+
+/* ===== NAVEGACIÓN INFERIOR ALINEADA Y FOSFORESCENTE ===== */
+
+.inicio-nav {
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  align-items: center !important;
+  justify-content: stretch !important;
+  gap: 4px !important;
+  width: min(100%, 760px) !important;
+  padding: 7px 8px calc(7px + env(safe-area-inset-bottom)) !important;
+  box-sizing: border-box !important;
+  border: 1px solid rgba(68, 220, 255, 0.45) !important;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(7, 35, 58, 0.98),
+      rgba(2, 17, 30, 0.98)
+    ) !important;
+  box-shadow:
+    0 -4px 24px rgba(0, 226, 255, 0.16),
+    0 0 18px rgba(231, 184, 54, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+.inicio-nav > a,
+.inicio-nav > button {
+  display: flex !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 66px !important;
+  margin: 0 !important;
+  padding: 4px 2px !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  border: 1px solid transparent !important;
+  border-radius: 14px !important;
+  box-sizing: border-box !important;
+  color: #dff9ff !important;
+  font-size: 0.64rem !important;
+  font-weight: 850 !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+
+.inicio-nav > a > span,
+.inicio-nav > button > span {
+  display: grid !important;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  place-items: center !important;
+  border: 1px solid #42e8ff !important;
+  border-radius: 14px !important;
+  background:
+    radial-gradient(
+      circle at 35% 25%,
+      rgba(81, 240, 255, 0.32),
+      transparent 38%
+    ),
+    linear-gradient(145deg, #123f62, #061b30) !important;
+  color: #7ef3ff !important;
+  font-size: 1.5rem !important;
+  line-height: 1 !important;
+  text-shadow:
+    0 0 5px #2be2ff,
+    0 0 10px rgba(43, 226, 255, 0.85) !important;
+  box-shadow:
+    0 0 7px rgba(45, 225, 255, 0.65),
+    0 0 15px rgba(45, 225, 255, 0.28),
+    inset 0 0 9px rgba(78, 235, 255, 0.15) !important;
+}
+
+/* Botón seleccionado en dorado fosforescente */
+.inicio-nav > a.activo,
+.inicio-nav > button.activo {
+  border-color: rgba(255, 224, 92, 0.7) !important;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(242, 201, 76, 0.17),
+      rgba(153, 95, 5, 0.08)
+    ) !important;
+  color: #ffe76e !important;
+  box-shadow:
+    inset 0 0 13px rgba(255, 215, 66, 0.12),
+    0 0 12px rgba(255, 211, 54, 0.2) !important;
+}
+
+.inicio-nav > a.activo > span,
+.inicio-nav > button.activo > span {
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  border-color: #fff179 !important;
+  background:
+    radial-gradient(
+      circle at 35% 25%,
+      #fff6a8,
+      transparent 36%
+    ),
+    linear-gradient(145deg, #f4cb43, #a86604) !important;
+  color: #082039 !important;
+  text-shadow: none !important;
+  box-shadow:
+    0 0 8px #ffe25c,
+    0 0 18px rgba(255, 222, 73, 0.82),
+    0 0 28px rgba(255, 204, 44, 0.38) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Efecto al tocar */
+.inicio-nav > a:active > span,
+.inicio-nav > button:active > span {
+  transform: scale(0.88) !important;
+}
+
+/* Pulso suave únicamente en el botón activo */
+.inicio-nav > a.activo > span,
+.inicio-nav > button.activo > span {
+  animation: navegacionNeon 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes navegacionNeon {
+  from {
+    filter: brightness(1);
+  }
+
+  to {
+    filter: brightness(1.18);
+    box-shadow:
+      0 0 11px #ffe25c,
+      0 0 23px rgba(255, 222, 73, 0.92),
+      0 0 34px rgba(255, 204, 44, 0.48);
+  }
+}
+
+@media (max-width: 520px) {
+  .inicio-nav {
+    gap: 1px !important;
+    padding-inline: 4px !important;
+  }
+
+  .inicio-nav > a,
+  .inicio-nav > button {
+    min-height: 64px !important;
+    padding-inline: 1px !important;
+    font-size: 0.56rem !important;
+  }
+
+  .inicio-nav > a > span,
+  .inicio-nav > button > span {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    border-radius: 12px !important;
+    font-size: 1.3rem !important;
+  }
+
+  .inicio-nav > a.activo > span,
+  .inicio-nav > button.activo > span {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inicio-nav > a.activo > span,
+  .inicio-nav > button.activo > span {
+    animation: none !important;
+  }
+}
+
+/* ===== NAVEGACIÓN SIEMPRE VISIBLE ===== */
+
+.inicio-nav {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  margin: 0 auto !important;
+}
+
+/* Dejar espacio para la barra dentro de las pantallas públicas */
+.jugadores-publicos-fondo,
+.jugadores-publicos-pantalla,
+.partidos-publicos-fondo,
+.partidos-publicos,
+.juegos-pantalla-fondo,
+.juegos-pantalla {
+  padding-bottom: 92px !important;
+  box-sizing: border-box !important;
+}
+
+/* Las ventanas quedan debajo de la navegación */
+.jugadores-publicos-fondo,
+.partidos-publicos-fondo,
+.juegos-pantalla-fondo {
+  z-index: 2147483600 !important;
+}
+
+/* Evitar que el contenido principal quede escondido detrás de la barra */
+.inicio-app {
+  padding-bottom: 98px !important;
+}
+
+@media (max-width: 520px) {
+  .jugadores-publicos-fondo,
+  .jugadores-publicos-pantalla,
+  .partidos-publicos-fondo,
+  .partidos-publicos,
+  .juegos-pantalla-fondo,
+  .juegos-pantalla {
+    padding-bottom: 86px !important;
+  }
+
+  .inicio-app {
+    padding-bottom: 92px !important;
+  }
+}
+
+/* CORREGIR CENTRADO DE LA BARRA INFERIOR FIJA */
+.inicio-nav {
+  right: auto !important;
+  left: 50% !important;
+  width: min(760px, calc(100% - 12px)) !important;
+  max-width: 760px !important;
+  transform: translateX(-50%) !important;
+  overflow: visible !important;
+  border-radius: 22px 22px 0 0 !important;
+}
+
+.inicio-nav > a,
+.inicio-nav > button {
+  overflow: visible !important;
+}
+
+@media (max-width: 520px) {
+  .inicio-nav {
+    width: calc(100% - 8px) !important;
+  }
+}
+
+/* ===== MARCA DEPORTIVA GENERALES EN LA PORTADA ===== */
+
+.inicio-generales-marca {
+  position: absolute;
+  z-index: 8;
+  top: clamp(20px, 4vw, 45px);
+  left: clamp(20px, 5vw, 58px);
+  display: flex;
+  min-width: 210px;
+  padding: 11px 18px 10px;
+  flex-direction: column;
+  border: 2px solid #f2c94c;
+  border-left-width: 7px;
+  border-radius: 5px 16px 16px 5px;
+  background:
+    linear-gradient(
+      105deg,
+      rgba(3, 20, 36, 0.97),
+      rgba(9, 49, 78, 0.91)
+    );
+  transform: skewX(-7deg);
+  box-shadow:
+    0 7px 0 rgba(2, 12, 22, 0.52),
+    0 12px 28px rgba(0, 0, 0, 0.4),
+    0 0 18px rgba(242, 201, 76, 0.22),
+    inset 0 1px rgba(255, 255, 255, 0.13);
+  animation: generalesMarcaEntrada 700ms ease-out both;
+}
+
+.inicio-generales-marca::before {
+  content: "⚾";
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  display: grid;
+  width: 39px;
+  height: 39px;
+  place-items: center;
+  border: 3px solid #f2c94c;
+  border-radius: 50%;
+  background: #071e34;
+  font-size: 1.25rem;
+  transform: translateY(-50%) skewX(7deg);
+  box-shadow:
+    0 0 10px rgba(242, 201, 76, 0.6),
+    0 0 22px rgba(242, 201, 76, 0.28);
+}
+
+.inicio-generales-marca span {
+  color: #ffffff;
+  font-family: Arial Black, Impact, sans-serif;
+  font-size: clamp(1.55rem, 4vw, 2.7rem);
+  font-style: italic;
+  font-weight: 950;
+  line-height: 0.95;
+  letter-spacing: 0.045em;
+  text-shadow:
+    3px 3px 0 #a56b05,
+    5px 5px 0 rgba(0, 0, 0, 0.45),
+    0 0 10px rgba(255, 221, 91, 0.3);
+  transform: skewX(7deg);
+}
+
+.inicio-generales-marca small {
+  margin-top: 6px;
+  color: #f6d45f;
+  font-size: clamp(0.55rem, 1.5vw, 0.72rem);
+  font-weight: 950;
+  letter-spacing: 0.22em;
+  transform: skewX(7deg);
+}
+
+@keyframes generalesMarcaEntrada {
+  from {
+    opacity: 0;
+    transform: translateX(-35px) skewX(-7deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) skewX(-7deg);
+  }
+}
+
+@media (max-width: 600px) {
+  .inicio-generales-marca {
+    top: 16px;
+    left: 14px;
+    min-width: 170px;
+    padding: 9px 14px 8px;
+  }
+
+  .inicio-generales-marca span {
+    font-size: 1.5rem;
+  }
+
+  .inicio-generales-marca small {
+    font-size: 0.52rem;
+  }
+
+  .inicio-generales-marca::before {
+    right: -17px;
+    width: 34px;
+    height: 34px;
+    font-size: 1.05rem;
+  }
+}

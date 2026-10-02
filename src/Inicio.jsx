@@ -6,10 +6,11 @@ import { createPortal } from 'react-dom'
 import { supabase } from './supabase';
 import SopaLetras from './SopaLetras'
 import MemoriaBeisbol from './MemoriaBeisbol'
+import BateoRetro from './BateoRetro'
+import RetoDigital from './RetoDigital'
 import preguntasReto from './PreguntasReto'
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
-import guerreroGenerales from './public/guerrero-generales.png';
 import ScoreboardGenerales from './ScoreboardGenerales'
 import CentroPartidos from './CentroPartidos'
 import PartidosPublicos from './PartidosPublicos'
@@ -29,9 +30,12 @@ export default function Inicio({
   const [programasOpen, setProgramasOpen] = useState(false)
   const [galeriaOpen, setGaleriaOpen] = useState(false)
   const [noticiasOpen, setNoticiasOpen] = useState(false)
+  const [notificacionesOpen, setNotificacionesOpen] = useState(false)
   const [masOpen, setMasOpen] = useState(false)
   const [sopaLetrasOpen, setSopaLetrasOpen] = useState(false)
   const [memoriaOpen, setMemoriaOpen] = useState(false)
+  const [bateoRetroOpen, setBateoRetroOpen] = useState(false)
+  const [retoDigitalOpen, setRetoDigitalOpen] = useState(false)
   const [juegosOpen, setJuegosOpen] = useState(false)
   const [scoreboardOpen, setScoreboardOpen] = useState(false)
   const [centroPartidosOpen, setCentroPartidosOpen] = useState(false)
@@ -271,27 +275,109 @@ const responderReto = (opcionElegida) => {
             <strong>BASEBALL ACADEMY</strong>
           </div>
         </div>
+        <div className="inicio-avisos-contenedor">
+          <button
+            type="button"
+            className={`inicio-notificacion ${
+              notificacionesOpen ? 'activo' : ''
+            }`}
+            aria-label="Abrir avisos"
+            onClick={() =>
+              setNotificacionesOpen((actual) => !actual)
+            }
+          >
+            <span className="inicio-campana-icono">🔔</span>
+            <b className="inicio-campana-contador">3</b>
+          </button>
 
-        <button
-          type="button"
-          className="inicio-notificacion"
-          aria-label="Notificaciones"
-          onClick={() => window.alert('No tienes notificaciones nuevas.')}
-        >
-          ♢
-          <i></i>
-        </button>
+          {notificacionesOpen && (
+            <section className="inicio-avisos-panel">
+              <header>
+                <div>
+                  <small>CENTRO DE AVISOS</small>
+                  <h3>Academia Generales</h3>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setNotificacionesOpen(false)}
+                >
+                  ×
+                </button>
+              </header>
+
+              <div className="inicio-aviso">
+                <span>⚾</span>
+                <div>
+                  <small>ENTRENAMIENTOS</small>
+                  <strong>Consulta días y horarios</strong>
+                  <p>Información actualizada de la Academia.</p>
+                </div>
+              </div>
+
+              <div className="inicio-aviso">
+                <span>📅</span>
+                <div>
+                  <small>PARTIDOS</small>
+                  <strong>Próximos juegos</strong>
+                  <p>Revisa rival, fecha, hora y estadio.</p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setNotificacionesOpen(false)
+                    setPartidosPublicosOpen(true)
+                  }}
+                >
+                  Ver
+                </button>
+              </div>
+
+              <div className="inicio-aviso">
+                <span>⭐</span>
+                <div>
+                  <small>INSCRIPCIONES</small>
+                  <strong>Forma parte de Generales</strong>
+                  <p>Completa el registro del jugador.</p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setNotificacionesOpen(false)
+                    onRegistro()
+                  }}
+                >
+                  Abrir
+                </button>
+              </div>
+
+              <button
+                type="button"
+                className="inicio-avisos-noticias"
+                onClick={() => {
+                  setNotificacionesOpen(false)
+                  setNoticiasOpen(true)
+                }}
+              >
+                Ver todas las noticias →
+              </button>
+            </section>
+          )}
+        </div>
         
       </header>
 
       <main>
         <section className="inicio-hero">
-  <img
-    src={guerreroGenerales}
-    alt=""
-    aria-hidden="true"
-    className="inicio-guerrero-portada"
-  />
+  <div
+    className="inicio-generales-marca"
+    aria-label="Generales Baseball Academy"
+  >
+    <span>GENERALES</span>
+    <small>BASEBALL ACADEMY</small>
+  </div>
 
   <div className="inicio-hero-contenido">
             <span className="inicio-etiqueta">FORMANDO FUTUROS CAMPEONES</span>
@@ -440,38 +526,23 @@ SÍGUENOS EN INSTAGRAM
         </button>
       </header>
 
-      <section id="reto-digital" style={{ padding: '32px 20px', textAlign: 'center', background: '#102236' }}>
-  <span style={{ color: '#b98213', fontWeight: 'bold' }}>RETO DIGITAL</span>
-  <h2>Aprende jugando ⚾</h2>
-
-  {retoTerminado ? (
-    <>
-      <h3>{respuestasCorrectas >= 3 ? '🏅 ¡Ganaste tu primera insignia!' : '¡Buen intento!'}</h3>
-      <p>Respondiste bien {respuestasCorrectas} de {preguntasReto.length} preguntas.</p>
-      <button onClick={() => {
-        setPreguntaActual(0);
-        setRespuestasCorrectas(0);
-        setRetoTerminado(false);
-      }}>
-        JUGAR DE NUEVO
-      </button>
-    </>
-  ) : (
-    <>
-      <p>Pregunta {preguntaActual + 1} de {preguntasReto.length}</p>
-      <h3>{preguntasReto[preguntaActual].pregunta}</h3>
-      <div style={{ display: 'grid', gap: 10, maxWidth: 360, margin: '20px auto' }}>
-        {preguntasReto[preguntaActual].opciones.map((opcion, indice) => (
-          <button key={opcion} onClick={() => responderReto(indice)} style={{ padding: 12 }}>
-            {opcion}
-          </button>
-        ))}
-      </div>
-    </>
-  )}
-  </section>
-
 <section className="juegos-acceso-seccion">
+
+  <button
+    type="button"
+    className="juego-acceso"
+    onClick={() => setRetoDigitalOpen(true)}
+  >
+    <span className="juego-acceso-icono">🏆</span>
+
+    <span className="juego-acceso-texto">
+      <strong>Reto Digital</strong>
+      <small>100 niveles de conocimientos de béisbol</small>
+    </span>
+
+    <b>Jugar →</b>
+  </button>
+
   <button
     type="button"
     className="juego-acceso"
@@ -507,6 +578,22 @@ SÍGUENOS EN INSTAGRAM
 
     <b>Jugar →</b>
   </button>
+
+  <button
+    type="button"
+    className="juego-acceso"
+    onClick={() => setBateoRetroOpen(true)}
+  >
+    <span className="juego-acceso-icono">🕹️</span>
+
+    <span className="juego-acceso-texto">
+      <strong>Bateo Retro</strong>
+      <small>Batea, consigue hits y conecta jonrones</small>
+    </span>
+
+    <b>Jugar →</b>
+  </button>
+
 </section>
     </section>
   </div>,
@@ -611,6 +698,16 @@ SÍGUENOS EN INSTAGRAM
   <CentroPartidos
     onCerrar={() => setCentroPartidosOpen(false)}
   />
+)}
+
+
+
+{retoDigitalOpen && (
+  <RetoDigital onCerrar={() => setRetoDigitalOpen(false)} />
+)}
+
+{bateoRetroOpen && (
+  <BateoRetro onCerrar={() => setBateoRetroOpen(false)} />
 )}
 
 {sopaLetrasOpen && (

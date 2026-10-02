@@ -1,0 +1,1516 @@
+/* BATEO RETRO GENERALES */
+
+.bateo-retro-fondo {
+  position: fixed;
+  z-index: 5000;
+  inset: 0;
+  display: grid;
+  padding: 14px;
+  place-items: center;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at top, rgba(27, 83, 123, .65), transparent 45%),
+    #020b14;
+}
+
+.bateo-retro {
+  width: min(820px, 100%);
+  overflow: hidden;
+  border: 3px solid #efc547;
+  border-radius: 20px;
+  background: #071c31;
+  color: white;
+  box-shadow:
+    0 0 0 5px #102f4b,
+    0 28px 80px rgba(0, 0, 0, .7);
+  font-family: Arial, sans-serif;
+}
+
+.bateo-retro-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #103c60, #06192c);
+  border-bottom: 2px solid #dba927;
+}
+
+.bateo-retro-header small {
+  color: #f2c94c;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+.bateo-retro-header h2 {
+  margin: 3px 0 0;
+}
+
+.bateo-retro-header button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 50%;
+  background: rgba(255,255,255,.1);
+  color: white;
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
+.bateo-retro-marcador {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  padding: 8px;
+  background: #020a11;
+}
+
+.bateo-retro-marcador span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 7px;
+  color: #d0dfeb;
+  font-size: .7rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+}
+
+.bateo-retro-marcador b {
+  margin-top: 3px;
+  color: #ffe46c;
+  font-family: monospace;
+  font-size: 1.35rem;
+  text-shadow: 0 0 8px rgba(255, 222, 87, .65);
+}
+
+.bateo-retro-estadio {
+  position: relative;
+  height: clamp(310px, 51vw, 430px);
+  overflow: hidden;
+  background: linear-gradient(#5dbce6 0 34%, #22713b 34%);
+  image-rendering: pixelated;
+}
+
+.bateo-retro-cielo {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 34%;
+  background:
+    linear-gradient(90deg, transparent 48%, rgba(255,255,255,.75) 49% 53%, transparent 54%) 20px 32px / 90px 20px no-repeat,
+    linear-gradient(#4daade, #bce8f4);
+}
+
+.bateo-retro-cielo span {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  padding: 6px 14px;
+  border: 3px solid white;
+  background: #0a2f50;
+  color: #f5cb4e;
+  font-size: clamp(.65rem, 2vw, .95rem);
+  font-weight: 950;
+  letter-spacing: .08em;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.bateo-retro-publico {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: 100%;
+  height: 18%;
+  border-top: 8px solid #173651;
+  border-bottom: 8px solid #d9b335;
+  background:
+    radial-gradient(circle, #fff 0 2px, transparent 3px) 0 0 / 19px 15px,
+    radial-gradient(circle, #e7b936 0 2px, transparent 3px) 8px 6px / 21px 17px,
+    #153d5b;
+}
+
+.bateo-retro-campo {
+  position: absolute;
+  inset: 40% -12% -20%;
+  border-radius: 50% 50% 0 0;
+  background:
+    repeating-linear-gradient(
+      105deg,
+      #247b40 0 32px,
+      #2d8a48 32px 64px
+    );
+}
+
+.bateo-retro-tierra {
+  position: absolute;
+  left: 50%;
+  bottom: -35%;
+  width: 65%;
+  height: 95%;
+  border-radius: 50% 50% 0 0;
+  background: #bd7d3e;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.bateo-retro-lanzador {
+  position: absolute;
+  z-index: 4;
+  left: 48%;
+  top: 48%;
+  width: 48px;
+  height: 72px;
+  transform: translateX(-50%) scale(.75);
+}
+
+.bateo-retro-lanzador span,
+.bateo-retro-bateador span {
+  position: absolute;
+  font-size: 2rem;
+}
+
+.bateo-retro-lanzador i,
+.bateo-retro-bateador i {
+  position: absolute;
+  top: 28px;
+  left: 10px;
+  width: 28px;
+  height: 38px;
+  border: 4px solid #f0c13f;
+  background: #0a3153;
+}
+
+.bateo-retro-bateador {
+  position: absolute;
+  z-index: 8;
+  right: 16%;
+  bottom: 13%;
+  width: 70px;
+  height: 105px;
+  transform-origin: bottom;
+}
+
+.bateo-retro-bateador span {
+  top: 0;
+  left: 16px;
+  font-size: 2.6rem;
+}
+
+.bateo-retro-bateador i {
+  top: 38px;
+  left: 20px;
+  width: 35px;
+  height: 48px;
+}
+
+.bateo-retro-bateador b {
+  position: absolute;
+  top: 22px;
+  left: -2px;
+  width: 75px;
+  height: 9px;
+  border: 2px solid #6e3f16;
+  border-radius: 6px;
+  background: #e5a341;
+  transform: rotate(-50deg);
+  transform-origin: right center;
+}
+
+.bateo-retro-bateador.bateando b {
+  animation: bateRetroSwing 220ms ease-out;
+}
+
+.bateo-retro-home {
+  position: absolute;
+  z-index: 5;
+  right: 21%;
+  bottom: 9%;
+  color: white;
+  font-size: 2rem;
+  transform: rotate(45deg);
+}
+
+.bateo-retro-pelota {
+  position: absolute;
+  z-index: 10;
+  left: 49%;
+  top: 55%;
+  font-size: 14px;
+  filter: drop-shadow(2px 3px 2px rgba(0,0,0,.4));
+  animation-name: pelotaRetroLanzamiento;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.bateo-retro-mensaje {
+  position: absolute;
+  z-index: 15;
+  top: 16%;
+  left: 50%;
+  padding: 8px 18px;
+  border: 3px solid #f4d663;
+  background: rgba(3, 17, 30, .9);
+  color: white;
+  font-family: monospace;
+  font-size: clamp(1rem, 4vw, 1.6rem);
+  font-weight: 950;
+  text-align: center;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  text-shadow: 3px 3px #07101a;
+}
+
+.bateo-retro-conteo {
+  display: flex;
+  justify-content: center;
+  gap: 34px;
+  padding: 12px;
+  background: #04111e;
+}
+
+.bateo-retro-conteo span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: .75rem;
+  font-weight: 900;
+}
+
+.bateo-retro-conteo i {
+  width: 15px;
+  height: 15px;
+  border: 2px solid #647887;
+  border-radius: 50%;
+  background: #182a38;
+}
+
+.bateo-retro-conteo i.encendido {
+  border-color: #ffe45d;
+  background: #f2ca35;
+  box-shadow: 0 0 9px #eecb3f;
+}
+
+.bateo-retro-conteo i.rojo {
+  border-color: #ff6b72;
+  background: #e23641;
+  box-shadow: 0 0 9px #e23641;
+}
+
+.bateo-retro-controles {
+  display: flex;
+  justify-content: center;
+  padding: 18px 20px 10px;
+}
+
+.bateo-retro-controles button {
+  min-width: 220px;
+  min-height: 62px;
+  border: 3px solid #ffe278;
+  border-radius: 16px;
+  background: linear-gradient(#f5cc43, #b97707);
+  color: #071a2d;
+  font-size: 1.25rem;
+  font-weight: 950;
+  letter-spacing: .06em;
+  cursor: pointer;
+  box-shadow:
+    0 7px 0 #704502,
+    0 13px 25px rgba(0,0,0,.35);
+}
+
+.bateo-retro-controles button:active {
+  transform: translateY(5px);
+  box-shadow: 0 2px 0 #704502;
+}
+
+.bateo-retro-controles button:disabled {
+  filter: grayscale(.7);
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+.bateo-retro-boton-batear.listo {
+  animation: botonBateoListo 700ms infinite alternate;
+}
+
+.bateo-retro-ayuda {
+  margin: 8px auto 20px;
+  padding: 0 18px;
+  color: #c6d5df;
+  font-size: .88rem;
+  text-align: center;
+}
+
+.bateo-retro-ayuda strong {
+  color: #f2c94c;
+}
+
+@keyframes pelotaRetroLanzamiento {
+  0% {
+    left: 49%;
+    top: 55%;
+    font-size: 9px;
+  }
+
+  70% {
+    left: 67%;
+    top: 68%;
+    font-size: 15px;
+  }
+
+  100% {
+    left: 78%;
+    top: 76%;
+    font-size: 22px;
+  }
+}
+
+@keyframes bateRetroSwing {
+  0% {
+    transform: rotate(-50deg);
+  }
+
+  45% {
+    transform: rotate(25deg);
+  }
+
+  100% {
+    transform: rotate(70deg);
+  }
+}
+
+@keyframes botonBateoListo {
+  from {
+    filter: brightness(1);
+  }
+
+  to {
+    filter: brightness(1.25);
+  }
+}
+
+@media (max-width: 600px) {
+  .bateo-retro-fondo {
+    padding: 0;
+  }
+
+  .bateo-retro {
+    min-height: 100vh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .bateo-retro-estadio {
+    height: 390px;
+  }
+
+  .bateo-retro-marcador b {
+    font-size: 1.05rem;
+  }
+
+  .bateo-retro-bateador {
+    right: 7%;
+  }
+
+  .bateo-retro-home {
+    right: 15%;
+  }
+
+  .bateo-retro-conteo {
+    gap: 18px;
+  }
+}
+
+/* Mantener Bateo Retro por encima de la Zona de Juegos */
+.bateo-retro-fondo {
+  z-index: 2147483647 !important;
+}
+
+
+/* ===== MEJORA VISUAL DEL ESTADIO RETRO ===== */
+
+.bateo-retro {
+  max-height: calc(100dvh - 20px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #e7b836 #071c31;
+}
+
+.bateo-retro-estadio {
+  height: clamp(300px, 47vw, 390px);
+  border-top: 2px solid #e7b836;
+  border-bottom: 2px solid #e7b836;
+  background: linear-gradient(#69c3e9 0 34%, #176834 34%);
+}
+
+.bateo-retro-cielo {
+  background:
+    radial-gradient(ellipse at 18% 48%, white 0 4%, transparent 4.5%),
+    radial-gradient(ellipse at 23% 45%, white 0 6%, transparent 6.5%),
+    radial-gradient(ellipse at 28% 49%, white 0 4%, transparent 4.5%),
+    linear-gradient(#42a8dc, #b9e7f4);
+}
+
+.bateo-retro-publico {
+  top: 29%;
+  height: 16%;
+  background:
+    radial-gradient(circle, #fff 0 2px, transparent 2.5px) 0 0 / 20px 15px,
+    radial-gradient(circle, #f2c94c 0 2px, transparent 2.5px) 9px 7px / 22px 16px,
+    radial-gradient(circle, #55a8da 0 2px, transparent 2.5px) 4px 3px / 24px 17px,
+    #0a2e4c;
+  box-shadow:
+    inset 0 8px #09243c,
+    inset 0 -6px #d4a521;
+}
+
+.bateo-retro-campo {
+  inset: 43% -8% -14%;
+  background:
+    repeating-linear-gradient(
+      102deg,
+      #167239 0 46px,
+      #248847 46px 92px
+    );
+}
+
+/* Forma correcta del cuadro interior */
+.bateo-retro-tierra {
+  left: 50%;
+  bottom: -29%;
+  width: 65%;
+  height: 88%;
+  border: 5px solid rgba(240, 189, 100, 0.65);
+  border-radius: 0;
+  background:
+    radial-gradient(
+      circle at 50% 51%,
+      #d39450 0 8%,
+      transparent 8.5%
+    ),
+    #b97738;
+  clip-path: polygon(50% 0, 100% 52%, 50% 100%, 0 52%);
+  transform: translateX(-50%);
+  box-shadow: inset 0 0 35px rgba(89, 43, 9, 0.25);
+}
+
+/* Montículo */
+.bateo-retro-lanzador::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  bottom: -9px;
+  width: 82px;
+  height: 25px;
+  border: 3px solid rgba(117, 65, 22, 0.45);
+  border-radius: 50%;
+  background: #d69a58;
+  transform: translateX(-50%);
+}
+
+/* Lanzador más grande y visible */
+.bateo-retro-lanzador {
+  left: 49%;
+  top: 51%;
+  width: 58px;
+  height: 88px;
+  transform: translateX(-50%) scale(1);
+  filter: drop-shadow(3px 5px 2px rgba(0, 0, 0, 0.3));
+}
+
+.bateo-retro-lanzador span {
+  left: 10px;
+  font-size: 2.5rem;
+}
+
+.bateo-retro-lanzador i {
+  top: 37px;
+  left: 14px;
+  width: 32px;
+  height: 43px;
+  border-width: 4px;
+  border-radius: 6px 6px 2px 2px;
+  background:
+    linear-gradient(90deg, #0b3152 45%, #f1c33d 46% 55%, #0b3152 56%);
+}
+
+/* Piernas del lanzador */
+.bateo-retro-lanzador::before {
+  content: "";
+  position: absolute;
+  top: 76px;
+  left: 18px;
+  width: 30px;
+  height: 19px;
+  border-left: 8px solid #f3f3f3;
+  border-right: 8px solid #f3f3f3;
+  transform: skew(-10deg);
+}
+
+/* Bateador más grande */
+.bateo-retro-bateador {
+  right: 12%;
+  bottom: 11%;
+  width: 85px;
+  height: 125px;
+  transform: scale(1.08);
+  filter: drop-shadow(4px 6px 2px rgba(0, 0, 0, 0.35));
+}
+
+.bateo-retro-bateador span {
+  left: 19px;
+  font-size: 3rem;
+}
+
+.bateo-retro-bateador i {
+  top: 44px;
+  left: 24px;
+  width: 40px;
+  height: 55px;
+  border-radius: 7px 7px 2px 2px;
+  background:
+    linear-gradient(90deg, #0b3152 43%, #f1c33d 44% 56%, #0b3152 57%);
+}
+
+.bateo-retro-bateador::after {
+  content: "";
+  position: absolute;
+  top: 94px;
+  left: 25px;
+  width: 40px;
+  height: 25px;
+  border-left: 9px solid white;
+  border-right: 9px solid white;
+  transform: skew(-12deg);
+}
+
+.bateo-retro-bateador b {
+  top: 25px;
+  left: -5px;
+  width: 92px;
+  height: 10px;
+  background: linear-gradient(90deg, #8f501c, #f5b74d);
+  box-shadow: 0 2px 0 #502707;
+}
+
+/* Home más definido */
+.bateo-retro-home {
+  right: 18%;
+  bottom: 7%;
+  width: 27px;
+  height: 24px;
+  overflow: hidden;
+  color: transparent;
+  background: white;
+  clip-path: polygon(0 0, 100% 0, 100% 62%, 50% 100%, 0 62%);
+  transform: none;
+  filter: drop-shadow(2px 3px 1px rgba(0, 0, 0, 0.35));
+}
+
+.bateo-retro-mensaje {
+  top: 18%;
+  max-width: calc(100% - 30px);
+  padding: 9px 20px;
+  border-color: #f2c94c;
+  border-radius: 5px;
+  background:
+    linear-gradient(135deg, rgba(5, 25, 43, 0.96), rgba(12, 52, 82, 0.96));
+  box-shadow:
+    0 6px 0 rgba(4, 13, 23, 0.55),
+    0 0 18px rgba(242, 201, 76, 0.25);
+}
+
+.bateo-retro-controles {
+  position: relative;
+  z-index: 20;
+  padding: 16px 20px 13px;
+  background:
+    linear-gradient(180deg, #0a2943, #051729);
+}
+
+.bateo-retro-controles button {
+  color: #071a2d !important;
+  opacity: 1;
+}
+
+.bateo-retro-controles button:disabled {
+  color: #d8e0e5 !important;
+  background: linear-gradient(#68747d, #424c52);
+  border-color: #98a2a8;
+  opacity: 0.75;
+}
+
+@media (max-height: 720px) and (min-width: 601px) {
+  .bateo-retro-estadio {
+    height: 330px;
+  }
+
+  .bateo-retro-header {
+    padding-block: 9px;
+  }
+
+  .bateo-retro-ayuda {
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .bateo-retro {
+    max-height: 100dvh;
+  }
+
+  .bateo-retro-estadio {
+    height: 370px;
+  }
+
+  .bateo-retro-lanzador {
+    top: 52%;
+  }
+
+  .bateo-retro-bateador {
+    right: 4%;
+    transform: scale(0.95);
+  }
+
+  .bateo-retro-home {
+    right: 11%;
+  }
+}
+
+
+/* ===== TERRENO COMPLETO DE BÉISBOL ===== */
+
+.bateo-retro-estadio {
+  perspective: 700px;
+  background:
+    linear-gradient(#65bee6 0 31%, transparent 31%),
+    linear-gradient(#1d713a 31%, #175d31 100%);
+}
+
+/* Cerca del jardín */
+.bateo-retro-estadio::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 39%;
+  left: 3%;
+  width: 94%;
+  height: 24%;
+  border-top: 8px solid #d9ad2c;
+  border-radius: 50% 50% 0 0;
+  box-shadow:
+    0 -5px 0 #092c49,
+    0 -11px 0 rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+}
+
+/* Césped completo con patrón */
+.bateo-retro-campo {
+  z-index: 1;
+  inset: 42% -18% -28%;
+  border-radius: 50% 50% 0 0;
+  background:
+    repeating-conic-gradient(
+      from 45deg at 50% 100%,
+      #176d37 0deg 12deg,
+      #238245 12deg 24deg
+    );
+}
+
+/* Diamante de tierra centrado */
+.bateo-retro-tierra {
+  z-index: 3;
+  left: 50%;
+  bottom: -25%;
+  width: min(66%, 510px);
+  height: 91%;
+  border: 4px solid rgba(249, 204, 123, 0.65);
+  background:
+    radial-gradient(
+      ellipse at 50% 50%,
+      #d99a56 0 8%,
+      transparent 8.5%
+    ),
+    linear-gradient(145deg, #c9833f, #aa652d);
+  clip-path: polygon(50% 0, 100% 53%, 50% 100%, 0 53%);
+  transform: translateX(-50%);
+}
+
+/* Césped dentro del cuadro */
+.bateo-retro-tierra::after {
+  content: "";
+  position: absolute;
+  inset: 23%;
+  background:
+    repeating-linear-gradient(
+      100deg,
+      #1d743b 0 25px,
+      #268548 25px 50px
+    );
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+/* Bases */
+.bateo-retro-base {
+  position: absolute;
+  z-index: 12;
+  width: 21px;
+  height: 21px;
+  border: 2px solid #cbd5dc;
+  border-radius: 2px;
+  background: linear-gradient(145deg, #ffffff, #dce5e9);
+  box-shadow:
+    2px 3px 0 rgba(43, 30, 17, 0.4),
+    inset 2px 2px 0 rgba(255, 255, 255, 0.9);
+  transform: rotate(45deg);
+}
+
+.base-primera {
+  left: calc(50% + min(21vw, 172px));
+  bottom: 31%;
+}
+
+.base-segunda {
+  left: calc(50% - 11px);
+  bottom: 58%;
+}
+
+.base-tercera {
+  right: calc(50% + min(21vw, 151px));
+  bottom: 31%;
+}
+
+/* Montículo visible */
+.bateo-retro-monticulo {
+  position: absolute;
+  z-index: 7;
+  left: 50%;
+  bottom: 38%;
+  width: 76px;
+  height: 26px;
+  border: 3px solid rgba(117, 64, 23, 0.42);
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse, #dda05c, #bd7738);
+  box-shadow: 0 5px 7px rgba(49, 28, 11, 0.3);
+  transform: translateX(-50%);
+}
+
+.bateo-retro-monticulo::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 27px;
+  height: 5px;
+  border-radius: 3px;
+  background: #f4eee1;
+  transform: translateX(-50%);
+}
+
+/* Líneas desde home hasta el jardín */
+.bateo-retro-linea-foul {
+  position: absolute;
+  z-index: 8;
+  bottom: 13%;
+  width: 3px;
+  height: 73%;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.35);
+  transform-origin: bottom center;
+}
+
+.foul-izquierda {
+  left: 49.8%;
+  transform: rotate(-49deg);
+}
+
+.foul-derecha {
+  left: 50.2%;
+  transform: rotate(49deg);
+}
+
+/* Lanzador encima del montículo */
+.bateo-retro-lanzador {
+  z-index: 13;
+  left: 50%;
+  top: auto;
+  bottom: 39%;
+  transform: translateX(-50%) scale(0.9);
+}
+
+/* Evitar segundo montículo debajo del lanzador */
+.bateo-retro-lanzador::after {
+  display: none;
+}
+
+/* Bateador junto a home */
+.bateo-retro-bateador {
+  z-index: 15;
+  right: auto;
+  left: calc(50% + 31px);
+  bottom: 5%;
+  transform: scale(0.95);
+}
+
+/* Home centrado */
+.bateo-retro-home {
+  z-index: 14;
+  right: auto;
+  left: 50%;
+  bottom: 7%;
+  width: 29px;
+  height: 26px;
+  transform: translateX(-50%);
+}
+
+/* La pelota viaja del montículo hacia home */
+.bateo-retro-pelota {
+  z-index: 20;
+  left: 50%;
+  top: 56%;
+}
+
+@keyframes pelotaRetroLanzamiento {
+  0% {
+    left: 50%;
+    top: 56%;
+    font-size: 9px;
+    transform: translateX(-50%);
+  }
+
+  65% {
+    left: 51%;
+    top: 70%;
+    font-size: 15px;
+    transform: translateX(-50%);
+  }
+
+  100% {
+    left: 52%;
+    top: 84%;
+    font-size: 23px;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 600px) {
+  .base-primera {
+    left: calc(50% + 29vw);
+    bottom: 30%;
+  }
+
+  .base-tercera {
+    right: calc(50% + 25vw);
+    bottom: 30%;
+  }
+
+  .base-segunda {
+    bottom: 57%;
+  }
+
+  .bateo-retro-bateador {
+    left: calc(50% + 22px);
+    bottom: 4%;
+    transform: scale(0.85);
+  }
+
+  .bateo-retro-home {
+    left: 50%;
+    right: auto;
+    bottom: 6%;
+  }
+}
+
+
+/* ===== CORRECCIÓN FINAL DE PERSPECTIVA Y JUGADORES ===== */
+
+/* Diamante más grande y con home en la parte inferior */
+.bateo-retro-tierra {
+  bottom: -38%;
+  width: min(78%, 600px);
+  height: 112%;
+  clip-path: polygon(50% 0, 100% 52%, 50% 100%, 0 52%);
+}
+
+/* Segunda base detrás del lanzador */
+.base-segunda {
+  left: calc(50% - 10px);
+  bottom: 72%;
+  width: 19px;
+  height: 19px;
+}
+
+/* Primera y tercera alineadas correctamente */
+.base-primera {
+  left: calc(50% + min(25vw, 195px));
+  bottom: 34%;
+}
+
+.base-tercera {
+  right: calc(50% + min(25vw, 174px));
+  bottom: 34%;
+}
+
+/* Las líneas salen desde home hacia el jardín */
+.bateo-retro-linea-foul {
+  bottom: 5%;
+  height: 92%;
+}
+
+.foul-izquierda {
+  left: 50%;
+  transform: rotate(-48deg);
+}
+
+.foul-derecha {
+  left: 50%;
+  transform: rotate(48deg);
+}
+
+/* Montículo entre home y segunda */
+.bateo-retro-monticulo {
+  bottom: 45%;
+  width: 82px;
+  height: 27px;
+}
+
+/* Lanzador ubicado encima del montículo, no en segunda */
+.bateo-retro-lanzador {
+  left: 50%;
+  bottom: 45%;
+  width: 50px;
+  height: 77px;
+  transform: translateX(-50%) scale(0.82);
+}
+
+/* Cuerpo del lanzador */
+.bateo-retro-lanzador span {
+  top: 0;
+  left: 8px;
+  font-size: 2.4rem;
+}
+
+.bateo-retro-lanzador i {
+  top: 34px;
+  left: 12px;
+  width: 31px;
+  height: 39px;
+}
+
+/* Piernas conectadas al cuerpo */
+.bateo-retro-lanzador::before {
+  top: 70px;
+  left: 13px;
+  width: 29px;
+  height: 25px;
+  border-left: 8px solid #f5f5f5;
+  border-right: 8px solid #f5f5f5;
+  transform: none;
+}
+
+/* Bateador colocado al lado derecho de home */
+.bateo-retro-bateador {
+  left: calc(50% + 54px);
+  right: auto;
+  bottom: 1%;
+  width: 72px;
+  height: 111px;
+  transform: scale(0.86);
+}
+
+/* Cuerpo del bateador */
+.bateo-retro-bateador span {
+  top: 0;
+  left: 15px;
+  font-size: 2.7rem;
+}
+
+.bateo-retro-bateador i {
+  top: 40px;
+  left: 20px;
+  width: 37px;
+  height: 49px;
+}
+
+/* Piernas conectadas al uniforme */
+.bateo-retro-bateador::after {
+  top: 86px;
+  left: 21px;
+  width: 36px;
+  height: 31px;
+  border-left: 9px solid #f5f5f5;
+  border-right: 9px solid #f5f5f5;
+  transform: none;
+}
+
+/* Posición natural del bate */
+.bateo-retro-bateador b {
+  top: 24px;
+  left: -7px;
+  width: 86px;
+  transform: rotate(-52deg);
+}
+
+/* Home queda libre y visible */
+.bateo-retro-home {
+  left: 50%;
+  bottom: 3%;
+  width: 30px;
+  height: 27px;
+  transform: translateX(-50%);
+}
+
+/* Pelota alineada entre lanzador y home */
+.bateo-retro-pelota {
+  left: 50%;
+  top: 54%;
+}
+
+@keyframes pelotaRetroLanzamiento {
+  0% {
+    left: 50%;
+    top: 54%;
+    font-size: 9px;
+    transform: translateX(-50%);
+  }
+
+  55% {
+    left: 51%;
+    top: 69%;
+    font-size: 14px;
+    transform: translateX(-50%);
+  }
+
+  100% {
+    left: 53%;
+    top: 88%;
+    font-size: 22px;
+    transform: translateX(-50%);
+  }
+}
+
+/* Mensaje más arriba para no tapar al lanzador */
+.bateo-retro-mensaje {
+  top: 9%;
+}
+
+/* Eliminar la nube alargada que parece una raya */
+.bateo-retro-cielo {
+  background:
+    radial-gradient(ellipse at 16% 45%, white 0 3%, transparent 3.5%),
+    radial-gradient(ellipse at 21% 42%, white 0 5%, transparent 5.5%),
+    radial-gradient(ellipse at 27% 46%, white 0 3.5%, transparent 4%),
+    radial-gradient(ellipse at 76% 38%, rgba(255,255,255,.85) 0 4%, transparent 4.5%),
+    radial-gradient(ellipse at 82% 40%, rgba(255,255,255,.85) 0 3%, transparent 3.5%),
+    linear-gradient(#49addd, #bde8f4);
+}
+
+/* Mejor profundidad del jardín */
+.bateo-retro-campo {
+  background:
+    repeating-conic-gradient(
+      from 45deg at 50% 100%,
+      #146833 0deg 10deg,
+      #238145 10deg 20deg
+    );
+  box-shadow: inset 0 18px 28px rgba(3, 45, 23, 0.18);
+}
+
+@media (max-width: 600px) {
+  .bateo-retro-tierra {
+    bottom: -33%;
+    width: 90%;
+    height: 106%;
+  }
+
+  .base-segunda {
+    bottom: 70%;
+  }
+
+  .base-primera {
+    left: calc(50% + 31vw);
+    bottom: 34%;
+  }
+
+  .base-tercera {
+    right: calc(50% + 27vw);
+    bottom: 34%;
+  }
+
+  .bateo-retro-lanzador {
+    bottom: 44%;
+    transform: translateX(-50%) scale(0.76);
+  }
+
+  .bateo-retro-monticulo {
+    bottom: 44%;
+  }
+
+  .bateo-retro-bateador {
+    left: calc(50% + 36px);
+    bottom: 0;
+    transform: scale(0.76);
+  }
+
+  .bateo-retro-home {
+    bottom: 2%;
+  }
+}
+
+
+/* ===== PERSONAJES HUMANOS Y LÍNEAS EXACTAS ===== */
+
+/* Ocultar bases y líneas anteriores */
+.bateo-retro-linea-foul,
+.bateo-retro-base,
+.bateo-retro-home {
+  display: none !important;
+}
+
+/* Capa exacta del diamante */
+.bateo-retro-diamante-svg {
+  position: absolute;
+  z-index: 9;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.linea-foul-svg {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 4;
+  stroke-linecap: round;
+  filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.45));
+}
+
+.base-svg {
+  fill: #ffffff;
+  stroke: #a9b5bd;
+  stroke-width: 3;
+  filter: drop-shadow(3px 4px 2px rgba(0, 0, 0, 0.45));
+}
+
+.home-svg {
+  fill: #ffffff;
+  stroke: #bbc5cb;
+  stroke-width: 3;
+  filter: drop-shadow(3px 4px 2px rgba(0, 0, 0, 0.45));
+}
+
+/* Estructura general de los jugadores */
+.jugador-retro {
+  position: absolute;
+  z-index: 18;
+  width: 64px;
+  height: 112px;
+  filter: drop-shadow(4px 6px 2px rgba(0, 0, 0, 0.38));
+}
+
+.jugador-retro::before,
+.jugador-retro::after {
+  display: none !important;
+}
+
+/* Cabeza */
+.jugador-retro .jugador-cabeza {
+  position: absolute;
+  z-index: 6;
+  top: 0;
+  left: 50%;
+  width: 34px;
+  height: 35px;
+  transform: translateX(-50%);
+}
+
+.jugador-retro .jugador-cara {
+  position: absolute;
+  z-index: 2;
+  top: 8px;
+  left: 5px;
+  width: 25px;
+  height: 26px;
+  border: 3px solid #592e18;
+  border-radius: 42% 45% 48% 48%;
+  background: #c87943;
+  box-shadow: inset -4px -2px rgba(114, 54, 26, 0.25);
+}
+
+/* Ojo y nariz */
+.jugador-retro .jugador-cara::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  right: 4px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #17222b;
+}
+
+.jugador-retro .jugador-cara::after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  bottom: 7px;
+  width: 7px;
+  height: 4px;
+  border-radius: 0 5px 5px 0;
+  background: #a95731;
+}
+
+/* Gorra del lanzador */
+.jugador-retro .jugador-gorra {
+  position: absolute !important;
+  z-index: 5;
+  top: 2px !important;
+  left: 1px !important;
+  width: 32px;
+  height: 14px;
+  border: 3px solid #031523;
+  border-radius: 15px 15px 4px 4px;
+  background: #075ca6;
+  font-size: 0 !important;
+}
+
+.jugador-retro .jugador-gorra::after {
+  content: "";
+  position: absolute;
+  right: -12px;
+  bottom: -3px;
+  width: 18px;
+  height: 6px;
+  border: 2px solid #031523;
+  border-radius: 1px 8px 8px 1px;
+  background: #075ca6;
+}
+
+/* Casco del bateador */
+.jugador-retro .jugador-casco {
+  position: absolute !important;
+  z-index: 5;
+  top: 0 !important;
+  left: 0 !important;
+  width: 34px;
+  height: 23px;
+  border: 3px solid #031523;
+  border-radius: 18px 18px 6px 6px;
+  background:
+    linear-gradient(90deg, #075ca6 0 66%, #f1c43f 67% 77%, #075ca6 78%);
+  font-size: 0 !important;
+}
+
+.jugador-retro .jugador-casco::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  bottom: -2px;
+  width: 18px;
+  height: 6px;
+  border: 2px solid #031523;
+  background: #075ca6;
+}
+
+/* Uniforme */
+.jugador-retro .jugador-cuerpo {
+  position: absolute;
+  z-index: 4;
+  top: 31px;
+  left: 50%;
+  width: 42px;
+  height: 48px;
+  border: 3px solid #031523;
+  border-radius: 9px 9px 4px 4px;
+  background:
+    linear-gradient(
+      90deg,
+      #075ca6 0 42%,
+      #f1c43f 43% 57%,
+      #075ca6 58%
+    );
+  transform: translateX(-50%);
+}
+
+.jugador-numero {
+  position: absolute !important;
+  top: 14px !important;
+  left: 50% !important;
+  color: white;
+  font-size: 12px !important;
+  font-weight: 950;
+  transform: translateX(-50%);
+}
+
+/* Brazos */
+.jugador-brazo {
+  position: absolute !important;
+  z-index: -1;
+  top: 5px !important;
+  width: 13px;
+  height: 39px;
+  border: 3px solid #542913;
+  border-radius: 8px;
+  background:
+    linear-gradient(#075ca6 0 46%, #c87943 47%);
+  transform-origin: top center;
+}
+
+.brazo-izquierdo {
+  left: -10px !important;
+  transform: rotate(18deg);
+}
+
+.brazo-derecho {
+  right: -10px;
+  left: auto !important;
+  transform: rotate(-18deg);
+}
+
+/* Piernas completas */
+.jugador-retro .jugador-piernas {
+  position: absolute;
+  z-index: 3;
+  top: 75px;
+  left: 50%;
+  display: flex;
+  gap: 7px;
+  transform: translateX(-50%);
+}
+
+.jugador-retro .jugador-piernas span {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  width: 13px;
+  height: 31px;
+  border: 3px solid #202a31;
+  border-radius: 3px 3px 6px 6px;
+  background:
+    linear-gradient(
+      #f4f4f4 0 67%,
+      #075ca6 68% 83%,
+      #151d22 84%
+    );
+  font-size: 0 !important;
+}
+
+/* Guante del lanzador */
+.jugador-guante {
+  position: absolute !important;
+  z-index: 8;
+  top: 23px !important;
+  left: -17px !important;
+  width: 20px;
+  height: 17px;
+  border: 3px solid #4c270f;
+  border-radius: 50% 35% 45% 50%;
+  background: #9d581d;
+  font-size: 0 !important;
+}
+
+/* Posición del lanzador */
+.bateo-retro-lanzador.jugador-retro {
+  left: 50%;
+  bottom: 42%;
+  width: 64px;
+  height: 112px;
+  transform: translateX(-50%) scale(0.73);
+}
+
+/* Posición del bateador */
+.bateo-retro-bateador.jugador-retro {
+  left: calc(50% + 54px);
+  bottom: 0;
+  width: 64px;
+  height: 112px;
+  transform: scale(0.88);
+}
+
+/* Brazos del bateador sosteniendo el bate */
+.bateador-retro .brazo-izquierdo {
+  top: 4px !important;
+  left: -7px !important;
+  transform: rotate(-42deg);
+}
+
+.bateador-retro .brazo-derecho {
+  top: 2px !important;
+  right: -5px;
+  transform: rotate(-55deg);
+}
+
+/* Bate independiente */
+.jugador-retro .jugador-bate {
+  position: absolute !important;
+  z-index: 8;
+  top: 19px !important;
+  left: -27px !important;
+  width: 84px;
+  height: 9px;
+  border: 3px solid #61310d;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #8e4d16, #f0ae42);
+  font-size: 0 !important;
+  transform: rotate(-57deg);
+  transform-origin: right center;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+.bateador-retro.bateando .jugador-bate {
+  animation: bateRetroHumano 220ms ease-out;
+}
+
+@keyframes bateRetroHumano {
+  0% {
+    transform: rotate(-57deg);
+  }
+
+  48% {
+    transform: rotate(18deg);
+  }
+
+  100% {
+    transform: rotate(72deg);
+  }
+}
+
+/* Movimiento del lanzador durante el lanzamiento */
+.lanzador-retro {
+  animation: lanzadorRespira 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes lanzadorRespira {
+  from {
+    transform: translateX(-50%) scale(0.73) translateY(0);
+  }
+
+  to {
+    transform: translateX(-50%) scale(0.73) translateY(-3px);
+  }
+}
+
+@media (max-width: 600px) {
+  .bateo-retro-lanzador.jugador-retro {
+    bottom: 42%;
+    transform: translateX(-50%) scale(0.67);
+  }
+
+  .bateo-retro-bateador.jugador-retro {
+    left: calc(50% + 38px);
+    bottom: -1%;
+    transform: scale(0.76);
+  }
+
+  @keyframes lanzadorRespira {
+    from {
+      transform: translateX(-50%) scale(0.67) translateY(0);
+    }
+
+    to {
+      transform: translateX(-50%) scale(0.67) translateY(-3px);
+    }
+  }
+}
