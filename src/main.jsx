@@ -7,10 +7,11 @@ import Bienvenida from './Bienvenida'
 import Registro from './Registro';
 import EntrenadoresAdmin from './EntrenadoresAdmin'
 import EntrenadoresPublicos from './EntrenadoresPublicos'
+import JugadoresPublicos from './JugadoresPublicos'
 import PantallaTransmision from './PantallaTransmision'
 const blankPlayer = {
   nombre: '', apellido: '', fecha_nacimiento: '', categoria: '', posicion: '', numero: '',
-  batea: 'R', lanza: 'R', estatura_cm: '', estatura_pulgadas: '', peso_kg: '', foto_url: '', estado: 'Activo', notas: ''
+  batea: 'R', lanza: 'R', estatura_cm: '', estatura_pulgadas: '', peso_kg: '', foto_url: '', estado: 'Activo', perfil_publico: false, notas: ''
 }
 
 function edad(fecha) {
@@ -800,6 +801,7 @@ function openEdit(p) {
       batea: form.batea || null, lanza: form.lanza || null, estatura_cm: form.estatura_cm === '' ? null : Number(form.estatura_cm) + (Number(form.estatura_pulgadas || 0) / 12),
       peso_kg: form.peso_kg === '' ? null : Number(form.peso_kg) * 0.453592, foto_url: form.foto_url || null,
       estado: form.estado || null,
+      perfil_publico: Boolean(form.perfil_publico),
 notas: form.notas || null,
 juegos: Number(form.juegos || 0),
 turnos_bate: Number(form.turnos_bate || 0),
@@ -990,6 +992,31 @@ if (vista === 'entrenadores-admin' && isAdmin) {
   )
 }
 
+if (vista === 'jugadores-publicos') {
+  return (
+    <div className="app-shell">
+      <header className="topbar">
+        <button
+          type="button"
+          className="ghost"
+          onClick={() => setVista('inicio')}
+        >
+          ← Volver
+        </button>
+
+        <div>
+          <div className="eyebrow">Generales de Chitré</div>
+          <h1>Nuestros jugadores</h1>
+        </div>
+      </header>
+
+      <main>
+        <JugadoresPublicos />
+      </main>
+    </div>
+  )
+}
+
 if (vista === 'entrenadores') {
   return (
     <div className="app-shell">
@@ -1021,6 +1048,7 @@ if (vista === 'inicio') {
       <Inicio
   onAdmin={() => setVista('admin')}
   onEntrenadores={() => setVista('entrenadores')}
+  onJugadoresPublicos={() => setVista('jugadores-publicos')}
   isAdmin={isAdmin}
   onRegistro={() => setVista('registro')}
 />
@@ -2189,6 +2217,27 @@ if (vista === 'inicio') {
 <label>RBI<input type="number" min="0" value={form.rbi ?? 0} onChange={e=>setForm({...form,rbi:e.target.value})}/></label>
 
 <label>Jonrones<input type="number" min="0" value={form.home_runs ?? 0} onChange={e=>setForm({...form,home_runs:e.target.value})}/></label>
+        <label className="wide perfil-publico-control">
+          <input
+            type="checkbox"
+            checked={Boolean(form.perfil_publico)}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                perfil_publico: e.target.checked
+              })
+            }
+          />
+
+          <span>
+            <strong>Mostrar perfil públicamente</strong>
+            <small>
+              Publica únicamente foto, nombre, número, posición,
+              categoría y lado de bateo/lanzamiento.
+            </small>
+          </span>
+        </label>
+
         <label className="wide">Notas<textarea rows="4" value={form.notas ?? ''} onChange={e=>setForm({...form,notas:e.target.value})}/></label>
       </div><button className="primary full">Guardar jugador</button></form></div>}
   </div>

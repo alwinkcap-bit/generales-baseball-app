@@ -1,0 +1,231 @@
+.agenda-academia {
+  width: min(1100px, calc(100% - 32px));
+  margin: 28px auto;
+  padding: 28px;
+  border: 1px solid rgba(242,185,31,.48);
+  border-radius: 25px;
+  background:
+    radial-gradient(circle at top right, rgba(242,185,31,.12), transparent 33%),
+    linear-gradient(145deg, #0d3554, #041b2e);
+  color: #fff;
+  box-shadow: 0 22px 48px rgba(0,10,22,.32);
+}
+
+.agenda-academia-titulo {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.agenda-academia-titulo small,
+.agenda-card small {
+  color: #f2b91f;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.agenda-academia-titulo h2 {
+  margin: 5px 0 0;
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+}
+
+.agenda-academia-titulo button {
+  padding: 11px 16px;
+  border: 1px solid #f2b91f;
+  border-radius: 12px;
+  background: #071f35;
+  color: #f2b91f;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.agenda-academia-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.agenda-card {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 18px;
+  min-height: 180px;
+  padding: 24px;
+  align-items: center;
+  border: 1px solid rgba(242,185,31,.38);
+  border-radius: 20px;
+  background: linear-gradient(145deg, #123f61, #061f35);
+}
+
+.agenda-juego {
+  background:
+    radial-gradient(circle at bottom right, rgba(242,185,31,.15), transparent 40%),
+    linear-gradient(145deg, #123f61, #061f35);
+}
+
+.agenda-icono {
+  display: grid;
+  width: 70px;
+  height: 70px;
+  place-items: center;
+  border-radius: 20px;
+  background: rgba(242,185,31,.14);
+  font-size: 2.2rem;
+}
+
+.agenda-card h3 {
+  margin: 7px 0 12px;
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+.agenda-card p {
+  margin: 5px 0;
+  color: #c8d4de;
+}
+
+.agenda-cargando {
+  padding: 30px;
+  text-align: center;
+}
+
+.agenda-editor-fondo {
+  position: fixed;
+  z-index: 1000000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 15px;
+  overflow-y: auto;
+  background: rgba(1,12,24,.94);
+  backdrop-filter: blur(9px);
+}
+
+.agenda-editor {
+  width: min(720px, 100%);
+  max-height: calc(100vh - 30px);
+  overflow-y: auto;
+  padding: 28px;
+  border: 2px solid #f2b91f;
+  border-radius: 22px;
+  background: #092943;
+  color: #fff;
+}
+
+.agenda-editor > header {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.agenda-editor header small {
+  color: #f2b91f;
+  font-weight: 900;
+}
+
+.agenda-editor header h2 {
+  margin: 4px 0;
+}
+
+.agenda-editor header > button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 50%;
+  background: #041b2e;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.agenda-editor fieldset {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 16px 0;
+  padding: 18px;
+  border: 1px solid rgba(242,185,31,.4);
+  border-radius: 16px;
+}
+
+.agenda-editor legend {
+  padding: 0 8px;
+  color: #f2b91f;
+  font-weight: 900;
+}
+
+.agenda-editor label {
+  display: grid;
+  gap: 7px;
+  color: #dce6ed;
+  font-weight: 700;
+}
+
+.agenda-editor input {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #43647d;
+  border-radius: 10px;
+  background: #041b2e;
+  color: #fff;
+}
+
+.agenda-editor-check {
+  display: flex !important;
+  grid-column: 1 / -1;
+  align-items: center;
+}
+
+.agenda-editor-check input {
+  width: auto;
+}
+
+.agenda-editor-guardar {
+  width: 100%;
+  padding: 14px;
+  border: 0;
+  border-radius: 12px;
+  background: #f2b91f;
+  color: #061d31;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.agenda-editor-mensaje {
+  color: #ffb3b3;
+}
+
+@media (max-width: 650px) {
+  .agenda-academia {
+    width: calc(100% - 20px);
+    padding: 20px 12px;
+  }
+
+  .agenda-academia-titulo {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .agenda-academia-grid,
+  .agenda-editor fieldset {
+    grid-template-columns: 1fr;
+  }
+
+  .agenda-card {
+    grid-template-columns: 55px 1fr;
+    min-height: 155px;
+    padding: 18px 12px;
+  }
+
+  .agenda-icono {
+    width: 55px;
+    height: 55px;
+    font-size: 1.7rem;
+  }
+
+  .agenda-editor {
+    padding: 20px 12px;
+  }
+}

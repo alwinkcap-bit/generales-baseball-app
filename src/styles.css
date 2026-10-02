@@ -1044,3 +1044,38 @@
 .bottom-nav button:active .bottom-nav-icon {
   transform: scale(0.88);
 }
+
+/* CONTROL PERFIL PUBLICO */
+.perfil-publico-control {
+  padding: 16px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 14px;
+  color: #ffffff;
+  border: 1px solid rgba(243, 184, 59, 0.38);
+  border-radius: 14px;
+  background: rgba(243, 184, 59, 0.08);
+}
+
+.perfil-publico-control > input {
+  width: 22px !important;
+  height: 22px;
+  flex: 0 0 22px;
+  accent-color: #f3b83b;
+}
+
+.perfil-publico-control > span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.perfil-publico-control strong {
+  color: #f3b83b;
+}
+
+.perfil-publico-control small {
+  color: rgba(255, 255, 255, 0.68);
+  line-height: 1.4;
+}

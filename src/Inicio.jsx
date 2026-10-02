@@ -2,18 +2,27 @@
 
 import './inicio.css';
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom'
 import { supabase } from './supabase';
 import SopaLetras from './SopaLetras'
 import MemoriaBeisbol from './MemoriaBeisbol'
+import BateoRetro from './BateoRetro'
+import RetoDigital from './RetoDigital'
 import preguntasReto from './PreguntasReto'
 import logoGenerales from './public/logo-generales.png';
 import equipoGenerales from './public/equipo-generales.jpg';
 import ScoreboardGenerales from './ScoreboardGenerales'
 import CentroPartidos from './CentroPartidos'
+import PartidosPublicos from './PartidosPublicos'
+import AgendaAcademia from './AgendaAcademia'
+import EstadisticasVisitas from './EstadisticasVisitas'
+
+import Patrocinadores from './Patrocinadores'
 
 export default function Inicio({
   onAdmin,
   onEntrenadores,
+  onJugadoresPublicos,
   isAdmin,
   onRegistro,
 }) {
@@ -21,11 +30,16 @@ export default function Inicio({
   const [programasOpen, setProgramasOpen] = useState(false)
   const [galeriaOpen, setGaleriaOpen] = useState(false)
   const [noticiasOpen, setNoticiasOpen] = useState(false)
+  const [notificacionesOpen, setNotificacionesOpen] = useState(false)
   const [masOpen, setMasOpen] = useState(false)
   const [sopaLetrasOpen, setSopaLetrasOpen] = useState(false)
   const [memoriaOpen, setMemoriaOpen] = useState(false)
+  const [bateoRetroOpen, setBateoRetroOpen] = useState(false)
+  const [retoDigitalOpen, setRetoDigitalOpen] = useState(false)
+  const [juegosOpen, setJuegosOpen] = useState(false)
   const [scoreboardOpen, setScoreboardOpen] = useState(false)
   const [centroPartidosOpen, setCentroPartidosOpen] = useState(false)
+  const [partidosPublicosOpen, setPartidosPublicosOpen] = useState(false)
  const [imagenesGaleriaPublica, setImagenesGaleriaPublica] = useState([])
 
 useEffect(() => {
@@ -251,14 +265,119 @@ const responderReto = (opcionElegida) => {
   <div id="inicio" className="inicio-app"> 
       <header className="inicio-header">
         <div className="inicio-marca">
-          <span>GENERALES DE CHITRÉ</span>
-          <strong>BASEBALL ACADEMY</strong>
+          <img
+            src={logoGenerales}
+            alt="Logo Generales de Chitré"
+            className="inicio-marca-logo"
+          />
+          <div>
+            <span>GENERALES DE CHITRÉ</span>
+            <strong>BASEBALL ACADEMY</strong>
+          </div>
+        </div>
+        <div className="inicio-avisos-contenedor">
+          <button
+            type="button"
+            className={`inicio-notificacion ${
+              notificacionesOpen ? 'activo' : ''
+            }`}
+            aria-label="Abrir avisos"
+            onClick={() =>
+              setNotificacionesOpen((actual) => !actual)
+            }
+          >
+            <span className="inicio-campana-icono">🔔</span>
+            <b className="inicio-campana-contador">3</b>
+          </button>
+
+          {notificacionesOpen && (
+            <section className="inicio-avisos-panel">
+              <header>
+                <div>
+                  <small>CENTRO DE AVISOS</small>
+                  <h3>Academia Generales</h3>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setNotificacionesOpen(false)}
+                >
+                  ×
+                </button>
+              </header>
+
+              <div className="inicio-aviso">
+                <span>⚾</span>
+                <div>
+                  <small>ENTRENAMIENTOS</small>
+                  <strong>Consulta días y horarios</strong>
+                  <p>Información actualizada de la Academia.</p>
+                </div>
+              </div>
+
+              <div className="inicio-aviso">
+                <span>📅</span>
+                <div>
+                  <small>PARTIDOS</small>
+                  <strong>Próximos juegos</strong>
+                  <p>Revisa rival, fecha, hora y estadio.</p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setNotificacionesOpen(false)
+                    setPartidosPublicosOpen(true)
+                  }}
+                >
+                  Ver
+                </button>
+              </div>
+
+              <div className="inicio-aviso">
+                <span>⭐</span>
+                <div>
+                  <small>INSCRIPCIONES</small>
+                  <strong>Forma parte de Generales</strong>
+                  <p>Completa el registro del jugador.</p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setNotificacionesOpen(false)
+                    onRegistro()
+                  }}
+                >
+                  Abrir
+                </button>
+              </div>
+
+              <button
+                type="button"
+                className="inicio-avisos-noticias"
+                onClick={() => {
+                  setNotificacionesOpen(false)
+                  setNoticiasOpen(true)
+                }}
+              >
+                Ver todas las noticias →
+              </button>
+            </section>
+          )}
         </div>
         
       </header>
 
       <main>
         <section className="inicio-hero">
+  <div
+    className="inicio-generales-marca"
+    aria-label="Generales Baseball Academy"
+  >
+    <span>GENERALES</span>
+    <small>BASEBALL ACADEMY</small>
+  </div>
 
   <div className="inicio-hero-contenido">
             <span className="inicio-etiqueta">FORMANDO FUTUROS CAMPEONES</span>
@@ -313,43 +432,124 @@ SÍGUENOS EN INSTAGRAM
   />
 </div>
         </section>
-        <section id="programas" className="inicio-valores">
-          <section id="reto-digital" style={{ padding: '32px 20px', textAlign: 'center', background: '#102236' }}>
-  <span style={{ color: '#b98213', fontWeight: 'bold' }}>RETO DIGITAL</span>
-  <h2>Aprende jugando ⚾</h2>
 
-  {retoTerminado ? (
-    <>
-      <h3>{respuestasCorrectas >= 3 ? '🏅 ¡Ganaste tu primera insignia!' : '¡Buen intento!'}</h3>
-      <p>Respondiste bien {respuestasCorrectas} de {preguntasReto.length} preguntas.</p>
-      <button onClick={() => {
-        setPreguntaActual(0);
-        setRespuestasCorrectas(0);
-        setRetoTerminado(false);
-      }}>
-        JUGAR DE NUEVO
-      </button>
-    </>
-  ) : (
-    <>
-      <p>Pregunta {preguntaActual + 1} de {preguntasReto.length}</p>
-      <h3>{preguntasReto[preguntaActual].pregunta}</h3>
-      <div style={{ display: 'grid', gap: 10, maxWidth: 360, margin: '20px auto' }}>
-        {preguntasReto[preguntaActual].opciones.map((opcion, indice) => (
-          <button key={opcion} onClick={() => responderReto(indice)} style={{ padding: 12 }}>
-            {opcion}
+        <Patrocinadores isAdmin={isAdmin} />
+
+        <section className="inicio-panel-rapido" aria-label="Accesos principales">
+          <button type="button" onClick={() => setProgramasOpen(true)}>
+            <span className="inicio-panel-icono">⚾</span>
+            <strong>Programas</strong>
+            <b>›</b>
           </button>
-        ))}
-      </div>
-    </>
-  )}
-  </section>
+
+          <button type="button" onClick={onJugadoresPublicos}>
+            <span className="inicio-panel-icono">👥</span>
+            <strong>Jugadores</strong>
+            <b>›</b>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setPartidosPublicosOpen(true)}
+          >
+            <span className="inicio-panel-icono">📅</span>
+            <strong>Partidos</strong>
+            <b>›</b>
+          </button>
+
+          <button type="button" onClick={() => setNoticiasOpen(true)}>
+            <span className="inicio-panel-icono">▤</span>
+            <strong>Noticias</strong>
+            <b>›</b>
+          </button>
+
+          <button type="button" onClick={() => setGaleriaOpen(true)}>
+            <span className="inicio-panel-icono">▧</span>
+            <strong>Galería</strong>
+            <b>›</b>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setJuegosOpen(true)}
+          >
+            <span className="inicio-panel-icono">★</span>
+            <strong>Juegos</strong>
+            <b>›</b>
+          </button>
+        </section>
+
+        <AgendaAcademia isAdmin={isAdmin} />
+        <EstadisticasVisitas isAdmin={isAdmin} />
+
+        <button
+          type="button"
+          className="inicio-inscripcion-grande"
+          onClick={onRegistro}
+        >
+          <span className="inicio-inscripcion-icono">⚾</span>
+
+          <span className="inicio-inscripcion-contenido">
+            <small>INSCRIPCIONES ABIERTAS</small>
+            <strong>Forma parte de los Generales</strong>
+            <em>
+              Registra a tu jugador y comienza su formación deportiva.
+            </em>
+          </span>
+
+          <b>Inscribirse →</b>
+        </button>
+
+        <section id="programas" className="inicio-valores">
+          {juegosOpen && createPortal(
+  <div
+    className="juegos-pantalla-fondo"
+    onClick={() => setJuegosOpen(false)}
+  >
+    <section
+      className="juegos-pantalla"
+      onClick={(evento) => evento.stopPropagation()}
+    >
+      <header className="juegos-pantalla-encabezado">
+        <div>
+          <small>GENERALES DE CHITRÉ</small>
+          <h2>Zona de Juegos</h2>
+          <p>Aprende y diviértete jugando béisbol.</p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setJuegosOpen(false)}
+          aria-label="Volver al inicio"
+        >
+          ×
+        </button>
+      </header>
 
 <section className="juegos-acceso-seccion">
+
   <button
     type="button"
     className="juego-acceso"
-    onClick={() => setSopaLetrasOpen(true)}
+    onClick={() => setRetoDigitalOpen(true)}
+  >
+    <span className="juego-acceso-icono">🏆</span>
+
+    <span className="juego-acceso-texto">
+      <strong>Reto Digital</strong>
+      <small>100 niveles de conocimientos de béisbol</small>
+    </span>
+
+    <b>Jugar →</b>
+  </button>
+
+  <button
+    type="button"
+    className="juego-acceso"
+    onClick={() => {
+      setJuegosOpen(false)
+      setSopaLetrasOpen(true)
+    }}
   >
     <span className="juego-acceso-icono">🔎</span>
 
@@ -364,7 +564,10 @@ SÍGUENOS EN INSTAGRAM
   <button
     type="button"
     className="juego-acceso"
-    onClick={() => setMemoriaOpen(true)}
+    onClick={() => {
+      setJuegosOpen(false)
+      setMemoriaOpen(true)
+    }}
   >
     <span className="juego-acceso-icono">🧠</span>
 
@@ -375,10 +578,119 @@ SÍGUENOS EN INSTAGRAM
 
     <b>Jugar →</b>
   </button>
+
+  <button
+    type="button"
+    className="juego-acceso"
+    onClick={() => setBateoRetroOpen(true)}
+  >
+    <span className="juego-acceso-icono">🕹️</span>
+
+    <span className="juego-acceso-texto">
+      <strong>Bateo Retro</strong>
+      <small>Batea, consigue hits y conecta jonrones</small>
+    </span>
+
+    <b>Jugar →</b>
+  </button>
+
 </section>
+    </section>
+  </div>,
+  document.body
+)}
+
+<section id="servicios" className="inicio-servicios-panel">
+  <div className="inicio-servicios-encabezado">
+    <span>SERVICIOS DE LA ACADEMIA</span>
+    <h2>Explora Generales</h2>
+    <p>Información, productos y herramientas de nuestra Academia.</p>
+  </div>
+
+  <div className="inicio-servicios-grid">
+    <button
+      type="button"
+      className="inicio-servicio-card servicio-tienda"
+      onClick={() => setTiendaOpen(true)}
+    >
+      <span className="inicio-servicio-icono">🛍️</span>
+      <span>
+        <strong>Tienda Generales</strong>
+        <small>Productos oficiales de la Academia</small>
+      </span>
+      <b>›</b>
+    </button>
+
+    <button
+      type="button"
+      className="inicio-servicio-card servicio-entrenadores"
+      onClick={onEntrenadores}
+    >
+      <span className="inicio-servicio-icono">⚾</span>
+      <span>
+        <strong>Nuestros entrenadores</strong>
+        <small>Conoce al equipo técnico</small>
+      </span>
+      <b>›</b>
+    </button>
+
+    <button
+      type="button"
+      className="inicio-servicio-card servicio-informacion"
+      onClick={() => setMasOpen(true)}
+    >
+      <span className="inicio-servicio-icono">ℹ️</span>
+      <span>
+        <strong>Más información</strong>
+        <small>Horarios, contacto y ubicación</small>
+      </span>
+      <b>›</b>
+    </button>
+
+    <button
+      type="button"
+      className="inicio-servicio-card servicio-gestion"
+      onClick={onAdmin}
+    >
+      <span className="inicio-servicio-icono">🔐</span>
+      <span>
+        <strong>Gestión de la Academia</strong>
+        <small>Acceso para miembros autorizados</small>
+      </span>
+      <b>›</b>
+    </button>
+
+    {isAdmin && (
+      <button
+        type="button"
+        className="inicio-servicio-card servicio-scoreboard"
+        onClick={() => setScoreboardOpen(true)}
+      >
+        <span className="inicio-servicio-icono">📊</span>
+        <span>
+          <strong>Scoreboard Generales</strong>
+          <small>Marcador privado para transmisiones</small>
+        </span>
+        <b>›</b>
+      </button>
+    )}
+  </div>
+</section>
+
 {scoreboardOpen && isAdmin && (
   <ScoreboardGenerales
     onCerrar={() => setScoreboardOpen(false)}
+  />
+)}
+
+{partidosPublicosOpen && (
+  <PartidosPublicos
+    isAdmin={isAdmin}
+    onCerrar={() => setPartidosPublicosOpen(false)}
+    onAdministrar={() => {
+      setPartidosPublicosOpen(false)
+      setCentroPartidosOpen(true)
+    }}
   />
 )}
 
@@ -386,6 +698,16 @@ SÍGUENOS EN INSTAGRAM
   <CentroPartidos
     onCerrar={() => setCentroPartidosOpen(false)}
   />
+)}
+
+
+
+{retoDigitalOpen && (
+  <RetoDigital onCerrar={() => setRetoDigitalOpen(false)} />
+)}
+
+{bateoRetroOpen && (
+  <BateoRetro onCerrar={() => setBateoRetroOpen(false)} />
 )}
 
 {sopaLetrasOpen && (
@@ -416,10 +738,12 @@ SÍGUENOS EN INSTAGRAM
         ×
       </button>
         <h2>PROGRAMAS DE FORMACIÓN</h2> 
-          <div><span>🏅</span><strong>DISCIPLINA</strong><small>En el terreno y en la vida</small></div>
-          <div><span>⚾</span><strong>FORMACIÓN</strong><small>Desarrollo integral</small></div>
-          <div><span>🏃</span><strong>DESARROLLO</strong><small>Talento y aprendizaje</small></div>
-          <div><span>🏆</span><strong>VALORES</strong><small>Respeto y compañerismo</small></div>
+          <div className="programas-valores-resumen">
+            <div><span>🏅</span><strong>DISCIPLINA</strong><small>En el terreno y en la vida</small></div>
+            <div><span>⚾</span><strong>FORMACIÓN</strong><small>Desarrollo integral</small></div>
+            <div><span>🏃</span><strong>DESARROLLO</strong><small>Talento y aprendizaje</small></div>
+            <div><span>🏆</span><strong>VALORES</strong><small>Respeto y compañerismo</small></div>
+          </div>
           <div className="programas-categorias">
   <div
   className={`categoria-card ${categoriaActiva === '4-5' ? 'categoria-activa' : ''}`}
@@ -593,95 +917,9 @@ SÍGUENOS EN INSTAGRAM
     a lo largo de sus trayectorias en este deporte.
   </p>
 </section>
-<section className="programas-acceso-seccion">
-  <button
-    type="button"
-    className="tienda-acceso"
-    onClick={() => setProgramasOpen(true)}
-  >
-    <span className="tienda-acceso-icono">⚾</span>
 
-    <span>
-      <strong>Programas de formación</strong>
-      <small>Ver categorías y metodología</small>
-    </span>
-
-    <b>Entrar →</b>
-  </button>
-</section>
-<section className="scoreboard-acceso-seccion">
-  <button
-    type="button"
-    className="tienda-acceso"
-    onClick={() => {
-      if (isAdmin) {
-        setCentroPartidosOpen(true)
-      } else {
-        window.alert(
-          'Acceso restringido. Debes iniciar sesión como administrador.'
-        )
-        onAdmin()
-      }
-    }}
-  >
-    <span className="tienda-acceso-icono">📅</span>
-
-    <span>
-      <strong>Centro de Partidos</strong>
-      <small>
-        {isAdmin
-          ? 'Programar juegos y registrar resultados'
-          : '🔒 Acceso exclusivo para usuarios autorizados'}
-      </small>
-    </span>
-
-    <b>{isAdmin ? 'Abrir →' : 'Acceder 🔒'}</b>
-  </button>
-
-  <button
-    type="button"
-    className="tienda-acceso"
-    onClick={() => {
-  if (isAdmin) {
-    setScoreboardOpen(true)
-  } else {
-    window.alert(
-      'Acceso restringido. Debes iniciar sesión como administrador.'
-    )
-    onAdmin()
-  }
-}}
-  >
-    <span className="tienda-acceso-icono">📊</span>
-
-    <span>
-      <strong>Scoreboard Generales</strong>
-      <small>
-  {isAdmin
-    ? 'Marcador privado para transmisiones'
-    : '🔒 Acceso exclusivo para usuarios autorizados'}
-</small>
-    </span>
-
-    <b>{isAdmin ? 'Abrir →' : 'Acceder 🔒'}</b>
-  </button>
-</section>
 
         <section className="programas-acceso-seccion inicio-noticias">
-          <button
-  type="button"
-  className="tienda-acceso"
-  onClick={() => setNoticiasOpen(true)}
->
-  <span className="tienda-acceso-icono">📰</span>
-
-  <span>
-    <strong>Noticias</strong>
-    <small>Ver novedades de la academia</small>
-  </span>
-
-  <b>Entrar →</b>
-</button>
 {noticiasOpen && (
   <div
     className="tienda-ventana-fondo"
@@ -735,22 +973,7 @@ SÍGUENOS EN INSTAGRAM
 </section>
 
 <section id="galeria" className="inicio-galeria">
-          <button
-  type="button"
-  className="tienda-acceso"
-  onClick={() => setGaleriaOpen(true)}
->
-  <span className="tienda-acceso-icono">📸</span>
-
-  <span>
-    <strong>Galería</strong>
-    <small>Ver fotos de la academia</small>
-  </span>
-
-  <b>Entrar →</b>
-</button>
-
-  {galeriaOpen && (
+{galeriaOpen && (
     <div
       className="tienda-ventana-fondo"
       onClick={() => setGaleriaOpen(false)}
@@ -939,18 +1162,7 @@ SÍGUENOS EN INSTAGRAM
   </div>
 )}
 <section id="tienda" className="inicio-tienda">
-  <button
-  type="button"
-  className="tienda-acceso"
-  onClick={() => setTiendaOpen(true)}
->
-  <span className="tienda-acceso-icono">🛍️</span>
-  <span>
-    <strong>Tienda Generales</strong>
-    <small>Ver productos disponibles</small>
-  </span>
-  <b>Entrar →</b>
-</button>
+  
 
 {tiendaOpen && (
   <div
@@ -1089,20 +1301,7 @@ SÍGUENOS EN INSTAGRAM
 
 </section>
         <section id="mas" className="inicio-mas">
-          <button
-  type="button"
-  className="tienda-acceso"
-  onClick={() => setMasOpen(true)}
->
-  <span className="tienda-acceso-icono">ℹ️</span>
-
-  <span>
-    <strong>Más información</strong>
-    <small>Horarios, contacto y ubicación</small>
-  </span>
-
-  <b>Entrar →</b>
-</button>
+          
 {masOpen && (
   <div
     className="tienda-ventana-fondo"
@@ -1194,84 +1393,78 @@ SÍGUENOS EN INSTAGRAM
 )}
 </section>
 <section className="gestion-acceso-seccion">
-  <button
-  type="button"
-  className="tienda-acceso"
-  onClick={onEntrenadores}
->
-  <span className="tienda-acceso-icono">⚾</span>
-
-  <span>
-    <strong>Nuestros entrenadores</strong>
-    <small>Conoce al equipo técnico de la Academia</small>
-  </span>
-
-  <b>Ver perfiles →</b>
-</button>
+  
 <div style={{ height: '16px' }}></div>
-  <button
-    type="button"
-    className="tienda-acceso gestion-acceso"
-    onClick={onAdmin}
-  >
-    <span className="tienda-acceso-icono">🔐</span>
-
-    <span>
-      <strong>Gestión de la Academia</strong>
-      <small>
-        Perfiles de jugadores y sus datos. Acceso exclusivo para miembros de la academia y entrenadores.
-      </small>
-    </span>
-
-    <b>Entrar →</b>
-  </button>
+  
 </section>
       </main>
 
       <nav className="inicio-nav">
-      <a
-  className={seccionActiva === 'inicio' ? 'activo' : ''}
-  href="#inicio"
-  onClick={() => setSeccionActiva('inicio')}
->
-  <span>⌂</span>Inicio
-</a>
-<a
-  className={seccionActiva === 'programas' ? 'activo' : ''}
-  href="#programas"
-  onClick={() => setSeccionActiva('programas')}
->
-  <span>⚾</span>Programas
-</a>
         <a
-  className={seccionActiva === 'galeria' ? 'activo' : ''}
-  href="#galeria"
-  onClick={() => setSeccionActiva('galeria')}
->
-  <span>▧</span>Galería
-</a>
-        
+          className={seccionActiva === 'inicio' ? 'activo' : ''}
+          href="#inicio"
+          onClick={() => setSeccionActiva('inicio')}
+        >
+          <span>⌂</span>
+          Inicio
+        </a>
+
+        <button
+          type="button"
+          className={seccionActiva === 'jugadores' ? 'activo' : ''}
+          onClick={() => {
+            setSeccionActiva('jugadores')
+            onJugadoresPublicos()
+          }}
+        >
+          <span>👥</span>
+          Jugadores
+        </button>
+
+        <button
+          type="button"
+          className={seccionActiva === 'partidos' ? 'activo' : ''}
+          onClick={() => {
+            setSeccionActiva('partidos')
+            setPartidosPublicosOpen(true)
+          }}
+        >
+          <span>📅</span>
+          Partidos
+        </button>
+
+        <button
+          type="button"
+          className={seccionActiva === 'juegos' ? 'activo' : ''}
+          onClick={() => {
+            setSeccionActiva('juegos')
+            setJuegosOpen(true)
+          }}
+        >
+          <span>🎮</span>
+          Juegos
+        </button>
+
+        <button
+          type="button"
+          className={seccionActiva === 'tienda' ? 'activo' : ''}
+          onClick={() => {
+            setSeccionActiva('tienda')
+            setTiendaOpen(true)
+          }}
+        >
+          <span>🛍️</span>
+          Tienda
+        </button>
+
         <a
-  className={seccionActiva === 'noticias' ? 'activo' : ''}
-  href="#noticias"
-  onClick={() => setSeccionActiva('noticias')}
->
-  <span>▤</span>Noticias
-</a>
-<a
-  className={seccionActiva === 'tienda' ? 'activo' : ''}
-  href="#tienda"
-  onClick={() => setSeccionActiva('tienda')}
->
-  <span>🛍️</span>Tienda
-</a>
-       <a
-  className={seccionActiva === 'mas' ? 'activo' : ''}
-  href="#mas"
-  onClick={() => setSeccionActiva('mas')}
->
-  <span>•••</span>Más
-</a>
+          className={seccionActiva === 'mas' ? 'activo' : ''}
+          href="#servicios"
+          onClick={() => setSeccionActiva('mas')}
+        >
+          <span>•••</span>
+          Más
+        </a>
       </nav>
     </div>
   );

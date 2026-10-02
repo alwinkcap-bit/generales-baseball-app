@@ -1,0 +1,297 @@
+/* RETO DIGITAL: 100 NIVELES */
+
+.reto-digital-fondo {
+  position: fixed;
+  z-index: 2147483647;
+  inset: 0;
+  display: grid;
+  padding: 16px;
+  place-items: center;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at top, rgba(30, 92, 135, .65), transparent 45%),
+    rgba(1, 10, 19, .96);
+  backdrop-filter: blur(8px);
+}
+
+.reto-digital {
+  width: min(900px, 100%);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  border: 2px solid #e7b836;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at top right, rgba(38, 101, 143, .3), transparent 35%),
+    #071d32;
+  color: white;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .65);
+}
+
+.reto-digital-header {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 2px solid #dcae2f;
+  background: linear-gradient(135deg, #123f63, #06182a);
+}
+
+.reto-digital-header small {
+  color: #f2c94c;
+  font-weight: 900;
+  letter-spacing: .13em;
+}
+
+.reto-digital-header h2 {
+  margin: 4px 0;
+}
+
+.reto-digital-header p {
+  margin: 0;
+  color: #cbd9e3;
+}
+
+.reto-digital-header button {
+  width: 43px;
+  height: 43px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 50%;
+  background: rgba(255,255,255,.1);
+  color: white;
+  font-size: 1.7rem;
+}
+
+.reto-digital-progreso {
+  padding: 22px;
+  text-align: center;
+}
+
+.reto-digital-progreso span {
+  display: block;
+  color: #f2c94c;
+  font-size: .8rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.reto-digital-progreso strong {
+  display: block;
+  margin: 7px;
+  font-size: 1.6rem;
+}
+
+.reto-digital-progreso > div,
+.reto-digital-barra {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(255,255,255,.12);
+}
+
+.reto-digital-progreso i,
+.reto-digital-barra i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #d99f16, #ffe06a);
+}
+
+.reto-digital-niveles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
+  gap: 11px;
+  padding: 0 22px 28px;
+}
+
+.reto-digital-niveles button {
+  display: flex;
+  min-height: 92px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(231, 184, 54, .5);
+  border-radius: 14px;
+  background: linear-gradient(145deg, #124367, #08243c);
+  color: white;
+  box-shadow: 0 7px 16px rgba(0,0,0,.25);
+}
+
+.reto-digital-niveles button.actual {
+  border: 3px solid #ffe169;
+  transform: scale(1.05);
+  box-shadow: 0 0 22px rgba(242,201,76,.35);
+}
+
+.reto-digital-niveles button:disabled {
+  border-color: rgba(255,255,255,.08);
+  background: #10202d;
+  color: #687987;
+  opacity: .7;
+}
+
+.reto-digital-niveles small {
+  font-size: .62rem;
+}
+
+.reto-digital-niveles strong {
+  color: #f2c94c;
+  font-size: 1.4rem;
+}
+
+.reto-digital-pregunta {
+  padding: clamp(20px, 5vw, 42px);
+}
+
+.reto-digital-pregunta-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #f2c94c;
+  font-size: .75rem;
+  font-weight: 900;
+}
+
+.reto-digital-barra {
+  margin: 12px 0 30px;
+}
+
+.reto-digital-pregunta h3 {
+  min-height: 80px;
+  margin: 0 auto 26px;
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  line-height: 1.35;
+  text-align: center;
+}
+
+.reto-digital-opciones {
+  display: grid;
+  gap: 13px;
+  max-width: 700px;
+  margin: auto;
+}
+
+.reto-digital-opciones button {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 61px;
+  padding: 12px 17px;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 14px;
+  background: linear-gradient(145deg, #123d5e, #0a2943);
+  color: white;
+  font-size: 1rem;
+  font-weight: 750;
+  text-align: left;
+}
+
+.reto-digital-opciones button span {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  place-items: center;
+  border-radius: 50%;
+  background: #e7b836;
+  color: #071a2d;
+  font-weight: 950;
+}
+
+.reto-digital-opciones button.correcta {
+  border-color: #56e18b;
+  background: #12613b;
+}
+
+.reto-digital-opciones button.incorrecta {
+  border-color: #ff6c74;
+  background: #7b2330;
+}
+
+.reto-digital-resultado {
+  display: flex;
+  min-height: 470px;
+  padding: 35px 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.reto-digital-trofeo {
+  font-size: 5rem;
+}
+
+.reto-digital-resultado h3 {
+  margin: 8px;
+  font-size: 2rem;
+}
+
+.reto-digital-estrellas {
+  display: flex;
+  gap: 8px;
+  margin: 15px;
+}
+
+.reto-digital-estrellas span {
+  color: #314759;
+  font-size: 3rem;
+}
+
+.reto-digital-estrellas span.ganada {
+  color: #f2c94c;
+  text-shadow: 0 0 15px rgba(242,201,76,.65);
+}
+
+.reto-digital-resultado > div:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.reto-digital-resultado button {
+  padding: 12px 18px;
+  border: 1px solid #f2c94c;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f2ca45, #ae7007);
+  color: #071a2d;
+  font-weight: 900;
+}
+
+@media (max-width: 600px) {
+  .reto-digital-fondo {
+    padding: 0;
+  }
+
+  .reto-digital {
+    min-height: 100dvh;
+    max-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .reto-digital-header {
+    padding: 14px;
+  }
+
+  .reto-digital-header p {
+    display: none;
+  }
+
+  .reto-digital-niveles {
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0 12px 22px;
+  }
+
+  .reto-digital-pregunta {
+    padding: 22px 14px;
+  }
+
+  .reto-digital-pregunta-info {
+    font-size: .64rem;
+  }
+}
