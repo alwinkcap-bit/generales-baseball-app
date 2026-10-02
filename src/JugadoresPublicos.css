@@ -211,3 +211,290 @@
     height: 260px;
   }
 }
+
+
+/* MODAL PERFIL PUBLICO */
+.jugadores-publicos-grid button:active {
+  transform: scale(0.96);
+}
+
+.jugador-publico-modal-fondo {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: rgba(2, 11, 21, 0.82);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  animation: perfilFondoEntrada 180ms ease-out both;
+}
+
+.jugador-publico-modal-fondo .jugador-publico-detalle {
+  position: relative;
+  width: min(820px, 100%);
+  max-height: calc(100vh - 48px);
+  margin: 0;
+  overflow-y: auto;
+  animation: perfilVentanaEntrada 280ms cubic-bezier(.2,.8,.2,1) both;
+}
+
+.jugador-publico-cerrar {
+  position: absolute;
+  z-index: 5;
+  top: 14px;
+  right: 14px;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-size: 1.65rem;
+  line-height: 1;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  background: rgba(5, 22, 39, 0.82);
+  cursor: pointer;
+  transition: 160ms ease;
+}
+
+.jugador-publico-cerrar:hover {
+  color: #071a2f;
+  background: #f3b83b;
+  transform: rotate(8deg) scale(1.05);
+}
+
+@keyframes perfilFondoEntrada {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes perfilVentanaEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 700px) {
+  .jugador-publico-modal-fondo {
+    padding: 12px;
+  }
+
+  .jugador-publico-modal-fondo .jugador-publico-detalle {
+    max-height: calc(100vh - 24px);
+  }
+
+  .jugador-publico-cerrar {
+    top: 9px;
+    right: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jugador-publico-modal-fondo,
+  .jugador-publico-modal-fondo .jugador-publico-detalle {
+    animation: none;
+  }
+}
+
+
+/* FORZAR MODAL VISIBLE */
+body > .jugador-publico-modal-fondo {
+  position: fixed !important;
+  z-index: 999999 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  margin: 0 !important;
+  padding: 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+}
+
+body > .jugador-publico-modal-fondo > .jugador-publico-detalle {
+  position: relative !important;
+  width: min(820px, 100%) !important;
+  max-height: calc(100dvh - 32px) !important;
+  margin: auto !important;
+  overflow-y: auto !important;
+}
+
+
+/* FONDO PREMIUM PERFIL */
+body > .jugador-publico-modal-fondo > .jugador-publico-detalle {
+  isolation: isolate;
+  border: 1px solid rgba(243, 184, 59, 0.48) !important;
+  background:
+    radial-gradient(
+      circle at 82% 18%,
+      rgba(243, 184, 59, 0.2),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 8% 95%,
+      rgba(34, 104, 166, 0.25),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      #16466f 0%,
+      #0d2c4b 47%,
+      #071b30 100%
+    ) !important;
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(243, 184, 59, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+body > .jugador-publico-modal-fondo > .jugador-publico-detalle::before {
+  content: "G";
+  position: absolute;
+  z-index: -1;
+  right: 18px;
+  bottom: -82px;
+  color: rgba(255, 255, 255, 0.035);
+  font-family: Georgia, serif;
+  font-size: clamp(15rem, 31vw, 25rem);
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+  transform: rotate(-9deg);
+}
+
+body > .jugador-publico-modal-fondo > .jugador-publico-detalle::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: 0.16;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image:
+    linear-gradient(
+      30deg,
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      150deg,
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 1px
+    );
+  background-size: 34px 34px;
+  mask-image: linear-gradient(to right, transparent 10%, black);
+}
+
+body > .jugador-publico-modal-fondo > .jugador-publico-detalle {
+  border-top: 3px solid #f3b83b !important;
+}
+
+.jugador-publico-detalle-foto {
+  border: 2px solid rgba(243, 184, 59, 0.72);
+  box-shadow:
+    0 17px 32px rgba(0, 0, 0, 0.38),
+    0 0 22px rgba(243, 184, 59, 0.09);
+}
+
+.jugador-publico-detalle-info span {
+  border-color: rgba(243, 184, 59, 0.15);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.025)
+    );
+  backdrop-filter: blur(8px);
+}
+
+
+/* PERFIL FIJO SIN BARRAS DE DESPLAZAMIENTO */
+body > .jugador-publico-modal-fondo {
+  overflow: hidden !important;
+}
+
+body > .jugador-publico-modal-fondo .jugador-publico-detalle {
+  width: min(820px, calc(100vw - 24px)) !important;
+  max-width: 820px !important;
+  max-height: calc(100vh - 24px) !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+body > .jugador-publico-modal-fondo .jugador-publico-detalle-info,
+body > .jugador-publico-modal-fondo .jugador-publico-detalle-foto {
+  min-width: 0 !important;
+}
+
+@media (max-width: 700px) {
+  body > .jugador-publico-modal-fondo .jugador-publico-detalle {
+    width: calc(100vw - 20px) !important;
+    max-height: calc(100vh - 20px) !important;
+  }
+}
+
+
+/* AJUSTAR PERFIL COMPLETO SIN CORTARLO */
+body > .jugador-publico-modal-fondo {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+body > .jugador-publico-modal-fondo .jugador-publico-detalle {
+  width: min(820px, calc(100vw - 32px)) !important;
+  max-width: 820px !important;
+  max-height: none !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+}
+
+/* PANTALLAS CON POCA ALTURA */
+@media (max-height: 650px) and (min-width: 701px) {
+  body > .jugador-publico-modal-fondo {
+    padding: 12px !important;
+  }
+
+  body > .jugador-publico-modal-fondo .jugador-publico-detalle {
+    width: min(760px, calc(100vw - 30px)) !important;
+    padding: 22px !important;
+    gap: 26px !important;
+  }
+
+  body > .jugador-publico-modal-fondo .jugador-publico-detalle-foto {
+    height: 330px !important;
+  }
+
+  body > .jugador-publico-modal-fondo .jugador-publico-detalle-foto img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  body > .jugador-publico-modal-fondo .jugador-publico-detalle-info h3 {
+    font-size: 3rem !important;
+    line-height: 1.05 !important;
+    margin: 12px 0 20px !important;
+  }
+
+  body > .jugador-publico-modal-fondo .jugador-publico-detalle-info > div {
+    gap: 12px !important;
+  }
+
+  body > .jugador-publico-modal-fondo .jugador-publico-detalle-info > div span {
+    padding: 16px !important;
+  }
+}

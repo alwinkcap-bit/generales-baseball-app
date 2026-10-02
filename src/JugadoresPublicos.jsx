@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { supabase } from './supabase'
 import './JugadoresPublicos.css'
 
@@ -30,7 +31,7 @@ export default function JugadoresPublicos() {
         setJugadores([])
       } else {
         setJugadores(data || [])
-        setSeleccionado(data?.[0] || null)
+        setSeleccionado(null)
       }
 
       setCargando(false)
@@ -106,53 +107,76 @@ export default function JugadoresPublicos() {
             ))}
           </div>
 
-          {seleccionado && (
-            <article className="jugador-publico-detalle">
-              <div className="jugador-publico-detalle-foto">
-                {seleccionado.foto_url ? (
-                  <img
-                    src={seleccionado.foto_url}
-                    alt={`${seleccionado.nombre} ${
-                      seleccionado.apellido || ''
-                    }`}
-                  />
-                ) : (
-                  <span>⚾</span>
-                )}
-              </div>
+          {seleccionado && createPortal(
+            <div
+              className="jugador-publico-modal-fondo"
+              onClick={() => setSeleccionado(null)}
+              role="presentation"
+            >
+              <article
+                className="jugador-publico-detalle"
+                role="dialog"
+                aria-modal="true"
+                aria-label={`Perfil deportivo de ${seleccionado.nombre}`}
+                onClick={(evento) => evento.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  className="jugador-publico-cerrar"
+                  onClick={() => setSeleccionado(null)}
+                  aria-label="Cerrar perfil"
+                >
+                  ×
+                </button>
 
-              <div className="jugador-publico-detalle-info">
-                <small>PERFIL DEPORTIVO</small>
-                <h3>
-                  {seleccionado.nombre} {seleccionado.apellido}
-                </h3>
-
-                <div>
-                  <span>
-                    <b>#{seleccionado.numero || '—'}</b>
-                    Número
-                  </span>
-
-                  <span>
-                    <b>{seleccionado.posicion || '—'}</b>
-                    Posición
-                  </span>
-
-                  <span>
-                    <b>{seleccionado.categoria || '—'}</b>
-                    Categoría
-                  </span>
-
-                  <span>
-                    <b>
-                      {seleccionado.batea || '—'}/
-                      {seleccionado.lanza || '—'}
-                    </b>
-                    Batea / Lanza
-                  </span>
+                <div className="jugador-publico-detalle-foto">
+                  {seleccionado.foto_url ? (
+                    <img
+                      src={seleccionado.foto_url}
+                      alt={`${seleccionado.nombre} ${
+                        seleccionado.apellido || ''
+                      }`}
+                    />
+                  ) : (
+                    <span>⚾</span>
+                  )}
                 </div>
-              </div>
-            </article>
+
+                <div className="jugador-publico-detalle-info">
+                  <small>PERFIL DEPORTIVO</small>
+
+                  <h3>
+                    {seleccionado.nombre} {seleccionado.apellido}
+                  </h3>
+
+                  <div>
+                    <span>
+                      <b>#{seleccionado.numero || '—'}</b>
+                      Número
+                    </span>
+
+                    <span>
+                      <b>{seleccionado.posicion || '—'}</b>
+                      Posición
+                    </span>
+
+                    <span>
+                      <b>{seleccionado.categoria || '—'}</b>
+                      Categoría
+                    </span>
+
+                    <span>
+                      <b>
+                        {seleccionado.batea || '—'}/
+                        {seleccionado.lanza || '—'}
+                      </b>
+                      Batea / Lanza
+                    </span>
+                  </div>
+                </div>
+              </article>
+            </div>,
+            document.body
           )}
         </>
       )}
