@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import preguntasBasicas from './PreguntasReto'
 import './RetoDigital.css'
@@ -254,57 +254,283 @@ function preguntaEstadistica(tipo, nivel, indice) {
   )
 }
 
-function generarNivel(nivel) {
-  if (nivel <= 20) {
-    return Array.from({ length: 10 }, (_, indice) => {
-      const base =
-        preguntasBasicas[
-          ((nivel - 1) * 7 + indice) % preguntasBasicas.length
-        ]
-
-      return {
-        ...base,
-        pregunta: `Nivel ${nivel}: ${base.pregunta}`
-      }
-    })
+function convertirPreguntaBanco(base, nivel, indice) {
+  if (base.opciones) {
+    return {
+      ...base,
+      id: `nivel-${nivel}-pregunta-${indice + 1}`
+    }
   }
 
-  if (nivel <= 45) {
-    return Array.from({ length: 10 }, (_, indice) => {
-      const base =
-        reglasIntermedias[
-          ((nivel - 21) * 3 + indice) % reglasIntermedias.length
-        ]
-
-      return crearPregunta(
-        base.pregunta,
-        base.correcta,
-        base.distractores,
-        nivel + indice
-      )
-    })
+  return {
+    ...crearPregunta(
+      base.pregunta,
+      base.correcta,
+      base.distractores,
+      nivel * 10 + indice
+    ),
+    id: `nivel-${nivel}-pregunta-${indice + 1}`
   }
-
-  if (nivel <= 70) {
-    return Array.from({ length: 10 }, (_, indice) => {
-      const base =
-        situacionesAvanzadas[
-          ((nivel - 46) * 2 + indice) % situacionesAvanzadas.length
-        ]
-
-      return crearPregunta(
-        base.pregunta,
-        base.correcta,
-        base.distractores,
-        nivel + indice
-      )
-    })
-  }
-
-  return Array.from({ length: 10 }, (_, indice) =>
-    preguntaEstadistica(indice % 6, nivel, indice)
-  )
 }
+
+function generarPreguntaUnica(nivel, indice, tipo) {
+  const semillaGlobal = (nivel - 1) * 10 + indice + 1
+
+  return {
+    ...preguntaEstadistica(
+      tipo % 6,
+      semillaGlobal * 7,
+      semillaGlobal
+    ),
+    id: `nivel-${nivel}-pregunta-${indice + 1}`
+  }
+}
+
+
+const hitosHistoriaBeisbol = [
+  { anio: 1845, hecho: 'Se redactaron las reglas Knickerbocker', detalle: 'Alexander Cartwright y el club Knickerbocker ayudaron a organizar reglas tempranas del béisbol.' },
+  { anio: 1846, hecho: 'Se disputó un reconocido juego bajo las reglas Knickerbocker', detalle: 'El encuentro se celebró en Hoboken, Nueva Jersey.' },
+  { anio: 1869, hecho: 'Los Cincinnati Red Stockings se convirtieron en el primer equipo abiertamente profesional', detalle: 'Sus jugadores recibían salario por jugar.' },
+  { anio: 1876, hecho: 'Se fundó la Liga Nacional', detalle: 'La National League es la liga profesional activa más antigua.' },
+  { anio: 1903, hecho: 'Se jugó la primera Serie Mundial moderna', detalle: 'Boston derrotó a Pittsburgh en aquella serie.' },
+  { anio: 1912, hecho: 'Se inauguró Fenway Park', detalle: 'El estadio de Boston continúa siendo utilizado por los Red Sox.' },
+  { anio: 1920, hecho: 'Rube Foster fundó la Negro National League', detalle: 'La liga ofreció una estructura profesional para jugadores afroamericanos.' },
+  { anio: 1933, hecho: 'Se celebró el primer Juego de Estrellas de MLB', detalle: 'El primer All-Star Game se jugó en Chicago.' },
+  { anio: 1936, hecho: 'Fue elegida la primera clase del Salón de la Fama', detalle: 'Incluyó figuras como Ty Cobb, Babe Ruth y Honus Wagner.' },
+  { anio: 1947, hecho: 'Jackie Robinson rompió la barrera racial moderna de MLB', detalle: 'Debutó con los Brooklyn Dodgers el 15 de abril.' },
+  { anio: 1953, hecho: 'Los Braves se trasladaron de Boston a Milwaukee', detalle: 'El traslado inició una nueva etapa de cambios de ciudades en MLB.' },
+  { anio: 1955, hecho: 'Los Brooklyn Dodgers ganaron su primera Serie Mundial', detalle: 'Derrotaron a los New York Yankees.' },
+  { anio: 1958, hecho: 'Dodgers y Giants comenzaron a jugar en California', detalle: 'Las franquicias se mudaron desde Nueva York a la costa oeste.' },
+  { anio: 1969, hecho: 'MLB comenzó a utilizar divisiones y Series de Campeonato', detalle: 'La postemporada se amplió antes de la Serie Mundial.' },
+  { anio: 1973, hecho: 'La Liga Americana adoptó el bateador designado', detalle: 'La regla permitió batear por el lanzador.' },
+  { anio: 1977, hecho: 'Debutaron Toronto Blue Jays y Seattle Mariners', detalle: 'Ambos equipos ingresaron durante una expansión de MLB.' },
+  { anio: 1992, hecho: 'Toronto se convirtió en el primer campeón de Serie Mundial fuera de Estados Unidos', detalle: 'Los Blue Jays conquistaron el campeonato.' },
+  { anio: 1994, hecho: 'Una huelga provocó la cancelación de la Serie Mundial', detalle: 'Fue la primera Serie Mundial cancelada desde 1904.' },
+  { anio: 1997, hecho: 'Comenzaron los juegos interligas en temporada regular', detalle: 'Equipos de la Liga Americana y Nacional comenzaron a enfrentarse durante la campaña.' },
+  { anio: 2006, hecho: 'Se disputó el primer Clásico Mundial de Béisbol', detalle: 'Japón ganó la primera edición del torneo.' },
+  { anio: 2020, hecho: 'MLB reconoció siete Ligas Negras como Grandes Ligas', detalle: 'Los registros comprendidos entre 1920 y 1948 recibieron condición de Grandes Ligas.' },
+  { anio: 2022, hecho: 'El bateador designado se aplicó permanentemente en ambas ligas', detalle: 'La Liga Nacional adoptó la regla de manera permanente.' },
+  { anio: 2023, hecho: 'MLB introdujo el reloj de lanzamiento', detalle: 'La medida buscó mejorar el ritmo y reducir la duración de los juegos.' }
+]
+
+const paresHistoriaBeisbol = hitosHistoriaBeisbol.flatMap(
+  (primero, indice) =>
+    hitosHistoriaBeisbol
+      .slice(indice + 1)
+      .map((segundo) => [primero, segundo])
+)
+
+function generarPreguntaHistoria(nivel, indice) {
+  const posicion = (nivel - 61) * 10 + indice
+  const [primero, segundo] = paresHistoriaBeisbol[posicion]
+  const diferencia = segundo.anio - primero.anio
+
+  if (posicion % 2 === 0) {
+    return {
+      ...crearPregunta(
+        `¿Cuál de estos acontecimientos ocurrió primero en la historia del béisbol?`,
+        primero.hecho,
+        [
+          segundo.hecho,
+          'Ambos acontecimientos ocurrieron el mismo año'
+        ],
+        posicion
+      ),
+      id: `historia-${posicion + 1}`,
+      explicacion:
+        `${primero.hecho} ocurrió en ${primero.anio}. ${primero.detalle}`
+    }
+  }
+
+  return {
+    ...crearPregunta(
+      `¿Cuántos años transcurrieron entre “${primero.hecho}” y “${segundo.hecho}”?`,
+      `${diferencia} años`,
+      [
+        `${diferencia + 5} años`,
+        `${Math.max(1, diferencia - 3)} años`
+      ],
+      posicion
+    ),
+    id: `historia-${posicion + 1}`,
+    explicacion:
+      `El primer acontecimiento ocurrió en ${primero.anio} y el segundo en ${segundo.anio}.`
+  }
+}
+
+
+const hitosGrandesLigas = [
+  { anio: 1927, hecho: 'Babe Ruth conectó 60 jonrones en una temporada', detalle: 'La marca permaneció como récord de una temporada en MLB durante 34 años.' },
+  { anio: 1939, hecho: 'Lou Gehrig pronunció su famoso discurso de despedida', detalle: 'El histórico jugador de los Yankees se retiró debido a una enfermedad.' },
+  { anio: 1941, hecho: 'Joe DiMaggio logró una racha de 56 juegos conectando hit', detalle: 'La racha continúa siendo el récord de MLB.' },
+  { anio: 1947, hecho: 'Jackie Robinson ganó el premio al Novato del Año', detalle: 'Fue su primera temporada con los Brooklyn Dodgers.' },
+  { anio: 1954, hecho: 'Willie Mays realizó “The Catch” en la Serie Mundial', detalle: 'La atrapada es una de las jugadas defensivas más famosas de la historia.' },
+  { anio: 1955, hecho: 'Humberto Robinson se convirtió en el primer panameño en jugar en MLB', detalle: 'El lanzador abrió el camino para futuras generaciones de peloteros panameños.' },
+  { anio: 1956, hecho: 'Don Larsen lanzó un juego perfecto en la Serie Mundial', detalle: 'Lo consiguió con los Yankees frente a los Dodgers.' },
+  { anio: 1961, hecho: 'Roger Maris conectó 61 jonrones', detalle: 'Superó la marca de 60 jonrones de Babe Ruth.' },
+  { anio: 1966, hecho: 'Frank Robinson ganó la Triple Corona de bateo', detalle: 'Lideró la Liga Americana en promedio, jonrones y carreras impulsadas.' },
+  { anio: 1967, hecho: 'Rod Carew ganó el premio al Novato del Año', detalle: 'El panameño inició una destacada carrera en Grandes Ligas.' },
+  { anio: 1968, hecho: 'Bob Gibson registró efectividad de 1.12', detalle: 'Su histórica temporada ayudó a impulsar cambios en la altura del montículo.' },
+  { anio: 1974, hecho: 'Hank Aaron conectó su jonrón número 715', detalle: 'Con ese batazo superó el récord de carrera de Babe Ruth.' },
+  { anio: 1975, hecho: 'Frank Robinson se convirtió en el primer dirigente afroamericano de MLB', detalle: 'Fue jugador y dirigente de Cleveland.' },
+  { anio: 1985, hecho: 'Pete Rose superó el récord de hits de Ty Cobb', detalle: 'Terminó su carrera con 4,256 imparables.' },
+  { anio: 1988, hecho: 'Kirk Gibson conectó su histórico jonrón en la Serie Mundial', detalle: 'El batazo decidió el primer juego para los Dodgers.' },
+  { anio: 1995, hecho: 'Mariano Rivera debutó en Grandes Ligas', detalle: 'El panameño se convertiría en uno de los mejores cerradores de la historia.' },
+  { anio: 1998, hecho: 'Mark McGwire conectó 70 jonrones', detalle: 'Superó entonces la marca de Roger Maris.' },
+  { anio: 2001, hecho: 'Barry Bonds conectó 73 jonrones', detalle: 'Es la marca oficial de MLB para una temporada.' },
+  { anio: 2004, hecho: 'Ichiro Suzuki logró 262 hits en una temporada', detalle: 'Estableció el récord moderno de imparables en una campaña.' },
+  { anio: 2011, hecho: 'Mariano Rivera estableció el récord de juegos salvados de MLB', detalle: 'Terminó su carrera con 652 salvamentos.' },
+  { anio: 2012, hecho: 'Miguel Cabrera ganó la Triple Corona de bateo', detalle: 'Fue la primera Triple Corona de MLB desde 1967.' },
+  { anio: 2016, hecho: 'Chicago Cubs ganó la Serie Mundial después de 108 años', detalle: 'Derrotó a Cleveland en siete juegos.' },
+  { anio: 2019, hecho: 'Mariano Rivera fue elegido unánimemente al Salón de la Fama', detalle: 'Fue el primer jugador elegido con el 100 % de los votos.' },
+  { anio: 2022, hecho: 'Aaron Judge conectó 62 jonrones', detalle: 'Estableció el récord de una temporada de la Liga Americana.' },
+  { anio: 2024, hecho: 'Shohei Ohtani logró la primera temporada de 50 jonrones y 50 bases robadas', detalle: 'Se convirtió en el primer integrante del club 50-50.' }
+]
+
+const paresGrandesLigas = hitosGrandesLigas.flatMap(
+  (primero, indice) =>
+    hitosGrandesLigas
+      .slice(indice + 1)
+      .map((segundo) => [primero, segundo])
+)
+
+function generarPreguntaGrandesLigas(nivel, indice) {
+  const posicion = (nivel - 81) * 10 + indice
+  const [primero, segundo] = paresGrandesLigas[posicion]
+  const diferencia = segundo.anio - primero.anio
+  const tipo = posicion % 3
+
+  if (tipo === 0) {
+    return {
+      ...crearPregunta(
+        '¿Cuál de estos hitos de Grandes Ligas ocurrió primero?',
+        primero.hecho,
+        [
+          segundo.hecho,
+          'Los dos ocurrieron durante la misma temporada'
+        ],
+        posicion
+      ),
+      id: `mlb-${posicion + 1}`,
+      explicacion:
+        `${primero.hecho} ocurrió en ${primero.anio}. ${primero.detalle}`
+    }
+  }
+
+  if (tipo === 1) {
+    return {
+      ...crearPregunta(
+        `¿Cuántos años transcurrieron entre “${primero.hecho}” y “${segundo.hecho}”?`,
+        `${diferencia} años`,
+        [
+          `${diferencia + 4} años`,
+          `${Math.max(1, diferencia - 2)} años`
+        ],
+        posicion
+      ),
+      id: `mlb-${posicion + 1}`,
+      explicacion:
+        `Los acontecimientos ocurrieron en ${primero.anio} y ${segundo.anio}.`
+    }
+  }
+
+  return {
+    ...crearPregunta(
+      `¿En qué año ocurrió este hecho: “${primero.hecho}”?`,
+      String(primero.anio),
+      [
+        String(segundo.anio),
+        String(primero.anio + 3)
+      ],
+      posicion
+    ),
+    id: `mlb-${posicion + 1}`,
+    explicacion:
+      `${primero.hecho} ocurrió en ${primero.anio}. ${primero.detalle}`
+  }
+}
+
+function generarNivel(nivel) {
+  return Array.from({ length: 10 }, (_, indice) => {
+    if (nivel <= 20) {
+      const posicion = (nivel - 1) * 10 + indice
+
+      if (posicion < preguntasBasicas.length) {
+        return convertirPreguntaBanco(
+          preguntasBasicas[posicion],
+          nivel,
+          indice
+        )
+      }
+
+      return generarPreguntaUnica(nivel, indice, indice)
+    }
+
+    if (nivel <= 40) {
+      const posicion = (nivel - 21) * 10 + indice
+
+      if (posicion < reglasIntermedias.length) {
+        return convertirPreguntaBanco(
+          reglasIntermedias[posicion],
+          nivel,
+          indice
+        )
+      }
+
+      return generarPreguntaUnica(nivel, indice, indice + 1)
+    }
+
+    if (nivel <= 60) {
+      const posicion = (nivel - 41) * 10 + indice
+
+      if (posicion < situacionesAvanzadas.length) {
+        return convertirPreguntaBanco(
+          situacionesAvanzadas[posicion],
+          nivel,
+          indice
+        )
+      }
+
+      return generarPreguntaUnica(nivel, indice, indice + 2)
+    }
+
+    if (nivel >= 61 && nivel <= 80) {
+      return generarPreguntaHistoria(nivel, indice)
+    }
+
+    if (nivel >= 81 && nivel <= 100) {
+      return generarPreguntaGrandesLigas(nivel, indice)
+    }
+
+    return generarPreguntaUnica(nivel, indice, indice + 3)
+  })
+}
+
+function comprobarPreguntasDuplicadas() {
+  const preguntas = Array.from(
+    { length: 100 },
+    (_, indice) => generarNivel(indice + 1)
+  ).flat()
+
+  const textos = preguntas.map((item) =>
+    item.pregunta.trim().toLowerCase()
+  )
+
+  const duplicadas = textos.filter(
+    (texto, indice) => textos.indexOf(texto) !== indice
+  )
+
+  if (duplicadas.length > 0) {
+    console.warn(
+      'Preguntas repetidas encontradas:',
+      [...new Set(duplicadas)]
+    )
+  }
+
+  return duplicadas.length === 0
+}
+
+comprobarPreguntasDuplicadas()
 
 export default function RetoDigital({ onCerrar }) {
   const [nivelDesbloqueado, setNivelDesbloqueado] = useState(() => {
@@ -320,6 +546,7 @@ export default function RetoDigital({ onCerrar }) {
   const [aciertos, setAciertos] = useState(0)
   const [seleccionada, setSeleccionada] = useState(null)
   const [terminado, setTerminado] = useState(false)
+  const [tiempo, setTiempo] = useState(10)
 
   const preguntas = useMemo(
     () => (nivel ? generarNivel(nivel) : []),
@@ -334,6 +561,7 @@ export default function RetoDigital({ onCerrar }) {
     setAciertos(0)
     setSeleccionada(null)
     setTerminado(false)
+    setTiempo(10)
   }
 
   function responder(indice) {
@@ -368,8 +596,24 @@ export default function RetoDigital({ onCerrar }) {
       setAciertos(nuevosAciertos)
       setPreguntaActual((actual) => actual + 1)
       setSeleccionada(null)
+      setTiempo(10)
     }, 750)
   }
+
+  useEffect(() => {
+    if (!nivel || terminado || seleccionada !== null) return
+
+    if (tiempo <= 0) {
+      responder(-1)
+      return
+    }
+
+    const temporizador = window.setTimeout(() => {
+      setTiempo((actual) => Math.max(0, actual - 1))
+    }, 1000)
+
+    return () => window.clearTimeout(temporizador)
+  }, [tiempo, nivel, terminado, seleccionada, preguntaActual])
 
   function estrellas() {
     if (aciertos === 10) return 3
@@ -492,6 +736,27 @@ export default function RetoDigital({ onCerrar }) {
                 PREGUNTA {preguntaActual + 1} / 10
               </strong>
               <b>{aciertos} ACIERTOS</b>
+
+              <span
+                className={`reto-digital-tiempo ${
+                  tiempo <= 3 ? 'urgente' : ''
+                }`}
+              >
+                ⏱ {tiempo}s
+              </span>
+            </div>
+
+            <div
+              className={`reto-digital-tiempo-barra ${
+                tiempo <= 3 ? 'urgente' : ''
+              }`}
+              aria-label={`${tiempo} segundos restantes`}
+            >
+              <i
+                style={{
+                  width: `${tiempo * 10}%`
+                }}
+              ></i>
             </div>
 
             <div className="reto-digital-barra">

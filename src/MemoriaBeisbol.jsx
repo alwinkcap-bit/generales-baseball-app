@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './MemoriaBeisbol.css'
 
 const conceptos = [
@@ -55,8 +55,20 @@ function crearCartas(nivel) {
 }
 
 export default function MemoriaBeisbol({ onCerrar }) {
-  const [nivel, setNivel] = useState(1)
-  const [cartas, setCartas] = useState(() => crearCartas(1))
+  const nivelGuardado = Math.min(
+    30,
+    Math.max(
+      1,
+      Number(
+        window.localStorage.getItem('memoria-beisbol-nivel') || 1
+      )
+    )
+  )
+
+  const [nivel, setNivel] = useState(nivelGuardado)
+  const [cartas, setCartas] = useState(() =>
+    crearCartas(nivelGuardado)
+  )
   const [seleccionadas, setSeleccionadas] = useState([])
   const [movimientos, setMovimientos] = useState(0)
   const [bloqueado, setBloqueado] = useState(false)
@@ -116,6 +128,37 @@ export default function MemoriaBeisbol({ onCerrar }) {
 
   const completado =
     cartas.length > 0 && cartas.every((carta) => carta.encontrada)
+
+  useEffect(() => {
+    if (!completado) return
+
+    const siguiente = Math.min(30, nivel + 1)
+    const guardado = Number(
+      window.localStorage.getItem('memoria-beisbol-nivel') || 1
+    )
+
+    if (siguiente > guardado) {
+      window.localStorage.setItem(
+        'memoria-beisbol-nivel',
+        String(siguiente)
+      )
+    }
+
+    const claveMovimientos = `memoria-mejor-${nivel}`
+    const mejorAnterior = Number(
+      window.localStorage.getItem(claveMovimientos) || 0
+    )
+
+    if (
+      movimientos > 0 &&
+      (mejorAnterior === 0 || movimientos < mejorAnterior)
+    ) {
+      window.localStorage.setItem(
+        claveMovimientos,
+        String(movimientos)
+      )
+    }
+  }, [completado, nivel, movimientos])
 
   return (
     <div className="memoria-ventana-fondo">

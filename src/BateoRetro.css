@@ -1514,3 +1514,38 @@
     }
   }
 }
+
+/* RÉCORD GUARDADO DEL JUGADOR */
+.bateo-retro-record {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px 0 14px;
+  padding: 9px 14px;
+  border: 1px solid rgba(244, 189, 43, 0.65);
+  border-radius: 12px;
+  background: rgba(244, 189, 43, 0.1);
+  color: #ffffff;
+  text-align: center;
+}
+
+.bateo-retro-record span {
+  color: #f4bd2b;
+  font-weight: 900;
+}
+
+.bateo-retro-record strong {
+  color: #ffffff;
+}
+
+.bateo-retro-record small {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+@media (max-width: 600px) {
+  .bateo-retro-record {
+    flex-direction: column;
+    gap: 3px;
+  }
+}

@@ -436,3 +436,41 @@
     width: min(100%, 390px) !important;
   }
 }
+/* ===== CORRECCIÓN FINAL SOPA DE LETRAS ===== */
+
+/* El tablero real es de 10 × 10 */
+.sopa-tablero,
+.sopa-tablero.sopa-tablero {
+  grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
+}
+
+/* Los controles quedan debajo del contenido y no lo cubren */
+@media (max-width: 600px) {
+  .sopa-controles {
+    position: static !important;
+    bottom: auto !important;
+    width: 100%;
+    margin: 18px 0 0 !important;
+    padding: 12px 0 4px !important;
+    border-top: 1px solid rgba(242, 185, 59, 0.35);
+    background: transparent !important;
+  }
+
+  .sopa-ventana {
+    padding-bottom: 22px !important;
+  }
+
+  .sopa-palabras {
+    margin-bottom: 0;
+  }
+
+  .sopa-palabras > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sopa-palabras span {
+    min-height: 40px;
+    display: grid;
+    place-items: center;
+  }
+}

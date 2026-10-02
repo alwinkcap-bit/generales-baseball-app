@@ -16,6 +16,21 @@ export default function BateoRetro({ onCerrar }) {
   const [duracion, setDuracion] = useState(1500)
   const [bateando, setBateando] = useState(false)
   const [pelotaActiva, setPelotaActiva] = useState(false)
+  const [record, setRecord] = useState(() => {
+    try {
+      return JSON.parse(
+        window.localStorage.getItem('bateo-retro-record') ||
+          '{"puntos":0,"nivel":1,"hits":0,"jonrones":0}'
+      )
+    } catch {
+      return {
+        puntos: 0,
+        nivel: 1,
+        hits: 0,
+        jonrones: 0
+      }
+    }
+  })
 
   const activoRef = useRef(false)
   const jugandoRef = useRef(false)
@@ -33,6 +48,29 @@ export default function BateoRetro({ onCerrar }) {
       window.clearTimeout(siguienteRef.current)
     }
   }, [])
+
+  useEffect(() => {
+    const nuevoRecord = {
+      puntos: Math.max(record.puntos || 0, puntos),
+      nivel: Math.max(record.nivel || 1, nivel),
+      hits: Math.max(record.hits || 0, hits),
+      jonrones: Math.max(record.jonrones || 0, jonrones)
+    }
+
+    const mejoro =
+      nuevoRecord.puntos !== record.puntos ||
+      nuevoRecord.nivel !== record.nivel ||
+      nuevoRecord.hits !== record.hits ||
+      nuevoRecord.jonrones !== record.jonrones
+
+    if (!mejoro) return
+
+    setRecord(nuevoRecord)
+    window.localStorage.setItem(
+      'bateo-retro-record',
+      JSON.stringify(nuevoRecord)
+    )
+  }, [puntos, nivel, hits, jonrones, record])
 
   function sonido(frecuencia, tiempo = 0.1) {
     try {
@@ -255,6 +293,15 @@ export default function BateoRetro({ onCerrar }) {
             HR
             <b>{jonrones}</b>
           </span>
+        </div>
+
+        <div className="bateo-retro-record">
+          <span>🏆 RÉCORD</span>
+          <strong>{String(record.puntos).padStart(5, '0')} puntos</strong>
+          <small>
+            Nivel {record.nivel} · {record.hits} hits ·{' '}
+            {record.jonrones} HR
+          </small>
         </div>
 
         <div className="bateo-retro-estadio">

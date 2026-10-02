@@ -51,7 +51,107 @@ const PALABRAS_BEISBOL = [
   'CHITRE',
   'HERrERA'.toUpperCase(),
   'VICTORIA',
-  'DEPORTE'
+  'DEPORTE',
+  'SENCILLO',
+  'JONRON',
+  'FOUL',
+  'SAFE',
+  'BALK',
+  'RELEVO',
+  'CORTADOR',
+  'TORPEDERO',
+  'INFIELD',
+  'OUTFIELD',
+  'ZURDO',
+  'DERECHO',
+  'NOVATO',
+  'CERRADOR',
+  'ABRIDOR',
+  'CURVA',
+  'RECTA',
+  'CAMBIO',
+  'SLIDER',
+  'CONTROL',
+  'VELOCIDAD',
+  'MADERA',
+  'ALUMINIO',
+  'MASCARA',
+  'PECHERA',
+  'SPIKES',
+  'BULLPEN',
+  'PLATO',
+  'MONTICULO',
+  'GRADAS',
+  'PIZARRA',
+  'MARCADOR',
+  'ROSTER',
+  'TEMPORADA',
+  'SERIE',
+  'CAMPEON',
+  'JONRONERO',
+  'IMPULSADA',
+  'ANOTADA',
+  'SALVADO',
+  'PROMEDIO',
+  'EFECTIVIDAD',
+  'FILDEO',
+  'ASISTENCIA',
+  'ERROR',
+  'DOBLEPLAY',
+  'TRIPLEPLAY',
+  'SACRIFICIO',
+  'ELEVADO',
+  'RODADO',
+  'LINEAZO',
+  'BANQUILLO',
+  'REGLAMENTO',
+  'PONCHE',
+  'CUENTA',
+  'TURNO',
+  'ORDEN',
+  'ALINEACION',
+  'SUPLENTE',
+  'TITULAR',
+  'RETOQUE',
+  'CORREDOR',
+  'VELOCISTA',
+  'BATACAZO',
+  'ATLETISMO',
+  'CALENTAR',
+  'ESTIRAR',
+  'HIDRATAR',
+  'TECNICA',
+  'TACTICA',
+  'COORDINAR',
+  'EQUILIBRIO',
+  'POTENCIA',
+  'AGILIDAD',
+  'REFLEJOS',
+  'PUNTERIA',
+  'LIDERAZGO',
+  'COMPROMISO',
+  'PACIENCIA',
+  'CONSTANCIA',
+  'HONESTIDAD',
+  'COMPAÑERO',
+  'FAMILIA',
+  'LEGADO',
+  'HERRERA',
+  'PANAMA',
+  'CLASICO',
+  'MUNDIAL',
+  'GRANDES',
+  'LIGAS',
+  'NOVENA',
+  'PELOTERO',
+  'MANAGER',
+  'COACH',
+  'SCOUT',
+  'UMPIRE',
+  'RECORD',
+  'TROFEO',
+  'MEDALLA',
+  'CAMPEONATO'
 ]
 
 const DIRECCIONES = [
@@ -87,12 +187,18 @@ function crearNivel(numeroNivel) {
     () => Array(tamaño).fill('')
   )
 
-  const palabras = Array.from({ length: 6 }, (_, indice) => {
-    const posicion =
-      (numeroNivel * 5 + indice * 11) % PALABRAS_BEISBOL.length
+  const palabrasPorNivel = 6
+  const inicio = (numeroNivel - 1) * palabrasPorNivel
 
-    return PALABRAS_BEISBOL[posicion]
-  })
+  const palabras = Array.from(
+    { length: palabrasPorNivel },
+    (_, indice) => {
+      const posicion =
+        (inicio + indice) % PALABRAS_BEISBOL.length
+
+      return PALABRAS_BEISBOL[posicion]
+    }
+  )
 
   const ubicaciones = []
 
@@ -181,8 +287,13 @@ export default function SopaLetras({ onCerrar }) {
     window.localStorage.getItem('sopa-letras-progreso') || 0
   )
 
+  const nivelGuardado = Number(
+    window.localStorage.getItem('sopa-letras-nivel-actual') ||
+      Math.min(100, progresoGuardado + 1)
+  )
+
   const [nivel, setNivel] = useState(
-    Math.min(100, progresoGuardado + 1)
+    Math.min(100, Math.max(1, nivelGuardado))
   )
 
   const [progreso, setProgreso] = useState(progresoGuardado)
@@ -203,6 +314,11 @@ export default function SopaLetras({ onCerrar }) {
     setMensaje(
       'Toca la primera y la última letra de una palabra.'
     )
+
+    window.localStorage.setItem(
+      'sopa-letras-nivel-actual',
+      String(nivel)
+    )
   }, [nivel])
 
   useEffect(() => {
@@ -215,6 +331,11 @@ export default function SopaLetras({ onCerrar }) {
     window.localStorage.setItem(
       'sopa-letras-progreso',
       String(nuevoProgreso)
+    )
+
+    window.localStorage.setItem(
+      'sopa-letras-nivel-actual',
+      String(Math.min(100, nivel + 1))
     )
 
     setMensaje(
