@@ -9,8 +9,8 @@ import MemoriaBeisbol from './MemoriaBeisbol'
 import BateoRetro from './BateoRetro'
 import RetoDigital from './RetoDigital'
 import preguntasReto from './PreguntasReto'
-import logoGenerales from './public/logo-generales.png';
-import equipoGenerales from './public/equipo-generales.jpg';
+import logoGenerales from './public/logo-generales.webp';
+import equipoGenerales from './public/equipo-generales.webp';
 import ScoreboardGenerales from './ScoreboardGenerales'
 import CentroPartidos from './CentroPartidos'
 import PartidosPublicos from './PartidosPublicos'
@@ -279,6 +279,37 @@ async function compartirApp() {
       'Un equipo, una familia, un legado.\n\n' +
       enlace,
     url: enlace
+  }
+
+  const canalCompartido = navigator.share
+    ? 'menu_dispositivo'
+    : 'copiar_enlace'
+
+  try {
+    const claveVisitante = 'generales_visitante_id'
+    let visitanteId = localStorage.getItem(claveVisitante)
+
+    if (!visitanteId) {
+      visitanteId = crypto.randomUUID()
+      localStorage.setItem(claveVisitante, visitanteId)
+    }
+
+    const { error } = await supabase
+      .from('interacciones_publicas')
+      .insert({
+        tipo: 'compartir',
+        canal: canalCompartido,
+        visitante_id: visitanteId
+      })
+
+    if (error) {
+      console.error(
+        'No se pudo registrar el contenido compartido:',
+        error
+      )
+    }
+  } catch (error) {
+    console.error('Error registrando el contenido compartido:', error)
   }
 
   if (navigator.share) {

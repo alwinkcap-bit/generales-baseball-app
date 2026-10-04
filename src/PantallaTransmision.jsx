@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { supabase } from './supabase'
-import logoGenerales from './public/logo-generales.png'
+import logoGenerales from './public/logo-generales.webp'
 import './PantallaTransmision.css'
 
 const estadoInicial = {

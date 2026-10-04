@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { QRCodeCanvas } from 'qrcode.react'
 import './ScoreboardGenerales.css'
-import logoGenerales from './public/logo-generales.png'
+import logoGenerales from './public/logo-generales.webp'
 import { supabase } from './supabase'
 
 const CLAVE_PARTIDA_SCOREBOARD =

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import './Bienvenida.css'
-import logoGenerales from './public/logo-generales.png'
+import logoGenerales from './public/logo-generales.webp'
 
 export default function Bienvenida({ onEntrar }) {
   useEffect(() => {

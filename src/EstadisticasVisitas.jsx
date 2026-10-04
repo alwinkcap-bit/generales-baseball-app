@@ -6,6 +6,7 @@ export default function EstadisticasVisitas({ isAdmin }) {
   const [estadisticas, setEstadisticas] = useState(null)
   const [cargando, setCargando] = useState(false)
   const [error, setError] = useState('')
+  const [compartidos, setCompartidos] = useState(0)
 
   useEffect(() => {
     registrarVisita()
@@ -69,6 +70,26 @@ export default function EstadisticasVisitas({ isAdmin }) {
       setEstadisticas(null)
     } else {
       setEstadisticas(data?.[0] || null)
+    }
+
+    const {
+      count: totalCompartidos,
+      error: errorCompartidos
+    } = await supabase
+      .from('interacciones_publicas')
+      .select('id', {
+        count: 'exact',
+        head: true
+      })
+      .eq('tipo', 'compartir')
+
+    if (errorCompartidos) {
+      console.error(
+        'No se pudieron cargar los compartidos:',
+        errorCompartidos
+      )
+    } else {
+      setCompartidos(totalCompartidos || 0)
     }
 
     setCargando(false)
@@ -135,6 +156,14 @@ export default function EstadisticasVisitas({ isAdmin }) {
               <strong>
                 {estadisticas?.visitantes_hoy ?? 0}
               </strong>
+            </div>
+          </article>
+
+          <article>
+            <span>🔗</span>
+            <div>
+              <small>VECES COMPARTIDA</small>
+              <strong>{compartidos}</strong>
             </div>
           </article>
 

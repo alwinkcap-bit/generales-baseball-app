@@ -2837,7 +2837,7 @@ section:has(> .tienda-acceso) > .tienda-acceso:hover {
       rgba(8, 43, 72, .83) 53%,
       rgba(8, 43, 72, .58) 100%
     ),
-    url('./public/equipo-generales.jpg') !important;
+    url('./public/equipo-generales.webp') !important;
   background-size: cover !important;
   color: #fff !important;
   box-shadow:
@@ -2950,7 +2950,7 @@ section:has(> .tienda-acceso) > .tienda-acceso:hover {
 .inicio-panel-rapido > button:nth-child(2) {
   background-image:
     linear-gradient(100deg, rgba(2,20,35,.96), rgba(8,43,72,.62)),
-    url('./public/equipo-generales.jpg') !important;
+    url('./public/equipo-generales.webp') !important;
   background-position: center 35% !important;
 }
 
@@ -2964,7 +2964,7 @@ section:has(> .tienda-acceso) > .tienda-acceso:hover {
 .inicio-panel-rapido > button:nth-child(4) {
   background-image:
     linear-gradient(100deg, rgba(2,20,35,.96), rgba(8,43,72,.63)),
-    url('./public/galeria3.png') !important;
+    url('./public/galeria3.webp') !important;
   background-position: center !important;
 }
 
@@ -2998,7 +2998,7 @@ section:has(> .tienda-acceso) > .tienda-acceso:hover {
 .inicio-panel-rapido > button:nth-child(2) {
   background-image:
     linear-gradient(100deg, rgba(2,20,35,.84), rgba(8,43,72,.34)),
-    url('./public/equipo-generales.jpg') !important;
+    url('./public/equipo-generales.webp') !important;
 }
 
 .inicio-panel-rapido > button:nth-child(3) {
@@ -3010,7 +3010,7 @@ section:has(> .tienda-acceso) > .tienda-acceso:hover {
 .inicio-panel-rapido > button:nth-child(4) {
   background-image:
     linear-gradient(100deg, rgba(2,20,35,.84), rgba(8,43,72,.34)),
-    url('./public/galeria3.png') !important;
+    url('./public/galeria3.webp') !important;
 }
 
 .inicio-panel-rapido > button:nth-child(5) {
