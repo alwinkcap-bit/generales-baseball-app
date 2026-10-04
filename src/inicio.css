@@ -5900,3 +5900,359 @@ body:has(.agenda-editor-fondo) nav.inicio-nav {
     max-width: 74px !important;
   }
 }
+
+/* ===== BOTÓN DESCARGAR APP ESTILO GENERALES ===== */
+.inicio-app .inicio-header .inicio-avisos-contenedor {
+  width: 260px !important;
+  min-width: 260px !important;
+  grid-template-columns: 148px 48px 48px !important;
+  gap: 8px !important;
+}
+
+.inicio-app .inicio-header .inicio-instalar-cabecera {
+  width: 148px !important;
+  min-width: 148px !important;
+  max-width: 148px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  padding: 4px 5px 4px 17px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  overflow: hidden !important;
+  border: 2px solid #efb62c !important;
+  border-radius: 25px !important;
+  color: #ffffff !important;
+  background:
+    linear-gradient(
+      180deg,
+      #174e74 0%,
+      #0b3555 50%,
+      #06243d 100%
+    ) !important;
+  box-shadow:
+    0 7px 15px rgba(0, 0, 0, 0.36),
+    inset 0 2px rgba(255, 255, 255, 0.16),
+    inset 0 -3px rgba(0, 0, 0, 0.24),
+    0 0 10px rgba(239, 182, 44, 0.18) !important;
+  cursor: pointer !important;
+  transform: none !important;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease !important;
+}
+
+.inicio-app .inicio-header .inicio-instalar-cabecera::after {
+  display: none !important;
+  content: none !important;
+}
+
+.inicio-instalar-cabecera:hover {
+  transform: translateY(-2px) !important;
+  box-shadow:
+    0 10px 19px rgba(0, 0, 0, 0.4),
+    inset 0 2px rgba(255, 255, 255, 0.2),
+    0 0 15px rgba(239, 182, 44, 0.3) !important;
+}
+
+.inicio-instalar-cabecera:active {
+  transform: scale(0.96) !important;
+}
+
+.inicio-instalar-texto {
+  min-width: 0;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  line-height: 1 !important;
+}
+
+.inicio-instalar-texto small {
+  color: #ffffff !important;
+  font-size: 0.53rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.09em !important;
+}
+
+.inicio-instalar-texto strong {
+  color: #ffd65a !important;
+  font-size: 0.87rem !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.04em !important;
+}
+
+.inicio-instalar-flecha {
+  width: 38px !important;
+  height: 38px !important;
+  flex: 0 0 38px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid #ffe688 !important;
+  border-radius: 50% !important;
+  color: #092943 !important;
+  background:
+    linear-gradient(
+      145deg,
+      #ffe270,
+      #e9a91e
+    ) !important;
+  box-shadow:
+    inset 0 2px rgba(255, 255, 255, 0.42),
+    0 3px 7px rgba(0, 0, 0, 0.32) !important;
+}
+
+.inicio-instalar-flecha svg {
+  width: 23px !important;
+  height: 23px !important;
+  display: block !important;
+}
+
+@media (max-width: 600px) {
+  .inicio-app .inicio-header .inicio-avisos-contenedor {
+    width: 218px !important;
+    min-width: 218px !important;
+    grid-template-columns: 122px 42px 42px !important;
+    gap: 6px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-instalar-cabecera {
+    width: 122px !important;
+    min-width: 122px !important;
+    max-width: 122px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 3px 4px 3px 13px !important;
+  }
+
+  .inicio-instalar-texto small {
+    font-size: 0.45rem !important;
+  }
+
+  .inicio-instalar-texto strong {
+    font-size: 0.73rem !important;
+  }
+
+  .inicio-instalar-flecha {
+    width: 34px !important;
+    height: 34px !important;
+    flex-basis: 34px !important;
+  }
+
+  .inicio-instalar-flecha svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+@media (max-width: 410px) {
+  .inicio-app .inicio-header .inicio-avisos-contenedor {
+    width: 198px !important;
+    min-width: 198px !important;
+    grid-template-columns: 108px 40px 40px !important;
+    gap: 5px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-instalar-cabecera {
+    width: 108px !important;
+    min-width: 108px !important;
+    max-width: 108px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    padding-left: 10px !important;
+  }
+
+  .inicio-instalar-texto small {
+    font-size: 0.41rem !important;
+  }
+
+  .inicio-instalar-texto strong {
+    font-size: 0.68rem !important;
+  }
+
+  .inicio-instalar-flecha {
+    width: 32px !important;
+    height: 32px !important;
+    flex-basis: 32px !important;
+  }
+}
+
+/* ===== BOTÓN DESCARGAR APP ESTILO GENERALES ===== */
+.inicio-app .inicio-header .inicio-avisos-contenedor {
+  width: 260px !important;
+  min-width: 260px !important;
+  grid-template-columns: 148px 48px 48px !important;
+  gap: 8px !important;
+}
+
+.inicio-app .inicio-header .inicio-instalar-cabecera {
+  width: 148px !important;
+  min-width: 148px !important;
+  max-width: 148px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  padding: 4px 5px 4px 17px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  overflow: hidden !important;
+  border: 2px solid #efb62c !important;
+  border-radius: 25px !important;
+  color: #ffffff !important;
+  background:
+    linear-gradient(
+      180deg,
+      #174e74 0%,
+      #0b3555 50%,
+      #06243d 100%
+    ) !important;
+  box-shadow:
+    0 7px 15px rgba(0, 0, 0, 0.36),
+    inset 0 2px rgba(255, 255, 255, 0.16),
+    inset 0 -3px rgba(0, 0, 0, 0.24),
+    0 0 10px rgba(239, 182, 44, 0.18) !important;
+  cursor: pointer !important;
+  transform: none !important;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease !important;
+}
+
+.inicio-app .inicio-header .inicio-instalar-cabecera::after {
+  display: none !important;
+  content: none !important;
+}
+
+.inicio-instalar-cabecera:hover {
+  transform: translateY(-2px) !important;
+  box-shadow:
+    0 10px 19px rgba(0, 0, 0, 0.4),
+    inset 0 2px rgba(255, 255, 255, 0.2),
+    0 0 15px rgba(239, 182, 44, 0.3) !important;
+}
+
+.inicio-instalar-cabecera:active {
+  transform: scale(0.96) !important;
+}
+
+.inicio-instalar-texto {
+  min-width: 0;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  line-height: 1 !important;
+}
+
+.inicio-instalar-texto small {
+  color: #ffffff !important;
+  font-size: 0.53rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.09em !important;
+}
+
+.inicio-instalar-texto strong {
+  color: #ffd65a !important;
+  font-size: 0.87rem !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.04em !important;
+}
+
+.inicio-instalar-flecha {
+  width: 38px !important;
+  height: 38px !important;
+  flex: 0 0 38px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid #ffe688 !important;
+  border-radius: 50% !important;
+  color: #092943 !important;
+  background:
+    linear-gradient(
+      145deg,
+      #ffe270,
+      #e9a91e
+    ) !important;
+  box-shadow:
+    inset 0 2px rgba(255, 255, 255, 0.42),
+    0 3px 7px rgba(0, 0, 0, 0.32) !important;
+}
+
+.inicio-instalar-flecha svg {
+  width: 23px !important;
+  height: 23px !important;
+  display: block !important;
+}
+
+@media (max-width: 600px) {
+  .inicio-app .inicio-header .inicio-avisos-contenedor {
+    width: 218px !important;
+    min-width: 218px !important;
+    grid-template-columns: 122px 42px 42px !important;
+    gap: 6px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-instalar-cabecera {
+    width: 122px !important;
+    min-width: 122px !important;
+    max-width: 122px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 3px 4px 3px 13px !important;
+  }
+
+  .inicio-instalar-texto small {
+    font-size: 0.45rem !important;
+  }
+
+  .inicio-instalar-texto strong {
+    font-size: 0.73rem !important;
+  }
+
+  .inicio-instalar-flecha {
+    width: 34px !important;
+    height: 34px !important;
+    flex-basis: 34px !important;
+  }
+
+  .inicio-instalar-flecha svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+@media (max-width: 410px) {
+  .inicio-app .inicio-header .inicio-avisos-contenedor {
+    width: 198px !important;
+    min-width: 198px !important;
+    grid-template-columns: 108px 40px 40px !important;
+    gap: 5px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-instalar-cabecera {
+    width: 108px !important;
+    min-width: 108px !important;
+    max-width: 108px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    padding-left: 10px !important;
+  }
+
+  .inicio-instalar-texto small {
+    font-size: 0.41rem !important;
+  }
+
+  .inicio-instalar-texto strong {
+    font-size: 0.68rem !important;
+  }
+
+  .inicio-instalar-flecha {
+    width: 32px !important;
+    height: 32px !important;
+    flex-basis: 32px !important;
+  }
+}
