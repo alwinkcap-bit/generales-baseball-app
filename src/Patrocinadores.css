@@ -576,3 +576,111 @@
     font-size: 0.78rem;
   }
 }
+
+/* BANNER COMPLETO PARA TABLET Y PC */
+@media (min-width: 701px) {
+  .patrocinadores-banner {
+    height: clamp(320px, 34vw, 430px) !important;
+    min-height: 320px !important;
+    background:
+      radial-gradient(circle at center, #123958, #061827 75%) !important;
+  }
+
+  .patrocinadores-banner img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+
+  .patrocinadores-banner-sombra {
+    background:
+      linear-gradient(
+        135deg,
+        rgba(3, 17, 32, 0.58) 0%,
+        rgba(3, 17, 32, 0.16) 30%,
+        transparent 56%
+      ) !important;
+  }
+
+  .patrocinadores-banner-contenido {
+    top: 22px !important;
+    left: 24px !important;
+    width: auto !important;
+    max-width: 330px !important;
+    padding: 13px 17px !important;
+    transform: none !important;
+    border: 1px solid rgba(244, 201, 69, 0.65) !important;
+    border-radius: 14px !important;
+    background: rgba(5, 25, 43, 0.78) !important;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.32) !important;
+    backdrop-filter: blur(8px);
+  }
+
+  .patrocinadores-banner-contenido small {
+    font-size: 0.64rem !important;
+    letter-spacing: 0.13em !important;
+  }
+
+  .patrocinadores-banner-contenido h2 {
+    margin: 4px 0 !important;
+    font-size: clamp(1.05rem, 1.8vw, 1.45rem) !important;
+    line-height: 1.1 !important;
+  }
+
+  .patrocinadores-banner-contenido p {
+    margin: 5px 0 0 !important;
+    font-size: 0.78rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .patrocinadores-banner-contenido span {
+    margin-top: 7px !important;
+    padding: 6px 11px !important;
+    font-size: 0.7rem !important;
+  }
+}
+
+/* BANNER PUBLICITARIO A TODO EL ANCHO */
+@media (min-width: 701px) {
+  .patrocinadores {
+    width: calc(100% - 32px) !important;
+    max-width: none !important;
+  }
+
+  .patrocinadores-banner-fondo {
+    position: absolute;
+    z-index: 0;
+    inset: -20px;
+    background-position: center;
+    background-size: cover;
+    filter: blur(16px) brightness(0.6);
+    transform: scale(1.08);
+  }
+
+  .patrocinadores-banner img.patrocinadores-banner-imagen {
+    position: absolute !important;
+    z-index: 1 !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  .patrocinadores-banner-sombra {
+    z-index: 2 !important;
+  }
+
+  .patrocinadores-banner-contenido {
+    z-index: 3 !important;
+  }
+}
+
+/* AMPLIAR LIGERAMENTE LA PUBLICIDAD CENTRAL */
+@media (min-width: 701px) {
+  .patrocinadores-banner img.patrocinadores-banner-imagen {
+    transform: scale(1.16) !important;
+    transform-origin: center center !important;
+  }
+}

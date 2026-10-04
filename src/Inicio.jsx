@@ -268,6 +268,36 @@ async function eliminarProducto(producto) {
 useEffect(() => {
   loadProductos()
 }, [])
+async function compartirApp() {
+  const enlace =
+    'https://alwinkcap-bit.github.io/generales-baseball-app/'
+
+  const datos = {
+    title: 'Generales de Chitré Baseball Academy',
+    text:
+      '⚾ Conoce la app oficial de Generales de Chitré. ' +
+      'Un equipo, una familia, un legado.\n\n' +
+      enlace,
+    url: enlace
+  }
+
+  if (navigator.share) {
+    try {
+      await navigator.share(datos)
+      return
+    } catch (error) {
+      if (error.name === 'AbortError') return
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(enlace)
+    window.alert('Enlace copiado correctamente.')
+  } catch {
+    window.prompt('Copia el enlace:', enlace)
+  }
+}
+
 const responderReto = (opcionElegida) => {
   if (opcionElegida === preguntasReto[preguntaActual].correcta) {
     setRespuestasCorrectas((total) => total + 1);
@@ -294,6 +324,25 @@ const responderReto = (opcionElegida) => {
           </div>
         </div>
         <div className="inicio-avisos-contenedor">
+          <button
+            type="button"
+            className="inicio-compartir"
+            onClick={compartirApp}
+            aria-label="Compartir la aplicación"
+            title="Compartir la app"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              className="inicio-compartir-icono"
+            >
+              <path
+                d="M18 16.1c-.76 0-1.44.3-1.96.77L8.91 12.7a3.2 3.2 0 0 0 0-1.4l7.05-4.13A3 3 0 1 0 15 5c0 .23.03.46.08.67L8.03 9.8a3 3 0 1 0 0 4.4l7.12 4.17A3 3 0 1 0 18 16.1Z"
+                fill="currentColor"
+              />
+            </svg>
+            <strong>Compartir</strong>
+          </button>
           <button
             type="button"
             className={`inicio-notificacion ${
@@ -389,15 +438,7 @@ const responderReto = (opcionElegida) => {
 
       <main>
         <section className="inicio-hero">
-  <div
-    className="inicio-generales-marca"
-    aria-label="Generales Baseball Academy"
-  >
-    <span>GENERALES</span>
-    <small>BASEBALL ACADEMY</small>
-  </div>
-
-  <div className="inicio-hero-contenido">
+<div className="inicio-hero-contenido">
             <span className="inicio-etiqueta">FORMANDO FUTUROS CAMPEONES</span>
             <h1>
               GENERALES DE CHITRÉ<br />
@@ -705,19 +746,6 @@ const responderReto = (opcionElegida) => {
   </div>
 
   <div className="inicio-servicios-grid">
-    <button
-      type="button"
-      className="inicio-servicio-card servicio-tienda"
-      onClick={() => setTiendaOpen(true)}
-    >
-      <span className="inicio-servicio-icono">🛍️</span>
-      <span>
-        <strong>Tienda Generales</strong>
-        <small>Productos oficiales de la Academia</small>
-      </span>
-      <b>›</b>
-    </button>
-
     <button
       type="button"
       className="inicio-servicio-card servicio-entrenadores"

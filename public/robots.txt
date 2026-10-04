@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alwinkcap-bit.github.io/generales-baseball-app/sitemap.xml

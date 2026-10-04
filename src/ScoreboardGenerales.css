@@ -2537,3 +2537,97 @@
   left: 126px !important;
   right: auto !important;
 }
+
+/* AJUSTE MANUAL DE CORREDORES */
+.scoreboard-corredores-manual {
+  width: min(100%, 620px);
+  margin: 20px auto;
+  padding: 16px;
+  border: 1px solid rgba(255, 184, 0, 0.55);
+  border-radius: 16px;
+  background: rgba(5, 27, 45, 0.88);
+}
+
+.scoreboard-corredores-manual > small {
+  display: block;
+  margin-bottom: 12px;
+  color: #ffbd19;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-align: center;
+}
+
+.scoreboard-corredores-manual > p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  text-align: center;
+}
+
+.scoreboard-corredor-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.scoreboard-corredor-fila:last-child {
+  border-bottom: 0;
+}
+
+.scoreboard-corredor-fila > strong {
+  color: #ffffff;
+  font-size: 0.86rem;
+}
+
+.scoreboard-corredor-fila > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.scoreboard-corredor-fila button {
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid #ffb800;
+  border-radius: 9px;
+  color: #ffffff;
+  background: #0b3554;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.scoreboard-corredor-fila button.anotar {
+  color: #052418;
+  border-color: #51e39b;
+  background: #51e39b;
+}
+
+.scoreboard-corredor-fila button.retirar {
+  color: #ffffff;
+  border-color: #e35a5a;
+  background: #a52828;
+}
+
+.scoreboard-corredor-fila button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .scoreboard-corredor-fila {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .scoreboard-corredor-fila > div {
+    justify-content: flex-start;
+  }
+
+  .scoreboard-corredor-fila button {
+    flex: 1;
+  }
+}

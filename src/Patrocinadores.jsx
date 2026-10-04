@@ -231,7 +231,16 @@ export default function Patrocinadores({ isAdmin }) {
             target={destacadoActual.enlace ? '_blank' : undefined}
             rel="noreferrer"
           >
+            <div
+              className="patrocinadores-banner-fondo"
+              aria-hidden="true"
+              style={{
+                backgroundImage: `url(${destacadoActual.banner_url})`
+              }}
+            ></div>
+
             <img
+              className="patrocinadores-banner-imagen"
               src={destacadoActual.banner_url}
               alt={`Publicidad de ${destacadoActual.nombre}`}
             />
