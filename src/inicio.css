@@ -6737,3 +6737,66 @@ body:has(.agenda-editor-fondo) nav.inicio-nav {
     min-height: 38px !important;
   }
 }
+
+
+/* CORRECCIÓN FINAL DEL PRIMER BOTÓN DE LA CABECERA */
+.inicio-app .inicio-header
+.inicio-avisos-contenedor > button:first-child {
+  width: 46px !important;
+  min-width: 46px !important;
+  max-width: 46px !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  gap: 0 !important;
+  border: 1px solid #ffe68d !important;
+  border-radius: 50% !important;
+  color: #08263e !important;
+  background: linear-gradient(
+    145deg,
+    #ffe476 0%,
+    #f3ba34 48%,
+    #d99208 100%
+  ) !important;
+  box-shadow:
+    0 7px 15px rgba(0, 0, 0, 0.34),
+    inset 0 2px rgba(255, 255, 255, 0.5),
+    inset 0 -3px rgba(112, 62, 0, 0.2) !important;
+}
+
+.inicio-app .inicio-header
+.inicio-avisos-contenedor > button:first-child::before,
+.inicio-app .inicio-header
+.inicio-avisos-contenedor > button:first-child::after {
+  display: none !important;
+  content: none !important;
+}
+
+.inicio-app .inicio-header
+.inicio-avisos-contenedor > button:first-child
+.inicio-descarga-icono {
+  width: 23px !important;
+  height: 23px !important;
+  margin: 0 !important;
+  color: #08263e !important;
+}
+
+@media (max-width: 600px) {
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button:first-child {
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button:first-child
+  .inicio-descarga-icono {
+    width: 21px !important;
+    height: 21px !important;
+  }
+}
