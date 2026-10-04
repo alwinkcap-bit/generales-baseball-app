@@ -16,6 +16,7 @@ import CentroPartidos from './CentroPartidos'
 import PartidosPublicos from './PartidosPublicos'
 import AgendaAcademia from './AgendaAcademia'
 import EstadisticasVisitas from './EstadisticasVisitas'
+import InstalarApp from './InstalarApp'
 
 import Patrocinadores from './Patrocinadores'
 
@@ -605,6 +606,7 @@ const responderReto = (opcionElegida) => {
         )}
 
         <section className="inicio-panel-rapido" aria-label="Accesos principales">
+          <InstalarApp />
           <button type="button" onClick={() => setProgramasOpen(true)}>
             <span className="inicio-panel-icono">⚾</span>
             <strong>Programas</strong>
