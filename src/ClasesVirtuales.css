@@ -1,0 +1,143 @@
+.clases-fondo {
+  position: fixed;
+  z-index: 99999;
+  inset: 0;
+  padding: 20px;
+  overflow-y: auto;
+  color: white;
+  background: rgba(0, 8, 17, 0.94);
+  backdrop-filter: blur(10px);
+}
+
+.clases-ventana {
+  width: min(1050px, 100%);
+  min-height: calc(100vh - 40px);
+  margin: auto;
+  overflow: hidden;
+  border: 1px solid rgba(243, 184, 59, 0.6);
+  border-radius: 25px;
+  background:
+    radial-gradient(circle at top right, rgba(243,184,59,.18), transparent 30%),
+    linear-gradient(145deg, #103b60, #06192c 60%, #020c16);
+  box-shadow: 0 30px 80px rgba(0,0,0,.65);
+}
+
+.clases-header {
+  padding: 25px 30px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 2px solid #f3b83b;
+}
+
+.clases-header small {
+  color: #f3b83b;
+  font-weight: 900;
+  letter-spacing: .15em;
+}
+
+.clases-header h2 {
+  margin: 7px 0;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.clases-header p {
+  margin: 0;
+  color: rgba(255,255,255,.7);
+}
+
+.clases-header > button {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border: 1px solid #f3b83b;
+  border-radius: 50%;
+  color: white;
+  background: #0d3657;
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
+.clases-grid {
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 17px;
+}
+
+.clases-grid article {
+  min-height: 245px;
+  padding: 21px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(243,184,59,.3);
+  border-radius: 20px;
+  background: linear-gradient(145deg, #17486f, #071d32);
+  box-shadow: 0 15px 30px rgba(0,0,0,.3);
+}
+
+.clases-grid article > small {
+  color: #f3b83b;
+  font-weight: 900;
+}
+
+.clases-grid article > span {
+  margin: 18px 0 10px;
+  font-size: 2.7rem;
+}
+
+.clases-grid h3 {
+  margin: 0;
+}
+
+.clases-grid p {
+  flex: 1;
+  color: rgba(255,255,255,.7);
+  line-height: 1.45;
+}
+
+.clases-grid button {
+  padding: 11px 14px;
+  border: 1px solid #ffe17c;
+  border-radius: 11px;
+  color: #08263e;
+  background: linear-gradient(145deg, #ffe476, #e6a51a);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .clases-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .clases-fondo {
+    padding: 0;
+  }
+
+  .clases-ventana {
+    min-height: 100vh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .clases-header {
+    padding: 18px 15px;
+  }
+
+  .clases-header h2 {
+    font-size: 1.55rem;
+  }
+
+  .clases-grid {
+    padding: 18px 13px 30px;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .clases-grid article {
+    min-height: 210px;
+  }
+}

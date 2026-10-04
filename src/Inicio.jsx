@@ -16,6 +16,7 @@ import CentroPartidos from './CentroPartidos'
 import PartidosPublicos from './PartidosPublicos'
 import AgendaAcademia from './AgendaAcademia'
 import EstadisticasVisitas from './EstadisticasVisitas'
+import ClasesVirtuales from './ClasesVirtuales'
 import InstalarApp from './InstalarApp'
 
 import Patrocinadores from './Patrocinadores'
@@ -39,6 +40,7 @@ export default function Inicio({
   const [bateoRetroOpen, setBateoRetroOpen] = useState(false)
   const [retoDigitalOpen, setRetoDigitalOpen] = useState(false)
   const [juegosOpen, setJuegosOpen] = useState(false)
+  const [clasesVirtualesOpen, setClasesVirtualesOpen] = useState(false)
   const [scoreboardOpen, setScoreboardOpen] = useState(false)
   const [centroPartidosOpen, setCentroPartidosOpen] = useState(false)
   const [partidosPublicosOpen, setPartidosPublicosOpen] = useState(false)
@@ -55,6 +57,7 @@ export default function Inicio({
     bateoRetroOpen ||
     retoDigitalOpen ||
     juegosOpen ||
+    clasesVirtualesOpen ||
     scoreboardOpen ||
     centroPartidosOpen ||
     partidosPublicosOpen
@@ -608,6 +611,15 @@ const responderReto = (opcionElegida) => {
         )}
 
         <section className="inicio-panel-rapido" aria-label="Accesos principales">
+          <button
+            type="button"
+            onClick={() => setClasesVirtualesOpen(true)}
+          >
+            <span className="inicio-panel-icono">▶</span>
+            <strong>Clases virtuales</strong>
+            <b>›</b>
+          </button>
+
           <button type="button" onClick={() => setProgramasOpen(true)}>
             <span className="inicio-panel-icono">⚾</span>
             <strong>Programas</strong>
@@ -650,6 +662,12 @@ const responderReto = (opcionElegida) => {
             <b>›</b>
           </button>
         </section>
+
+        {clasesVirtualesOpen && (
+          <ClasesVirtuales
+            onCerrar={() => setClasesVirtualesOpen(false)}
+          />
+        )}
 
         <AgendaAcademia isAdmin={isAdmin} />
         <EstadisticasVisitas isAdmin={isAdmin} />
