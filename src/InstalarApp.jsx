@@ -31,7 +31,7 @@ export default function InstalarApp() {
 
       if (navegadorInterno) {
         alert(
-          'Abre esta página en Chrome o Safari y vuelve a tocar Instalar app.'
+          'Abre esta página en Chrome o Safari y vuelve a tocar el icono de descarga.'
         )
       } else if (esIOS) {
         alert(
@@ -55,25 +55,19 @@ export default function InstalarApp() {
       type="button"
       className="inicio-instalar-cabecera"
       onClick={instalar}
-      aria-label="Instalar la aplicación"
-      title="Instalar aplicación"
+      aria-label="Descargar la aplicación"
+      title="Descargar aplicación"
     >
-      <span className="inicio-instalar-texto">
-        <small>DESCARGAR</small>
-        <strong>APP</strong>
-      </span>
-
-      <span
-        className="inicio-instalar-flecha"
+      <svg
+        viewBox="0 0 24 24"
         aria-hidden="true"
+        className="inicio-descarga-icono"
       >
-        <svg viewBox="0 0 24 24">
-          <path
-            d="M11 3h2v10.2l3.6-3.6 1.4 1.4-6 6-6-6 1.4-1.4 3.6 3.6V3Zm-5 16h12v2H6v-2Z"
-            fill="currentColor"
-          />
-        </svg>
-      </span>
+        <path
+          d="M11 3h2v10.1l3.5-3.5 1.5 1.5-6 6-6-6 1.5-1.5 3.5 3.5V3Zm-5 16h12v2H6v-2Z"
+          fill="currentColor"
+        />
+      </svg>
     </button>
   )
 }

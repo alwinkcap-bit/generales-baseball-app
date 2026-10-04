@@ -6256,3 +6256,196 @@ body:has(.agenda-editor-fondo) nav.inicio-nav {
     flex-basis: 32px !important;
   }
 }
+
+/* NOMBRE DE LA ACADEMIA EN TRES LÍNEAS */
+.inicio-app .inicio-header .inicio-marca > div {
+  gap: 1px !important;
+}
+
+.inicio-app .inicio-header .inicio-marca span {
+  color: #ffffff !important;
+  font-weight: 950 !important;
+  line-height: 1 !important;
+}
+
+.inicio-app .inicio-header .inicio-marca-chitre {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #ffffff !important;
+  background: transparent !important;
+  font-size: 0.68rem !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.055em !important;
+  white-space: nowrap !important;
+}
+
+.inicio-app .inicio-header .inicio-marca strong {
+  color: #ffd447 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 600px) {
+  .inicio-app .inicio-header .inicio-marca span {
+    font-size: 0.61rem !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca-chitre {
+    font-size: 0.5rem !important;
+    letter-spacing: 0.045em !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca strong {
+    font-size: 0.43rem !important;
+    letter-spacing: 0.01em !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .inicio-app .inicio-header .inicio-marca span {
+    font-size: 0.56rem !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca-chitre {
+    font-size: 0.46rem !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca strong {
+    display: block !important;
+    font-size: 0.38rem !important;
+  }
+}
+
+/* ===== TRES ICONOS REDONDOS EN LA CABECERA ===== */
+.inicio-app .inicio-header .inicio-avisos-contenedor {
+  width: 160px !important;
+  min-width: 160px !important;
+  max-width: 160px !important;
+  height: 48px !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, 48px) !important;
+  grid-template-rows: 48px !important;
+  align-items: center !important;
+  justify-content: end !important;
+  gap: 8px !important;
+}
+
+.inicio-app .inicio-header .inicio-instalar-cabecera {
+  position: relative !important;
+  inset: auto !important;
+  width: 48px !important;
+  min-width: 48px !important;
+  max-width: 48px !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: visible !important;
+  border: 1px solid #ffe280 !important;
+  border-radius: 50% !important;
+  color: #08263e !important;
+  background:
+    linear-gradient(
+      145deg,
+      #ffe370,
+      #e8a718
+    ) !important;
+  box-shadow:
+    0 7px 15px rgba(0, 0, 0, 0.34),
+    inset 0 2px rgba(255, 255, 255, 0.45),
+    inset 0 -3px rgba(122, 72, 0, 0.18) !important;
+  transform: none !important;
+  cursor: pointer !important;
+}
+
+.inicio-app .inicio-header .inicio-instalar-cabecera::after {
+  display: none !important;
+  content: none !important;
+}
+
+.inicio-app .inicio-header .inicio-instalar-cabecera:hover {
+  transform: translateY(-2px) !important;
+  box-shadow:
+    0 10px 19px rgba(0, 0, 0, 0.4),
+    inset 0 2px rgba(255, 255, 255, 0.5),
+    0 0 14px rgba(255, 205, 55, 0.3) !important;
+}
+
+.inicio-descarga-icono {
+  display: block !important;
+  width: 25px !important;
+  height: 25px !important;
+  color: #08263e !important;
+  filter: drop-shadow(
+    0 1px rgba(255, 255, 255, 0.35)
+  );
+}
+
+@media (max-width: 600px) {
+  .inicio-app .inicio-header {
+    grid-template-columns: minmax(0, 1fr) 132px !important;
+    gap: 6px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-avisos-contenedor {
+    width: 132px !important;
+    min-width: 132px !important;
+    max-width: 132px !important;
+    height: 40px !important;
+    grid-template-columns: repeat(3, 40px) !important;
+    grid-template-rows: 40px !important;
+    gap: 6px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-instalar-cabecera,
+  .inicio-app .inicio-header .inicio-compartir,
+  .inicio-app .inicio-header .inicio-notificacion {
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .inicio-descarga-icono {
+    width: 22px !important;
+    height: 22px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .inicio-app .inicio-header {
+    grid-template-columns: minmax(0, 1fr) 120px !important;
+    gap: 4px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-avisos-contenedor {
+    width: 120px !important;
+    min-width: 120px !important;
+    max-width: 120px !important;
+    height: 38px !important;
+    grid-template-columns: repeat(3, 38px) !important;
+    grid-template-rows: 38px !important;
+    gap: 3px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-instalar-cabecera,
+  .inicio-app .inicio-header .inicio-compartir,
+  .inicio-app .inicio-header .inicio-notificacion {
+    width: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+  }
+
+  .inicio-descarga-icono {
+    width: 21px !important;
+    height: 21px !important;
+  }
+}

@@ -351,7 +351,8 @@ const responderReto = (opcionElegida) => {
             className="inicio-marca-logo"
           />
           <div>
-            <span>GENERALES DE CHITRÉ</span>
+            <span>GENERALES</span>
+            <b className="inicio-marca-chitre">DE CHITRÉ</b>
             <strong>BASEBALL ACADEMY</strong>
           </div>
         </div>
