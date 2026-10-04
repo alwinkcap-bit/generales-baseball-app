@@ -6568,3 +6568,172 @@ body:has(.agenda-editor-fondo) nav.inicio-nav {
     min-height: 38px !important;
   }
 }
+
+
+/* ===== CABECERA DEFINITIVA: DESCARGAR, COMPARTIR Y AVISOS ===== */
+.inicio-app .inicio-header .inicio-avisos-contenedor {
+  width: 158px !important;
+  min-width: 158px !important;
+  max-width: 158px !important;
+  height: 46px !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, 46px) !important;
+  grid-template-rows: 46px !important;
+  align-items: center !important;
+  justify-content: end !important;
+  gap: 10px !important;
+  flex: 0 0 158px !important;
+  position: relative !important;
+}
+
+/* Los tres botones tendrán exactamente el mismo tamaño */
+.inicio-app .inicio-header .inicio-instalar-cabecera,
+.inicio-app .inicio-header .inicio-compartir,
+.inicio-app .inicio-header .inicio-notificacion {
+  position: relative !important;
+  inset: auto !important;
+  width: 46px !important;
+  min-width: 46px !important;
+  max-width: 46px !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid #ffe68d !important;
+  border-radius: 50% !important;
+  color: #08263e !important;
+  background: linear-gradient(
+    145deg,
+    #ffe476 0%,
+    #f3ba34 48%,
+    #d99208 100%
+  ) !important;
+  box-shadow:
+    0 7px 15px rgba(0, 0, 0, 0.34),
+    inset 0 2px rgba(255, 255, 255, 0.5),
+    inset 0 -3px rgba(112, 62, 0, 0.2) !important;
+  transform: none !important;
+  overflow: visible !important;
+}
+
+/* Quitar textos que provocaban que Compartir se cortara */
+.inicio-app .inicio-header .inicio-compartir > strong,
+.inicio-app .inicio-header .inicio-instalar-cabecera > strong {
+  display: none !important;
+}
+
+/* Eliminar decoraciones anteriores del botón de descarga */
+.inicio-app .inicio-header .inicio-instalar-cabecera::before,
+.inicio-app .inicio-header .inicio-instalar-cabecera::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Tamaño uniforme de los iconos */
+.inicio-app .inicio-header .inicio-descarga-icono,
+.inicio-app .inicio-header .inicio-compartir-icono {
+  width: 23px !important;
+  height: 23px !important;
+  margin: 0 !important;
+  color: #08263e !important;
+}
+
+.inicio-app .inicio-header .inicio-campana-icono {
+  display: block !important;
+  font-size: 1.35rem !important;
+  line-height: 1 !important;
+}
+
+/* Contador de notificaciones */
+.inicio-app .inicio-header .inicio-campana-contador {
+  position: absolute !important;
+  top: -5px !important;
+  right: -4px !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+  border: 2px solid #08263e !important;
+  border-radius: 50% !important;
+  color: #ffffff !important;
+  background: #ef3340 !important;
+  font-size: 0.65rem !important;
+  font-weight: 900 !important;
+}
+
+/* Efecto profesional */
+.inicio-app .inicio-header .inicio-instalar-cabecera:hover,
+.inicio-app .inicio-header .inicio-compartir:hover,
+.inicio-app .inicio-header .inicio-notificacion:hover {
+  transform: translateY(-2px) !important;
+  filter: brightness(1.08) !important;
+}
+
+@media (max-width: 600px) {
+  .inicio-app .inicio-header {
+    grid-template-columns: minmax(0, 1fr) 136px !important;
+    gap: 8px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-avisos-contenedor {
+    width: 136px !important;
+    min-width: 136px !important;
+    max-width: 136px !important;
+    height: 40px !important;
+    grid-template-columns: repeat(3, 40px) !important;
+    grid-template-rows: 40px !important;
+    gap: 8px !important;
+    flex-basis: 136px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-instalar-cabecera,
+  .inicio-app .inicio-header .inicio-compartir,
+  .inicio-app .inicio-header .inicio-notificacion {
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-descarga-icono,
+  .inicio-app .inicio-header .inicio-compartir-icono {
+    width: 21px !important;
+    height: 21px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-campana-icono {
+    font-size: 1.2rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .inicio-app .inicio-header {
+    grid-template-columns: minmax(0, 1fr) 124px !important;
+    gap: 5px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-avisos-contenedor {
+    width: 124px !important;
+    min-width: 124px !important;
+    max-width: 124px !important;
+    height: 38px !important;
+    grid-template-columns: repeat(3, 38px) !important;
+    grid-template-rows: 38px !important;
+    gap: 5px !important;
+    flex-basis: 124px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-instalar-cabecera,
+  .inicio-app .inicio-header .inicio-compartir,
+  .inicio-app .inicio-header .inicio-notificacion {
+    width: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+  }
+}

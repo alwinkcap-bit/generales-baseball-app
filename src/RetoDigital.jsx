@@ -561,7 +561,7 @@ export default function RetoDigital({ onCerrar }) {
   const [aciertos, setAciertos] = useState(0)
   const [seleccionada, setSeleccionada] = useState(null)
   const [terminado, setTerminado] = useState(false)
-  const [tiempo, setTiempo] = useState(10)
+  const [tiempo, setTiempo] = useState(20)
 
   const preguntas = useMemo(
     () => (nivel ? generarNivel(nivel) : []),
@@ -576,7 +576,7 @@ export default function RetoDigital({ onCerrar }) {
     setAciertos(0)
     setSeleccionada(null)
     setTerminado(false)
-    setTiempo(10)
+    setTiempo(20)
   }
 
   function responder(indice) {
@@ -611,7 +611,7 @@ export default function RetoDigital({ onCerrar }) {
       setAciertos(nuevosAciertos)
       setPreguntaActual((actual) => actual + 1)
       setSeleccionada(null)
-      setTiempo(10)
+      setTiempo(20)
     }, 750)
   }
 
@@ -769,7 +769,7 @@ export default function RetoDigital({ onCerrar }) {
             >
               <i
                 style={{
-                  width: `${tiempo * 10}%`
+                  width: `${(tiempo / 20) * 100}%`
                 }}
               ></i>
             </div>
