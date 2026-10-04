@@ -356,6 +356,7 @@ const responderReto = (opcionElegida) => {
           </div>
         </div>
         <div className="inicio-avisos-contenedor">
+          <InstalarApp />
           <button
             type="button"
             className="inicio-compartir"
@@ -606,7 +607,6 @@ const responderReto = (opcionElegida) => {
         )}
 
         <section className="inicio-panel-rapido" aria-label="Accesos principales">
-          <InstalarApp />
           <button type="button" onClick={() => setProgramasOpen(true)}>
             <span className="inicio-panel-icono">⚾</span>
             <strong>Programas</strong>
