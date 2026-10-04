@@ -5380,3 +5380,38 @@ body:has(.agenda-editor-fondo) nav.inicio-nav {
     height: 22px;
   }
 }
+
+
+/* CABECERA: INSTALAR + COMPARTIR + AVISOS */
+.inicio-app .inicio-header .inicio-avisos-contenedor {
+  min-width: 160px !important;
+  flex: 0 0 160px !important;
+  grid-template-columns: 48px 48px 48px !important;
+  grid-template-rows: 48px !important;
+  gap: 8px !important;
+}
+
+.inicio-instalar-cabecera {
+  color: #ffffff !important;
+  border-color: #65d8ff !important;
+  background:
+    linear-gradient(145deg, #168bd1, #07588d) !important;
+  box-shadow:
+    0 7px 16px rgba(0, 0, 0, 0.32),
+    inset 0 1px rgba(255, 255, 255, 0.25),
+    0 0 14px rgba(50, 196, 255, 0.28) !important;
+}
+
+.inicio-instalar-cabecera .inicio-compartir-icono {
+  color: #ffffff !important;
+}
+
+@media (max-width: 600px) {
+  .inicio-app .inicio-header .inicio-avisos-contenedor {
+    min-width: 154px !important;
+    flex-basis: 154px !important;
+    grid-template-columns: 46px 46px 46px !important;
+    grid-template-rows: 46px !important;
+    gap: 8px !important;
+  }
+}
