@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import preguntasBasicas from './PreguntasReto'
 import preguntasRetoNiveles11a20 from './PreguntasRetoNiveles11a20'
+import preguntasRetoNivel21 from './PreguntasRetoNivel21'
 import './RetoDigital.css'
 
 const reglasIntermedias = [
@@ -452,6 +453,10 @@ function generarPreguntaGrandesLigas(nivel, indice) {
 }
 
 function generarNivel(nivel) {
+  if (nivel === 21) {
+    return preguntasRetoNivel21
+  }
+
   if (nivel >= 11 && nivel <= 20) {
     const inicio = (nivel - 11) * 10
 
