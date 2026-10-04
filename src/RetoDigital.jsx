@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import preguntasBasicas from './PreguntasReto'
+import preguntasRetoNiveles11a20 from './PreguntasRetoNiveles11a20'
 import './RetoDigital.css'
 
 const reglasIntermedias = [
@@ -451,6 +452,15 @@ function generarPreguntaGrandesLigas(nivel, indice) {
 }
 
 function generarNivel(nivel) {
+  if (nivel >= 11 && nivel <= 20) {
+    const inicio = (nivel - 11) * 10
+
+    return preguntasRetoNiveles11a20.slice(
+      inicio,
+      inicio + 10
+    )
+  }
+
   return Array.from({ length: 10 }, (_, indice) => {
     if (nivel <= 20) {
       const posicion = (nivel - 1) * 10 + indice
@@ -799,6 +809,16 @@ export default function RetoDigital({ onCerrar }) {
                 }
               )}
             </div>
+
+            {seleccionada !== null &&
+              preguntas[preguntaActual].explicacion && (
+                <div className="reto-digital-explicacion">
+                  <strong>Explicación</strong>
+                  <p>
+                    {preguntas[preguntaActual].explicacion}
+                  </p>
+                </div>
+              )}
           </div>
         )}
       </section>

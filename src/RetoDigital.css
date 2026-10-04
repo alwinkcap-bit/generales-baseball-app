@@ -367,3 +367,33 @@
   background: linear-gradient(90deg, #ff9b42, #ff304f);
   box-shadow: 0 0 16px rgba(255, 48, 79, 0.8);
 }
+
+/* EXPLICACIÓN DE LA RESPUESTA */
+.reto-digital-explicacion {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border: 1px solid rgba(244, 189, 43, 0.55);
+  border-radius: 14px;
+  color: #ffffff;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(244, 189, 43, 0.16),
+      rgba(7, 26, 43, 0.94)
+    );
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+}
+
+.reto-digital-explicacion strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #f4bd2b;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.reto-digital-explicacion p {
+  margin: 0;
+  line-height: 1.5;
+}
