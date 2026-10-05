@@ -613,11 +613,29 @@ const responderReto = (opcionElegida) => {
         <section className="inicio-panel-rapido" aria-label="Accesos principales">
           <button
             type="button"
-            onClick={() => setClasesVirtualesOpen(true)}
+            className={
+              isAdmin
+                ? 'inicio-clases-autorizadas'
+                : 'inicio-clases-bloqueadas'
+            }
+            onClick={() => {
+              if (isAdmin) {
+                setClasesVirtualesOpen(true)
+              } else {
+                window.alert(
+                  'Acceso exclusivo para administradores y usuarios autorizados.'
+                )
+                onAdmin()
+              }
+            }}
           >
-            <span className="inicio-panel-icono">▶</span>
+            <span className="inicio-panel-icono">
+              {isAdmin ? '▶' : '🔒'}
+            </span>
+
             <strong>Clases virtuales</strong>
-            <b>›</b>
+
+            <b>{isAdmin ? '›' : '🔒'}</b>
           </button>
 
           <button type="button" onClick={() => setProgramasOpen(true)}>
@@ -663,7 +681,7 @@ const responderReto = (opcionElegida) => {
           </button>
         </section>
 
-        {clasesVirtualesOpen && (
+        {clasesVirtualesOpen && isAdmin && (
           <ClasesVirtuales
             onCerrar={() => setClasesVirtualesOpen(false)}
           />
