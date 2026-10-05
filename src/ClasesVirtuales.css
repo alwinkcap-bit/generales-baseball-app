@@ -805,3 +805,125 @@
     object-fit: cover;
   }
 }
+
+
+/* ===== CLASE 4: PEQUEÑOS GIGANTES ===== */
+.clase-portada-pequenos {
+  background:
+    radial-gradient(circle at 88% 18%, rgba(255,220,75,.35), transparent 30%),
+    radial-gradient(circle at 15% 90%, rgba(70,177,255,.22), transparent 35%),
+    linear-gradient(135deg, #17618b, #082b4a 55%, #061726);
+}
+
+.clase-aviso-adulto {
+  border: 2px solid rgba(84,204,255,.55);
+  background:
+    linear-gradient(145deg, rgba(31,116,160,.4), rgba(7,29,50,.94));
+}
+
+.clase-materiales {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 11px;
+}
+
+.clase-materiales article {
+  padding: 15px 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-align: center;
+  border: 1px solid rgba(243,184,59,.35);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #15466b, #071d32);
+}
+
+.clase-materiales span {
+  font-size: 2.2rem;
+}
+
+.clase-materiales strong {
+  color: #ffffff;
+}
+
+.clase-materiales small {
+  color: rgba(255,255,255,.72);
+  line-height: 1.4;
+}
+
+.clase-imagen-pequenos img {
+  aspect-ratio: 2.4 / 1;
+  object-fit: cover;
+}
+
+.clase-juego-infantil {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(243,184,59,.42);
+  background:
+    radial-gradient(circle at top right, rgba(243,184,59,.12), transparent 38%),
+    linear-gradient(145deg, #123e60, #071d32);
+}
+
+.clase-juego-infantil h4 {
+  color: #ffd65a;
+  font-size: 1.25rem;
+}
+
+.clase-sonido {
+  display: block;
+  width: fit-content;
+  margin-top: 15px;
+  padding: 10px 15px;
+  border-radius: 999px;
+  color: #08263e;
+  background: linear-gradient(145deg, #ffe476, #e6a51a);
+  box-shadow: 0 7px 16px rgba(0,0,0,.25);
+}
+
+.clase-estrella {
+  border: 2px solid #f3b83b;
+  text-align: center;
+  background:
+    radial-gradient(circle at center, rgba(243,184,59,.2), transparent 60%),
+    linear-gradient(145deg, #164b70, #071d32);
+}
+
+.clase-estrella h4 {
+  color: #ffd65a;
+  font-size: 1.35rem;
+}
+
+.clase-estrella strong {
+  display: block;
+  margin-top: 10px;
+  color: #ffd65a;
+}
+
+.clase-consejos-instructor {
+  border-style: dashed;
+}
+
+@media (max-width: 760px) {
+  .clase-materiales {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .clase-imagen-pequenos img {
+    aspect-ratio: auto;
+    min-height: 220px;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 420px) {
+  .clase-materiales {
+    grid-template-columns: 1fr;
+  }
+
+  .clase-juego-infantil h4 {
+    font-size: 1.12rem;
+  }
+}

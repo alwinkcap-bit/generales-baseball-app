@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import './ClasesVirtuales.css'
 import fildeoSecuencia from './public/clases/fildeo-secuencia.png'
 import bateoSecuencia from './public/clases/bateo-secuencia.png'
+import pequenosGigantes from './public/clases/pequenos-gigantes.png'
 
 const clases = [
   {
@@ -28,10 +29,10 @@ const clases = [
   },
   {
     id: 4,
-    icono: '🏃',
-    titulo: 'Corrido de bases',
-    descripcion: 'Recorrido, velocidad y seguridad.',
-    disponible: false
+    icono: '🌟',
+    titulo: 'Pequeños Gigantes',
+    descripcion: 'Clase especial de béisbol para niños de 4 a 6 años.',
+    disponible: true
   },
   {
     id: 5,
@@ -186,10 +187,56 @@ const preguntasClase3 = [
   }
 ]
 
+
+const preguntasClase4 = [
+  {
+    pregunta: '¿Cómo colocamos las piernas en la posición de gorila?',
+    opciones: [
+      'Juntas y rectas',
+      'Separadas y con las rodillas flexionadas',
+      'Sentados en el suelo'
+    ],
+    correcta: 1
+  },
+  {
+    pregunta: '¿Cuántas manos usamos para hacer la boca del caimán?',
+    opciones: ['Dos manos', 'Una mano', 'Ninguna mano'],
+    correcta: 0
+  },
+  {
+    pregunta: '¿Dónde debemos mirar cuando bateamos?',
+    opciones: [
+      'A la cámara',
+      'Al techo',
+      'A la pelota'
+    ],
+    correcta: 2
+  },
+  {
+    pregunta: '¿Qué hacemos con el bate antes de correr?',
+    opciones: [
+      'Lo dejamos con cuidado en el suelo',
+      'Lo lanzamos',
+      'Corremos con el bate'
+    ],
+    correcta: 0
+  },
+  {
+    pregunta: '¿Qué objeto puede representar la primera base?',
+    opciones: [
+      'Un vaso de vidrio',
+      'Un peluche o almohada',
+      'Una lámpara'
+    ],
+    correcta: 1
+  }
+]
+
 const preguntasPorClase = {
   1: preguntasClase1,
   2: preguntasClase2,
-  3: preguntasClase3
+  3: preguntasClase3,
+  4: preguntasClase4
 }
 
 function obtenerCompletadas() {
@@ -821,6 +868,223 @@ export default function ClasesVirtuales({ onCerrar }) {
                     </li>
                     <li>
                       Finaliza siempre con equilibrio.
+                    </li>
+                  </ul>
+                </section>
+              </>
+            ) : claseActiva.id === 4 ? (
+              <>
+                <section className="clase-portada clase-portada-pequenos">
+                  <span>🌟</span>
+                  <div>
+                    <small>CLASE 04 · EDADES DE 4 A 6 AÑOS</small>
+                    <h3>Pequeños Gigantes del Béisbol</h3>
+                    <p>
+                      Aprende jugando con historias, sonidos,
+                      movimientos y objetos seguros de casa.
+                    </p>
+                  </div>
+                </section>
+
+                <section className="clase-bloque clase-objetivo">
+                  <h4>🎯 Objetivo de la clase</h4>
+                  <p>
+                    Desarrollar coordinación, equilibrio, atrape,
+                    bateo y corrido de bases mediante juegos
+                    divertidos apropiados para niños de 4 a 6 años.
+                  </p>
+                </section>
+
+                <section className="clase-bloque clase-aviso-adulto">
+                  <h4>👨‍👩‍👧 Acompañamiento de un adulto</h4>
+                  <p>
+                    Un adulto debe acompañar al niño, despejar el
+                    área de práctica y ayudar a sostener el vaso o
+                    lanzar suavemente la pelota.
+                  </p>
+                </section>
+
+                <section className="clase-bloque">
+                  <h4>🎒 Materiales seguros</h4>
+
+                  <div className="clase-materiales">
+                    <article>
+                      <span>🧦</span>
+                      <strong>Pelota blanda</strong>
+                      <small>
+                        Pelota de esponja, tenis o medias enrolladas.
+                      </small>
+                    </article>
+
+                    <article>
+                      <span>🏏</span>
+                      <strong>Bate liviano</strong>
+                      <small>
+                        Bate plástico, tubo de cartón o escobillón.
+                      </small>
+                    </article>
+
+                    <article>
+                      <span>🥤</span>
+                      <strong>Soporte</strong>
+                      <small>
+                        Vaso plástico resistente o cono pequeño.
+                      </small>
+                    </article>
+
+                    <article>
+                      <span>🧸</span>
+                      <strong>Primera base</strong>
+                      <small>
+                        Peluche o almohada colocada a tres pasos.
+                      </small>
+                    </article>
+                  </div>
+                </section>
+
+                <section className="clase-bloque">
+                  <h4>⏱️ Clase divertida de 35 minutos</h4>
+
+                  <div className="clase-cronograma clase-cronograma-infantil">
+                    <article>
+                      <strong>7 min</strong>
+                      <span>Estatuas y superhéroes</span>
+                    </article>
+                    <article>
+                      <strong>10 min</strong>
+                      <span>La boca del caimán</span>
+                    </article>
+                    <article>
+                      <strong>10 min</strong>
+                      <span>El cohete al espacio</span>
+                    </article>
+                    <article>
+                      <strong>8 min</strong>
+                      <span>El corredor relámpago</span>
+                    </article>
+                  </div>
+                </section>
+
+                <section className="clase-bloque">
+                  <h4>Las cuatro estaciones de juego</h4>
+
+                  <figure className="clase-imagen-fildeo clase-imagen-pequenos">
+                    <img
+                      src={pequenosGigantes}
+                      alt="Cuatro juegos de béisbol para niños de 4 a 6 años"
+                    />
+                    <figcaption>
+                      Posición de gorila, boca del caimán,
+                      cohete al espacio y corredor relámpago.
+                    </figcaption>
+                  </figure>
+                </section>
+
+                <section className="clase-bloque clase-juego-infantil">
+                  <h4>🦸 1. Estatuas y superhéroes</h4>
+                  <p>
+                    Corre suavemente en el mismo lugar. Cuando el
+                    entrenador diga “¡Tiburón!”, detente como una
+                    estatua en posición de gorila:
+                  </p>
+                  <ul>
+                    <li>Pies abiertos.</li>
+                    <li>Rodillas flexionadas.</li>
+                    <li>Manos preparadas al frente.</li>
+                  </ul>
+                  <strong className="clase-sonido">
+                    ¡TIBURÓN! 🦈
+                  </strong>
+                </section>
+
+                <section className="clase-bloque clase-juego-infantil">
+                  <h4>🐊 2. La boca del caimán</h4>
+                  <p>
+                    El guante y la otra mano forman la boca de un
+                    caimán. Cuando llega la pelota, ambas manos se
+                    cierran cerca del pecho.
+                  </p>
+                  <ol>
+                    <li>Lanza suavemente la bola de medias.</li>
+                    <li>Sigue la pelota con los ojos.</li>
+                    <li>Atrápala con ambas manos.</li>
+                    <li>Intenta conseguir cinco atrapadas seguidas.</li>
+                  </ol>
+                  <strong className="clase-sonido">
+                    ¡CHOMP! 🐊
+                  </strong>
+                </section>
+
+                <section className="clase-bloque clase-juego-infantil">
+                  <h4>🚀 3. El cohete al espacio</h4>
+                  <p>
+                    Coloca una pelota blanda sobre un vaso plástico
+                    o cono. Separa los pies como un elefante y
+                    alinea los nudillos que tocan la puerta.
+                  </p>
+                  <ol>
+                    <li>Mira fijamente la pelota.</li>
+                    <li>Realiza un swing suave y controlado.</li>
+                    <li>Termina equilibrado.</li>
+                    <li>Celebra el lanzamiento del cohete.</li>
+                  </ol>
+                  <strong className="clase-sonido">
+                    ¡SWOOSH! ¡A LA LUNA! 🌙
+                  </strong>
+                </section>
+
+                <section className="clase-bloque clase-juego-infantil">
+                  <h4>⚡ 4. El corredor relámpago</h4>
+                  <p>
+                    Coloca un peluche a tres pasos. Realiza un
+                    swing imaginario, deja el bate cuidadosamente
+                    en el suelo y corre a tocar la primera base.
+                  </p>
+                  <strong className="clase-sonido">
+                    ¡RÁPIDO COMO UN RAYO! ⚡
+                  </strong>
+                </section>
+
+                <section className="clase-bloque clase-seguridad">
+                  <h4>🛡️ Reglas de seguridad</h4>
+                  <ul>
+                    <li>Practica siempre acompañado por un adulto.</li>
+                    <li>Usa únicamente pelotas y bates blandos.</li>
+                    <li>Retira muebles y objetos frágiles del área.</li>
+                    <li>No lances el bate después del swing.</li>
+                    <li>Espera la señal antes de comenzar.</li>
+                    <li>Detente inmediatamente si alguien se acerca.</li>
+                  </ul>
+                </section>
+
+                <section className="clase-bloque clase-actividad clase-estrella">
+                  <h4>⭐ Estrellita de la clase</h4>
+                  <p>
+                    Completa una posición de gorila, cinco atrapadas,
+                    tres swings suaves y una carrera a primera base.
+                  </p>
+                  <p>
+                    Finaliza con una porra:
+                    <strong>
+                      “¡Un equipo, una familia, un legado!”
+                    </strong>
+                  </p>
+                </section>
+
+                <section className="clase-bloque clase-consejos-instructor">
+                  <h4>📣 Consejos para el instructor</h4>
+                  <ul>
+                    <li>
+                      Habla con energía y utiliza sonidos divertidos.
+                    </li>
+                    <li>
+                      Felicita a cada niño por su nombre.
+                    </li>
+                    <li>
+                      Realiza pausas cortas para tomar agua.
+                    </li>
+                    <li>
+                      Prioriza la diversión sobre la perfección.
                     </li>
                   </ul>
                 </section>
