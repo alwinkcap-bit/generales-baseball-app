@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
 import './ClasesVirtuales.css'
+import fildeoSecuencia from './public/clases/fildeo-secuencia.png'
 
 const clases = [
   {
@@ -15,7 +16,7 @@ const clases = [
     icono: '🧤',
     titulo: 'Fildeo',
     descripcion: 'Posición básica, rodados y recepción.',
-    disponible: false
+    disponible: true
   },
   {
     id: 3,
@@ -47,7 +48,7 @@ const clases = [
   }
 ]
 
-const preguntas = [
+const preguntasClase1 = [
   {
     pregunta: '¿Cuál es el objetivo principal del equipo ofensivo?',
     opciones: [
@@ -87,6 +88,59 @@ const preguntas = [
   }
 ]
 
+const preguntasClase2 = [
+  {
+    pregunta: '¿Cuál es la posición correcta para esperar un roletazo?',
+    opciones: [
+      'Rodillas flexionadas y peso hacia adelante',
+      'Piernas juntas y cuerpo erguido',
+      'Sentado sobre los talones'
+    ],
+    correcta: 0
+  },
+  {
+    pregunta: '¿Qué representa el triángulo de fildeo?',
+    opciones: [
+      'La ubicación del lanzador',
+      'Los dos pies y el guante colocado al frente',
+      'Las tres bases del cuadro'
+    ],
+    correcta: 1
+  },
+  {
+    pregunta: '¿Cómo debe trabajar el guante al recibir el roletazo?',
+    opciones: [
+      'De arriba hacia abajo',
+      'De un lado hacia otro',
+      'De abajo hacia arriba'
+    ],
+    correcta: 2
+  },
+  {
+    pregunta: '¿Para qué se coloca la mano libre sobre el guante?',
+    opciones: [
+      'Para asegurar la pelota',
+      'Para esconder la pelota',
+      'Para cerrar los ojos'
+    ],
+    correcta: 0
+  },
+  {
+    pregunta: '¿Qué debe hacerse antes de lanzar a primera base?',
+    opciones: [
+      'Cruzar las piernas',
+      'Llevar la pelota al pecho y hacer el paso lateral',
+      'Lanzar desde el suelo'
+    ],
+    correcta: 1
+  }
+]
+
+const preguntasPorClase = {
+  1: preguntasClase1,
+  2: preguntasClase2
+}
+
 function obtenerCompletadas() {
   try {
     return JSON.parse(
@@ -106,6 +160,9 @@ export default function ClasesVirtuales({ onCerrar }) {
   const [completadas, setCompletadas] = useState(
     obtenerCompletadas
   )
+
+  const preguntas =
+    preguntasPorClase[claseActiva?.id] || []
 
   function abrirClase(clase) {
     if (!clase.disponible) {
@@ -153,8 +210,8 @@ export default function ClasesVirtuales({ onCerrar }) {
       aprobada
     })
 
-    if (aprobada && !completadas.includes(1)) {
-      const nuevasCompletadas = [...completadas, 1]
+    if (aprobada && !completadas.includes(claseActiva.id)) {
+      const nuevasCompletadas = [...completadas, claseActiva.id]
 
       setCompletadas(nuevasCompletadas)
 
@@ -262,6 +319,224 @@ export default function ClasesVirtuales({ onCerrar }) {
               ← Volver a todas las clases
             </button>
 
+            {claseActiva.id === 2 ? (
+              <>
+                <section className="clase-portada clase-portada-fildeo">
+                  <span>🧤</span>
+                  <div>
+                    <small>CLASE 02 · TÉCNICA DEFENSIVA</small>
+                    <h3>Fildeo de roletazos</h3>
+                    <p>
+                      Aprende la posición correcta, la recepción
+                      segura y la transición para realizar el tiro.
+                    </p>
+                  </div>
+                </section>
+
+                <section className="clase-bloque clase-objetivo">
+                  <h4>🎯 Objetivo de la clase</h4>
+                  <p>
+                    Al finalizar, el jugador podrá adoptar una
+                    posición de listo, atacar el roletazo, recibir
+                    la pelota con ambas manos y prepararse para
+                    realizar un tiro preciso.
+                  </p>
+                </section>
+
+                <section className="clase-bloque">
+                  <h4>⏱️ Plan de entrenamiento · 60 minutos</h4>
+
+                  <div className="clase-cronograma">
+                    <article>
+                      <strong>10 min</strong>
+                      <span>Calentamiento y movilidad</span>
+                    </article>
+                    <article>
+                      <strong>20 min</strong>
+                      <span>Explicación de la técnica</span>
+                    </article>
+                    <article>
+                      <strong>25 min</strong>
+                      <span>Ejercicios prácticos</span>
+                    </article>
+                    <article>
+                      <strong>5 min</strong>
+                      <span>Cierre y retroalimentación</span>
+                    </article>
+                  </div>
+                </section>
+
+                <section className="clase-bloque">
+                  <h4>1. Calentamiento y movilidad</h4>
+                  <ul>
+                    <li>
+                      Trote suave para activar el cuerpo.
+                    </li>
+                    <li>
+                      Movilidad de hombros, cadera, rodillas
+                      y tobillos.
+                    </li>
+                    <li>
+                      Desplazamientos laterales cortos manteniendo
+                      las rodillas flexionadas.
+                    </li>
+                  </ul>
+                </section>
+
+                <section className="clase-bloque">
+                  <h4>2. Los cuatro pasos del fildeo correcto</h4>
+
+                  <figure className="clase-imagen-fildeo">
+                    <img
+                      src={fildeoSecuencia}
+                      alt="Secuencia de cuatro pasos para fildear un roletazo"
+                    />
+                    <figcaption>
+                      Observa la secuencia completa antes de practicar.
+                    </figcaption>
+                  </figure>
+
+                  <div className="clase-pasos-fildeo">
+                    <article>
+                      <b>1</b>
+                      <div>
+                        <strong>Posición de listo</strong>
+                        <p>
+                          Separa los pies más que los hombros,
+                          flexiona las rodillas, inclina el cuerpo
+                          y mantén el peso sobre la parte delantera
+                          de los pies.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article>
+                      <b>2</b>
+                      <div>
+                        <strong>Ataque y triángulo de fildeo</strong>
+                        <p>
+                          Avanza con pasos cortos hacia la pelota.
+                          Los dos pies forman la base del triángulo
+                          y el guante es el vértice delantero.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article>
+                      <b>3</b>
+                      <div>
+                        <strong>Recepción con ambas manos</strong>
+                        <p>
+                          Coloca el guante en el suelo y recibe de
+                          abajo hacia arriba. La mano de lanzar se
+                          ubica encima como una tapa.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article>
+                      <b>4</b>
+                      <div>
+                        <strong>Transición y paso lateral</strong>
+                        <p>
+                          Lleva la pelota al centro del pecho y
+                          realiza un paso lateral hacia el objetivo
+                          antes de lanzar.
+                        </p>
+                      </div>
+                    </article>
+                  </div>
+
+                  <p className="clase-dato">
+                    💡 La pelota se fildea de abajo hacia arriba,
+                    nunca de arriba hacia abajo.
+                  </p>
+                </section>
+
+                <section className="clase-bloque">
+                  <h4>3. Ejercicios prácticos</h4>
+
+                  <div className="clase-drills">
+                    <article>
+                      <span>🤲</span>
+                      <div>
+                        <strong>Fildeo sin guante</strong>
+                        <p>
+                          Usa pelotas de tenis o goma y recibe
+                          roletazos suaves con ambas manos.
+                        </p>
+                        <small>
+                          OBJETIVO: suavidad y amortiguación.
+                        </small>
+                      </div>
+                    </article>
+
+                    <article>
+                      <span>🕒</span>
+                      <div>
+                        <strong>Reloj de fildeo</strong>
+                        <p>
+                          Desde las rodillas, recibe pelotas a la
+                          izquierda, al centro y a la derecha.
+                        </p>
+                        <small>
+                          OBJETIVO: manos correctas y guante abajo.
+                        </small>
+                      </div>
+                    </article>
+
+                    <article>
+                      <span>🔺</span>
+                      <div>
+                        <strong>Triángulo y embudo</strong>
+                        <p>
+                          Marca un triángulo con conos, recibe en
+                          la punta y lleva la pelota al pecho.
+                        </p>
+                        <small>
+                          OBJETIVO: punto exacto de recepción.
+                        </small>
+                      </div>
+                    </article>
+                  </div>
+                </section>
+
+                <section className="clase-bloque clase-seguridad">
+                  <h4>⚠️ Errores comunes</h4>
+                  <ul>
+                    <li>
+                      Esperar la pelota completamente erguido.
+                    </li>
+                    <li>
+                      Juntar demasiado los pies.
+                    </li>
+                    <li>
+                      Bajar el guante cuando la pelota ya está cerca.
+                    </li>
+                    <li>
+                      Recibir la pelota debajo del cuerpo.
+                    </li>
+                    <li>
+                      Lanzar sin orientar primero los pies.
+                    </li>
+                  </ul>
+                </section>
+
+                <section className="clase-bloque clase-actividad">
+                  <h4>✅ Cierre y retroalimentación</h4>
+                  <p>
+                    Cada jugador realiza cinco repeticiones. El
+                    entrenador corrige primero la postura, después
+                    la recepción y finalmente la transición al tiro.
+                  </p>
+                  <p>
+                    Termina preguntando: “¿El guante trabaja de
+                    abajo hacia arriba o de arriba hacia abajo?”
+                  </p>
+                </section>
+              </>
+            ) : (
+              <>
             <section className="clase-portada">
               <span>⚾</span>
               <div>
@@ -389,6 +664,9 @@ export default function ClasesVirtuales({ onCerrar }) {
                 </li>
               </ul>
             </section>
+
+              </>
+            )}
 
             <section className="clase-evaluacion">
               <header>

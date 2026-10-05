@@ -594,3 +594,165 @@
     padding: 15px 12px;
   }
 }
+
+
+/* ===== CLASE 2: FILDEO DE ROLETAZOS ===== */
+.clase-portada-fildeo {
+  background:
+    radial-gradient(circle at top right, rgba(243,184,59,.2), transparent 38%),
+    linear-gradient(135deg, #174a72, #06192c);
+}
+
+.clase-cronograma {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.clase-cronograma article {
+  padding: 16px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  text-align: center;
+  border: 1px solid rgba(243,184,59,.38);
+  border-radius: 14px;
+  background: rgba(5,26,44,.72);
+}
+
+.clase-cronograma strong {
+  color: #f3b83b;
+  font-size: 1.3rem;
+}
+
+.clase-cronograma span {
+  color: rgba(255,255,255,.82);
+  font-size: .82rem;
+  line-height: 1.35;
+}
+
+.clase-imagen-fildeo {
+  margin: 20px 0;
+  overflow: hidden;
+  border: 2px solid rgba(243,184,59,.65);
+  border-radius: 18px;
+  background: #06192c;
+  box-shadow: 0 15px 35px rgba(0,0,0,.38);
+}
+
+.clase-imagen-fildeo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.clase-imagen-fildeo figcaption {
+  padding: 11px 15px;
+  color: rgba(255,255,255,.76);
+  text-align: center;
+  font-size: .82rem;
+}
+
+.clase-pasos-fildeo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 13px;
+}
+
+.clase-pasos-fildeo article {
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid rgba(243,184,59,.28);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #123c5d, #071d32);
+}
+
+.clase-pasos-fildeo article > b {
+  width: 35px;
+  height: 35px;
+  flex: 0 0 35px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #08263e;
+  background: linear-gradient(145deg, #ffe476, #e6a51a);
+  font-size: 1.05rem;
+}
+
+.clase-pasos-fildeo strong {
+  color: #ffffff;
+}
+
+.clase-pasos-fildeo p {
+  margin: 6px 0 0;
+  color: rgba(255,255,255,.72);
+  line-height: 1.5;
+}
+
+.clase-drills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+  margin-top: 18px;
+}
+
+.clase-drills article {
+  padding: 17px;
+  border: 1px solid rgba(243,184,59,.28);
+  border-radius: 16px;
+  background: linear-gradient(145deg, #123c5d, #071d32);
+}
+
+.clase-drills article > span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 2rem;
+}
+
+.clase-drills strong {
+  color: #ffffff;
+}
+
+.clase-drills p {
+  color: rgba(255,255,255,.72);
+  line-height: 1.45;
+}
+
+.clase-drills small {
+  color: #f3b83b;
+  font-weight: 900;
+  line-height: 1.4;
+}
+
+@media (max-width: 760px) {
+  .clase-cronograma {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .clase-pasos-fildeo {
+    grid-template-columns: 1fr;
+  }
+
+  .clase-drills {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .clase-cronograma {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .clase-imagen-fildeo {
+    margin-inline: -10px;
+    border-radius: 12px;
+  }
+
+  .clase-pasos-fildeo article {
+    padding: 14px;
+  }
+}
