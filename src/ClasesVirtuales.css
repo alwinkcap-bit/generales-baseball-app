@@ -756,3 +756,52 @@
     padding: 14px;
   }
 }
+
+
+/* ===== CLASE 3: FUNDAMENTOS DEL BATEO ===== */
+.clase-portada-bateo {
+  background:
+    radial-gradient(circle at top right, rgba(255,220,94,.22), transparent 38%),
+    linear-gradient(135deg, #173f63, #061726);
+}
+
+.clase-imagen-bateo img {
+  aspect-ratio: 2.5 / 1;
+  object-fit: cover;
+  object-position: center;
+}
+
+.clase-pasos-bateo {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.clase-pasos-bateo article:last-child {
+  grid-column: 1 / -1;
+}
+
+.clase-tarea-bateo {
+  border-color: rgba(243,184,59,.58);
+  background:
+    radial-gradient(circle at top right, rgba(243,184,59,.16), transparent 45%),
+    linear-gradient(145deg, #143d5d, #071d32);
+}
+
+.clase-tarea-bateo h4 {
+  color: #f3b83b;
+}
+
+@media (max-width: 760px) {
+  .clase-pasos-bateo {
+    grid-template-columns: 1fr;
+  }
+
+  .clase-pasos-bateo article:last-child {
+    grid-column: auto;
+  }
+
+  .clase-imagen-bateo img {
+    aspect-ratio: auto;
+    min-height: 230px;
+    object-fit: cover;
+  }
+}

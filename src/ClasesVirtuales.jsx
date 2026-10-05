@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
 import './ClasesVirtuales.css'
 import fildeoSecuencia from './public/clases/fildeo-secuencia.png'
+import bateoSecuencia from './public/clases/bateo-secuencia.png'
 
 const clases = [
   {
@@ -23,7 +24,7 @@ const clases = [
     icono: '🏏',
     titulo: 'Bateo',
     descripcion: 'Agarre, postura, balance y coordinación.',
-    disponible: false
+    disponible: true
   },
   {
     id: 4,
@@ -136,9 +137,59 @@ const preguntasClase2 = [
   }
 ]
 
+
+const preguntasClase3 = [
+  {
+    pregunta: '¿Cómo deben mantenerse las manos al agarrar el bate?',
+    opciones: [
+      'Relajadas pero firmes',
+      'Totalmente sueltas',
+      'Apretadas con toda la fuerza'
+    ],
+    correcta: 0
+  },
+  {
+    pregunta: '¿Cómo debe ser la postura inicial del bateador?',
+    opciones: [
+      'Piernas juntas y rodillas rectas',
+      'Pies separados, rodillas flexionadas y equilibrio',
+      'Todo el peso sobre el pie delantero'
+    ],
+    correcta: 1
+  },
+  {
+    pregunta: '¿Cómo debe realizarse el paso hacia el lanzador?',
+    opciones: [
+      'Largo y con mucho peso',
+      'Saltando hacia adelante',
+      'Corto, suave y controlado'
+    ],
+    correcta: 2
+  },
+  {
+    pregunta: '¿Dónde debe producirse el contacto con la pelota?',
+    opciones: [
+      'Frente al plato',
+      'Detrás del cuerpo',
+      'Sobre la cabeza'
+    ],
+    correcta: 0
+  },
+  {
+    pregunta: '¿Qué debe hacer la cabeza durante el contacto?',
+    opciones: [
+      'Girar hacia el jardín',
+      'Mantenerse observando el punto de contacto',
+      'Mirar hacia el suelo'
+    ],
+    correcta: 1
+  }
+]
+
 const preguntasPorClase = {
   1: preguntasClase1,
-  2: preguntasClase2
+  2: preguntasClase2,
+  3: preguntasClase3
 }
 
 function obtenerCompletadas() {
@@ -533,6 +584,245 @@ export default function ClasesVirtuales({ onCerrar }) {
                     Termina preguntando: “¿El guante trabaja de
                     abajo hacia arriba o de arriba hacia abajo?”
                   </p>
+                </section>
+              </>
+            ) : claseActiva.id === 3 ? (
+              <>
+                <section className="clase-portada clase-portada-bateo">
+                  <span>🏏</span>
+                  <div>
+                    <small>CLASE 03 · TÉCNICA OFENSIVA</small>
+                    <h3>Fundamentos del bateo</h3>
+                    <p>
+                      Aprende el agarre, la postura, la carga,
+                      el contacto y la terminación del swing.
+                    </p>
+                  </div>
+                </section>
+
+                <section className="clase-bloque clase-objetivo">
+                  <h4>🎯 Objetivo de la clase</h4>
+                  <p>
+                    Al finalizar, el jugador podrá ejecutar una
+                    secuencia básica de bateo con equilibrio,
+                    coordinación, una ruta corta de manos y una
+                    terminación controlada.
+                  </p>
+                </section>
+
+                <section className="clase-bloque">
+                  <h4>⏱️ Organización de la clase</h4>
+
+                  <div className="clase-cronograma">
+                    <article>
+                      <strong>10 min</strong>
+                      <span>Activación y movilidad</span>
+                    </article>
+                    <article>
+                      <strong>15 min</strong>
+                      <span>Teoría y análisis visual</span>
+                    </article>
+                    <article>
+                      <strong>20 min</strong>
+                      <span>Ejercicios prácticos</span>
+                    </article>
+                    <article>
+                      <strong>10 min</strong>
+                      <span>Dinámica y tarea virtual</span>
+                    </article>
+                    <article>
+                      <strong>5 min</strong>
+                      <span>Cierre y correcciones</span>
+                    </article>
+                  </div>
+                </section>
+
+                <section className="clase-bloque">
+                  <h4>1. Las cinco fases del bateo</h4>
+
+                  <figure className="clase-imagen-fildeo clase-imagen-bateo">
+                    <img
+                      src={bateoSecuencia}
+                      alt="Secuencia de cinco pasos para realizar el swing"
+                    />
+                    <figcaption>
+                      Observa la secuencia completa: agarre,
+                      postura, carga, contacto y terminación.
+                    </figcaption>
+                  </figure>
+
+                  <div className="clase-pasos-fildeo clase-pasos-bateo">
+                    <article>
+                      <b>1</b>
+                      <div>
+                        <strong>Agarre del bate</strong>
+                        <p>
+                          Alinea los nudillos medios. Mantén las
+                          manos relajadas, pero con suficiente
+                          firmeza para controlar el bate.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article>
+                      <b>2</b>
+                      <div>
+                        <strong>Postura de preparación</strong>
+                        <p>
+                          Separa los pies un poco más que los
+                          hombros, flexiona las rodillas y mantén
+                          ambos ojos dirigidos al lanzador.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article>
+                      <b>3</b>
+                      <div>
+                        <strong>Carga y paso</strong>
+                        <p>
+                          Transfiere suavemente el peso hacia la
+                          pierna trasera y realiza un paso corto
+                          y ligero con el pie delantero.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article>
+                      <b>4</b>
+                      <div>
+                        <strong>Contacto y extensión</strong>
+                        <p>
+                          Lleva las manos por una ruta corta hacia
+                          la pelota. Realiza el contacto delante
+                          del plato mientras rota la cadera.
+                        </p>
+                      </div>
+                    </article>
+
+                    <article>
+                      <b>5</b>
+                      <div>
+                        <strong>Terminación</strong>
+                        <p>
+                          Mantén la cabeza cerca del punto de
+                          contacto y termina el movimiento de
+                          forma fluida, equilibrada y controlada.
+                        </p>
+                      </div>
+                    </article>
+                  </div>
+
+                  <p className="clase-dato">
+                    💡 Un buen swing comienza con equilibrio y
+                    termina con control.
+                  </p>
+                </section>
+
+                <section className="clase-bloque">
+                  <h4>2. Ejercicios para espacios reducidos</h4>
+
+                  <div className="clase-drills">
+                    <article>
+                      <span>🪞</span>
+                      <div>
+                        <strong>Trabajo de espejo o cámara</strong>
+                        <p>
+                          Realiza la carga y el paso. Detente
+                          durante tres segundos para revisar la
+                          alineación de hombros y caderas.
+                        </p>
+                        <small>
+                          OBJETIVO: corregir postura y equilibrio.
+                        </small>
+                      </div>
+                    </article>
+
+                    <article>
+                      <span>🧱</span>
+                      <div>
+                        <strong>Ruta de manos junto a la pared</strong>
+                        <p>
+                          Practica lentamente cerca de una pared
+                          sin permitir que el extremo del bate
+                          toque la superficie.
+                        </p>
+                        <small>
+                          OBJETIVO: desarrollar una ruta corta.
+                        </small>
+                      </div>
+                    </article>
+
+                    <article>
+                      <span>🔄</span>
+                      <div>
+                        <strong>Rotación con palo en los hombros</strong>
+                        <p>
+                          Coloca un palo sobre los hombros y gira
+                          la cadera manteniendo la cabeza estable
+                          y el cuerpo equilibrado.
+                        </p>
+                        <small>
+                          OBJETIVO: coordinación de cadera y torso.
+                        </small>
+                      </div>
+                    </article>
+                  </div>
+                </section>
+
+                <section className="clase-bloque clase-actividad">
+                  <h4>🎥 Dinámica interactiva</h4>
+                  <ol>
+                    <li>
+                      Observa un swing presentado en cámara lenta.
+                    </li>
+                    <li>
+                      Identifica el momento de la carga y el paso.
+                    </li>
+                    <li>
+                      Señala dónde ocurre el contacto con la pelota.
+                    </li>
+                    <li>
+                      Explica si el bateador terminó equilibrado.
+                    </li>
+                  </ol>
+                </section>
+
+                <section className="clase-bloque clase-tarea-bateo">
+                  <h4>📱 Tarea virtual</h4>
+                  <p>
+                    Graba un video de 15 a 30 segundos realizando
+                    tres swings secos con un bate de plástico,
+                    tubo de PVC o escobillón.
+                  </p>
+                  <p>
+                    Antes de comenzar, explica brevemente cómo
+                    colocaste las manos y los pies.
+                  </p>
+                </section>
+
+                <section className="clase-bloque clase-seguridad">
+                  <h4>🛡️ Seguridad y errores comunes</h4>
+                  <ul>
+                    <li>
+                      Revisa que no haya personas u objetos cerca.
+                    </li>
+                    <li>
+                      No practiques con un bate pesado dentro de casa.
+                    </li>
+                    <li>
+                      Evita apretar excesivamente las manos.
+                    </li>
+                    <li>
+                      No realices un paso demasiado largo.
+                    </li>
+                    <li>
+                      Mantén la cabeza estable durante el contacto.
+                    </li>
+                    <li>
+                      Finaliza siempre con equilibrio.
+                    </li>
+                  </ul>
                 </section>
               </>
             ) : (
