@@ -270,3 +270,115 @@
     font-size: 20px;
   }
 }
+
+/* Presentación inspirada en el ejemplo de mejores momentos */
+.videos-cintillo {
+  background: #081b30;
+  border: 0;
+  border-radius: 16px;
+  box-shadow: none;
+  padding: 22px 18px;
+}
+.videos-cintillo-header small {
+  display: none;
+}
+.videos-cintillo-header h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 26px;
+  font-weight: 800;
+}
+.videos-cintillo-header p {
+  display: none;
+}
+.videos-cintillo-ayuda {
+  margin: 12px 0;
+  color: #aebdcd;
+}
+.videos-cintillo-lista {
+  gap: 18px;
+  padding: 4px 0 16px;
+}
+.videos-cintillo-tarjeta {
+  display: block;
+  flex: 0 0 340px;
+  min-height: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+.videos-cintillo-tarjeta video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background: #020a12;
+  border-radius: 10px;
+}
+.videos-cintillo-pie,
+.videos-cintillo-tarjeta:has(.videos-cintillo-eliminar)
+  .videos-cintillo-pie {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 9px;
+  padding: 14px 0 12px;
+  padding-right: 46px;
+}
+.videos-cintillo-pie strong {
+  color: #fff;
+  font-size: 19px;
+  line-height: 1.35;
+  font-weight: 800;
+}
+.videos-cintillo-fecha {
+  color: #aebdcd;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.videos-cintillo-pie span {
+  position: absolute;
+  top: 15px;
+  right: 0;
+  padding: 4px 7px;
+  color: #e6c369;
+  background: rgba(230,195,105,.12);
+  border-radius: 6px;
+  font-size: 11px;
+}
+.videos-cintillo .videos-cintillo-eliminar {
+  position: static;
+  margin: 0 0 8px;
+  padding: 7px 10px;
+  color: #ffb8b8;
+  background: #21384c;
+}
+@media (max-width: 600px) {
+  .videos-cintillo {
+    padding: 18px 12px;
+  }
+  .videos-cintillo-header h3 {
+    font-size: 23px;
+  }
+  .videos-cintillo-lista {
+    gap: 14px;
+  }
+  .videos-cintillo-tarjeta {
+    flex-basis: 86%;
+  }
+  .videos-cintillo-tarjeta video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+  .videos-cintillo-pie strong {
+    font-size: 18px;
+  }
+}

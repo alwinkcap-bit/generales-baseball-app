@@ -143,7 +143,7 @@ export default function VideosCintillo({ isAdmin }) {
       <header className="videos-cintillo-header">
         <div>
           <small>GENERALES EN ACCIÓN</small>
-          <h3>Momentos de la academia</h3>
+          <h3>Mejores momentos</h3>
           <p>Entrenamientos y jugadas en 10 segundos.</p>
         </div>
         {isAdmin && (
@@ -196,6 +196,12 @@ export default function VideosCintillo({ isAdmin }) {
                     }} />
                   <div className="videos-cintillo-pie">
                     <strong>{video.titulo}</strong>
+                    <small className="videos-cintillo-fecha">
+                      {new Date(video.created_at).toLocaleDateString('es-PA', {
+                        day: 'numeric',
+                        month: 'short'
+                      })}
+                    </small>
                     <span>{Math.ceil(Number(video.duracion))} s</span>
                   </div>
                   {isAdmin && (
