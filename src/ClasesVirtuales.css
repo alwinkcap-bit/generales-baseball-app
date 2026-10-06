@@ -927,3 +927,125 @@
     font-size: 1.12rem;
   }
 }
+
+/* ===== CLASES PREMIUM ===== */
+.clases-grid article.clase-premium {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 214, 92, 0.85);
+  background:
+    radial-gradient(circle at top right, rgba(255, 210, 70, 0.25), transparent 38%),
+    linear-gradient(145deg, #174b72, #07192a 72%);
+}
+
+.clases-grid article.clase-premium::after {
+  content: 'PREMIUM';
+  position: absolute;
+  top: 17px;
+  right: -31px;
+  width: 120px;
+  padding: 5px 0;
+  color: #071a2b;
+  background: linear-gradient(135deg, #ffe27a, #e9a91d);
+  font-size: 0.62rem;
+  font-weight: 950;
+  text-align: center;
+  transform: rotate(42deg);
+}
+
+.clase-compra-fondo {
+  position: fixed;
+  z-index: 100001;
+  inset: 0;
+  padding: 18px;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: rgba(0, 7, 14, 0.92);
+  backdrop-filter: blur(8px);
+}
+
+.clase-compra {
+  position: relative;
+  width: min(480px, 100%);
+  padding: 29px;
+  border: 1px solid #f3b83b;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at top right, rgba(243,184,59,.2), transparent 35%),
+    linear-gradient(145deg, #123f65, #061828);
+  box-shadow: 0 25px 70px rgba(0,0,0,.65);
+}
+
+.clase-compra > small {
+  color: #f3b83b;
+  font-weight: 900;
+  letter-spacing: .14em;
+}
+
+.clase-compra h3 {
+  margin: 7px 40px 12px 0;
+  font-size: 1.65rem;
+}
+
+.clase-compra p {
+  color: rgba(255,255,255,.82);
+  line-height: 1.5;
+}
+
+.clase-compra label {
+  margin-top: 16px;
+  display: grid;
+  gap: 7px;
+  color: #f8d778;
+  font-weight: 850;
+}
+
+.clase-compra select,
+.clase-compra input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(243,184,59,.42);
+  border-radius: 11px;
+  color: white;
+  background: #071d31;
+}
+
+.clase-compra > button[type='submit'] {
+  width: 100%;
+  margin-top: 20px;
+  padding: 13px;
+  border: 1px solid #ffe58b;
+  border-radius: 12px;
+  color: #071a2b;
+  background: linear-gradient(145deg, #ffe474, #dfa017);
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.clase-compra-cerrar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #f3b83b;
+  border-radius: 50%;
+  color: white;
+  background: #0b3150;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.clase-compra-mensaje {
+  padding: 10px;
+  border: 1px solid rgba(243,184,59,.35);
+  border-radius: 10px;
+  background: rgba(0,0,0,.22);
+}
+
+@media (max-width: 560px) {
+  .clase-compra {
+    padding: 24px 18px;
+  }
+}
