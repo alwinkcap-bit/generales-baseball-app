@@ -302,6 +302,7 @@ export default function ClasesVirtuales({
 }) {
   const [claseActiva, setClaseActiva] = useState(null)
   const [accesosAutorizados, setAccesosAutorizados] = useState([])
+  const [accesosAdmin, setAccesosAdmin] = useState([])
   const [solicitudesUsuario, setSolicitudesUsuario] = useState([])
   const [solicitudesPendientes, setSolicitudesPendientes] = useState([])
   const [mensajeAcceso, setMensajeAcceso] = useState('')
@@ -356,6 +357,7 @@ export default function ClasesVirtuales({
   async function cargarControlAccesos() {
     if (!usuario?.id) {
       setAccesosAutorizados([])
+      setAccesosAdmin([])
       setSolicitudesUsuario([])
       setSolicitudesPendientes([])
       return
@@ -380,6 +382,37 @@ export default function ClasesVirtuales({
     }
 
     if (isAdmin) {
+      const [resultadoAccesos, resultadoNombres] = await Promise.all([
+        supabase
+          .from('accesos_clases_premium')
+          .select('id, user_id, clase_id, solicitud_id, fecha_expiracion')
+          .eq('activo', true),
+        supabase
+          .from('solicitudes_clases_premium')
+          .select('id, solicitante_nombre, solicitante_email')
+      ])
+
+      if (resultadoAccesos.error || resultadoNombres.error) {
+        setAccesosAdmin([])
+        setMensajeAcceso(
+          'No se pudieron cargar los accesos: ' +
+          (resultadoAccesos.error || resultadoNombres.error).message
+        )
+      } else {
+        const nombres = new Map(
+          (resultadoNombres.data || []).map((solicitud) => [
+            String(solicitud.id), solicitud
+          ])
+        )
+
+        setAccesosAdmin(
+          (resultadoAccesos.data || []).map((acceso) => ({
+            ...acceso,
+            solicitante: nombres.get(String(acceso.solicitud_id))
+          }))
+        )
+      }
+
       const { data, error } = await supabase
         .from('solicitudes_clases_premium')
         .select('*')
@@ -605,6 +638,39 @@ export default function ClasesVirtuales({
     )
 
     await cargarControlAccesos()
+  }
+
+  async function quitarAcceso(acceso) {
+    if (!isAdmin || procesandoAcceso) return
+
+    const nombre =
+      acceso.solicitante?.solicitante_nombre || 'este participante'
+
+    if (!window.confirm(
+      `¿Quitar el acceso de ${nombre} a ${nombreClase(acceso.clase_id)}?`
+    )) return
+
+    setProcesandoAcceso(true)
+
+    try {
+      const { data, error } = await supabase
+        .from('accesos_clases_premium')
+        .update({ activo: false })
+        .eq('id', acceso.id)
+        .select('id')
+
+      if (error) throw error
+      if (!data?.length) {
+        throw new Error('No se pudo modificar el acceso. Revisa los permisos.')
+      }
+
+      await cargarControlAccesos()
+      setMensajeAcceso('✅ Acceso retirado correctamente.')
+    } catch (error) {
+      setMensajeAcceso(`No se pudo quitar el acceso: ${error.message}`)
+    } finally {
+      setProcesandoAcceso(false)
+    }
   }
 
   async function rechazarSolicitud(solicitud) {
@@ -946,6 +1012,52 @@ export default function ClasesVirtuales({
                             disabled={procesandoAcceso}
                           >
                             Rechazar
+                          </button>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
+
+            {isAdmin && (
+              <section className="clases-solicitudes-admin">
+                <header>
+                  <div>
+                    <small>🔐 CONTROL DE ACCESOS</small>
+                    <h3>
+                      Accesos autorizados
+                      <span>{accesosAdmin.length}</span>
+                    </h3>
+                  </div>
+                </header>
+
+                {accesosAdmin.length === 0 ? (
+                  <p>No hay accesos activos.</p>
+                ) : (
+                  <div className="clases-solicitudes-lista">
+                    {accesosAdmin.map((acceso) => (
+                      <article key={acceso.id}>
+                        <div>
+                          <strong>
+                            {acceso.solicitante?.solicitante_nombre ||
+                              'Participante'}
+                          </strong>
+                          <span>
+                            {acceso.solicitante?.solicitante_email ||
+                              acceso.user_id}
+                          </span>
+                          <b>{nombreClase(acceso.clase_id)}</b>
+                        </div>
+                        <div>
+                          <button
+                            type="button"
+                            className="solicitud-rechazar"
+                            disabled={procesandoAcceso}
+                            onClick={() => quitarAcceso(acceso)}
+                          >
+                            Quitar acceso
                           </button>
                         </div>
                       </article>
