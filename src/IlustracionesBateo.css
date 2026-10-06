@@ -1,0 +1,15 @@
+.bateo-ilustracion{
+  margin:18px 0;padding:14px;background:#081b30;
+  border:1px solid #dcae35;border-radius:16px
+}
+.bateo-ilustracion svg{display:block;width:100%;height:auto}
+.bateo-svg-texto{
+  font-family:Arial,sans-serif;font-size:17px;
+  fill:#fff;font-weight:600
+}
+.bateo-ilustracion figcaption{
+  margin-top:12px;color:#c7d8e5;font-size:13px;line-height:1.5
+}
+@media(max-width:500px){
+  .bateo-ilustracion{padding:8px}
+}
