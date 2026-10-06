@@ -585,7 +585,7 @@ export default function ClasesVirtuales({
     const { error } = await supabase
       .from('solicitudes_clases_premium')
       .update({
-        estado: 'aprobada',
+        estado: 'aprobado',
         notas_admin: 'Acceso autorizado desde la aplicación.',
         updated_at: new Date().toISOString()
       })
@@ -615,7 +615,7 @@ export default function ClasesVirtuales({
     const { error } = await supabase
       .from('solicitudes_clases_premium')
       .update({
-        estado: 'rechazada',
+        estado: 'rechazado',
         notas_admin: 'Solicitud rechazada desde la aplicación.',
         updated_at: new Date().toISOString()
       })
