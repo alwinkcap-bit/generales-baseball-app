@@ -1049,3 +1049,336 @@
     padding: 24px 18px;
   }
 }
+
+
+/* ===== CLASES PERSONALIZADAS PREMIUM ===== */
+.clase-premium-fondo {
+  position: fixed;
+  z-index: 100000;
+  inset: 0;
+  padding: 20px;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: rgba(0, 7, 15, 0.92);
+  backdrop-filter: blur(10px);
+}
+
+.clase-premium-modal {
+  position: relative;
+  width: min(620px, 100%);
+  padding: 38px 34px;
+  border: 1px solid #f3b83b;
+  border-radius: 25px;
+  color: white;
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(243, 184, 59, 0.2),
+      transparent 35%
+    ),
+    linear-gradient(145deg, #17486f, #06192c);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65);
+}
+
+.clase-premium-cerrar {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #f3b83b;
+  border-radius: 50%;
+  color: #f3b83b;
+  background: #08263e;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.clase-premium-icono {
+  width: 82px;
+  height: 82px;
+  margin: 0 auto 16px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #f3b83b;
+  border-radius: 50%;
+  background: #0b2e4b;
+  font-size: 2.8rem;
+}
+
+.clase-premium-modal > small {
+  color: #f3b83b;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+
+.clase-premium-modal h3 {
+  margin: 10px 0;
+  font-size: clamp(1.6rem, 4vw, 2.35rem);
+}
+
+.clase-premium-modal > p {
+  max-width: 500px;
+  margin: 0 auto 24px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.55;
+}
+
+.clase-premium-detalles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.clase-premium-detalles article {
+  min-height: 100px;
+  padding: 14px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid rgba(243, 184, 59, 0.35);
+  border-radius: 14px;
+  background: rgba(2, 15, 27, 0.48);
+}
+
+.clase-premium-detalles article > span {
+  font-size: 1.6rem;
+}
+
+.clase-premium-detalles small {
+  display: block;
+  color: #f3b83b;
+  font-size: 0.66rem;
+  font-weight: 900;
+}
+
+.clase-premium-detalles strong {
+  display: block;
+  margin-top: 4px;
+  color: white;
+}
+
+.clase-premium-modal ul {
+  margin: 22px 0;
+  padding: 18px 18px 18px 38px;
+  border-radius: 14px;
+  color: rgba(255, 255, 255, 0.82);
+  background: rgba(0, 0, 0, 0.2);
+  text-align: left;
+  line-height: 1.7;
+}
+
+.clase-premium-solicitar {
+  width: 100%;
+  min-height: 54px;
+  padding: 14px 20px;
+  border: 1px solid #ffe58b;
+  border-radius: 14px;
+  color: #061b2e;
+  background: linear-gradient(145deg, #ffe477, #e6a51a);
+  font-size: 1rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.clase-premium-nota {
+  display: block;
+  margin-top: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 600px) {
+  .clase-premium-fondo {
+    padding: 10px;
+  }
+
+  .clase-premium-modal {
+    padding: 30px 17px 24px;
+    border-radius: 19px;
+  }
+
+  .clase-premium-detalles {
+    grid-template-columns: 1fr;
+  }
+
+  .clase-premium-detalles article {
+    min-height: 76px;
+  }
+}
+
+
+/* ===== AUTORIZACIÓN DE CLASES ===== */
+.clases-acceso-mensaje {
+  margin: 16px 30px 0;
+  padding: 13px 16px;
+  border: 1px solid rgba(243, 184, 59, 0.45);
+  border-radius: 12px;
+  color: white;
+  background: rgba(243, 184, 59, 0.12);
+  text-align: center;
+}
+
+.clases-grid article.clase-bloqueada {
+  position: relative;
+}
+
+.clases-grid article.clase-bloqueada::after {
+  content: "🔒";
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(243, 184, 59, 0.55);
+  border-radius: 50%;
+  background: rgba(3, 18, 31, 0.88);
+  font-size: 0.9rem;
+}
+
+.clases-grid article.clase-autorizada {
+  border-color: rgba(72, 211, 130, 0.7);
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.3),
+    0 0 18px rgba(72, 211, 130, 0.12);
+}
+
+.clases-solicitudes-admin {
+  margin: 25px 30px 0;
+  padding: 22px;
+  border: 1px solid rgba(243, 184, 59, 0.55);
+  border-radius: 20px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(20, 67, 103, 0.95),
+      rgba(5, 24, 42, 0.97)
+    );
+}
+
+.clases-solicitudes-admin > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.clases-solicitudes-admin header small {
+  color: #f3b83b;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.clases-solicitudes-admin h3 {
+  margin: 5px 0 0;
+}
+
+.clases-solicitudes-admin h3 span {
+  min-width: 27px;
+  height: 27px;
+  margin-left: 9px;
+  padding: 0 8px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  color: #08263e;
+  background: #f3b83b;
+  font-size: 0.8rem;
+}
+
+.clases-solicitudes-admin > header > button {
+  padding: 10px 14px;
+  border: 1px solid #f3b83b;
+  border-radius: 11px;
+  color: white;
+  background: #0b3150;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.clases-solicitudes-lista {
+  margin-top: 18px;
+  display: grid;
+  gap: 11px;
+}
+
+.clases-solicitudes-lista article {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.clases-solicitudes-lista article > div:first-child {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.clases-solicitudes-lista article small {
+  color: #f3b83b;
+  font-weight: 900;
+}
+
+.clases-solicitudes-lista article span {
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+.clases-solicitudes-lista article b {
+  margin-top: 5px;
+}
+
+.clases-solicitudes-lista article > div:last-child {
+  display: flex;
+  gap: 8px;
+}
+
+.clases-solicitudes-lista button {
+  padding: 10px 13px;
+  border: 1px solid #83e6a9;
+  border-radius: 10px;
+  color: #062319;
+  background: #57d68b;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.clases-solicitudes-lista .solicitud-rechazar {
+  border-color: rgba(255, 125, 125, 0.6);
+  color: white;
+  background: rgba(176, 42, 42, 0.75);
+}
+
+@media (max-width: 600px) {
+  .clases-acceso-mensaje {
+    margin: 12px 13px 0;
+  }
+
+  .clases-solicitudes-admin {
+    margin: 18px 13px 0;
+    padding: 16px;
+  }
+
+  .clases-solicitudes-admin > header,
+  .clases-solicitudes-lista article {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .clases-solicitudes-lista article > div:last-child {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

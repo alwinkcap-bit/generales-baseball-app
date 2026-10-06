@@ -9,7 +9,13 @@ const CLASES_DISPONIBLES = [
   { id: '3', titulo: 'Fundamentos del bateo' },
   { id: '4', titulo: 'Pequeños Gigantes · 4 a 6 años' },
   { id: '5', titulo: 'Estrategia y lectura del juego' },
-  { id: '6', titulo: 'Bateo avanzado' }
+  { id: '6', titulo: 'Bateo avanzado' },
+  { id: '7', titulo: 'Defensa personalizada · $15' },
+  { id: '8', titulo: 'Bateo personalizado · $15' },
+  {
+    id: '9',
+    titulo: 'Paquete completo de béisbol · $25'
+  }
 ]
 
 export default function SesionesClasesVivo({
