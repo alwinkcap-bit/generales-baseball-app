@@ -1,3 +1,4 @@
+import preguntasRetoNivel28 from './PreguntasRetoNivel28'
 import preguntasReto25a27 from './PreguntasReto25a27'
 import preguntasReto23a24 from './PreguntasReto23a24'
 import React, { useEffect, useMemo, useState } from 'react'
@@ -455,6 +456,10 @@ function generarPreguntaGrandesLigas(nivel, indice) {
 }
 
 function generarNivel(nivel) {
+  if (nivel === 28) {
+    return preguntasRetoNivel28
+  }
+
   if (nivel >= 25 && nivel <= 27) {
     const inicio = (nivel - 25) * 10
     return preguntasReto25a27.slice(inicio, inicio + 10)
