@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { supabase } from './supabase'
 import './ClasesVirtuales.css'
 import SesionesClasesVivo from './SesionesClasesVivo'
+import RecursosClase from './RecursosClase'
 import fildeoSecuencia from './public/clases/fildeo-secuencia.png'
 import bateoSecuencia from './public/clases/bateo-secuencia.png'
 import pequenosGigantes from './public/clases/pequenos-gigantes.png'
@@ -1150,6 +1151,15 @@ export default function ClasesVirtuales({
             >
               ← Volver a todas las clases
             </button>
+
+            {claseActiva.id <= 4 && (
+              <RecursosClase
+                clase={claseActiva}
+                usuario={usuario}
+                isAdmin={isAdmin}
+                aprobada={resultado?.aprobada === true}
+              />
+            )}
 
             {claseActiva.id === 2 ? (
               <>
