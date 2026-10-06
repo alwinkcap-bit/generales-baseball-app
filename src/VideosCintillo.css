@@ -190,3 +190,83 @@
     padding: 15px;
   }
 }
+
+/* Cintillo compacto con tarjetas horizontales */
+.videos-cintillo {
+  padding: 18px;
+  border-radius: 18px;
+}
+.videos-cintillo-header h3 {
+  margin: 5px 0;
+  font-size: 22px;
+}
+.videos-cintillo-header p {
+  font-size: 13px;
+}
+.videos-cintillo-ayuda {
+  margin: 14px 0 8px;
+}
+.videos-cintillo-lista {
+  gap: 14px;
+  padding-bottom: 8px;
+}
+.videos-cintillo-tarjeta {
+  position: relative;
+  display: grid;
+  grid-template-columns: 190px 150px;
+  flex: 0 0 340px;
+  min-height: 170px;
+  border-radius: 14px;
+  background: #102b43;
+  border: 1px solid rgba(230,195,105,.28);
+}
+.videos-cintillo-tarjeta video {
+  width: 190px;
+  height: 170px;
+  object-fit: contain;
+}
+.videos-cintillo-pie {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 14px;
+}
+.videos-cintillo-pie strong {
+  color: #fff;
+  font-size: 15px;
+}
+.videos-cintillo-pie span {
+  color: #e6c369;
+  background: rgba(230,195,105,.12);
+}
+.videos-cintillo-tarjeta:has(.videos-cintillo-eliminar)
+  .videos-cintillo-pie {
+  padding-bottom: 48px;
+}
+.videos-cintillo .videos-cintillo-eliminar {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  margin: 0;
+  background: #21384c;
+  color: #ffb8b8;
+}
+@media (max-width: 600px) {
+  .videos-cintillo {
+    padding: 15px 12px;
+  }
+  .videos-cintillo-tarjeta {
+    grid-template-columns: 55% 45%;
+    flex-basis: min(320px, 100%);
+    min-height: 160px;
+  }
+  .videos-cintillo-tarjeta video {
+    width: 100%;
+    height: 160px;
+  }
+  .videos-cintillo-header h3 {
+    font-size: 20px;
+  }
+}
