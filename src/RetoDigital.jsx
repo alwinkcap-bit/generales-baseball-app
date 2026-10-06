@@ -1,3 +1,4 @@
+import preguntasReto25a27 from './PreguntasReto25a27'
 import preguntasReto23a24 from './PreguntasReto23a24'
 import React, { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -454,6 +455,11 @@ function generarPreguntaGrandesLigas(nivel, indice) {
 }
 
 function generarNivel(nivel) {
+  if (nivel >= 25 && nivel <= 27) {
+    const inicio = (nivel - 25) * 10
+    return preguntasReto25a27.slice(inicio, inicio + 10)
+  }
+
   if (nivel === 23 || nivel === 24) {
     const inicio = (nivel - 23) * 10
     return preguntasReto23a24.slice(inicio, inicio + 10)
