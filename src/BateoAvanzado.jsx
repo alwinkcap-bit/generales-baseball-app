@@ -1,3 +1,5 @@
+import iconoBate from './public/clases/icono-bate.jpg'
+import IlustracionBateo from './IlustracionesBateo'
 import React from 'react'
 
 export const preguntasBateoAvanzado = [
@@ -52,7 +54,7 @@ export default function BateoAvanzado() {
   return (
     <>
       <section className="clase-portada clase-portada-bateo">
-        <span>🏏</span>
+        <span><img className="clase-icono-material" src={iconoBate} alt="Bate de béisbol" /></span>
         <div>
           <small>CLASE 06 · NIVEL INTERMEDIO–AVANZADO</small>
           <h3>Bateo avanzado y biomecánica moderna</h3>
@@ -78,6 +80,7 @@ export default function BateoAvanzado() {
 
       <section className="clase-bloque">
         <h4>01 · Cadena cinética y postura — 5 minutos</h4>
+        <IlustracionBateo tipo="cadena" />
         <p>El swing combina fuerzas del suelo y movimientos coordinados
           de piernas, pelvis, tronco, brazos y bate. La eficiencia
           depende de su secuencia y del momento en que actúan.</p>
@@ -94,6 +97,7 @@ export default function BateoAvanzado() {
 
       <section className="clase-bloque">
         <h4>02 · Biomecánica del swing — 10 minutos</h4>
+        <IlustracionBateo tipo="biomecanica" />
         <p><strong>Separación cadera-hombros:</strong> la pelvis puede
           comenzar a girar antes que el tronco. Observa la coordinación
           sin intentar conseguir una torsión máxima.</p>
@@ -110,6 +114,7 @@ export default function BateoAvanzado() {
 
       <section className="clase-bloque">
         <h4>03 · Métricas modernas — 8 minutos</h4>
+        <IlustracionBateo tipo="metricas" />
         <ul>
           <li><strong>Exit Velocity:</strong> velocidad de salida de la
             pelota. La distancia también depende del ángulo, efecto
@@ -150,6 +155,7 @@ export default function BateoAvanzado() {
 
       <section className="clase-bloque clase-actividad">
         <h4>04 · Visión, decisión y práctica — 7 minutos</h4>
+        <IlustracionBateo tipo="practica" />
         <p>El tiempo disponible depende de la velocidad y distancia
           del lanzamiento. Los 400 ms son una referencia aproximada
           para ciertos lanzamientos rápidos, no un tiempo universal.
@@ -158,7 +164,7 @@ export default function BateoAvanzado() {
           y trayectoria con videos pausados.</p>
         <div className="clase-drills">
           <article>
-            <span>🏏</span>
+            <span><img className="clase-icono-material" src={iconoBate} alt="Bate de béisbol" /></span>
             <div>
               <strong>Swings pausados con observación</strong>
               <ol>

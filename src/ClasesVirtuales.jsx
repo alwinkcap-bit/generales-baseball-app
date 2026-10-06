@@ -1,3 +1,5 @@
+import iconoGuante from './public/clases/guante-icons.png'
+import iconoBate from './public/clases/icono-bate.jpg'
 import BateoAvanzado, { preguntasBateoAvanzado } from './BateoAvanzado'
 import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -19,14 +21,14 @@ const clases = [
   },
   {
     id: 2,
-    icono: '🧤',
+    icono: (<img className="clase-icono-material" src={iconoGuante} alt="Guante de béisbol" />),
     titulo: 'Fildeo',
     descripcion: 'Posición básica, rodados y recepción.',
     disponible: true
   },
   {
     id: 3,
-    icono: '🏏',
+    icono: (<img className="clase-icono-material" src={iconoBate} alt="Bate de béisbol" />),
     titulo: 'Bateo',
     descripcion: 'Agarre, postura, balance y coordinación.',
     disponible: true
@@ -49,7 +51,7 @@ const clases = [
   },
   {
     id: 6,
-    icono: '🏏',
+    icono: (<img className="clase-icono-material" src={iconoBate} alt="Bate de béisbol" />),
     titulo: 'Bateo avanzado',
     descripcion:
       'Lectura del lanzamiento, enfoque, ajustes y producción ofensiva.',
@@ -59,7 +61,7 @@ const clases = [
   },
   {
     id: 7,
-    icono: '🧤',
+    icono: (<img className="clase-icono-material" src={iconoGuante} alt="Guante de béisbol" />),
     titulo: 'Defensa personalizada',
     descripcion:
       'Sesión individual para mejorar fildeo, desplazamientos, recepción y tiros.',
@@ -71,7 +73,7 @@ const clases = [
   },
   {
     id: 8,
-    icono: '🏏',
+    icono: (<img className="clase-icono-material" src={iconoBate} alt="Bate de béisbol" />),
     titulo: 'Bateo personalizado',
     descripcion:
       'Evaluación individual del swing, postura, carga, contacto y terminación.',
@@ -1168,7 +1170,7 @@ export default function ClasesVirtuales({
             ) : claseActiva.id === 2 ? (
               <>
                 <section className="clase-portada clase-portada-fildeo">
-                  <span>🧤</span>
+                  <span><img className="clase-icono-material" src={iconoGuante} alt="Guante de béisbol" /></span>
                   <div>
                     <small>CLASE 02 · TÉCNICA DEFENSIVA</small>
                     <h3>Fildeo de roletazos</h3>
@@ -1384,7 +1386,7 @@ export default function ClasesVirtuales({
             ) : claseActiva.id === 3 ? (
               <>
                 <section className="clase-portada clase-portada-bateo">
-                  <span>🏏</span>
+                  <span><img className="clase-icono-material" src={iconoBate} alt="Bate de béisbol" /></span>
                   <div>
                     <small>CLASE 03 · TÉCNICA OFENSIVA</small>
                     <h3>Fundamentos del bateo</h3>
@@ -1665,7 +1667,7 @@ export default function ClasesVirtuales({
                     </article>
 
                     <article>
-                      <span>🏏</span>
+                      <span><img className="clase-icono-material" src={iconoBate} alt="Bate de béisbol" /></span>
                       <strong>Bate liviano</strong>
                       <small>
                         Bate plástico, tubo de cartón o escobillón.
@@ -1871,7 +1873,7 @@ export default function ClasesVirtuales({
 
               <div className="clase-conceptos">
                 <article>
-                  <span>🏏</span>
+                  <span><img className="clase-icono-material" src={iconoBate} alt="Bate de béisbol" /></span>
                   <strong>Ofensiva</strong>
                   <p>
                     Batea la pelota y corre por las bases para
@@ -1880,7 +1882,7 @@ export default function ClasesVirtuales({
                 </article>
 
                 <article>
-                  <span>🧤</span>
+                  <span><img className="clase-icono-material" src={iconoGuante} alt="Guante de béisbol" /></span>
                   <strong>Defensa</strong>
                   <p>
                     Atrapa la pelota y busca realizar tres outs

@@ -1382,3 +1382,13 @@
     grid-template-columns: 1fr 1fr;
   }
 }
+
+.clase-icono-material {
+  width: 52px;
+  height: 52px;
+  max-width: 100%;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 12px;
+}
