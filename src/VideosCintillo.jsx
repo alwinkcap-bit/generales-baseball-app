@@ -1,0 +1,207 @@
+import React, { useEffect, useRef, useState } from 'react'
+import { supabase } from './supabase'
+import './VideosCintillo.css'
+
+const BUCKET = 'videos-cintillo'
+
+function medirDuracion(archivo) {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement('video')
+    const url = URL.createObjectURL(archivo)
+    let terminado = false
+    const finalizar = (error) => {
+      if (terminado) return
+      terminado = true
+      const duracion = video.duration
+      clearTimeout(timer)
+      video.onloadedmetadata = null
+      video.onerror = null
+      video.removeAttribute('src')
+      video.load()
+      URL.revokeObjectURL(url)
+      if (error) reject(error)
+      else resolve(duracion)
+    }
+    const timer = setTimeout(
+      () => finalizar(new Error('No se pudo leer la duración.')),
+      15000
+    )
+    video.preload = 'metadata'
+    video.onloadedmetadata = () => finalizar()
+    video.onerror = () => finalizar(new Error('Prueba con un video MP4.'))
+    video.src = url
+  })
+}
+
+export default function VideosCintillo({ isAdmin }) {
+  const [videos, setVideos] = useState([])
+  const [titulo, setTitulo] = useState('')
+  const [archivo, setArchivo] = useState(null)
+  const [editor, setEditor] = useState(false)
+  const [ocupado, setOcupado] = useState(false)
+  const [mensaje, setMensaje] = useState('')
+  const entrada = useRef(null)
+
+  async function cargar() {
+    const { data, error } = await supabase
+      .from('videos_cintillo')
+      .select('*')
+      .order('created_at', { ascending: false })
+    if (error) throw error
+    setVideos(data || [])
+  }
+
+  useEffect(() => {
+    cargar().catch(error => setMensaje(error.message))
+  }, [])
+
+  async function publicar(evento) {
+    evento.preventDefault()
+    if (!isAdmin || ocupado || !archivo) return
+    setOcupado(true)
+    setMensaje('Comprobando video…')
+    let rutaSubida = null
+    try {
+      const nombre = titulo.trim()
+      if (!nombre) throw new Error('Escribe el título.')
+      if (!['video/mp4', 'video/webm'].includes(archivo.type)) {
+        throw new Error('Selecciona un MP4 o WebM.')
+      }
+      if (archivo.size > 20 * 1024 * 1024) {
+        throw new Error('El máximo es 20 MB.')
+      }
+      const duracion = await medirDuracion(archivo)
+      if (!Number.isFinite(duracion) || duracion <= 0 || duracion > 10) {
+        throw new Error('El video debe durar 10 segundos o menos.')
+      }
+      const extension = archivo.type === 'video/webm' ? 'webm' : 'mp4'
+      const ruta = `${crypto.randomUUID()}.${extension}`
+      setMensaje('Publicando…')
+      const { error: subida } = await supabase.storage
+        .from(BUCKET)
+        .upload(ruta, archivo, { contentType: archivo.type, upsert: false })
+      if (subida) throw subida
+      rutaSubida = ruta
+      const { error } = await supabase.from('videos_cintillo').insert({
+        titulo: nombre,
+        archivo_path: ruta,
+        duracion
+      })
+      if (error) throw error
+      rutaSubida = null
+      setTitulo('')
+      setArchivo(null)
+      if (entrada.current) entrada.current.value = ''
+      setEditor(false)
+      setMensaje('✅ Video publicado.')
+      await cargar()
+    } catch (error) {
+      let aviso = ''
+      if (rutaSubida) {
+        const { error: limpieza } = await supabase.storage
+          .from(BUCKET).remove([rutaSubida])
+        if (limpieza) aviso = ' El archivo quedó pendiente de limpieza.'
+      }
+      setMensaje(`${error.message}${aviso}`)
+    } finally {
+      setOcupado(false)
+    }
+  }
+
+  async function eliminar(video) {
+    if (!isAdmin || ocupado) return
+    if (!window.confirm(`¿Eliminar "${video.titulo}"?`)) return
+    setOcupado(true)
+    try {
+      const { data, error } = await supabase.from('videos_cintillo')
+        .delete().eq('id', video.id).select('id')
+      if (error) throw error
+      if (!data?.length) throw new Error('No se confirmó la eliminación.')
+      setVideos(actuales => actuales.filter(item => item.id !== video.id))
+      const { error: borrado } = await supabase.storage
+        .from(BUCKET).remove([video.archivo_path])
+      setMensaje(borrado
+        ? `Retirado del cintillo. Falta borrar el archivo: ${borrado.message}`
+        : 'Video eliminado.')
+    } catch (error) {
+      setMensaje(error.message)
+    } finally {
+      setOcupado(false)
+    }
+  }
+
+  return (
+    <section className="videos-cintillo" aria-label="Videos de la academia">
+      <header className="videos-cintillo-header">
+        <div>
+          <small>GENERALES EN ACCIÓN</small>
+          <h3>Momentos de la academia</h3>
+          <p>Entrenamientos y jugadas en 10 segundos.</p>
+        </div>
+        {isAdmin && (
+          <button type="button" disabled={ocupado}
+            onClick={() => setEditor(actual => !actual)}>
+            {editor ? 'Cerrar' : '＋ Publicar video'}
+          </button>
+        )}
+      </header>
+
+      {isAdmin && editor && (
+        <form className="videos-cintillo-form" onSubmit={publicar}>
+          <label>
+            Título
+            <input value={titulo} maxLength={120} required disabled={ocupado}
+              onChange={evento => setTitulo(evento.target.value)} />
+          </label>
+          <label>
+            MP4 o WebM · máximo 10 segundos y 20 MB
+            <input ref={entrada} type="file" accept="video/mp4,video/webm"
+              required disabled={ocupado}
+              onChange={evento => setArchivo(evento.target.files?.[0] || null)} />
+          </label>
+          <button type="submit" disabled={ocupado || !archivo}>
+            {ocupado ? 'Publicando…' : 'Publicar'}
+          </button>
+        </form>
+      )}
+
+      {mensaje && <p className="videos-cintillo-mensaje" role="status">{mensaje}</p>}
+      {videos.length === 0 ? (
+        <p className="videos-cintillo-vacio">Pronto compartiremos nuevos videos.</p>
+      ) : (
+        <>
+          <p className="videos-cintillo-ayuda">Desliza para ver más videos →</p>
+          <div className="videos-cintillo-lista">
+            {videos.map(video => {
+              const { data } = supabase.storage
+                .from(BUCKET).getPublicUrl(video.archivo_path)
+              return (
+                <article className="videos-cintillo-tarjeta" key={video.id}>
+                  <video src={data.publicUrl} controls playsInline
+                    preload="metadata" aria-label={video.titulo}
+                    onPlay={evento => {
+                      const actual = evento.currentTarget
+                      actual.closest('.videos-cintillo-lista')
+                        ?.querySelectorAll('video').forEach(otro => {
+                          if (otro !== actual) otro.pause()
+                        })
+                    }} />
+                  <div className="videos-cintillo-pie">
+                    <strong>{video.titulo}</strong>
+                    <span>{Math.ceil(Number(video.duracion))} s</span>
+                  </div>
+                  {isAdmin && (
+                    <button className="videos-cintillo-eliminar" type="button"
+                      disabled={ocupado} onClick={() => eliminar(video)}>
+                      Eliminar video
+                    </button>
+                  )}
+                </article>
+              )
+            })}
+          </div>
+        </>
+      )}
+    </section>
+  )
+}

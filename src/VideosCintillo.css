@@ -1,0 +1,120 @@
+.videos-cintillo {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid rgba(212,175,55,.4);
+  border-radius: 20px;
+  background: linear-gradient(135deg, #081b30, #123654);
+  color: #fff;
+}
+.videos-cintillo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.videos-cintillo-header small {
+  color: #e6c369;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+.videos-cintillo-header h3 {
+  margin: 6px 0;
+  color: #fff;
+  font-size: 22px;
+}
+.videos-cintillo-header p,
+.videos-cintillo-ayuda,
+.videos-cintillo-vacio {
+  color: #cbd7e3;
+  font-size: 14px;
+}
+.videos-cintillo button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 10px;
+  padding: 11px 15px;
+  background: #e6c369;
+  color: #081b30;
+  font-weight: 800;
+}
+.videos-cintillo button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+.videos-cintillo-lista {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 6px 0 14px;
+}
+.videos-cintillo-tarjeta {
+  flex: 0 0 260px;
+  min-width: 0;
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: #fff;
+  border-radius: 16px;
+  color: #081b30;
+}
+.videos-cintillo-tarjeta video {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  background: #050e18;
+}
+.videos-cintillo-pie {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+}
+.videos-cintillo-pie strong {
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.videos-cintillo-pie span {
+  white-space: nowrap;
+  font-size: 12px;
+  color: #536477;
+}
+.videos-cintillo .videos-cintillo-eliminar {
+  margin: 0 14px 14px;
+  background: #fff0f0;
+  color: #a82323;
+  font-size: 12px;
+}
+.videos-cintillo-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 16px;
+  background: rgba(255,255,255,.07);
+  border-radius: 14px;
+}
+.videos-cintillo-form label {
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+}
+.videos-cintillo-form input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px;
+  border-radius: 9px;
+  border: 1px solid #b9c8d8;
+  background: #fff;
+  color: #081b30;
+}
+.videos-cintillo-mensaje {
+  color: #ffe3a0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .videos-cintillo { padding: 15px; }
+  .videos-cintillo-tarjeta { flex-basis: 230px; }
+  .videos-cintillo-header h3 { font-size: 20px; }
+}

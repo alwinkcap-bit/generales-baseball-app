@@ -1,3 +1,4 @@
+import VideosCintillo from './VideosCintillo'
 
 
 import './inicio.css';
@@ -611,6 +612,8 @@ const responderReto = (opcionElegida) => {
             )}
           </section>
         )}
+
+        <VideosCintillo isAdmin={isAdmin} />
 
         <section className="inicio-panel-rapido" aria-label="Accesos principales">
           <button
