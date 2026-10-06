@@ -1,3 +1,4 @@
+import VideoCintilloVisor from './VideoCintilloVisor'
 import React, { useEffect, useRef, useState } from 'react'
 import { supabase } from './supabase'
 import './VideosCintillo.css'
@@ -185,15 +186,7 @@ export default function VideosCintillo({ isAdmin }) {
                 .from(BUCKET).getPublicUrl(video.archivo_path)
               return (
                 <article className="videos-cintillo-tarjeta" key={video.id}>
-                  <video src={data.publicUrl} controls playsInline
-                    preload="metadata" aria-label={video.titulo}
-                    onPlay={evento => {
-                      const actual = evento.currentTarget
-                      actual.closest('.videos-cintillo-lista')
-                        ?.querySelectorAll('video').forEach(otro => {
-                          if (otro !== actual) otro.pause()
-                        })
-                    }} />
+                  <VideoCintilloVisor src={data.publicUrl} titulo={video.titulo} />
                   <div className="videos-cintillo-pie">
                     <strong>{video.titulo}</strong>
                     <small className="videos-cintillo-fecha">
