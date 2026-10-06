@@ -3,6 +3,15 @@ import { supabase } from './supabase'
 import SalaClaseEnVivo from './SalaClaseEnVivo'
 import './SesionesClasesVivo.css'
 
+const CLASES_DISPONIBLES = [
+  { id: '1', titulo: 'Fundamentos del béisbol' },
+  { id: '2', titulo: 'Fildeo de roletazos' },
+  { id: '3', titulo: 'Fundamentos del bateo' },
+  { id: '4', titulo: 'Pequeños Gigantes · 4 a 6 años' },
+  { id: '5', titulo: 'Estrategia y lectura del juego' },
+  { id: '6', titulo: 'Bateo avanzado' }
+]
+
 export default function SesionesClasesVivo({
   usuario,
   isAdmin
@@ -15,7 +24,8 @@ export default function SesionesClasesVivo({
     clase_id: '5',
     titulo: 'Estrategia y lectura del juego',
     fecha_inicio: '',
-    duracion_minutos: '60'
+    duracion_minutos: '60',
+    enlace_meet: ''
   })
 
   useEffect(() => {
@@ -42,13 +52,17 @@ export default function SesionesClasesVivo({
   function seleccionarClase(evento) {
     const claseId = evento.target.value
 
+    const claseSeleccionada =
+      CLASES_DISPONIBLES.find(
+        (clase) => clase.id === claseId
+      )
+
     setFormulario((actual) => ({
       ...actual,
       clase_id: claseId,
       titulo:
-        claseId === '6'
-          ? 'Bateo avanzado'
-          : 'Estrategia y lectura del juego'
+        claseSeleccionada?.titulo ||
+        'Clase virtual de béisbol'
     }))
   }
 
@@ -56,9 +70,16 @@ export default function SesionesClasesVivo({
     evento.preventDefault()
     setMensaje('')
 
-    const sala =
-      `Generales-${formulario.clase_id}-` +
-      crypto.randomUUID().replaceAll('-', '')
+    const sala = formulario.enlace_meet.trim()
+
+    if (
+      !/^https:\/\/meet\.google\.com\/[a-z0-9-]+/i.test(sala)
+    ) {
+      setMensaje(
+        'Introduce un enlace válido de Google Meet.'
+      )
+      return
+    }
 
     const { error } = await supabase
       .from('sesiones_clases_vivo')
@@ -80,7 +101,8 @@ export default function SesionesClasesVivo({
     setFormularioOpen(false)
     setFormulario((actual) => ({
       ...actual,
-      fecha_inicio: ''
+      fecha_inicio: '',
+      enlace_meet: ''
     }))
     setMensaje('Sesión programada correctamente.')
     await cargarSesiones()
@@ -172,12 +194,14 @@ export default function SesionesClasesVivo({
                 value={formulario.clase_id}
                 onChange={seleccionarClase}
               >
-                <option value="5">
-                  Estrategia y lectura del juego
-                </option>
-                <option value="6">
-                  Bateo avanzado
-                </option>
+                {CLASES_DISPONIBLES.map((clase) => (
+                  <option
+                    key={clase.id}
+                    value={clase.id}
+                  >
+                    {clase.titulo}
+                  </option>
+                ))}
               </select>
             </label>
 
@@ -189,6 +213,22 @@ export default function SesionesClasesVivo({
                   setFormulario((actual) => ({
                     ...actual,
                     titulo: evento.target.value
+                  }))
+                }
+                required
+              />
+            </label>
+
+            <label>
+              Enlace de Google Meet
+              <input
+                type="url"
+                value={formulario.enlace_meet}
+                placeholder="https://meet.google.com/abc-defg-hij"
+                onChange={(evento) =>
+                  setFormulario((actual) => ({
+                    ...actual,
+                    enlace_meet: evento.target.value
                   }))
                 }
                 required
@@ -297,11 +337,8 @@ export default function SesionesClasesVivo({
 
       {salaActiva && (
         <SalaClaseEnVivo
-        sesionId={salaActiva.id}
           sala={salaActiva.sala}
           titulo={salaActiva.titulo}
-          usuario={usuario}
-          isAdmin={isAdmin}
           onCerrar={() => setSalaActiva(null)}
         />
       )}

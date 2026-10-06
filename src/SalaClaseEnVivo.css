@@ -142,3 +142,196 @@
     padding: 8px 11px;
   }
 }
+
+
+/* ===== DISEÑO GOOGLE MEET GENERALES ===== */
+.sala-vivo-contenedor {
+  min-height: calc(100vh - 120px);
+  padding: 35px 20px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(
+      circle at 50% 10%,
+      rgba(243, 184, 59, 0.14),
+      transparent 36%
+    ),
+    linear-gradient(145deg, #071d32, #020b14);
+}
+
+.sala-meet-acceso {
+  width: min(560px, 100%);
+  padding: 38px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid rgba(243, 184, 59, 0.65);
+  border-radius: 24px;
+  color: white;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(243, 184, 59, 0.16),
+      transparent 35%
+    ),
+    linear-gradient(145deg, #17486f, #071d32);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.sala-meet-icono {
+  width: 82px;
+  height: 82px;
+  margin-bottom: 18px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #f3b83b;
+  border-radius: 50%;
+  background:
+    linear-gradient(145deg, #1c527b, #08253e);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.38),
+    0 0 24px rgba(243, 184, 59, 0.18);
+  font-size: 2.7rem;
+}
+
+.sala-meet-acceso > small {
+  color: #f3b83b;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.sala-meet-acceso h3 {
+  margin: 12px 0 8px;
+  color: white;
+  font-size: clamp(1.55rem, 4vw, 2.25rem);
+}
+
+.sala-meet-acceso p {
+  max-width: 450px;
+  margin: 0 0 24px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+}
+
+.sala-meet-boton {
+  width: min(390px, 100%);
+  min-height: 54px;
+  padding: 14px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ffe58b;
+  border-radius: 14px;
+  color: #061b2e;
+  background:
+    linear-gradient(145deg, #ffe477, #e6a51a);
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.35),
+    inset 0 2px rgba(255, 255, 255, 0.4);
+  font-size: 1rem;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.sala-meet-boton:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 28px rgba(0, 0, 0, 0.42),
+    0 0 20px rgba(243, 184, 59, 0.25);
+}
+
+.sala-meet-boton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.sala-meet-aviso {
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 600px) {
+  .sala-vivo-contenedor {
+    min-height: calc(100vh - 105px);
+    padding: 22px 13px;
+  }
+
+  .sala-meet-acceso {
+    padding: 30px 18px;
+    border-radius: 19px;
+  }
+
+  .sala-meet-icono {
+    width: 70px;
+    height: 70px;
+    font-size: 2.25rem;
+  }
+
+  .sala-meet-boton {
+    min-height: 52px;
+  }
+}
+
+
+/* ===== BOTÓN CERRAR CLASE PROFESIONAL ===== */
+.sala-vivo-header .sala-vivo-cerrar {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid #f3b83b;
+  border-radius: 50%;
+  color: #f8ca50;
+  background:
+    linear-gradient(145deg, #17486f, #071d32);
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.35),
+    inset 0 1px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.sala-vivo-header .sala-vivo-cerrar svg {
+  width: 21px;
+  height: 21px;
+}
+
+.sala-vivo-header .sala-vivo-cerrar:hover {
+  color: #08263e;
+  background:
+    linear-gradient(145deg, #ffe477, #e6a51a);
+  transform: scale(1.06);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.42),
+    0 0 15px rgba(243, 184, 59, 0.25);
+}
+
+.sala-vivo-header .sala-vivo-cerrar:active {
+  transform: scale(0.94);
+}
+
+@media (max-width: 600px) {
+  .sala-vivo-header .sala-vivo-cerrar {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+
+  .sala-vivo-header .sala-vivo-cerrar svg {
+    width: 19px;
+    height: 19px;
+  }
+}
