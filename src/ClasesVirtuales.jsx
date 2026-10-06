@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { supabase } from './supabase'
 import './ClasesVirtuales.css'
 import SesionesClasesVivo from './SesionesClasesVivo'
 import fildeoSecuencia from './public/clases/fildeo-secuencia.png'
@@ -53,6 +54,42 @@ const clases = [
     disponible: false,
     premium: true,
     precio: 10
+  },
+  {
+    id: 7,
+    icono: '🧤',
+    titulo: 'Defensa personalizada',
+    descripcion:
+      'Sesión individual para mejorar fildeo, desplazamientos, recepción y tiros.',
+    disponible: false,
+    premium: true,
+    personalizada: true,
+    precio: 15,
+    duracion: 60
+  },
+  {
+    id: 8,
+    icono: '🏏',
+    titulo: 'Bateo personalizado',
+    descripcion:
+      'Evaluación individual del swing, postura, carga, contacto y terminación.',
+    disponible: false,
+    premium: true,
+    personalizada: true,
+    precio: 15,
+    duracion: 60
+  },
+  {
+    id: 9,
+    icono: '🧠',
+    titulo: 'Paquete completo de béisbol',
+    descripcion:
+      'Programa integral personalizado de defensa, bateo, fundamentos y lectura del juego.',
+    disponible: false,
+    premium: true,
+    personalizada: true,
+    precio: 25,
+    duracion: 60
   }
 ]
 
@@ -260,11 +297,21 @@ function obtenerCompletadas() {
 export default function ClasesVirtuales({
   onCerrar,
   usuario,
-  isAdmin
+  isAdmin,
+  onLogin
 }) {
   const [claseActiva, setClaseActiva] = useState(null)
+  const [accesosAutorizados, setAccesosAutorizados] = useState([])
+  const [solicitudesUsuario, setSolicitudesUsuario] = useState([])
+  const [solicitudesPendientes, setSolicitudesPendientes] = useState([])
+  const [mensajeAcceso, setMensajeAcceso] = useState('')
+  const [procesandoAcceso, setProcesandoAcceso] = useState(false)
   const [respuestas, setRespuestas] = useState({})
   const [resultado, setResultado] = useState(null)
+  const [
+    premiumSeleccionada,
+    setPremiumSeleccionada
+  ] = useState(null)
   const [completadas, setCompletadas] = useState(
     obtenerCompletadas
   )
@@ -272,12 +319,357 @@ export default function ClasesVirtuales({
   const preguntas =
     preguntasPorClase[claseActiva?.id] || []
 
+  function nombreClase(claseId) {
+    return (
+      clases.find(
+        (clase) => clase.id === Number(claseId)
+      )?.titulo || `Clase ${claseId}`
+    )
+  }
+
+  function tieneAcceso(claseId) {
+    if (isAdmin) return true
+
+    const ahora = new Date()
+
+    return accesosAutorizados.some((acceso) => {
+      const vigente =
+        !acceso.fecha_expiracion ||
+        new Date(acceso.fecha_expiracion) > ahora
+
+      return (
+        Number(acceso.clase_id) === Number(claseId) &&
+        acceso.activo &&
+        vigente
+      )
+    })
+  }
+
+  function solicitudPendiente(claseId) {
+    return solicitudesUsuario.some(
+      (solicitud) =>
+        Number(solicitud.clase_id) === Number(claseId) &&
+        solicitud.estado === 'pendiente'
+    )
+  }
+
+  async function cargarControlAccesos() {
+    if (!usuario?.id) {
+      setAccesosAutorizados([])
+      setSolicitudesUsuario([])
+      setSolicitudesPendientes([])
+      return
+    }
+
+    const { data: accesos, error: accesosError } =
+      await supabase
+        .from('accesos_clases_premium')
+        .select(
+          'id, clase_id, activo, fecha_inicio, fecha_expiracion'
+        )
+        .eq('user_id', usuario.id)
+        .eq('activo', true)
+
+    if (accesosError) {
+      console.error(
+        'Error cargando accesos:',
+        accesosError
+      )
+    } else {
+      setAccesosAutorizados(accesos || [])
+    }
+
+    if (isAdmin) {
+      const { data, error } = await supabase
+        .from('solicitudes_clases_premium')
+        .select('*')
+        .eq('estado', 'pendiente')
+        .order('created_at', { ascending: true })
+
+      if (error) {
+        console.error(
+          'Error cargando solicitudes:',
+          error
+        )
+      } else {
+        setSolicitudesPendientes(data || [])
+      }
+
+      return
+    }
+
+    const { data, error } = await supabase
+      .from('solicitudes_clases_premium')
+      .select('id, clase_id, estado, created_at')
+      .eq('user_id', usuario.id)
+      .order('created_at', { ascending: false })
+
+    if (error) {
+      console.error(
+        'Error cargando solicitudes del usuario:',
+        error
+      )
+    } else {
+      setSolicitudesUsuario(data || [])
+    }
+  }
+
+  useEffect(() => {
+    cargarControlAccesos()
+
+    if (!usuario?.id) return undefined
+
+    const intervalo = window.setInterval(
+      cargarControlAccesos,
+      5000
+    )
+
+    return () => window.clearInterval(intervalo)
+  }, [usuario?.id, isAdmin])
+
+  async function solicitarAcceso(clase) {
+    let usuarioSolicitud = usuario
+    let nombreSolicitante =
+      usuario?.user_metadata?.nombre ||
+      usuario?.user_metadata?.full_name ||
+      ''
+
+    if (!usuarioSolicitud?.id) {
+      nombreSolicitante = window.prompt(
+        'Escribe tu nombre para solicitar acceso:'
+      )?.trim()
+
+      if (!nombreSolicitante) return
+
+      setProcesandoAcceso(true)
+      setMensajeAcceso(
+        'Preparando tu solicitud de acceso…'
+      )
+
+      const { data, error } =
+        await supabase.auth.signInAnonymously({
+          options: {
+            data: {
+              nombre: nombreSolicitante
+            }
+          }
+        })
+
+      if (error || !data?.user) {
+        setProcesandoAcceso(false)
+        console.error(error)
+
+        setMensajeAcceso(
+          error?.message ||
+          'No se pudo preparar la solicitud.'
+        )
+        return
+      }
+
+      usuarioSolicitud = data.user
+    }
+
+    if (solicitudPendiente(clase.id)) {
+      setMensajeAcceso(
+        '⏳ Ya estás esperando la autorización del administrador.'
+      )
+      setPremiumSeleccionada(null)
+      setProcesandoAcceso(false)
+      return
+    }
+
+    setProcesandoAcceso(true)
+    setMensajeAcceso('Enviando solicitud…')
+
+    const nombre =
+      nombreSolicitante ||
+      usuarioSolicitud.user_metadata?.nombre ||
+      usuarioSolicitud.user_metadata?.full_name ||
+      usuarioSolicitud.email?.split('@')[0] ||
+      'Visitante'
+
+    const { error } = await supabase
+      .from('solicitudes_clases_premium')
+      .insert({
+        user_id: usuarioSolicitud.id,
+        modalidad: clase.personalizada
+          ? 'personalizada'
+          : clase.premium
+            ? 'premium'
+            : 'academia_digital',
+        clase_id: clase.id,
+        monto: Number(clase.precio || 0),
+        estado: 'pendiente',
+        solicitante_nombre: nombre,
+        solicitante_email:
+          usuarioSolicitud.email || ''
+      })
+
+    setProcesandoAcceso(false)
+
+    if (error) {
+      console.error(error)
+
+      setMensajeAcceso(
+        `No se pudo enviar la solicitud: ${error.message}`
+      )
+      return
+    }
+
+    setPremiumSeleccionada(null)
+
+    setSolicitudesUsuario((actuales) => [
+      ...actuales,
+      {
+        clase_id: clase.id,
+        estado: 'pendiente'
+      }
+    ])
+
+    setMensajeAcceso(
+      '⏳ Solicitud enviada. Espera la autorización del administrador.'
+    )
+
+    await cargarControlAccesos()
+  }
+
+  async function autorizarSolicitud(solicitud) {
+    if (!isAdmin || procesandoAcceso) return
+
+    setProcesandoAcceso(true)
+    setMensajeAcceso('')
+
+    const { data: accesoExistente } = await supabase
+      .from('accesos_clases_premium')
+      .select('id')
+      .eq('user_id', solicitud.user_id)
+      .eq('clase_id', solicitud.clase_id)
+      .limit(1)
+      .maybeSingle()
+
+    let errorAcceso
+
+    if (accesoExistente?.id) {
+      const resultado = await supabase
+        .from('accesos_clases_premium')
+        .update({
+          activo: true,
+          modalidad: solicitud.modalidad,
+          fecha_inicio: new Date().toISOString(),
+          fecha_expiracion: null,
+          solicitud_id: solicitud.id
+        })
+        .eq('id', accesoExistente.id)
+
+      errorAcceso = resultado.error
+    } else {
+      const resultado = await supabase
+        .from('accesos_clases_premium')
+        .insert({
+          user_id: solicitud.user_id,
+          modalidad: solicitud.modalidad,
+          clase_id: solicitud.clase_id,
+          activo: true,
+          fecha_inicio: new Date().toISOString(),
+          fecha_expiracion: null,
+          solicitud_id: solicitud.id
+        })
+
+      errorAcceso = resultado.error
+    }
+
+    if (errorAcceso) {
+      setProcesandoAcceso(false)
+      setMensajeAcceso(
+        `No se pudo autorizar: ${errorAcceso.message}`
+      )
+      return
+    }
+
+    const { error } = await supabase
+      .from('solicitudes_clases_premium')
+      .update({
+        estado: 'aprobada',
+        notas_admin: 'Acceso autorizado desde la aplicación.',
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', solicitud.id)
+
+    setProcesandoAcceso(false)
+
+    if (error) {
+      setMensajeAcceso(
+        `El acceso se creó, pero no se actualizó la solicitud: ${error.message}`
+      )
+      return
+    }
+
+    setMensajeAcceso(
+      `✅ Acceso autorizado para ${solicitud.solicitante_nombre || solicitud.solicitante_email || 'el usuario'}.`
+    )
+
+    await cargarControlAccesos()
+  }
+
+  async function rechazarSolicitud(solicitud) {
+    if (!isAdmin || procesandoAcceso) return
+
+    setProcesandoAcceso(true)
+
+    const { error } = await supabase
+      .from('solicitudes_clases_premium')
+      .update({
+        estado: 'rechazada',
+        notas_admin: 'Solicitud rechazada desde la aplicación.',
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', solicitud.id)
+
+    setProcesandoAcceso(false)
+
+    if (error) {
+      setMensajeAcceso(
+        `No se pudo rechazar: ${error.message}`
+      )
+      return
+    }
+
+    setMensajeAcceso('Solicitud rechazada.')
+    await cargarControlAccesos()
+  }
+
   function abrirClase(clase) {
-    if (!clase.disponible) {
-      window.alert(
-        clase.premium
-          ? 'Clase avanzada premium. Selecciona una modalidad de acceso para desbloquearla.'
-          : 'Esta clase estará disponible próximamente.'
+    if (!tieneAcceso(clase.id)) {
+      if (clase.premium) {
+        setPremiumSeleccionada(clase)
+      } else if (solicitudPendiente(clase.id)) {
+        setMensajeAcceso(
+          'Tu solicitud está pendiente de autorización.'
+        )
+      } else {
+        const confirmar = window.confirm(
+          `Esta clase requiere autorización del administrador.\n\n¿Deseas solicitar acceso a "${clase.titulo}"?`
+        )
+
+        if (confirmar) {
+          solicitarAcceso(clase)
+        }
+      }
+
+      return
+    }
+
+    if (clase.personalizada) {
+      setPremiumSeleccionada(clase)
+      setMensajeAcceso(
+        '✅ Tienes acceso autorizado. El administrador coordinará tu sesión.'
+      )
+      return
+    }
+
+    if (!clase.disponible && !isAdmin) {
+      setMensajeAcceso(
+        'Tu acceso está autorizado. El contenido será habilitado por el administrador.'
       )
       return
     }
@@ -285,6 +677,37 @@ export default function ClasesVirtuales({
     setClaseActiva(clase)
     setRespuestas({})
     setResultado(null)
+  }
+
+  function solicitarClasePersonalizada() {
+    if (!premiumSeleccionada) return
+
+    const nombreUsuario =
+      usuario?.user_metadata?.nombre ||
+      usuario?.user_metadata?.full_name ||
+      usuario?.email ||
+      'Usuario interesado'
+
+    const mensaje = [
+      'Hola, Generales de Chitré.',
+      '',
+      `Deseo solicitar la clase premium: ${premiumSeleccionada.titulo}.`,
+      `Valor: $${premiumSeleccionada.precio} por sesión.`,
+      `Duración: ${premiumSeleccionada.duracion || 60} minutos.`,
+      `Solicitante: ${nombreUsuario}.`,
+      '',
+      'Deseo coordinar la fecha, el pago y el enlace de Google Meet.'
+    ].join('\n')
+
+    const enlace =
+      'https://wa.me/50763776387?text=' +
+      encodeURIComponent(mensaje)
+
+    window.open(
+      enlace,
+      '_blank',
+      'noopener,noreferrer'
+    )
   }
 
   function volverAClases() {
@@ -363,12 +786,178 @@ export default function ClasesVirtuales({
           </button>
         </header>
 
+        {premiumSeleccionada && (
+          <div
+            className="clase-premium-fondo"
+            onClick={() => setPremiumSeleccionada(null)}
+          >
+            <section
+              className="clase-premium-modal"
+              onClick={(evento) => evento.stopPropagation()}
+            >
+              <button
+                type="button"
+                className="clase-premium-cerrar"
+                onClick={() => setPremiumSeleccionada(null)}
+                aria-label="Cerrar información"
+              >
+                ×
+              </button>
+
+              <span className="clase-premium-icono">
+                {premiumSeleccionada.icono}
+              </span>
+
+              <small>ENTRENAMIENTO PERSONALIZADO</small>
+              <h3>{premiumSeleccionada.titulo}</h3>
+              <p>{premiumSeleccionada.descripcion}</p>
+
+              <div className="clase-premium-detalles">
+                <article>
+                  <span>💵</span>
+                  <div>
+                    <small>INVERSIÓN</small>
+                    <strong>
+                      ${premiumSeleccionada.precio}
+                    </strong>
+                  </div>
+                </article>
+
+                <article>
+                  <span>⏱️</span>
+                  <div>
+                    <small>DURACIÓN</small>
+                    <strong>
+                      {premiumSeleccionada.duracion || 60} minutos
+                    </strong>
+                  </div>
+                </article>
+
+                <article>
+                  <span>🎥</span>
+                  <div>
+                    <small>MODALIDAD</small>
+                    <strong>Google Meet</strong>
+                  </div>
+                </article>
+              </div>
+
+              <ul>
+                <li>Evaluación individual del jugador.</li>
+                <li>Correcciones técnicas personalizadas.</li>
+                <li>Ejercicios adaptados a su nivel.</li>
+                <li>Recomendaciones para continuar practicando.</li>
+              </ul>
+
+              <button
+                type="button"
+                className="clase-premium-solicitar"
+                onClick={() => solicitarAcceso(premiumSeleccionada)}
+              >
+                {procesandoAcceso
+                  ? 'Enviando solicitud…'
+                  : solicitudPendiente(premiumSeleccionada.id)
+                    ? 'Solicitud pendiente ⏳'
+                    : 'Solicitar autorización →'}
+              </button>
+
+              <span className="clase-premium-nota">
+                El administrador confirmará el pago, la fecha y
+                el enlace privado de Google Meet.
+              </span>
+            </section>
+          </div>
+        )}
+
+        {mensajeAcceso && (
+          <p className="clases-acceso-mensaje">
+            {mensajeAcceso}
+          </p>
+        )}
+
         {!claseActiva ? (
           <>
             <SesionesClasesVivo
               usuario={usuario}
               isAdmin={isAdmin}
             />
+
+            {isAdmin && (
+              <section className="clases-solicitudes-admin">
+                <header>
+                  <div>
+                    <small>🔔 CONTROL DE ACCESOS</small>
+                    <h3>
+                      Solicitudes pendientes
+                      <span>{solicitudesPendientes.length}</span>
+                    </h3>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={cargarControlAccesos}
+                  >
+                    ↻ Actualizar
+                  </button>
+                </header>
+
+                {solicitudesPendientes.length === 0 ? (
+                  <p>No hay solicitudes pendientes.</p>
+                ) : (
+                  <div className="clases-solicitudes-lista">
+                    {solicitudesPendientes.map((solicitud) => (
+                      <article key={solicitud.id}>
+                        <div>
+                          <small>
+                            {solicitud.modalidad?.toUpperCase()}
+                          </small>
+
+                          <strong>
+                            {solicitud.solicitante_nombre ||
+                              'Usuario registrado'}
+                          </strong>
+
+                          <span>
+                            {solicitud.solicitante_email ||
+                              solicitud.user_id}
+                          </span>
+
+                          <b>
+                            {nombreClase(solicitud.clase_id)}
+                            {Number(solicitud.monto) > 0
+                              ? ` · $${solicitud.monto}`
+                              : ''}
+                          </b>
+                        </div>
+
+                        <div>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              autorizarSolicitud(solicitud)
+                            }
+                            disabled={procesandoAcceso}
+                          >
+                            ✓ Autorizar
+                          </button>
+
+                          <button
+                            type="button"
+                            className="solicitud-rechazar"
+                            onClick={() =>
+                              rechazarSolicitud(solicitud)
+                            }
+                            disabled={procesandoAcceso}
+                          >
+                            Rechazar
+                          </button>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
 
             <section className="clases-progreso">
               <div>
@@ -391,19 +980,26 @@ export default function ClasesVirtuales({
             <div className="clases-grid">
               {clases.map((clase) => {
                 const completada = completadas.includes(clase.id)
+                const autorizada = tieneAcceso(clase.id)
+                const pendiente = solicitudPendiente(clase.id)
 
                 return (
                   <article
                     key={clase.id}
                     className={[
                       completada ? 'completada' : '',
-                      clase.premium ? 'clase-premium' : ''
+                      clase.premium ? 'clase-premium' : '',
+                      autorizada
+                        ? 'clase-autorizada'
+                        : 'clase-bloqueada'
                     ].filter(Boolean).join(' ')}
                   >
                     <small>
-                      {clase.premium
-                        ? '⭐ CLASE PREMIUM'
-                        : `CLASE ${String(clase.id).padStart(2, '0')}`}
+                      {autorizada
+                        ? '✓ ACCESO AUTORIZADO'
+                        : clase.premium
+                          ? '🔒 CLASE PREMIUM'
+                          : `🔒 CLASE ${String(clase.id).padStart(2, '0')}`}
                     </small>
 
                     <span>{clase.icono}</span>
@@ -420,13 +1016,17 @@ export default function ClasesVirtuales({
                       type="button"
                       onClick={() => abrirClase(clase)}
                     >
-                      {clase.disponible
-                        ? completada
-                          ? 'Repasar clase →'
-                          : 'Comenzar clase →'
-                        : clase.premium
-                          ? `Desbloquear sesión · $${clase.precio} 🔒`
-                          : 'Próximamente 🔒'}
+                      {autorizada
+                        ? clase.personalizada
+                          ? 'Acceso autorizado ✓'
+                          : completada
+                            ? 'Repasar clase →'
+                            : 'Abrir clase →'
+                        : pendiente
+                          ? 'Solicitud pendiente ⏳'
+                          : clase.precio
+                            ? `Solicitar acceso · $${clase.precio} 🔒`
+                            : 'Solicitar acceso 🔒'}
                     </button>
                   </article>
                 )

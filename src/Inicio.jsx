@@ -615,29 +615,12 @@ const responderReto = (opcionElegida) => {
         <section className="inicio-panel-rapido" aria-label="Accesos principales">
           <button
             type="button"
-            className={
-              usuario || isAdmin
-                ? 'inicio-clases-autorizadas'
-                : 'inicio-clases-bloqueadas'
-            }
-            onClick={() => {
-              if (usuario || isAdmin) {
-                setClasesVirtualesOpen(true)
-              } else {
-                window.alert(
-                  'Inicia sesión para acceder a la Academia Digital.'
-                )
-                onLogin()
-              }
-            }}
+            className="inicio-clases-publicas"
+            onClick={() => setClasesVirtualesOpen(true)}
           >
-            <span className="inicio-panel-icono">
-              {usuario || isAdmin ? '▶' : '🔒'}
-            </span>
-
+            <span className="inicio-panel-icono">▶</span>
             <strong>Clases virtuales</strong>
-
-            <b>{usuario || isAdmin ? '›' : '🔒'}</b>
+            <b>›</b>
           </button>
 
           <button type="button" onClick={() => setProgramasOpen(true)}>
@@ -683,10 +666,11 @@ const responderReto = (opcionElegida) => {
           </button>
         </section>
 
-        {clasesVirtualesOpen && (usuario || isAdmin) && (
+        {clasesVirtualesOpen && (
           <ClasesVirtuales
             usuario={usuario}
             isAdmin={isAdmin}
+            onLogin={onLogin}
             onCerrar={() => setClasesVirtualesOpen(false)}
           />
         )}
