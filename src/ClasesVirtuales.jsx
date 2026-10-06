@@ -1,3 +1,4 @@
+import BateoAvanzado, { preguntasBateoAvanzado } from './BateoAvanzado'
 import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { supabase } from './supabase'
@@ -52,7 +53,7 @@ const clases = [
     titulo: 'Bateo avanzado',
     descripcion:
       'Lectura del lanzamiento, enfoque, ajustes y producción ofensiva.',
-    disponible: false,
+    disponible: true,
     premium: true,
     precio: 10
   },
@@ -280,7 +281,8 @@ const preguntasPorClase = {
   1: preguntasClase1,
   2: preguntasClase2,
   3: preguntasClase3,
-  4: preguntasClase4
+  4: preguntasClase4,
+  6: preguntasBateoAvanzado
 }
 
 function obtenerCompletadas() {
@@ -1152,7 +1154,7 @@ export default function ClasesVirtuales({
               ← Volver a todas las clases
             </button>
 
-            {claseActiva.id <= 4 && (
+            {(claseActiva.id <= 4 || claseActiva.id === 6) && (
               <RecursosClase
                 clase={claseActiva}
                 usuario={usuario}
@@ -1161,7 +1163,9 @@ export default function ClasesVirtuales({
               />
             )}
 
-            {claseActiva.id === 2 ? (
+            {claseActiva.id === 6 ? (
+              <BateoAvanzado />
+            ) : claseActiva.id === 2 ? (
               <>
                 <section className="clase-portada clase-portada-fildeo">
                   <span>🧤</span>
