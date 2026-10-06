@@ -492,11 +492,7 @@ export default function ClasesVirtuales({
       .from('solicitudes_clases_premium')
       .insert({
         user_id: usuarioSolicitud.id,
-        modalidad: clase.personalizada
-          ? 'personalizada'
-          : clase.premium
-            ? 'premium'
-            : 'academia_digital',
+        modalidad: 'clase_individual',
         clase_id: clase.id,
         monto: Number(clase.precio || 0),
         estado: 'pendiente',
