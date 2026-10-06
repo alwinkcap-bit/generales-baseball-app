@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { createPortal } from 'react-dom'
 import './ClasesVirtuales.css'
+import SesionesClasesVivo from './SesionesClasesVivo'
 import fildeoSecuencia from './public/clases/fildeo-secuencia.png'
 import bateoSecuencia from './public/clases/bateo-secuencia.png'
 import pequenosGigantes from './public/clases/pequenos-gigantes.png'
@@ -36,17 +37,22 @@ const clases = [
   },
   {
     id: 5,
-    icono: '🔢',
-    titulo: 'Posiciones defensivas',
-    descripcion: 'Nombres y números de las posiciones.',
-    disponible: false
+    icono: '🧠',
+    titulo: 'Estrategia y lectura del juego',
+    descripcion: 'Decisiones, coberturas y situaciones reales de juego.',
+    disponible: false,
+    premium: true,
+    precio: 5
   },
   {
     id: 6,
-    icono: '⭐',
-    titulo: 'Valores deportivos',
-    descripcion: 'Disciplina, respeto y trabajo en equipo.',
-    disponible: false
+    icono: '🏏',
+    titulo: 'Bateo avanzado',
+    descripcion:
+      'Lectura del lanzamiento, enfoque, ajustes y producción ofensiva.',
+    disponible: false,
+    premium: true,
+    precio: 10
   }
 ]
 
@@ -251,7 +257,11 @@ function obtenerCompletadas() {
   }
 }
 
-export default function ClasesVirtuales({ onCerrar }) {
+export default function ClasesVirtuales({
+  onCerrar,
+  usuario,
+  isAdmin
+}) {
   const [claseActiva, setClaseActiva] = useState(null)
   const [respuestas, setRespuestas] = useState({})
   const [resultado, setResultado] = useState(null)
@@ -264,7 +274,11 @@ export default function ClasesVirtuales({ onCerrar }) {
 
   function abrirClase(clase) {
     if (!clase.disponible) {
-      window.alert('Esta clase estará disponible próximamente.')
+      window.alert(
+        clase.premium
+          ? 'Clase avanzada premium. Selecciona una modalidad de acceso para desbloquearla.'
+          : 'Esta clase estará disponible próximamente.'
+      )
       return
     }
 
@@ -351,6 +365,11 @@ export default function ClasesVirtuales({ onCerrar }) {
 
         {!claseActiva ? (
           <>
+            <SesionesClasesVivo
+              usuario={usuario}
+              isAdmin={isAdmin}
+            />
+
             <section className="clases-progreso">
               <div>
                 <small>PROGRESO DE APRENDIZAJE</small>
@@ -376,10 +395,15 @@ export default function ClasesVirtuales({ onCerrar }) {
                 return (
                   <article
                     key={clase.id}
-                    className={completada ? 'completada' : ''}
+                    className={[
+                      completada ? 'completada' : '',
+                      clase.premium ? 'clase-premium' : ''
+                    ].filter(Boolean).join(' ')}
                   >
                     <small>
-                      CLASE {String(clase.id).padStart(2, '0')}
+                      {clase.premium
+                        ? '⭐ CLASE PREMIUM'
+                        : `CLASE ${String(clase.id).padStart(2, '0')}`}
                     </small>
 
                     <span>{clase.icono}</span>
@@ -400,7 +424,9 @@ export default function ClasesVirtuales({ onCerrar }) {
                         ? completada
                           ? 'Repasar clase →'
                           : 'Comenzar clase →'
-                        : 'Próximamente 🔒'}
+                        : clase.premium
+                          ? `Desbloquear sesión · $${clase.precio} 🔒`
+                          : 'Próximamente 🔒'}
                     </button>
                   </article>
                 )

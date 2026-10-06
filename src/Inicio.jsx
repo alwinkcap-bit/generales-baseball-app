@@ -27,6 +27,8 @@ export default function Inicio({
   onJugadoresPublicos,
   onEditarGaleria,
   isAdmin,
+  usuario,
+  onLogin,
   onRegistro,
 }) {
   const [tiendaOpen, setTiendaOpen] = useState(false)
@@ -614,28 +616,28 @@ const responderReto = (opcionElegida) => {
           <button
             type="button"
             className={
-              isAdmin
+              usuario || isAdmin
                 ? 'inicio-clases-autorizadas'
                 : 'inicio-clases-bloqueadas'
             }
             onClick={() => {
-              if (isAdmin) {
+              if (usuario || isAdmin) {
                 setClasesVirtualesOpen(true)
               } else {
                 window.alert(
-                  'Acceso exclusivo para administradores y usuarios autorizados.'
+                  'Inicia sesión para acceder a la Academia Digital.'
                 )
-                onAdmin()
+                onLogin()
               }
             }}
           >
             <span className="inicio-panel-icono">
-              {isAdmin ? '▶' : '🔒'}
+              {usuario || isAdmin ? '▶' : '🔒'}
             </span>
 
             <strong>Clases virtuales</strong>
 
-            <b>{isAdmin ? '›' : '🔒'}</b>
+            <b>{usuario || isAdmin ? '›' : '🔒'}</b>
           </button>
 
           <button type="button" onClick={() => setProgramasOpen(true)}>
@@ -681,8 +683,10 @@ const responderReto = (opcionElegida) => {
           </button>
         </section>
 
-        {clasesVirtualesOpen && isAdmin && (
+        {clasesVirtualesOpen && (usuario || isAdmin) && (
           <ClasesVirtuales
+            usuario={usuario}
+            isAdmin={isAdmin}
             onCerrar={() => setClasesVirtualesOpen(false)}
           />
         )}

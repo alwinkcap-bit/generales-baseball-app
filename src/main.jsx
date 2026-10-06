@@ -1055,6 +1055,11 @@ if (vista === 'inicio') {
     setVista('admin')
   }}
   isAdmin={isAdmin}
+  usuario={session?.user || null}
+  onLogin={() => {
+    setVista('admin')
+    setLoginOpen(true)
+  }}
   onRegistro={() => setVista('registro')}
 />
       
