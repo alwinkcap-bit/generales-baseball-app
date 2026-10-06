@@ -1,51 +1,53 @@
 .videos-cintillo {
-  margin: 24px 0;
-  padding: 24px;
+  box-sizing: border-box;
+  width: min(1120px, calc(100% - 32px));
+  margin: 22px auto;
+  padding: 18px;
+  overflow: hidden;
   color: #fff;
+  border: 1px solid rgba(231,184,54,.58);
+  border-radius: 22px;
   background:
-    radial-gradient(ellipse at top right, rgba(212,175,55,.14), transparent 60%),
-    linear-gradient(145deg, #081b30, #123451);
-  border: 1px solid rgba(230,195,105,.3);
-  border-radius: 24px;
-  box-shadow: 0 12px 30px rgba(4,17,31,.18);
+    radial-gradient(circle at 10% 0%, rgba(30,111,151,.28), transparent 38%),
+    linear-gradient(145deg, #071c30, #0b304b 62%, #071b2d);
+  box-shadow:
+    0 16px 34px rgba(0,12,25,.3),
+    inset 0 1px 0 rgba(255,255,255,.08);
 }
 .videos-cintillo-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 18px;
+  margin-bottom: 15px;
 }
 .videos-cintillo-header small {
-  color: #e6c369;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 4px;
+  color: #f2c94c;
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .16em;
 }
 .videos-cintillo-header h3 {
-  margin: 8px 0;
-  color: #fff;
-  font-size: clamp(22px, 3vw, 29px);
-  line-height: 1.2;
-}
-.videos-cintillo-header p {
   margin: 0;
-  color: #bdcede;
-  font-size: 14px;
+  color: #fff;
+  font-size: clamp(1.15rem, 2.5vw, 1.7rem);
+  line-height: 1.1;
+}
+.videos-cintillo-header p,
+.videos-cintillo-ayuda {
+  display: none;
 }
 .videos-cintillo button {
-  padding: 11px 16px;
-  border: 0;
-  border-radius: 11px;
-  background: #e6c369;
-  color: #081b30;
-  font: inherit;
-  font-size: 13px;
-  font-weight: 800;
+  border: 1px solid #efc84c;
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: #071a2b;
+  background: linear-gradient(135deg, #ffe47c, #d9a91f);
+  font-weight: 900;
   cursor: pointer;
-}
-.videos-cintillo button:hover:not(:disabled) {
-  background: #f3d58b;
+  box-shadow: 0 6px 16px rgba(217,169,31,.24);
 }
 .videos-cintillo button:disabled {
   opacity: .55;
@@ -54,331 +56,151 @@
 .videos-cintillo button:focus-visible,
 .videos-cintillo input:focus-visible,
 .videos-cintillo video:focus-visible {
-  outline: 3px solid #f3d58b;
-  outline-offset: 4px;
-}
-.videos-cintillo-ayuda {
-  margin: 22px 0 10px;
-  color: #bdcede;
-  font-size: 12px;
+  outline: 3px solid #f2c94c;
+  outline-offset: 3px;
 }
 .videos-cintillo-lista {
   display: flex;
-  gap: 18px;
+  gap: 12px;
   overflow-x: auto;
-  padding: 4px 2px 16px;
+  overflow-y: hidden;
+  padding: 2px 28px 8px 2px;
   scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: #d6b566 #17344c;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.videos-cintillo-lista::-webkit-scrollbar {
+  display: none;
 }
 .videos-cintillo-tarjeta {
-  flex: 0 0 290px;
-  min-width: 0;
+  box-sizing: border-box;
+  position: relative;
+  width: 270px;
+  height: 155px;
+  flex: 0 0 270px;
   overflow: hidden;
+  border: 1px solid rgba(255,214,81,.44);
+  border-radius: 15px;
+  background: #061727;
+  box-shadow: 0 7px 18px rgba(0,0,0,.3);
   scroll-snap-align: start;
-  background: #f7f9fc;
-  border-radius: 18px;
-  box-shadow: 0 8px 18px rgba(0,0,0,.2);
+  scroll-snap-stop: always;
 }
 .videos-cintillo-tarjeta video {
   display: block;
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: contain;
-  background: #030b14;
+  background: #061727;
 }
 .videos-cintillo-pie {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 12px;
-  padding: 17px 16px;
+  gap: 8px;
+  padding: 10px 12px 24px;
+  color: #fff;
+  background: linear-gradient(rgba(1,12,22,.88), transparent);
+  pointer-events: none;
 }
 .videos-cintillo-pie strong {
-  color: #102d48;
-  font-size: 15px;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
+  color: #fff;
+  font-size: .82rem;
+  font-weight: 800;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .videos-cintillo-pie span {
   flex-shrink: 0;
-  padding: 4px 8px;
-  color: #755617;
-  background: #f5e9cb;
-  border-radius: 7px;
-  font-size: 11px;
+  color: #ffe47c;
+  font-size: .72rem;
   font-weight: 800;
 }
+.videos-cintillo-fecha {
+  display: none;
+}
 .videos-cintillo .videos-cintillo-eliminar {
-  margin: 0 16px 15px;
-  padding: 7px 10px;
-  color: #9e3030;
-  background: #fbecec;
-  font-size: 11px;
+  position: absolute;
+  right: 8px;
+  top: 40px;
+  padding: 5px 8px;
+  color: #fff;
+  background: rgba(126,25,25,.9);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 7px;
+  box-shadow: none;
+  font-size: 10px;
 }
 .videos-cintillo-form {
   display: grid;
-  gap: 16px;
-  margin-top: 22px;
-  padding: 20px;
+  gap: 14px;
+  margin-bottom: 16px;
+  padding: 16px;
   background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 16px;
+  border-radius: 12px;
 }
 .videos-cintillo-form label {
   display: grid;
-  gap: 9px;
-  color: #e1eaf3;
+  gap: 8px;
   font-size: 13px;
 }
 .videos-cintillo-form input {
+  box-sizing: border-box;
   width: 100%;
   min-width: 0;
-  box-sizing: border-box;
-  padding: 12px;
-  color: #102d48;
-  background: #f8fafc;
+  padding: 11px;
   border: 1px solid #cad6e1;
-  border-radius: 10px;
-  font: inherit;
-  font-size: 14px;
-}
-.videos-cintillo-form input::file-selector-button {
-  margin-right: 10px;
-  padding: 8px 10px;
-  color: #fff;
-  background: #163a5b;
-  border: 0;
-  border-radius: 7px;
-  cursor: pointer;
+  border-radius: 9px;
+  color: #071a2b;
+  background: #fff;
 }
 .videos-cintillo-form > button {
   justify-self: start;
 }
 .videos-cintillo-mensaje {
-  margin-top: 16px;
-  padding: 12px 14px;
-  color: #ffe3a0;
-  background: rgba(230,195,105,.08);
-  border-radius: 10px;
+  color: #ffe47c;
   font-size: 13px;
   overflow-wrap: anywhere;
 }
 .videos-cintillo-vacio {
-  margin: 20px 0 0;
-  padding: 24px 16px;
-  color: #bdcede;
-  border: 1px dashed rgba(230,195,105,.3);
-  border-radius: 14px;
+  padding: 20px;
+  color: #cbd7e3;
   text-align: center;
 }
 @media (max-width: 600px) {
   .videos-cintillo {
-    padding: 18px 15px;
-    border-radius: 20px;
+    width: calc(100% - 20px);
+    margin: 14px auto;
+    padding: 14px 12px;
+    border-radius: 18px;
   }
-  .videos-cintillo-tarjeta {
-    flex-basis: min(260px, 85%);
-  }
-  .videos-cintillo-tarjeta video {
-    height: 185px;
-  }
-  .videos-cintillo-lista {
-    gap: 12px;
-  }
-  .videos-cintillo-form {
-    padding: 15px;
-  }
-}
-
-/* Cintillo compacto con tarjetas horizontales */
-.videos-cintillo {
-  padding: 18px;
-  border-radius: 18px;
-}
-.videos-cintillo-header h3 {
-  margin: 5px 0;
-  font-size: 22px;
-}
-.videos-cintillo-header p {
-  font-size: 13px;
-}
-.videos-cintillo-ayuda {
-  margin: 14px 0 8px;
-}
-.videos-cintillo-lista {
-  gap: 14px;
-  padding-bottom: 8px;
-}
-.videos-cintillo-tarjeta {
-  position: relative;
-  display: grid;
-  grid-template-columns: 190px 150px;
-  flex: 0 0 340px;
-  min-height: 170px;
-  border-radius: 14px;
-  background: #102b43;
-  border: 1px solid rgba(230,195,105,.28);
-}
-.videos-cintillo-tarjeta video {
-  width: 190px;
-  height: 170px;
-  object-fit: contain;
-}
-.videos-cintillo-pie {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 12px;
-  padding: 16px 14px;
-}
-.videos-cintillo-pie strong {
-  color: #fff;
-  font-size: 15px;
-}
-.videos-cintillo-pie span {
-  color: #e6c369;
-  background: rgba(230,195,105,.12);
-}
-.videos-cintillo-tarjeta:has(.videos-cintillo-eliminar)
-  .videos-cintillo-pie {
-  padding-bottom: 48px;
-}
-.videos-cintillo .videos-cintillo-eliminar {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  margin: 0;
-  background: #21384c;
-  color: #ffb8b8;
-}
-@media (max-width: 600px) {
-  .videos-cintillo {
-    padding: 15px 12px;
-  }
-  .videos-cintillo-tarjeta {
-    grid-template-columns: 55% 45%;
-    flex-basis: min(320px, 100%);
-    min-height: 160px;
-  }
-  .videos-cintillo-tarjeta video {
-    width: 100%;
-    height: 160px;
+  .videos-cintillo-header {
+    align-items: flex-end;
+    gap: 10px;
+    margin-bottom: 12px;
   }
   .videos-cintillo-header h3 {
-    font-size: 20px;
+    font-size: 1.08rem;
   }
-}
-
-/* Presentación inspirada en el ejemplo de mejores momentos */
-.videos-cintillo {
-  background: #081b30;
-  border: 0;
-  border-radius: 16px;
-  box-shadow: none;
-  padding: 22px 18px;
-}
-.videos-cintillo-header small {
-  display: none;
-}
-.videos-cintillo-header h3 {
-  margin: 0;
-  color: #fff;
-  font-size: 26px;
-  font-weight: 800;
-}
-.videos-cintillo-header p {
-  display: none;
-}
-.videos-cintillo-ayuda {
-  margin: 12px 0;
-  color: #aebdcd;
-}
-.videos-cintillo-lista {
-  gap: 18px;
-  padding: 4px 0 16px;
-}
-.videos-cintillo-tarjeta {
-  display: block;
-  flex: 0 0 340px;
-  min-height: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  overflow: hidden;
-}
-.videos-cintillo-tarjeta video {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: contain;
-  background: #020a12;
-  border-radius: 10px;
-}
-.videos-cintillo-pie,
-.videos-cintillo-tarjeta:has(.videos-cintillo-eliminar)
-  .videos-cintillo-pie {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 9px;
-  padding: 14px 0 12px;
-  padding-right: 46px;
-}
-.videos-cintillo-pie strong {
-  color: #fff;
-  font-size: 19px;
-  line-height: 1.35;
-  font-weight: 800;
-}
-.videos-cintillo-fecha {
-  color: #aebdcd;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.videos-cintillo-pie span {
-  position: absolute;
-  top: 15px;
-  right: 0;
-  padding: 4px 7px;
-  color: #e6c369;
-  background: rgba(230,195,105,.12);
-  border-radius: 6px;
-  font-size: 11px;
-}
-.videos-cintillo .videos-cintillo-eliminar {
-  position: static;
-  margin: 0 0 8px;
-  padding: 7px 10px;
-  color: #ffb8b8;
-  background: #21384c;
-}
-@media (max-width: 600px) {
-  .videos-cintillo {
-    padding: 18px 12px;
-  }
-  .videos-cintillo-header h3 {
-    font-size: 23px;
+  .videos-cintillo-header button {
+    padding: 8px 9px;
+    font-size: .72rem;
   }
   .videos-cintillo-lista {
-    gap: 14px;
+    gap: 9px;
+    padding-right: 22px;
   }
   .videos-cintillo-tarjeta {
-    flex-basis: 86%;
-  }
-  .videos-cintillo-tarjeta video {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-  }
-  .videos-cintillo-pie strong {
-    font-size: 18px;
+    width: 78vw;
+    max-width: 290px;
+    height: 165px;
+    flex-basis: 78vw;
+    border-radius: 13px;
   }
 }
