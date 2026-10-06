@@ -1,0 +1,136 @@
+.sesiones-vivo-panel {
+  margin: 24px 30px 32px;
+  padding: 22px;
+  border: 1px solid rgba(243, 184, 59, 0.45);
+  border-radius: 20px;
+  background: linear-gradient(145deg, #123d61, #06192b);
+}
+
+.sesiones-vivo-panel > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.sesiones-vivo-panel header small {
+  color: #f3b83b;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+.sesiones-vivo-panel header h3 {
+  margin: 5px 0 0;
+}
+
+.sesiones-vivo-panel button {
+  padding: 10px 14px;
+  border: 1px solid #ffe17c;
+  border-radius: 10px;
+  color: #071a2b;
+  background: linear-gradient(145deg, #ffe474, #e4a319);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.sesiones-vivo-formulario {
+  margin-top: 20px;
+  padding: 17px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 13px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.sesiones-vivo-formulario label {
+  display: grid;
+  gap: 6px;
+  color: #f6d778;
+  font-size: 0.8rem;
+  font-weight: 850;
+}
+
+.sesiones-vivo-formulario input,
+.sesiones-vivo-formulario select {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid rgba(243,184,59,.35);
+  border-radius: 9px;
+  color: white;
+  background: #071c2f;
+}
+
+.sesiones-vivo-formulario > button {
+  grid-column: 1 / -1;
+}
+
+.sesiones-vivo-mensaje {
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(243,184,59,.12);
+}
+
+.sesiones-vivo-lista {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.sesiones-vivo-lista article {
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  background: rgba(0,0,0,.2);
+}
+
+.sesiones-vivo-lista article > span {
+  color: #f3b83b;
+  font-size: .68rem;
+  font-weight: 950;
+  letter-spacing: .1em;
+}
+
+.sesiones-vivo-lista article > span.en-vivo {
+  color: #ff5151;
+}
+
+.sesiones-vivo-lista h4 {
+  margin: 7px 0;
+}
+
+.sesiones-vivo-lista p {
+  color: rgba(255,255,255,.7);
+}
+
+.sesiones-vivo-lista article > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.sesiones-vivo-lista button.sesion-finalizar {
+  color: white;
+  border-color: #ff6868;
+  background: #9c2020;
+}
+
+.sesiones-vivo-vacio {
+  margin: 18px 0 0;
+  color: rgba(255,255,255,.7);
+}
+
+@media (max-width: 600px) {
+  .sesiones-vivo-panel {
+    margin: 18px 13px 28px;
+    padding: 16px;
+  }
+
+  .sesiones-vivo-panel > header {
+    align-items: flex-start;
+  }
+
+  .sesiones-vivo-formulario {
+    grid-template-columns: 1fr;
+  }
+}

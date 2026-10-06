@@ -1,0 +1,144 @@
+.sala-vivo-fondo {
+  position: fixed;
+  z-index: 200000;
+  inset: 0;
+  padding: 14px;
+  color: #ffffff;
+  background: #020b13;
+}
+
+.sala-vivo {
+  width: 100%;
+  height: calc(100vh - 28px);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid rgba(243, 184, 59, 0.75);
+  border-radius: 22px;
+  background: #06192b;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.7);
+}
+
+.sala-vivo-header {
+  min-height: 74px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border-bottom: 2px solid #f3b83b;
+  background:
+    linear-gradient(100deg, #123f65, #071b2e 72%);
+}
+
+.sala-vivo-header small {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #f3b83b;
+  font-size: 0.68rem;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+}
+
+.sala-vivo-header small i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ff3838;
+  box-shadow: 0 0 12px #ff3838;
+}
+
+.sala-vivo-header h2 {
+  margin: 4px 0 0;
+  font-size: clamp(1rem, 2.4vw, 1.55rem);
+}
+
+.sala-vivo-acciones {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.sala-vivo-acciones a,
+.sala-vivo-acciones button {
+  padding: 9px 13px;
+  border: 1px solid #f3b83b;
+  border-radius: 10px;
+  color: #ffffff;
+  background: #0a3151;
+  font-weight: 850;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sala-vivo-acciones button {
+  color: #071a2b;
+  background: linear-gradient(145deg, #ffe477, #e4a319);
+}
+
+.sala-vivo-contenedor {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background: #000000;
+}
+
+.sala-vivo-jitsi,
+.sala-vivo-jitsi iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.sala-vivo-cargando,
+.sala-vivo-error {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 10px;
+  padding: 25px;
+  text-align: center;
+  background:
+    radial-gradient(circle, #123f65, #020c15 65%);
+}
+
+.sala-vivo-cargando span {
+  font-size: 3.2rem;
+}
+
+.sala-vivo-cargando p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.sala-vivo-error a {
+  color: #f3b83b;
+}
+
+@media (max-width: 600px) {
+  .sala-vivo-fondo {
+    padding: 0;
+  }
+
+  .sala-vivo {
+    height: 100vh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .sala-vivo-header {
+    min-height: 68px;
+    padding: 10px;
+  }
+
+  .sala-vivo-acciones a {
+    display: none;
+  }
+
+  .sala-vivo-acciones button {
+    padding: 8px 11px;
+  }
+}
