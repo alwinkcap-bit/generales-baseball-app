@@ -57,7 +57,15 @@ export default function VideosCintillo({ isAdmin }) {
 
   async function publicar(evento) {
     evento.preventDefault()
-    if (!isAdmin || ocupado || !archivo) return
+    if (ocupado) return
+    if (!isAdmin) {
+      setMensaje('Inicia sesión como administrador para publicar.')
+      return
+    }
+    if (!archivo) {
+      setMensaje('Selecciona un video antes de publicar.')
+      return
+    }
     setOcupado(true)
     setMensaje('Comprobando video…')
     let rutaSubida = null
@@ -147,7 +155,7 @@ export default function VideosCintillo({ isAdmin }) {
       </header>
 
       {isAdmin && editor && (
-        <form className="videos-cintillo-form" onSubmit={publicar}>
+        <form className="videos-cintillo-form" onSubmit={publicar} noValidate>
           <label>
             Título
             <input value={titulo} maxLength={120} required disabled={ocupado}
@@ -159,7 +167,7 @@ export default function VideosCintillo({ isAdmin }) {
               required disabled={ocupado}
               onChange={evento => setArchivo(evento.target.files?.[0] || null)} />
           </label>
-          <button type="submit" disabled={ocupado || !archivo}>
+          <button type="button" onClick={publicar} disabled={ocupado}>
             {ocupado ? 'Publicando…' : 'Publicar'}
           </button>
         </form>
