@@ -1,3 +1,4 @@
+import preguntasReto29a35 from './PreguntasReto29a35'
 import preguntasReto7a10 from './PreguntasReto7a10'
 import preguntasRetoNivel28 from './PreguntasRetoNivel28'
 import preguntasReto25a27 from './PreguntasReto25a27'
@@ -457,6 +458,15 @@ function generarPreguntaGrandesLigas(nivel, indice) {
 }
 
 function generarNivel(nivel) {
+  if (nivel >= 29 && nivel <= 35) {
+    const inicio = (nivel - 29) * 10
+    return preguntasReto29a35
+      .slice(inicio, inicio + 10)
+      .map((pregunta, indice) =>
+        convertirPreguntaBanco(pregunta, nivel, indice)
+      )
+  }
+
   if (nivel >= 7 && nivel <= 10) {
     const inicio = (nivel - 7) * 10
     return preguntasReto7a10.slice(inicio, inicio + 10)
