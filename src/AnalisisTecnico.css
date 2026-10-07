@@ -1,0 +1,111 @@
+
+.analisis-tecnico {
+  width: min(1120px, calc(100% - 32px));
+  box-sizing: border-box;
+  margin: 22px auto;
+  padding: 22px;
+  border: 1px solid rgba(221, 179, 76, .5);
+  border-radius: 22px;
+  background: linear-gradient(135deg, #081b30, #123452);
+  color: #fff;
+}
+.analisis-tecnico-cabecera small {
+  color: #e9c56c;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+.analisis-tecnico-cabecera h3 {
+  margin: 8px 0;
+  color: #fff;
+  font-size: clamp(21px, 4vw, 29px);
+  line-height: 1.2;
+}
+.analisis-tecnico-cabecera p {
+  margin: 0 0 20px;
+  color: #cfdae7;
+  line-height: 1.5;
+}
+.analisis-tecnico-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.analisis-tecnico-tarjeta {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid rgba(233, 197, 108, .3);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, .05);
+  display: flex;
+  flex-direction: column;
+}
+.analisis-tecnico-superior {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.analisis-tecnico-superior img {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+.analisis-tecnico-precio {
+  color: #f0cc75;
+  font-size: 32px;
+  font-weight: 900;
+  text-align: right;
+}
+.analisis-tecnico-precio small {
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  color: #cfdae7;
+}
+.analisis-tecnico-tarjeta h4 {
+  margin: 16px 0 8px;
+  color: #fff;
+  font-size: 22px;
+}
+.analisis-tecnico-tarjeta p {
+  margin: 0 0 12px;
+  color: #dbe5ee;
+  line-height: 1.5;
+}
+.analisis-tecnico-tarjeta .analisis-tecnico-indicacion {
+  color: #b8cbdb;
+  font-size: 13px;
+}
+.analisis-tecnico-tarjeta a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding: 13px 15px;
+  border-radius: 11px;
+  background: #e9c56c;
+  color: #081b30;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.analisis-tecnico-tarjeta a:hover {
+  background: #f5d890;
+}
+.analisis-tecnico-tarjeta a:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+.analisis-tecnico .analisis-tecnico-nota {
+  margin: 16px 0 0;
+  color: #b8cbdb;
+  font-size: 12px;
+  line-height: 1.5;
+}
+@media (max-width: 600px) {
+  .analisis-tecnico { padding: 18px; }
+  .analisis-tecnico-grid { grid-template-columns: 1fr; }
+}

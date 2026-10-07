@@ -1,3 +1,4 @@
+import AnalisisTecnico from './AnalisisTecnico'
 import VideosCintillo from './VideosCintillo'
 
 
@@ -614,6 +615,8 @@ const responderReto = (opcionElegida) => {
         )}
 
         <VideosCintillo isAdmin={isAdmin} />
+
+        <AnalisisTecnico />
 
         <section className="inicio-panel-rapido" aria-label="Accesos principales">
           <button
