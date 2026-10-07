@@ -1,3 +1,4 @@
+import { estiloPortada } from './EditorPortada'
 import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import './VideoCintilloVisor.css'
@@ -50,8 +51,19 @@ function VentanaVideo({ src, titulo, onCerrar }) {
   )
 }
 
-export default function VideoCintilloVisor({ src, titulo }) {
+export default function VideoCintilloVisor({ src, titulo, ajuste }) {
   const [abierto, setAbierto] = useState(false)
+  const miniatura = useRef(null)
+
+  useEffect(() => {
+    const video = miniatura.current
+    if (video?.readyState >= 1 && Number.isFinite(video.duration)) {
+      video.currentTime = Math.min(
+        Number(ajuste?.tiempo) || 0,
+        Math.max(0, video.duration - 0.05)
+      )
+    }
+  }, [ajuste?.tiempo])
 
   return (
     <>
@@ -66,8 +78,20 @@ export default function VideoCintilloVisor({ src, titulo }) {
           muted
           playsInline
           preload="metadata"
+          ref={miniatura}
           aria-hidden="true"
           tabIndex={-1}
+          className="portada-ajustable"
+          style={estiloPortada(ajuste || { modo: 'cover' })}
+          onLoadedMetadata={evento => {
+            const video = evento.currentTarget
+            if (Number.isFinite(video.duration)) {
+              video.currentTime = Math.min(
+                Number(ajuste?.tiempo) || 0,
+                Math.max(0, video.duration - 0.05)
+              )
+            }
+          }}
         />
         <span className="video-miniatura-play" aria-hidden="true">▶</span>
       </button>

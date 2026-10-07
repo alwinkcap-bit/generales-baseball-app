@@ -1,3 +1,5 @@
+import AjustePortadaSubida from './AjustePortadaSubida'
+import EditorPortada, { estiloPortada } from './EditorPortada'
 import VideoCintilloVisor from './VideoCintilloVisor'
 import React, { useEffect, useRef, useState } from 'react'
 import { supabase } from './supabase'
@@ -38,6 +40,9 @@ export default function VideosCintillo({ isAdmin }) {
   const [videos, setVideos] = useState([])
   const [titulo, setTitulo] = useState('')
   const [archivo, setArchivo] = useState(null)
+  const [portada, setPortada] = useState({
+    modo: 'cover', x: 50, y: 50, zoom: 1, tiempo: 0
+  })
   const [editor, setEditor] = useState(false)
   const [ocupado, setOcupado] = useState(false)
   const [mensaje, setMensaje] = useState('')
@@ -98,12 +103,14 @@ export default function VideosCintillo({ isAdmin }) {
       const { error } = await supabase.from('videos_cintillo').insert({
         titulo: nombre,
         archivo_path: ruta,
-        duracion
+        duracion,
+        ajuste_portada: portada
       })
       if (error) throw error
       rutaSubida = null
       setTitulo('')
       setArchivo(null)
+      setPortada({ modo: 'cover', x: 50, y: 50, zoom: 1, tiempo: 0 })
       if (entrada.current) entrada.current.value = ''
       setEditor(false)
       setMensaje('✅ Video publicado.')
@@ -173,8 +180,24 @@ export default function VideosCintillo({ isAdmin }) {
             MP4 o WebM · máximo 20 segundos y 50 MB
             <input ref={entrada} type="file" accept="video/mp4,video/webm"
               required disabled={ocupado}
-              onChange={evento => setArchivo(evento.target.files?.[0] || null)} />
+              onChange={evento => {
+                setArchivo(evento.target.files?.[0] || null)
+                setPortada({
+                  modo: 'cover', x: 50, y: 50, zoom: 1, tiempo: 0
+                })
+              }} />
           </label>
+          {archivo && (
+            <AjustePortadaSubida
+              key={`${archivo.name}-${archivo.lastModified}`}
+              archivo={archivo}
+              tipo="video"
+              valor={portada}
+              onChange={setPortada}
+              disabled={ocupado}
+              proporcion="270 / 155"
+            />
+          )}
           <button type="button" onClick={publicar} disabled={ocupado}>
             {ocupado ? 'Publicando…' : 'Publicar'}
           </button>
@@ -193,7 +216,22 @@ export default function VideosCintillo({ isAdmin }) {
                 .from(BUCKET).getPublicUrl(video.archivo_path)
               return (
                 <article className="videos-cintillo-tarjeta" key={video.id}>
-                  <VideoCintilloVisor src={data.publicUrl} titulo={video.titulo} />
+                  <VideoCintilloVisor
+                    src={data.publicUrl}
+                    titulo={video.titulo}
+                    ajuste={video.ajuste_portada}
+                  />
+                  {isAdmin && (
+                    <EditorPortada
+                      src={data.publicUrl}
+                      tipo="video"
+                      titulo={video.titulo}
+                      tabla="videos_cintillo"
+                      id={video.id}
+                      valor={video.ajuste_portada}
+                      onGuardado={cargar}
+                    />
+                  )}
                   <div className="videos-cintillo-pie">
                     <strong>{video.titulo}</strong>
                     <small className="videos-cintillo-fecha">

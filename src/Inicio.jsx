@@ -1,3 +1,4 @@
+import { estiloPortada } from './EditorPortada'
 import AnalisisTecnico from './AnalisisTecnico'
 import VideosCintillo from './VideosCintillo'
 
@@ -74,7 +75,7 @@ useEffect(() => {
   async function cargarGaleriaPublica() {
     const { data, error } = await supabase
       .from('galeria_publica')
-      .select('id, titulo, imagen_url, created_at')
+      .select('id, titulo, imagen_url, created_at, ajuste_portada')
       .order('orden', { ascending: true })
       .order('created_at', { ascending: false })
 
@@ -84,8 +85,10 @@ useEffect(() => {
   }
 
   cargarGaleriaPublica()
+  window.addEventListener('portadas-actualizadas', cargarGaleriaPublica)
 
   return () => {
+    window.removeEventListener('portadas-actualizadas', cargarGaleriaPublica)
     activo = false
   }
 }, []) 
@@ -614,6 +617,8 @@ const responderReto = (opcionElegida) => {
                     >
                       <img
                         src={imagen.imagen_url}
+                        className="portada-ajustable"
+                        style={estiloPortada(imagen.ajuste_portada)}
                         alt={imagen.titulo || 'Generales de Chitré'}
                         loading="lazy"
                       />

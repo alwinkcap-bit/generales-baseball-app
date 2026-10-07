@@ -1,0 +1,256 @@
+
+/* Perfil administrativo */
+.content-grid.perfil-admin-contenido {
+  display: block !important;
+  width: min(1180px, 100%) !important;
+  margin: 24px auto;
+  min-width: 0;
+}
+.perfil-admin-contenido > .profile {
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(230,195,105,.4);
+  border-radius: 24px;
+  background: #0a2236;
+  box-shadow: 0 18px 45px rgba(0,0,0,.25);
+}
+.perfil-admin-contenido .hero {
+  display: grid !important;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 28px;
+  padding: 28px;
+  background:
+    radial-gradient(circle at top right, rgba(39,110,157,.3), transparent 60%),
+    linear-gradient(135deg, #113b55, #071827);
+}
+.perfil-admin-contenido .hero-photo {
+  position: relative;
+  width: 220px;
+  max-width: 100%;
+  min-width: 0;
+  border-radius: 18px;
+  overflow: hidden;
+}
+.perfil-admin-contenido .hero-info {
+  min-width: 0;
+  align-self: center;
+}
+.perfil-admin-contenido .hero-info h2 {
+  margin: 12px 0;
+  font-size: clamp(25px, 3vw, 40px);
+  line-height: 1.15;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  color: #fff;
+}
+.perfil-admin-contenido .player-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-bottom: 14px;
+  color: #d1e0eb;
+}
+.perfil-admin-contenido .admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+.perfil-admin-contenido .tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 20px;
+  background: #102e45;
+}
+.perfil-admin-contenido .tabs > button {
+  flex-shrink: 0;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #d5e3ef;
+  font-weight: 700;
+}
+.perfil-admin-contenido .tabs > button.tab-activa {
+  color: #081b30;
+  background: #f2c94c;
+}
+.perfil-admin-contenido .summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  padding: 22px;
+}
+.perfil-admin-contenido .bio-card {
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 22px;
+  border-radius: 16px;
+  background: #f4f7fb;
+  color: #183044;
+}
+.perfil-admin-contenido .bio-card h3 {
+  margin-top: 0;
+  color: #123852;
+}
+.perfil-admin-contenido .bio-card p {
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.perfil-admin-contenido .bio-card dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 14px;
+}
+.perfil-admin-contenido .bio-card dd {
+  margin: 0;
+}
+
+/* Formulario de edición */
+.modal.editor.editor-jugador-admin {
+  box-sizing: border-box;
+  width: min(860px, calc(100vw - 24px)) !important;
+  max-width: 860px !important;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  padding: 0 !important;
+  border: 1px solid #c9a64c;
+  border-radius: 22px;
+  background: #f3f6fa;
+  color: #153249;
+  box-shadow: 0 25px 80px rgba(0,0,0,.45);
+}
+.editor-jugador-encabezado {
+  padding: 22px 26px;
+  background: linear-gradient(135deg, #0b2940, #124c69);
+  color: #fff;
+}
+.editor-jugador-encabezado small {
+  display: block;
+  margin-top: 20px;
+  color: #f2c94c;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+.editor-jugador-encabezado h3 {
+  margin: 7px 0 !important;
+  color: #fff !important;
+  font-size: 28px;
+}
+.editor-jugador-encabezado p {
+  margin: 0;
+  color: #d1e1ed;
+  font-size: 14px;
+}
+.editor-jugador-admin .editor-jugador-regresar {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 10px;
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  cursor: pointer;
+}
+.editor-jugador-admin .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  padding: 24px;
+}
+.editor-jugador-admin .form-grid > label {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+  color: #173a52;
+  font-size: 13px;
+  font-weight: 700;
+}
+.editor-jugador-admin .form-grid .wide {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+.editor-jugador-admin input:not([type="checkbox"]):not([type="range"]),
+.editor-jugador-admin textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid #c7d5e1;
+  border-radius: 10px;
+  background: #fff;
+  color: #142e42;
+  font: inherit;
+}
+.editor-jugador-admin input:focus-visible,
+.editor-jugador-admin textarea:focus-visible,
+.editor-jugador-admin button:focus-visible {
+  outline: 3px solid #d9ad36;
+  outline-offset: 2px;
+}
+.editor-jugador-acciones {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 18px 24px;
+  border-top: 1px solid #d7e0e8;
+  background: #f3f6fa;
+  z-index: 2;
+}
+.editor-jugador-acciones button {
+  padding: 12px 18px;
+  border-radius: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.editor-jugador-acciones .primary {
+  border: 1px solid #cfa430;
+  background: linear-gradient(135deg, #ffe082, #e3b332);
+  color: #092238;
+}
+.editor-jugador-cancelar {
+  border: 1px solid #bdcddd;
+  background: #fff;
+  color: #173b55;
+}
+.editor-jugador-admin button:disabled {
+  opacity: .55;
+  cursor: default;
+}
+@media (max-width: 640px) {
+  .perfil-admin-contenido .hero {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 20px;
+  }
+  .perfil-admin-contenido .hero-photo {
+    width: 180px;
+    margin: 0 auto;
+  }
+  .perfil-admin-contenido .summary-grid {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+  .editor-jugador-admin .form-grid {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+  .editor-jugador-encabezado {
+    padding: 18px;
+  }
+  .editor-jugador-acciones {
+    padding: 14px;
+  }
+  .editor-jugador-acciones button {
+    flex: 1;
+  }
+}

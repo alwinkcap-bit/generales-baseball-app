@@ -1,3 +1,4 @@
+import EditorPortada, { estiloPortada } from './EditorPortada'
 import React, { useEffect, useMemo, useState } from 'react'
 import { supabase } from './supabase'
 import './Patrocinadores.css'
@@ -240,9 +241,10 @@ export default function Patrocinadores({ isAdmin }) {
             ></div>
 
             <img
-              className="patrocinadores-banner-imagen"
-              src={destacadoActual.banner_url}
+                            src={destacadoActual.banner_url}
               alt={`Publicidad de ${destacadoActual.nombre}`}
+              className="patrocinadores-banner-imagen portada-ajustable"
+              style={estiloPortada(destacadoActual.ajuste_banner)}
             />
 
             <div className="patrocinadores-banner-sombra"></div>
@@ -319,7 +321,11 @@ export default function Patrocinadores({ isAdmin }) {
                   className="patrocinadores-cintillo-item"
                 >
                   {item.logo_url ? (
-                    <img src={item.logo_url} alt={item.nombre} />
+                    <span className="portada-logo-marco">
+      <img src={item.logo_url} alt={item.nombre}
+        className="portada-ajustable"
+        style={estiloPortada(item.ajuste_logo)} />
+    </span>
                   ) : (
                     <span className="patrocinadores-logo-vacio">★</span>
                   )}
@@ -499,6 +505,34 @@ export default function Patrocinadores({ isAdmin }) {
                       </small>
                     </div>
 
+                    <div className="patrocinadores-ajustes">
+                      {item.logo_url && (
+                        <EditorPortada
+                          src={item.logo_url}
+                          titulo={`Logo: ${item.nombre}`}
+                          tabla="patrocinadores"
+                          columna="ajuste_logo"
+                          id={item.id}
+                          valor={item.ajuste_logo}
+                          proporcion="1 / 1"
+                          etiqueta="Ajustar logo"
+                          onGuardado={cargarPatrocinadores}
+                        />
+                      )}
+                      {item.banner_url && (
+                        <EditorPortada
+                          src={item.banner_url}
+                          titulo={`Banner: ${item.nombre}`}
+                          tabla="patrocinadores"
+                          columna="ajuste_banner"
+                          id={item.id}
+                          valor={item.ajuste_banner}
+                          proporcion="1120 / 430"
+                          etiqueta="Ajustar banner"
+                          onGuardado={cargarPatrocinadores}
+                        />
+                      )}
+                    </div>
                     <button
                       type="button"
                       onClick={() => editarPatrocinador(item)}

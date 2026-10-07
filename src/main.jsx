@@ -1,3 +1,6 @@
+import './AdminJugador.css'
+import AjustePortadaSubida from './AjustePortadaSubida'
+import EditorPortada, { estiloPortada } from './EditorPortada'
 import React, { useEffect, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { supabase } from './supabase'
@@ -231,6 +234,24 @@ async function desvincularJugador(vinculacionId) {
   await loadAcudientes()
 }
 
+const [portadaPublica, setPortadaPublica] = useState({
+  modo: 'cover', x: 50, y: 50, zoom: 1, tiempo: 0
+})
+const [fotoPendienteGaleria, setFotoPendienteGaleria] = useState(null)
+const [portadaGaleria, setPortadaGaleria] = useState({
+  modo: 'cover', x: 50, y: 50, zoom: 1, tiempo: 0
+})
+const [fotoPendientePerfil, setFotoPendientePerfil] = useState(null)
+const [guardandoPerfil, setGuardandoPerfil] = useState(false)
+
+useEffect(() => {
+  setFotoPendienteGaleria(null)
+}, [selected?.id])
+
+useEffect(() => {
+  if (!editorOpen) setFotoPendientePerfil(null)
+}, [editorOpen])
+
 async function loadGaleriaPublica() {
   setLoadingGaleriaPublica(true)
 
@@ -293,6 +314,7 @@ async function subirImagenGaleriaPublica(e) {
     .insert({
   titulo: tituloGaleriaPublica.trim() || 'Galería',
   imagen_url: publicUrlData.publicUrl,
+  ajuste_portada: portadaPublica,
   storage_path: storagePath,
   orden:
     Math.max(
@@ -313,6 +335,10 @@ async function subirImagenGaleriaPublica(e) {
 
   setTituloGaleriaPublica('')
   setArchivoGaleriaPublica(null)
+  setPortadaPublica({
+    modo: 'cover', x: 50, y: 50, zoom: 1, tiempo: 0
+  })
+  window.dispatchEvent(new Event('portadas-actualizadas'))
   setMessage('Imagen publicada correctamente.')
   await loadGaleriaPublica()
   setSubiendoGaleriaPublica(false)
@@ -383,7 +409,7 @@ async function loadGaleria(jugadorId) {
 
   const { data, error } = await supabase
     .from('galeria_jugadores')
-    .select('id, jugador_id, storage_path, titulo, created_at')
+    .select('id, jugador_id, storage_path, titulo, created_at, ajuste_portada')
     .eq('jugador_id', jugadorId)
     .order('created_at', { ascending: false })
 
@@ -446,6 +472,37 @@ async function eliminarFotoGaleria(foto) {
 
   await loadGaleria(selected.id)
 }
+function seleccionarFotoGaleria(evento) {
+  const foto = evento.target.files?.[0]
+  evento.target.value = ''
+  if (!foto) return
+  if (!foto.type.startsWith('image/')) {
+    window.alert('Selecciona una imagen.')
+    return
+  }
+  if (foto.size > 10 * 1024 * 1024) {
+    window.alert('La fotografía no puede superar los 10 MB.')
+    return
+  }
+  setFotoPendienteGaleria(foto)
+  setPortadaGaleria({
+    modo: 'cover', x: 50, y: 50, zoom: 1, tiempo: 0
+  })
+}
+
+async function guardarFotoGaleria() {
+  if (!isAdmin || !fotoPendienteGaleria || subiendoGaleria) return
+  try {
+    await subirFotoGaleria({
+      target: { files: [fotoPendienteGaleria], value: '' }
+    })
+  } catch (error) {
+    window.alert(`No se pudo guardar: ${error.message}`)
+  } finally {
+    setSubiendoGaleria(false)
+  }
+}
+
 async function subirFotoGaleria(e) {
   const archivo = e.target.files?.[0]
 
@@ -498,7 +555,8 @@ async function subirFotoGaleria(e) {
     .insert({
       jugador_id: selected.id,
       storage_path: storagePath,
-      titulo: archivo.name
+      titulo: archivo.name,
+      ajuste_portada: portadaGaleria
     })
 
  if (registroError) {
@@ -522,6 +580,7 @@ async function subirFotoGaleria(e) {
 }
 
   await loadGaleria(selected.id)
+  setFotoPendienteGaleria(null)
   setMessage('Fotografía agregada correctamente.')
   setSubiendoGaleria(false)
   e.target.value = ''
@@ -766,40 +825,58 @@ function openEdit(p) {
   setEditorOpen(true)
 }   
   
-  async function subirFoto(file) {
-  if (!file) return
-
-  const extension = file.name.split('.').pop()
-  const nombreArchivo = `${Date.now()}.${extension}`
-
-  const { error } = await supabase.storage
-    .from('fotos-jugadores')
-    .upload(nombreArchivo, file)
-
-  if (error) {
-    alert('Error al subir la foto: ' + error.message)
-    return
+  function subirFoto(file) {
+    if (!file) return
+    if (!file.type.startsWith('image/')) {
+      window.alert('Selecciona una imagen.')
+      return
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      window.alert('La foto no puede superar los 10 MB.')
+      return
+    }
+    setFotoPendientePerfil(file)
+    setForm(actual => ({
+      ...actual,
+      ajuste_portada: {
+        modo: 'cover', x: 50, y: 50, zoom: 1, tiempo: 0
+      }
+    }))
   }
 
-  const { data } = supabase.storage
-    .from('fotos-jugadores')
-    .getPublicUrl(nombreArchivo)
-
-  setForm(prev => ({
-    ...prev,
-    foto_url: data.publicUrl
-  }))
-
-  alert('Foto cargada correctamente')
-}
   async function savePlayer(e) {
     e.preventDefault()
+    if (!isAdmin || guardandoPerfil) return
     setMessage('')
+    setGuardandoPerfil(true)
+    let rutaNueva = null
+    let registroGuardado = false
+    try {
+    let fotoUrl = form.foto_url || null
+    if (fotoPendientePerfil) {
+      const extension =
+        fotoPendientePerfil.name.split('.').pop()?.toLowerCase() || 'jpg'
+      const ruta = `${crypto.randomUUID()}.${extension}`
+      const { error } = await supabase.storage
+        .from('fotos-jugadores')
+        .upload(ruta, fotoPendientePerfil, {
+          contentType: fotoPendientePerfil.type,
+          upsert: false
+        })
+      if (error) throw error
+      rutaNueva = ruta
+      const { data } = supabase.storage
+        .from('fotos-jugadores').getPublicUrl(ruta)
+      fotoUrl = data.publicUrl
+    }
     const payload = {
       nombre: form.nombre.trim(), apellido: form.apellido.trim(), fecha_nacimiento: form.fecha_nacimiento || null,
       categoria: form.categoria || null, posicion: form.posicion || null, numero: form.numero === '' ? null : Number(form.numero),
       batea: form.batea || null, lanza: form.lanza || null, estatura_cm: form.estatura_cm === '' ? null : Number(form.estatura_cm) + (Number(form.estatura_pulgadas || 0) / 12),
-      peso_kg: form.peso_kg === '' ? null : Number(form.peso_kg) * 0.453592, foto_url: form.foto_url || null,
+      peso_kg: form.peso_kg === '' ? null : Number(form.peso_kg) * 0.453592, foto_url: fotoUrl,
+      ajuste_portada: form.ajuste_portada || {
+        modo: 'cover', x: 50, y: 50, zoom: 1, tiempo: 0
+      },
       estado: form.estado || null,
       perfil_publico: Boolean(form.perfil_publico),
 notas: form.notas || null,
@@ -813,10 +890,21 @@ home_runs: Number(form.home_runs || 0)
     let result
     if (form.id) result = await supabase.from('jugadores').update(payload).eq('id', form.id).select().single()
     else result = await supabase.from('jugadores').insert(payload).select().single()
-    if (result.error) return setMessage(result.error.message)
+    if (result.error) throw result.error
+    registroGuardado = true
+    setFotoPendientePerfil(null)
     setEditorOpen(false)
     await loadPlayers()
     if (result.data) setSelected(result.data)
+    } catch (error) {
+      if (rutaNueva && !registroGuardado) {
+        await supabase.storage.from('fotos-jugadores').remove([rutaNueva])
+      }
+      setMessage(`No se pudo guardar: ${error.message}`)
+      window.alert(`No se pudo guardar: ${error.message}`)
+    } finally {
+      setGuardandoPerfil(false)
+    }
   }
 
   async function deletePlayer(p) {
@@ -1271,13 +1359,26 @@ if (vista === 'inicio') {
           <input
             type="file"
             accept="image/jpeg,image/png,image/webp"
-            onChange={(e) =>
+            disabled={subiendoGaleriaPublica}
+            onChange={(e) => {
               setArchivoGaleriaPublica(e.target.files?.[0] || null)
-            }
+              setPortadaPublica({
+                modo: 'cover', x: 50, y: 50, zoom: 1, tiempo: 0
+              })
+            }}
             required
           />
         </label>
 
+        {archivoGaleriaPublica && (
+          <AjustePortadaSubida
+            archivo={archivoGaleriaPublica}
+            valor={portadaPublica}
+            onChange={setPortadaPublica}
+            proporcion="270 / 155"
+            disabled={subiendoGaleriaPublica}
+          />
+        )}
         <button
           type="submit"
           className="primary full"
@@ -1301,10 +1402,23 @@ if (vista === 'inicio') {
               <img
                 src={imagen.imagen_url}
                 alt={imagen.titulo}
+                className="portada-ajustable"
+                style={estiloPortada(imagen.ajuste_portada)}
               />
 
               <div>
                 <strong>{imagen.titulo}</strong>
+                <EditorPortada
+                  src={imagen.imagen_url}
+                  titulo={imagen.titulo || 'Imagen del cintillo'}
+                  tabla="galeria_publica"
+                  id={imagen.id}
+                  valor={imagen.ajuste_portada}
+                  onGuardado={async () => {
+                    await loadGaleriaPublica()
+                    window.dispatchEvent(new Event('portadas-actualizadas'))
+                  }}
+                />
                 <label className="galeria-publica-orden">
   Orden
   <input
@@ -1347,7 +1461,7 @@ if (vista === 'inicio') {
     </div>
   </section>
 )}
-      <section className="content-grid">
+      <section className={`content-grid ${isAdmin ? "perfil-admin-contenido" : ""}`}>
         {jugadoresOpen && (
   <div
     className="jugadores-modal-fondo"
@@ -1373,7 +1487,9 @@ if (vista === 'inicio') {
 }
   }}
 >
-              <div className="avatar">{p.foto_url ? <img src={p.foto_url} alt=""/> : `${p.nombre?.[0]||''}${p.apellido?.[0]||''}`}</div>
+              <div className="avatar">{p.foto_url ? <img src={p.foto_url} alt=""
+      className="portada-ajustable"
+      style={estiloPortada(p.ajuste_portada)} /> : `${p.nombre?.[0]||''}${p.apellido?.[0]||''}`}</div>
               <div className="player-card-info"><strong>{p.nombre} {p.apellido}</strong><span>#{p.numero ?? '—'} · {p.posicion || 'Sin posición'} · {p.categoria || 'Sin categoría'}</span></div>
             </button>)}
         </aside>
@@ -1392,8 +1508,31 @@ if (vista === 'inicio') {
   <img
     src={selected.foto_url}
     alt={`${selected.nombre} ${selected.apellido || ''}`}
+    className="portada-ajustable"
+    style={estiloPortada(selected.ajuste_portada)}
   />
-</button> : <div className="photo-placeholder">FOTO</div>}</div>
+</button> : <div className="photo-placeholder">FOTO</div>}
+                {isAdmin && selected.foto_url && (
+                  <EditorPortada
+                    src={selected.foto_url}
+                    titulo="Foto de perfil del jugador"
+                    proporcion="1 / 1"
+                    tabla="jugadores"
+                    id={selected.id}
+                    valor={selected.ajuste_portada}
+                    onGuardado={ajuste => {
+                      setSelected(actual => ({
+                        ...actual, ajuste_portada: ajuste
+                      }))
+                      setPlayers(actuales => actuales.map(jugador =>
+                        jugador.id === selected.id
+                          ? { ...jugador, ajuste_portada: ajuste }
+                          : jugador
+                      ))
+                    }}
+                  />
+                )}
+              </div>
               <div className="hero-info">
                 <div className="number-chip">#{selected.numero ?? '—'}</div>
                 <h2>{selected.nombre} {selected.apellido}</h2>
@@ -1755,7 +1894,7 @@ if (vista === 'inicio') {
     <input
       type="file"
       accept="image/jpeg,image/png,image/webp"
-      onChange={subirFotoGaleria}
+      onChange={seleccionarFotoGaleria}
       disabled={subiendoGaleria}
     />
 
@@ -1764,6 +1903,26 @@ if (vista === 'inicio') {
       : '+ Subir fotografía'}
   </label>
 )}
+      {isAdmin && fotoPendienteGaleria && (
+        <div>
+          <AjustePortadaSubida
+            archivo={fotoPendienteGaleria}
+            valor={portadaGaleria}
+            onChange={setPortadaGaleria}
+            proporcion="270 / 155"
+            disabled={subiendoGaleria}
+          />
+          <button type="button" className="primary"
+            disabled={subiendoGaleria}
+            onClick={guardarFotoGaleria}>
+            {subiendoGaleria ? 'Guardando…' : 'Guardar fotografía'}
+          </button>
+          <button type="button" disabled={subiendoGaleria}
+            onClick={() => setFotoPendienteGaleria(null)}>
+            Cancelar
+          </button>
+        </div>
+      )}
       {loadingGaleria ? (
         <p>Cargando fotografías...</p>
       ) : galeria.length === 0 ? (
@@ -1783,9 +1942,21 @@ if (vista === 'inicio') {
     <img
       src={foto.url}
       alt={foto.titulo || 'Fotografía del jugador'}
+      className="portada-ajustable"
+      style={estiloPortada(foto.ajuste_portada)}
     />
   </button>
 
+  {isAdmin && (
+    <EditorPortada
+      src={foto.url}
+      titulo={foto.titulo || 'Foto del jugador'}
+      tabla="galeria_jugadores"
+      id={foto.id}
+      valor={foto.ajuste_portada}
+      onGuardado={() => loadGaleria(selected.id)}
+    />
+  )}
   {isAdmin && (
     <button
       type="button"
@@ -2206,11 +2377,51 @@ if (vista === 'inicio') {
     </div>
   </div>
 )}
-    {editorOpen && <div className="modal-backdrop"><form className="modal editor" onSubmit={savePlayer}>
-      <button type="button" className="close" onClick={()=>setEditorOpen(false)}>×</button><h3>{form.id?'Editar jugador':'Nuevo jugador'}</h3>
+    {editorOpen && <div className="modal-backdrop"><form className="modal editor editor-jugador-admin" onSubmit={savePlayer}>
+      <header className="editor-jugador-encabezado">
+        <button
+          type="button"
+          className="editor-jugador-regresar"
+          disabled={guardandoPerfil}
+          onClick={() => setEditorOpen(false)}
+        >
+          <span aria-hidden="true">←</span> Regresar al perfil
+        </button>
+        <div>
+          <small>GENERALES · ADMINISTRACIÓN</small>
+          <h3>{form.id ? 'Editar jugador' : 'Nuevo jugador'}</h3>
+          <p>Actualiza su información, fotografía y estadísticas.</p>
+        </div>
+      </header>
       <div className="form-grid">
-        {['nombre','apellido','categoria','posicion','batea','lanza','estado'].map(k=><label key={k}>{k.replace('_',' ')}<input value={form[k] ?? ''} onChange={e=>setForm({...form,[k]:e.target.value})} required={k==='nombre'} /></label>)}
-      <label className="wide">Foto del jugador<input type="file" accept="image/*" onChange={(e)=>subirFoto(e.target.files?.[0])} /></label>
+        {['nombre','apellido','categoria','posicion','batea','lanza','estado'].map(k=><label key={k}>{({
+          nombre: 'Nombre',
+          apellido: 'Apellido',
+          categoria: 'Categoría',
+          posicion: 'Posición',
+          batea: 'Lado de bateo',
+          lanza: 'Brazo de lanzamiento',
+          estado: 'Estado del jugador'
+        })[k] || k}<input value={form[k] ?? ''} onChange={e=>setForm({...form,[k]:e.target.value})} required={k==='nombre'} /></label>)}
+      <label className="wide">
+        Foto del jugador
+        <input type="file" accept="image/*" disabled={guardandoPerfil}
+          onChange={e => subirFoto(e.target.files?.[0])} />
+      </label>
+      {(fotoPendientePerfil || form.foto_url) && (
+        <div className="wide">
+          <AjustePortadaSubida
+            archivo={fotoPendientePerfil}
+            src={form.foto_url || ''}
+            valor={form.ajuste_portada}
+            proporcion="1 / 1"
+            disabled={guardandoPerfil}
+            onChange={ajuste => setForm(actual => ({
+              ...actual, ajuste_portada: ajuste
+            }))}
+          />
+        </div>
+      )}
         <label>Fecha nacimiento<input type="date" value={form.fecha_nacimiento ?? ''} onChange={e=>setForm({...form,fecha_nacimiento:e.target.value})}/></label>
         <label>Número<input type="number" value={form.numero ?? ''} onChange={e=>setForm({...form,numero:e.target.value})}/></label>
         <label>Estatura '<input type="number" min="0" value={form.estatura_cm ?? ''} onChange={e=>setForm({...form,estatura_cm:e.target.value})}/></label>
@@ -2249,7 +2460,20 @@ if (vista === 'inicio') {
         </label>
 
         <label className="wide">Notas<textarea rows="4" value={form.notas ?? ''} onChange={e=>setForm({...form,notas:e.target.value})}/></label>
-      </div><button className="primary full">Guardar jugador</button></form></div>}
+      </div><footer className="editor-jugador-acciones">
+        <button
+          type="button"
+          className="editor-jugador-cancelar"
+          disabled={guardandoPerfil}
+          onClick={() => setEditorOpen(false)}
+        >
+          Regresar sin guardar
+        </button>
+        <button type="submit" className="primary"
+          disabled={guardandoPerfil}>
+          {guardandoPerfil ? 'Guardando…' : 'Guardar jugador'}
+        </button>
+      </footer></form></div>}
   </div>
 }
 
