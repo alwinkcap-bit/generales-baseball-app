@@ -6863,3 +6863,76 @@ body:has(.agenda-editor-fondo) nav.inicio-nav {
     url('./public/beisbol-juegos.avif') !important;
   background-position: center !important;
 }
+
+
+/* Inscripción e Instagram con las mismas dimensiones */
+.inicio-inscripcion-destacada {
+  width: min(1120px, calc(100% - 32px));
+  margin: 20px auto 0;
+  display: flex;
+  justify-content: center;
+}
+.inicio-inscripcion-destacada .inicio-inscripcion-compacta,
+.inicio-instagram-destacado .inicio-instagram-boton {
+  box-sizing: border-box;
+  width: min(100%, 390px) !important;
+  max-width: none !important;
+  height: 60px !important;
+  min-height: 60px !important;
+  margin: 0 !important;
+  padding: 9px 18px !important;
+  border-radius: 14px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.inicio-inscripcion-destacada + .inicio-instagram-destacado {
+  margin-top: 10px;
+}
+.inicio-inscripcion-compacta > span:first-child {
+  font-size: 25px;
+  flex-shrink: 0;
+}
+.inicio-inscripcion-compacta > span:last-child {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.inicio-inscripcion-compacta .inicio-inscripcion-texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  min-width: 0;
+  text-align: left;
+  line-height: 1.1;
+}
+.inicio-inscripcion-texto small {
+  color: #173449;
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.inicio-inscripcion-texto strong {
+  color: #081b30;
+  font-size: .83rem;
+  font-weight: 900;
+  text-transform: none;
+}
+.inicio-inscripcion-compacta:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 4px;
+}
+@media (max-width: 600px) {
+  .inicio-inscripcion-destacada {
+    width: calc(100% - 24px);
+    margin-top: 14px;
+  }
+  .inicio-inscripcion-destacada .inicio-inscripcion-compacta,
+  .inicio-instagram-destacado .inicio-instagram-boton {
+    width: 100% !important;
+  }
+  .inicio-inscripcion-texto strong {
+    font-size: .79rem;
+  }
+}

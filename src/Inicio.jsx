@@ -515,6 +515,21 @@ const responderReto = (opcionElegida) => {
         <Patrocinadores isAdmin={isAdmin} />
 
 
+        <section className="inicio-inscripcion-destacada" aria-label="Inscripciones">
+          <button
+            type="button"
+            className="inicio-boton dorado inicio-inscripcion-compacta"
+            onClick={onRegistro}
+          >
+            <span aria-hidden="true">⚾</span>
+            <span className="inicio-inscripcion-texto">
+              <small>INSCRIPCIONES ABIERTAS</small>
+              <strong>Forma parte de los Generales</strong>
+            </span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </section>
+
         <section
           className="inicio-instagram-destacado"
           aria-label="Instagram de Generales de Chitré"
@@ -684,23 +699,7 @@ const responderReto = (opcionElegida) => {
         <AgendaAcademia isAdmin={isAdmin} />
         <EstadisticasVisitas isAdmin={isAdmin} />
 
-        <button
-          type="button"
-          className="inicio-inscripcion-grande"
-          onClick={onRegistro}
-        >
-          <span className="inicio-inscripcion-icono">⚾</span>
-
-          <span className="inicio-inscripcion-contenido">
-            <small>INSCRIPCIONES ABIERTAS</small>
-            <strong>Forma parte de los Generales</strong>
-            <em>
-              Registra a tu jugador y comienza su formación deportiva.
-            </em>
-          </span>
-
-          <b>Inscribirse →</b>
-        </button>
+        
 
         <section id="programas" className="inicio-valores">
           {juegosOpen && createPortal(
