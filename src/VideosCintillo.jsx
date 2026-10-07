@@ -80,8 +80,12 @@ export default function VideosCintillo({ isAdmin }) {
         throw new Error('El máximo es 20 MB.')
       }
       const duracion = await medirDuracion(archivo)
-      if (!Number.isFinite(duracion) || duracion <= 0 || duracion > 10) {
-        throw new Error('El video debe durar 10 segundos o menos.')
+      if (!Number.isFinite(duracion) || duracion <= 0 || duracion > 15) {
+        throw new Error(
+          Number.isFinite(duracion)
+            ? `El video dura ${duracion.toFixed(2)} segundos. El máximo es 15.`
+            : 'No se pudo determinar la duración. Prueba exportándolo como MP4.'
+        )
       }
       const extension = archivo.type === 'video/webm' ? 'webm' : 'mp4'
       const ruta = `${crypto.randomUUID()}.${extension}`
@@ -103,6 +107,7 @@ export default function VideosCintillo({ isAdmin }) {
       if (entrada.current) entrada.current.value = ''
       setEditor(false)
       setMensaje('✅ Video publicado.')
+      window.alert('Video publicado correctamente.')
       await cargar()
     } catch (error) {
       let aviso = ''
@@ -111,7 +116,9 @@ export default function VideosCintillo({ isAdmin }) {
           .from(BUCKET).remove([rutaSubida])
         if (limpieza) aviso = ' El archivo quedó pendiente de limpieza.'
       }
-      setMensaje(`${error.message}${aviso}`)
+      console.error('Error publicando video:', error)
+      window.alert(`No se pudo publicar: ${error.message || String(error)}${aviso}`)
+      setMensaje(`${error.message || String(error)}${aviso}`)
     } finally {
       setOcupado(false)
     }
@@ -145,7 +152,7 @@ export default function VideosCintillo({ isAdmin }) {
         <div>
           <small>GENERALES EN ACCIÓN</small>
           <h3>Mejores momentos</h3>
-          <p>Entrenamientos y jugadas en 10 segundos.</p>
+          <p>Entrenamientos y jugadas en 15 segundos.</p>
         </div>
         {isAdmin && (
           <button type="button" disabled={ocupado}
@@ -163,7 +170,7 @@ export default function VideosCintillo({ isAdmin }) {
               onChange={evento => setTitulo(evento.target.value)} />
           </label>
           <label>
-            MP4 o WebM · máximo 10 segundos y 20 MB
+            MP4 o WebM · máximo 15 segundos y 20 MB
             <input ref={entrada} type="file" accept="video/mp4,video/webm"
               required disabled={ocupado}
               onChange={evento => setArchivo(evento.target.files?.[0] || null)} />
