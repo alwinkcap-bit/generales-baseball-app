@@ -76,14 +76,14 @@ export default function VideosCintillo({ isAdmin }) {
       if (!['video/mp4', 'video/webm'].includes(archivo.type)) {
         throw new Error('Selecciona un MP4 o WebM.')
       }
-      if (archivo.size > 20 * 1024 * 1024) {
-        throw new Error('El máximo es 20 MB.')
+      if (archivo.size > 50 * 1024 * 1024) {
+        throw new Error('El máximo es 50 MB.')
       }
       const duracion = await medirDuracion(archivo)
-      if (!Number.isFinite(duracion) || duracion <= 0 || duracion > 15) {
+      if (!Number.isFinite(duracion) || duracion <= 0 || duracion > 20) {
         throw new Error(
           Number.isFinite(duracion)
-            ? `El video dura ${duracion.toFixed(2)} segundos. El máximo es 15.`
+            ? `El video dura ${duracion.toFixed(2)} segundos. El máximo es 20.`
             : 'No se pudo determinar la duración. Prueba exportándolo como MP4.'
         )
       }
@@ -152,7 +152,7 @@ export default function VideosCintillo({ isAdmin }) {
         <div>
           <small>GENERALES EN ACCIÓN</small>
           <h3>Mejores momentos</h3>
-          <p>Entrenamientos y jugadas en 15 segundos.</p>
+          <p>Entrenamientos y jugadas en 20 segundos.</p>
         </div>
         {isAdmin && (
           <button type="button" disabled={ocupado}
@@ -170,7 +170,7 @@ export default function VideosCintillo({ isAdmin }) {
               onChange={evento => setTitulo(evento.target.value)} />
           </label>
           <label>
-            MP4 o WebM · máximo 15 segundos y 20 MB
+            MP4 o WebM · máximo 20 segundos y 50 MB
             <input ref={entrada} type="file" accept="video/mp4,video/webm"
               required disabled={ocupado}
               onChange={evento => setArchivo(evento.target.files?.[0] || null)} />
