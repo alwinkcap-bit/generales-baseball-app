@@ -215,6 +215,10 @@ export default function InstalarApp() {
             fill="currentColor"
           />
         </svg>
+        <span className="instalar-app-texto">
+          {ocupado ? 'Abriendo…' : enApp ? 'App instalada' : 'Instalar app'}
+        </span>
+
       </button>
 
       {ayuda && (

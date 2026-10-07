@@ -101,3 +101,68 @@
   .instalar-app-dialogo { padding: 18px; }
   .instalar-app-dialogo footer button { flex: 1; }
 }
+
+/* Boton visible de instalacion */
+button.inicio-instalar-cabecera {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: auto !important;
+  height: auto !important;
+  min-height: 44px;
+  max-width: 100%;
+  flex-shrink: 0;
+  padding: 10px 15px !important;
+  border: 1px solid #ffe49a !important;
+  border-radius: 14px !important;
+  background: linear-gradient(135deg, #ffe49a, #efc34b) !important;
+  color: #081b30 !important;
+  box-shadow: 0 4px 14px #0003, inset 0 1px 0 #ffffff80;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+button.inicio-instalar-cabecera .inicio-descarga-icono {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+.instalar-app-texto {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+button.inicio-instalar-cabecera:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+button.inicio-instalar-cabecera:active {
+  transform: translateY(1px);
+}
+
+button.inicio-instalar-cabecera:disabled {
+  opacity: .75;
+  cursor: wait;
+}
+
+@media (max-width: 480px) {
+  button.inicio-instalar-cabecera {
+    gap: 6px;
+    padding: 9px 10px !important;
+  }
+
+  .instalar-app-texto {
+    font-size: 12px;
+  }
+
+  button.inicio-instalar-cabecera .inicio-descarga-icono {
+    width: 20px;
+    height: 20px;
+  }
+}
