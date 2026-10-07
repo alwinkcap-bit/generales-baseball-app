@@ -168,3 +168,140 @@ video.portada-ajustable {
   color: #071a2b !important;
   background: #f2c94c !important;
 }
+
+/* Editor de portadas para movil */
+@media (max-width: 700px) {
+  .editor-portada-dialogo {
+    width: calc(100vw - 16px);
+    max-width: 560px;
+    max-height: calc(100dvh - 16px);
+    margin: auto;
+    padding: 16px;
+    border-radius: 18px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .editor-portada-dialogo > header {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .editor-portada-dialogo > header > div {
+    min-width: 0;
+  }
+
+  .editor-portada-dialogo h3 {
+    font-size: 18px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
+  .editor-portada-dialogo > header > button {
+    flex-shrink: 0;
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 24px;
+  }
+
+  .editor-portada-preview {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .editor-portada-controles {
+    gap: 18px;
+  }
+
+  .editor-portada-controles label {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .editor-portada-controles select {
+    box-sizing: border-box;
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .editor-portada-controles input[type="range"],
+  .portada-subida-controles input[type="range"] {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    height: 44px;
+    padding: 0;
+    margin: 8px 0 0;
+    appearance: auto;
+    touch-action: auto;
+    accent-color: #f2c94c;
+  }
+
+  .editor-portada-dialogo > footer {
+    position: sticky;
+    bottom: -16px;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 18px -16px -16px;
+    padding: 14px 16px;
+    padding-bottom: max(14px, env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(242,201,76,.35);
+    background: #081b30;
+  }
+
+  .editor-portada-dialogo > footer > button {
+    min-height: 46px;
+    font-size: 14px;
+  }
+
+  .editor-portada-dialogo > footer > button:last-child {
+    grid-column: 1 / -1;
+    font-size: 16px;
+  }
+
+  .videos-cintillo .videos-cintillo-tarjeta > .editor-portada-abrir {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    visibility: visible !important;
+    opacity: 1 !important;
+    min-height: 44px;
+    max-width: calc(100% - 16px);
+    bottom: 8px;
+    left: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    pointer-events: auto;
+    z-index: 4;
+  }
+
+  .patrocinadores-ajustes .editor-portada-abrir,
+  .galeria-publica-item .editor-portada-abrir,
+  .galeria-jugador-item .editor-portada-abrir,
+  .hero-photo .editor-portada-abrir {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    visibility: visible !important;
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 13px;
+    white-space: normal;
+  }
+
+  .patrocinadores-ajustes {
+    gap: 10px;
+  }
+
+  .portada-subida {
+    padding: 14px;
+  }
+
+  .portada-subida-controles label {
+    font-size: 14px;
+  }
+}
