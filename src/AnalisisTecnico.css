@@ -211,3 +211,56 @@
 @media (prefers-reduced-motion: reduce) {
   .analisis-tecnico-tarjeta { transition: none; }
 }
+
+/* Fondo con relieve para las tarjetas */
+.analisis-tecnico-tarjeta {
+  border: 1px solid rgba(233, 197, 108, .5);
+  border-top: 4px solid #e9c56c;
+  background:
+    radial-gradient(ellipse at top left, rgba(255,255,255,.12), transparent 65%),
+    linear-gradient(145deg, #244d6b 0%, #14334e 55%, #0b2238 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.2),
+    inset 0 -3px 6px rgba(0,0,0,.25),
+    0 12px 24px rgba(0,0,0,.3);
+}
+.analisis-tecnico-tarjeta h4,
+.analisis-tecnico-beneficios li {
+  color: #fff;
+}
+.analisis-tecnico-tarjeta p {
+  color: #d4e1ec;
+}
+.analisis-tecnico-precio {
+  color: #f3d487;
+  text-shadow: 0 2px 4px rgba(0,0,0,.3);
+}
+.analisis-tecnico-precio small {
+  color: #c6d7e5;
+}
+.analisis-tecnico-superior img {
+  border: 1px solid rgba(233,197,108,.35);
+  background: linear-gradient(145deg, #315a77, #18374f);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,.15),
+    0 5px 12px rgba(0,0,0,.2);
+}
+.analisis-tecnico-tarjeta .analisis-tecnico-indicacion {
+  background: rgba(0,0,0,.18);
+  color: #d0dfeb;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,.15);
+}
+.analisis-tecnico-beneficios li::before {
+  background: rgba(233,197,108,.15);
+  color: #f3d487;
+}
+.analisis-tecnico-tarjeta a {
+  border: 1px solid rgba(255,255,255,.15);
+  background: linear-gradient(180deg, #218d52, #12673a);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.2),
+    0 5px 12px rgba(0,0,0,.25);
+}
+.analisis-tecnico-tarjeta a:hover {
+  background: linear-gradient(180deg, #269d5c, #147943);
+}
