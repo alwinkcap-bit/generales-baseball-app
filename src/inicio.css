@@ -7253,3 +7253,46 @@ body:has(.agenda-editor-fondo) nav.inicio-nav {
     grid-template-rows: 44px !important;
   }
 }
+
+/* Cabecera movil mas compacta y marca mas visible */
+@media (max-width: 600px) {
+  .inicio-app .inicio-header {
+    gap: 8px !important;
+    padding-top: calc(12px + env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: 12px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-width: 0 !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca img {
+    width: 50px !important;
+    height: 56px !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca strong {
+    display: block !important;
+    font-size: 17px !important;
+    line-height: 1.1 !important;
+    letter-spacing: .6px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca small {
+    display: block !important;
+    font-size: 10px !important;
+    line-height: 1.3 !important;
+    letter-spacing: .7px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-avisos-contenedor {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
