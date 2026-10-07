@@ -2,43 +2,88 @@
 .analisis-tecnico {
   width: min(1120px, calc(100% - 32px));
   box-sizing: border-box;
-  margin: 22px auto;
-  padding: 22px;
-  border: 1px solid rgba(221, 179, 76, .5);
-  border-radius: 22px;
-  background: linear-gradient(135deg, #081b30, #123452);
+  margin: 26px auto;
+  padding: clamp(20px, 4vw, 34px);
+  border: 1px solid rgba(233,197,108,.55);
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at top right, rgba(233,197,108,.15), transparent 60%),
+    linear-gradient(135deg, #081b30, #143854);
+  box-shadow: 0 16px 36px rgba(0,0,0,.16);
   color: #fff;
+}
+.analisis-tecnico,
+.analisis-tecnico * {
+  box-sizing: border-box;
+}
+.analisis-tecnico-cabecera {
+  max-width: 720px;
 }
 .analisis-tecnico-cabecera small {
-  color: #e9c56c;
-  font-size: 11px;
+  display: inline-block;
+  padding: 7px 11px;
+  border: 1px solid rgba(233,197,108,.4);
+  border-radius: 7px;
+  background: rgba(233,197,108,.08);
+  color: #f1d28c;
+  font-size: 10px;
   font-weight: 800;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.4px;
 }
 .analisis-tecnico-cabecera h3 {
-  margin: 8px 0;
+  margin: 15px 0 10px;
   color: #fff;
-  font-size: clamp(21px, 4vw, 29px);
-  line-height: 1.2;
+  font-size: clamp(25px, 4vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -.6px;
 }
 .analisis-tecnico-cabecera p {
-  margin: 0 0 20px;
-  color: #cfdae7;
-  line-height: 1.5;
+  margin: 0;
+  color: #d2deea;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.analisis-tecnico-pasos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin: 23px 0;
+}
+.analisis-tecnico-pasos span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #dce6ef;
+  font-size: 12px;
+}
+.analisis-tecnico-pasos b {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid rgba(233,197,108,.5);
+  border-radius: 50%;
+  color: #f1d28c;
+  font-size: 11px;
 }
 .analisis-tecnico-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 20px;
 }
 .analisis-tecnico-tarjeta {
-  min-width: 0;
-  padding: 20px;
-  border: 1px solid rgba(233, 197, 108, .3);
-  border-radius: 17px;
-  background: rgba(255, 255, 255, .05);
+  position: relative;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  padding: clamp(20px, 3vw, 28px);
+  border: 1px solid #e2e8ed;
+  border-top: 4px solid #d6af50;
+  border-radius: 18px;
+  background: #fff;
+  color: #081b30;
+  box-shadow: 0 8px 22px rgba(0,0,0,.12);
+  transition: transform .2s ease, box-shadow .2s ease;
 }
 .analisis-tecnico-superior {
   display: flex;
@@ -47,36 +92,78 @@
   gap: 16px;
 }
 .analisis-tecnico-superior img {
-  width: 76px;
-  height: 76px;
+  display: block;
+  width: 88px;
+  height: 88px;
+  padding: 7px;
+  border: 1px solid #e4eaf0;
+  border-radius: 16px;
+  background: #f3f6f9;
   object-fit: contain;
-  border-radius: 12px;
 }
 .analisis-tecnico-precio {
-  color: #f0cc75;
-  font-size: 32px;
+  color: #081b30;
+  font-size: 44px;
   font-weight: 900;
+  line-height: 1;
+  letter-spacing: -2px;
   text-align: right;
 }
 .analisis-tecnico-precio small {
   display: block;
+  margin-top: 7px;
+  color: #617185;
   font-size: 11px;
-  font-weight: 500;
-  color: #cfdae7;
+  font-weight: 600;
+  letter-spacing: 0;
 }
 .analisis-tecnico-tarjeta h4 {
-  margin: 16px 0 8px;
-  color: #fff;
-  font-size: 22px;
+  margin: 20px 0 9px;
+  color: #081b30;
+  font-size: 25px;
+  line-height: 1.2;
+  letter-spacing: -.4px;
 }
 .analisis-tecnico-tarjeta p {
   margin: 0 0 12px;
-  color: #dbe5ee;
-  line-height: 1.5;
+  color: #425569;
+  font-size: 14px;
+  line-height: 1.6;
 }
 .analisis-tecnico-tarjeta .analisis-tecnico-indicacion {
-  color: #b8cbdb;
+  padding: 11px 12px;
+  border-left: 3px solid #d6af50;
+  border-radius: 0 7px 7px 0;
+  background: #f5f7fa;
+  color: #536579;
+  font-size: 12px;
+}
+.analisis-tecnico-beneficios {
+  display: grid;
+  gap: 9px;
+  margin: 5px 0 24px;
+  padding: 0;
+  list-style: none;
+}
+.analisis-tecnico-beneficios li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #22394e;
   font-size: 13px;
+}
+.analisis-tecnico-beneficios li::before {
+  content: '✓';
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e7f4ec;
+  color: #167341;
+  font-size: 12px;
+  font-weight: 800;
 }
 .analisis-tecnico-tarjeta a {
   display: flex;
@@ -84,28 +171,43 @@
   justify-content: space-between;
   gap: 10px;
   margin-top: auto;
-  padding: 13px 15px;
+  padding: 15px 16px;
   border-radius: 11px;
-  background: #e9c56c;
-  color: #081b30;
+  background: #147943;
+  color: #fff;
   font-size: 14px;
   font-weight: 800;
+  line-height: 1.35;
   text-decoration: none;
+  box-shadow: 0 5px 12px rgba(20,121,67,.16);
 }
 .analisis-tecnico-tarjeta a:hover {
-  background: #f5d890;
+  background: #106237;
+}
+.analisis-tecnico-tarjeta a span {
+  font-size: 20px;
 }
 .analisis-tecnico-tarjeta a:focus-visible {
-  outline: 3px solid white;
+  outline: 3px solid #bd922e;
   outline-offset: 4px;
 }
 .analisis-tecnico .analisis-tecnico-nota {
-  margin: 16px 0 0;
-  color: #b8cbdb;
+  margin: 20px 0 0;
+  color: #c1d0dd;
   font-size: 12px;
-  line-height: 1.5;
+  line-height: 1.6;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .analisis-tecnico-tarjeta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(0,0,0,.2);
+  }
 }
 @media (max-width: 600px) {
-  .analisis-tecnico { padding: 18px; }
   .analisis-tecnico-grid { grid-template-columns: 1fr; }
+  .analisis-tecnico-pasos { gap: 10px 16px; }
+  .analisis-tecnico-superior img { width: 76px; height: 76px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .analisis-tecnico-tarjeta { transition: none; }
 }
