@@ -7135,3 +7135,79 @@ body:has(.agenda-editor-fondo) nav.inicio-nav {
     max-height: 44px !important;
   }
 }
+
+/* Espacio superior para logo y barra del dispositivo */
+.inicio-app .inicio-header {
+  padding-top: calc(16px + env(safe-area-inset-top, 0px)) !important;
+  padding-bottom: 12px !important;
+  height: auto !important;
+  min-height: 82px !important;
+  box-sizing: border-box !important;
+}
+
+/* Instalacion: acabado dorado y animacion */
+.inicio-app .inicio-header
+.inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child {
+  isolation: isolate;
+  overflow: hidden !important;
+  border: 1px solid #ffe9ab !important;
+  border-radius: 9px !important;
+  background: linear-gradient(
+    135deg, #ffe9a6 0%, #f6ca55 48%, #e8ab29 100%
+  ) !important;
+  box-shadow:
+    0 5px 14px #0004,
+    inset 0 1px 0 #fff9,
+    inset 0 -2px 0 #a8752533 !important;
+}
+
+.inicio-app .inicio-header
+.inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 45% !important;
+  height: 100% !important;
+  background: linear-gradient(
+    90deg, transparent, #ffffff65, transparent
+  ) !important;
+  transform: translateX(-250%) skewX(-20deg);
+  pointer-events: none;
+  animation: generales-instalar-brillo 6s ease-in-out infinite;
+}
+
+.inicio-app .inicio-header
+.inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child
+.inicio-descarga-icono {
+  animation: generales-instalar-flecha 6s ease-in-out infinite;
+}
+
+.inicio-app .inicio-header
+.inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child:disabled::after,
+.inicio-app .inicio-header
+.inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child:disabled
+.inicio-descarga-icono {
+  animation: none !important;
+}
+
+@keyframes generales-instalar-brillo {
+  0%, 65% { transform: translateX(-250%) skewX(-20deg); }
+  85%, 100% { transform: translateX(350%) skewX(-20deg); }
+}
+
+@keyframes generales-instalar-flecha {
+  0%, 65%, 85%, 100% { transform: translateY(0); }
+  70%, 80% { transform: translateY(3px); }
+  75% { transform: translateY(-1px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child::after,
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child
+  .inicio-descarga-icono {
+    animation: none !important;
+  }
+}
