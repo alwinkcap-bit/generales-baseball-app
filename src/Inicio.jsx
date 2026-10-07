@@ -526,7 +526,15 @@ const responderReto = (opcionElegida) => {
               <small>INSCRIPCIONES ABIERTAS</small>
               <strong>Forma parte de los Generales</strong>
             </span>
-            <span aria-hidden="true">→</span>
+            <span className="inicio-inscripcion-simbolo" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2"
+                strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="9" cy="7" r="3" />
+                <path d="M3 20v-2a6 6 0 0 1 12 0v2" />
+                <path d="M19 8v6M16 11h6" />
+              </svg>
+            </span>
           </button>
         </section>
 
