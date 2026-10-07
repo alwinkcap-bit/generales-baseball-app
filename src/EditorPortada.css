@@ -1,0 +1,170 @@
+.editor-portada-dialogo {
+  box-sizing: border-box;
+  width: min(560px, calc(100vw - 24px));
+  max-height: calc(100dvh - 28px);
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid #d6b15c;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #153c58, #081b30);
+  color: #fff;
+  box-shadow: 0 24px 80px #0009;
+}
+.editor-portada-dialogo::backdrop { background: #020b18b8; }
+.editor-portada-dialogo header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.editor-portada-dialogo h3 {
+  color: #fff;
+  font-size: 20px;
+  margin: 5px 0;
+}
+.editor-portada-dialogo small {
+  color: #f1cd79;
+  font-size: 10px;
+  letter-spacing: 1.4px;
+}
+.editor-portada-dialogo button,
+.editor-portada-abrir {
+  cursor: pointer;
+  border: 1px solid #d6b15c;
+  border-radius: 9px;
+  padding: 9px 12px;
+  background: #153c58;
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+}
+.editor-portada-dialogo button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+.editor-portada-dialogo button:focus-visible,
+.editor-portada-abrir:focus-visible {
+  outline: 3px solid #f1cd79;
+  outline-offset: 3px;
+}
+.editor-portada-dialogo footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+.editor-portada-dialogo footer button:last-child {
+  background: #e9c56c;
+  color: #081b30;
+  font-weight: 800;
+}
+.editor-portada-preview {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #050e18;
+  border: 1px solid #ffffff26;
+}
+.editor-portada-preview img,
+.editor-portada-preview video {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.editor-portada-controles {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+.editor-portada-controles label {
+  display: block;
+  color: #fff;
+  font-size: 13px;
+}
+.editor-portada-controles output { float: right; color: #f1cd79; }
+.editor-portada-controles input[type=range] {
+  width: 100%;
+  margin: 10px 0 0;
+  accent-color: #e9c56c;
+}
+.editor-portada-controles select {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 9px;
+  border-radius: 8px;
+  background: #fff;
+  color: #081b30;
+}
+.editor-portada-controles p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #c1d4e3;
+}
+.editor-portada-controles .editor-portada-error { color: #ffb6b6; }
+img.portada-ajustable,
+video.portada-ajustable {
+  object-fit: var(--portada-modo, contain) !important;
+  object-position: var(--portada-posicion, 50% 50%) !important;
+}
+.patrocinadores-ajustes { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.portada-logo-marco {
+  display: block;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.portada-logo-marco img { width: 100% !important; height: 100% !important; }
+.videos-cintillo-tarjeta > .editor-portada-abrir {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  z-index: 3;
+  padding: 7px 10px;
+  background: #081b30eb;
+}
+.galeria-jugador-item,
+.galeria-jugador-foto,
+.hero-photo .foto-perfil-button { overflow: hidden; }
+
+/* Portadas que llenan las tarjetas de los cintillos */
+.inicio-cintillo-foto,
+.videos-cintillo .video-miniatura {
+  position: relative;
+  overflow: hidden;
+  padding: 0 !important;
+}
+
+.inicio-cintillo-foto img.portada-ajustable,
+.videos-cintillo .video-miniatura video.portada-ajustable {
+  position: absolute !important;
+  inset: 0;
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: var(--portada-posicion, 50% 50%) !important;
+}
+
+.patrocinadores-banner img.patrocinadores-banner-imagen {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: var(--portada-posicion, 50% 50%) !important;
+}
+
+/* Botón de edición visible sobre la portada */
+.videos-cintillo .editor-portada-abrir {
+  z-index: 3;
+  color: #071a2b !important;
+  background: #f2c94c !important;
+}
