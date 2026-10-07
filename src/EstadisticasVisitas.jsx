@@ -1,3 +1,4 @@
+import EstadisticasInstalaciones from './EstadisticasInstalaciones'
 import React, { useEffect, useState } from 'react'
 import { supabase } from './supabase'
 import './EstadisticasVisitas.css'
@@ -180,6 +181,7 @@ export default function EstadisticasVisitas({ isAdmin }) {
           </article>
         </div>
       )}
+      <EstadisticasInstalaciones isAdmin={isAdmin} />
     </section>
   )
 }

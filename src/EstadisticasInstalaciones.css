@@ -1,0 +1,39 @@
+
+.instalaciones-panel { margin-top:20px; }
+.instalaciones-panel .instalaciones-boton {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; width:100%; padding:16px 20px;
+  border:1px solid #d5ad40; border-radius:14px;
+  background:linear-gradient(135deg,#ffe383,#e1b335);
+  color:#092238; font-size:15px; font-weight:800; cursor:pointer;
+}
+.instalaciones-boton span { font-size:24px; }
+.instalaciones-detalle {
+  margin-top:12px; padding:20px; border-radius:16px;
+  border:1px solid rgba(230,195,105,.4);
+  background:linear-gradient(135deg,#0a263c,#103b54); color:#fff;
+}
+.instalaciones-detalle header {
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:12px;
+}
+.instalaciones-detalle h3 { margin:0; color:#fff; }
+.instalaciones-detalle header button {
+  padding:10px 14px; border:1px solid #d5ad40;
+  border-radius:10px; background:#f2c94c; color:#092238; cursor:pointer;
+}
+.instalaciones-cifras {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px; margin-top:18px;
+}
+.instalaciones-cifras article {
+  padding:18px; border-radius:12px; background:rgba(255,255,255,.07);
+}
+.instalaciones-cifras small { color:#f2c94c; font-weight:800; }
+.instalaciones-cifras strong {
+  display:block; margin-top:8px; font-size:36px; color:#fff;
+}
+.instalaciones-nota { color:#c7d9e7; font-size:12px; line-height:1.6; }
+.instalaciones-panel button:focus-visible {
+  outline:3px solid #fff; outline-offset:3px;
+}

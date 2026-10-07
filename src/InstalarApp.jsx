@@ -1,7 +1,10 @@
+import { observarInstalaciones } from './RegistroInstalaciones'
 import React, { useEffect, useState } from 'react'
 
 export default function InstalarApp() {
   const [instalador, setInstalador] = useState(null)
+
+  useEffect(observarInstalaciones, [])
 
   useEffect(() => {
     navigator.serviceWorker?.register(
