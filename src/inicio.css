@@ -7296,3 +7296,92 @@ body:has(.agenda-editor-fondo) nav.inicio-nav {
     margin-bottom: 0 !important;
   }
 }
+
+/* Movil: marca y botones en una sola fila */
+@media (max-width: 600px) {
+  .inicio-app .inicio-header {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 198px !important;
+    grid-template-rows: auto !important;
+    align-items: center !important;
+    gap: 6px !important;
+    height: auto !important;
+    max-height: none !important;
+    padding: calc(12px + env(safe-area-inset-top, 0px)) 8px 12px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    gap: 5px !important;
+    min-width: 0 !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca img {
+    width: 34px !important;
+    height: 42px !important;
+    flex-shrink: 0 !important;
+    object-fit: contain !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca strong {
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca small {
+    font-size: 7px !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .inicio-app .inicio-header .inicio-avisos-contenedor {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    width: 198px !important;
+    min-width: 198px !important;
+    max-width: 198px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    flex-basis: 198px !important;
+    grid-template-columns: 110px 38px 38px !important;
+    grid-template-rows: 40px !important;
+    gap: 6px !important;
+    margin: 0 !important;
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child {
+    width: 110px !important;
+    min-width: 110px !important;
+    max-width: 110px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    padding: 0 7px !important;
+    gap: 5px !important;
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera
+  .instalar-app-texto {
+    font-size: 11px !important;
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera svg {
+    width: 17px !important;
+    height: 17px !important;
+    flex-basis: 17px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-compartir,
+  .inicio-app .inicio-header .inicio-notificacion {
+    width: 38px !important;
+    min-width: 38px !important;
+    max-width: 38px !important;
+    height: 38px !important;
+    min-height: 38px !important;
+  }
+}
