@@ -1,0 +1,103 @@
+.instalar-app-dialogo {
+  box-sizing: border-box;
+  width: min(480px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  overflow: auto;
+  padding: 24px;
+  border: 1px solid #c9a34b;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #153955, #081b30);
+  color: #fff;
+  box-shadow: 0 24px 70px #0008;
+}
+
+.instalar-app-dialogo::backdrop {
+  background: #03101ed9;
+}
+
+.instalar-app-dialogo header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.instalar-app-dialogo small {
+  color: #f2c94c;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.instalar-app-dialogo h2 {
+  margin: 8px 0 18px;
+  font-size: 23px;
+  line-height: 1.2;
+}
+
+.instalar-app-dialogo li {
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+.instalar-app-dialogo ol {
+  padding-left: 24px;
+}
+
+.instalar-app-dialogo label {
+  display: block;
+  font-size: 14px;
+}
+
+.instalar-app-dialogo input {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  border: 1px solid #ffffff30;
+  border-radius: 10px;
+  background: #fff;
+  color: #081b30;
+  font-size: 16px;
+}
+
+.instalar-app-dialogo p {
+  color: #cedcea;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.instalar-app-dialogo button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid #ffffff35;
+  border-radius: 10px;
+  background: #ffffff12;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.instalar-app-dialogo header button {
+  min-width: 44px;
+  padding: 4px;
+  font-size: 26px;
+}
+
+.instalar-app-dialogo footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.instalar-app-dialogo footer button:last-child {
+  background: #f2c94c;
+  color: #081b30;
+  font-weight: 700;
+}
+
+@media (max-width: 480px) {
+  .instalar-app-dialogo { padding: 18px; }
+  .instalar-app-dialogo footer button { flex: 1; }
+}
