@@ -7385,3 +7385,48 @@ body:has(.agenda-editor-fondo) nav.inicio-nav {
     min-height: 38px !important;
   }
 }
+
+/* Acabado del boton de instalacion solo en movil */
+@media (max-width: 600px) {
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child {
+    border: 1px solid #ffeba9 !important;
+    border-radius: 8px !important;
+    background: linear-gradient(
+      160deg,
+      #fff0b8 0%,
+      #f8d16b 35%,
+      #edb83f 70%,
+      #d99a20 100%
+    ) !important;
+    color: #071c30 !important;
+    box-shadow:
+      0 4px 9px rgba(0, 0, 0, .3),
+      inset 0 1px 0 rgba(255, 255, 255, .8),
+      inset 0 -2px 0 rgba(135, 84, 8, .22) !important;
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera
+  .instalar-app-texto {
+    font-weight: 800 !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, .3);
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera svg {
+    padding: 3px;
+    box-sizing: content-box;
+    width: 15px !important;
+    height: 15px !important;
+    flex-basis: 15px !important;
+    border-radius: 5px;
+    background: rgba(8, 27, 48, .08);
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child:focus-visible {
+    outline: 2px solid #fff !important;
+    outline-offset: 3px !important;
+  }
+}
