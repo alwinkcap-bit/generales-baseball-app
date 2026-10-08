@@ -1172,3 +1172,120 @@
   );
   box-shadow: 0 2px 1px #0005;
 }
+
+/* Postura del bateador y secuencia del swing */
+.bateo-retro .bateador-retro .jugador-cuerpo {
+  width: 30px;
+  transform: translateX(-50%) rotate(-7deg);
+  transform-origin: 50% 90%;
+}
+
+.bateo-retro .bateador-retro .jugador-cabeza {
+  left: 44%;
+  transform: translateX(-50%) rotate(-6deg);
+}
+
+.bateo-retro .bateador-retro .jugador-piernas {
+  gap: 14px;
+}
+
+.bateo-retro .bateador-retro .jugador-piernas span:first-child {
+  transform: rotate(15deg);
+}
+
+.bateo-retro .bateador-retro .jugador-piernas span:last-child {
+  transform: rotate(-15deg);
+}
+
+.bateo-retro .bateador-retro .brazo-izquierdo {
+  top: 6px !important;
+  left: -6px !important;
+  height: 29px;
+  z-index: 7;
+  transform: rotate(-62deg);
+}
+
+.bateo-retro .bateador-retro .brazo-derecho {
+  top: 5px !important;
+  right: -5px;
+  height: 29px;
+  z-index: 8;
+  transform: rotate(-105deg);
+}
+
+.bateo-retro .bateador-retro .jugador-bate {
+  top: 27px !important;
+  left: -9px !important;
+  width: 68px;
+  transform: rotate(62deg);
+  transform-origin: 90% 50%;
+}
+
+.bateo-retro .bateador-retro.bateando .jugador-cuerpo {
+  animation: generales-giro-swing 220ms ease-in-out both;
+}
+
+.bateo-retro .bateador-retro.bateando .brazo-izquierdo {
+  animation: generales-brazo-delantero 220ms ease-in-out both;
+}
+
+.bateo-retro .bateador-retro.bateando .brazo-derecho {
+  animation: generales-brazo-trasero 220ms ease-in-out both;
+}
+
+.bateo-retro .bateador-retro.bateando .jugador-bate {
+  animation: generales-recorrido-bate 220ms ease-in-out both;
+}
+
+.bateo-retro .bateador-retro.bateando .jugador-piernas span:first-child {
+  animation: generales-paso-frontal 220ms ease-in-out both;
+}
+
+.bateo-retro .bateador-retro.bateando .jugador-piernas span:last-child {
+  animation: generales-pivote-trasero 220ms ease-in-out both;
+}
+
+@keyframes generales-giro-swing {
+  0% { transform: translateX(-50%) rotate(-7deg); }
+  20% { transform: translateX(-47%) rotate(-12deg); }
+  55% { transform: translateX(-55%) rotate(10deg); }
+  100% { transform: translateX(-55%) rotate(16deg); }
+}
+
+@keyframes generales-recorrido-bate {
+  0% { transform: rotate(62deg); }
+  20% { transform: rotate(75deg); }
+  55% { transform: rotate(8deg); }
+  100% { transform: rotate(-65deg); }
+}
+
+@keyframes generales-brazo-delantero {
+  0%, 20% { transform: rotate(-62deg); }
+  55% { transform: rotate(65deg); }
+  100% { transform: rotate(110deg); }
+}
+
+@keyframes generales-brazo-trasero {
+  0%, 20% { transform: rotate(-105deg); }
+  55% { transform: rotate(45deg); }
+  100% { transform: rotate(95deg); }
+}
+
+@keyframes generales-paso-frontal {
+  0%, 20% { transform: rotate(15deg); }
+  55%, 100% { transform: translateX(-3px) rotate(20deg); }
+}
+
+@keyframes generales-pivote-trasero {
+  0%, 20% { transform: rotate(-15deg); }
+  55%, 100% { transform: rotate(-5deg) translateY(-2px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bateo-retro .bateador-retro.bateando .jugador-cuerpo,
+  .bateo-retro .bateador-retro.bateando .jugador-bate,
+  .bateo-retro .bateador-retro.bateando .jugador-brazo,
+  .bateo-retro .bateador-retro.bateando .jugador-piernas span {
+    animation: none;
+  }
+}
