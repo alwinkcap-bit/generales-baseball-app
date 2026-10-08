@@ -928,3 +928,46 @@
   0%, 75% { opacity: .65; }
   100% { opacity: 0; }
 }
+
+/* El público celebra los jonrones */
+.bateo-retro .retro-gradas-celebrando {
+  animation: retro-gradas-destello 500ms ease-in-out 4;
+}
+
+.bateo-retro .retro-gradas-celebrando i {
+  animation: retro-publico-salto 400ms ease-in-out 5;
+}
+
+.bateo-retro .retro-gradas-celebrando i:nth-child(3n) {
+  animation-delay: 70ms;
+}
+
+.bateo-retro .retro-gradas-celebrando i:nth-child(3n + 1) {
+  animation-delay: 140ms;
+}
+
+@keyframes retro-publico-salto {
+  0%, 100% { transform: translateY(0); }
+  45% { transform: translateY(-5px) rotate(-8deg); }
+  65% { transform: translateY(-3px) rotate(8deg); }
+}
+
+@keyframes retro-gradas-destello {
+  0%, 100% {
+    box-shadow: inset 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: inset 0 0 24px #ffd56a80;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bateo-retro .retro-gradas-celebrando,
+  .bateo-retro .retro-gradas-celebrando i {
+    animation: none;
+  }
+
+  .bateo-retro .retro-gradas-celebrando {
+    box-shadow: inset 0 0 24px #ffd56a80;
+  }
+}

@@ -338,7 +338,7 @@ export default function BateoRetro({ onCerrar }) {
           </div>
 
           
-          <div className="retro-gradas" aria-hidden="true">
+          <div className={`retro-gradas ${vueloJonron ? 'retro-gradas-celebrando' : ''}`} aria-hidden="true">
             {Array.from({ length: 4 }, (_, fila) => (
               <div className="retro-fila-publico" key={fila}>
                 {Array.from({ length: 36 }, (_, asiento) => (
