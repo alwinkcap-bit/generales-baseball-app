@@ -807,3 +807,103 @@
     grid-template-rows: auto auto minmax(160px, 1fr) auto auto;
   }
 }
+
+/* Pantalla de juego con controles siempre visibles */
+.bateo-retro-fondo .bateo-retro {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto auto auto minmax(160px, 1fr) auto auto auto;
+  height: min(760px, calc(100dvh - 24px));
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+}
+
+.bateo-retro .bateo-retro-header {
+  padding: 8px 14px;
+}
+
+.bateo-retro-header h2 {
+  font-size: 22px;
+  margin-top: 3px;
+}
+
+.bateo-retro .bateo-retro-marcador {
+  padding: 6px 10px;
+}
+
+.bateo-retro-marcador span {
+  padding: 5px 3px;
+  gap: 3px;
+  font-size: 9px;
+}
+
+.bateo-retro-marcador b {
+  font-size: 24px;
+}
+
+.bateo-retro .bateo-retro-record {
+  padding: 6px 10px;
+  gap: 4px 10px;
+  font-size: 10px;
+}
+
+.bateo-retro .bateo-retro-estadio {
+  height: auto;
+  min-height: 160px;
+}
+
+.bateo-retro .bateo-retro-conteo {
+  padding: 8px;
+}
+
+.bateo-retro .bateo-retro-controles {
+  padding: 8px 14px 10px;
+}
+
+.bateo-retro .bateo-retro-controles button {
+  min-height: 48px;
+  padding: 10px 18px;
+}
+
+.bateo-retro .bateo-retro-ayuda {
+  padding: 0 12px 8px;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .bateo-retro-fondo .bateo-retro {
+    height: calc(100dvh - 12px);
+    max-height: calc(100dvh - 12px);
+  }
+
+  .bateo-retro-header h2 {
+    font-size: 19px;
+  }
+
+  .bateo-retro .bateo-retro-header button {
+    font-size: 11px;
+    padding: 8px;
+  }
+
+  .bateo-retro .bateo-retro-record small {
+    display: none;
+  }
+
+  .bateo-retro .bateo-retro-controles {
+    padding-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* En pantallas bajas, conservar espacio para jugar */
+@media (max-height: 500px) {
+  .bateo-retro .bateo-retro-header small,
+  .bateo-retro .bateo-retro-record,
+  .bateo-retro .bateo-retro-ayuda {
+    display: none;
+  }
+
+  .bateo-retro-fondo .bateo-retro {
+    grid-template-rows: auto auto minmax(160px, 1fr) auto auto;
+  }
+}
