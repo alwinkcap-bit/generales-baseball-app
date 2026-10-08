@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import './BateoRetro.css'
+import './BateoRetroConsola.css'
 
 export default function BateoRetro({ onCerrar }) {
   const [jugando, setJugando] = useState(false)
@@ -265,11 +266,11 @@ export default function BateoRetro({ onCerrar }) {
         <header className="bateo-retro-header">
           <div>
             <small>GENERALES ARCADE</small>
-            <h2>⚾ Bateo Retro</h2>
+            <h2>BATEO RETRO</h2>
           </div>
 
-          <button type="button" onClick={onCerrar} aria-label="Cerrar juego">
-            ×
+          <button type="button" onClick={onCerrar} aria-label="Regresar al inicio">
+            ← Regresar
           </button>
         </header>
 
@@ -305,6 +306,27 @@ export default function BateoRetro({ onCerrar }) {
         </div>
 
         <div className="bateo-retro-estadio">
+          <div className="retro-luces" aria-hidden="true">
+            <i></i><i></i>
+          </div>
+          <div className="retro-cartel" aria-hidden="true">
+            GENERALES PARK · CHITRÉ
+          </div>
+          {!jugando && (
+            <div className="retro-presentacion">
+              <small>GENERALES ARCADE · BASEBALL</small>
+              <strong>{terminado ? 'FIN DE PARTIDA' : 'BATEO RETRO'}</strong>
+              <span>
+                {terminado
+                  ? `${puntos} PUNTOS · ${jonrones} JONRONES`
+                  : 'TU MOMENTO. TU SWING.'}
+              </span>
+              <button type="button" onClick={comenzarJuego}>
+                {terminado ? 'VOLVER A JUGAR' : 'PRESIONA PARA JUGAR'}
+              </button>
+            </div>
+          )}
+
           <div className="bateo-retro-cielo">
             <span>★ GENERALES DE CHITRÉ ★</span>
           </div>

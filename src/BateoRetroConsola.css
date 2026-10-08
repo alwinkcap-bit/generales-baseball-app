@@ -1,0 +1,384 @@
+/* Pantalla propia de Generales inspirada en consolas clasicas */
+.bateo-retro-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  box-sizing: border-box;
+  background: #030b17ed;
+  overflow-y: auto;
+}
+
+.bateo-retro-fondo .bateo-retro {
+  width: min(800px, 100%);
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  border: 3px solid #e6bd52;
+  border-radius: 8px;
+  background: #071b30;
+  color: #eef7ff;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 0 5px #122d46, 0 22px 70px #000a;
+}
+
+.bateo-retro .bateo-retro-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 2px solid #e6bd52;
+  background: #0b253d;
+}
+
+.bateo-retro-header small {
+  color: #f5cc61;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.bateo-retro-header h2 {
+  margin: 5px 0 0;
+  font-size: clamp(20px, 5vw, 30px);
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 3px 3px #020c18;
+}
+
+.bateo-retro .bateo-retro-header button {
+  width: auto;
+  height: auto;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid #53738e;
+  border-radius: 4px;
+  background: #102f49;
+  color: white;
+  font: bold 12px 'Courier New', monospace;
+}
+
+.bateo-retro .bateo-retro-marcador {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr);
+  gap: 2px;
+  padding: 10px;
+  background: #020c17;
+}
+
+.bateo-retro-marcador span {
+  display: grid;
+  gap: 5px;
+  padding: 8px 4px;
+  text-align: center;
+  color: #91abc1;
+  font-size: 10px;
+  letter-spacing: 1px;
+  border: 1px solid #264158;
+  background: #081a29;
+}
+
+.bateo-retro-marcador b {
+  color: #ffe08b;
+  font-size: clamp(20px, 5vw, 30px);
+  text-shadow: 2px 2px #654914;
+}
+
+.bateo-retro .bateo-retro-record {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  margin: 0;
+  padding: 9px 12px;
+  border: 0;
+  border-bottom: 2px solid #264158;
+  border-radius: 0;
+  background: #10243a;
+  font-size: 11px;
+}
+
+.bateo-retro .bateo-retro-estadio {
+  position: relative;
+  isolation: isolate;
+  height: clamp(300px, 47vh, 430px);
+  overflow: hidden;
+  perspective: none;
+  background: #123752;
+}
+
+.bateo-retro .bateo-retro-cielo {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 30%;
+  background:
+    radial-gradient(circle at 76% 22%, #fff2bf 0 10px, transparent 11px),
+    radial-gradient(circle at 15% 20%, #c1e5ff 0 1px, transparent 2px),
+    radial-gradient(circle at 56% 32%, #c1e5ff 0 1px, transparent 2px),
+    linear-gradient(#061426, #1b4566);
+}
+
+.bateo-retro-cielo > span { display: none; }
+
+.bateo-retro .bateo-retro-publico {
+  position: absolute;
+  z-index: 2;
+  inset: 24% 0 auto;
+  height: 14%;
+  border-top: 5px solid #17334c;
+  border-bottom: 7px solid #edc155;
+  background:
+    radial-gradient(circle, #f4cf76 0 2px, transparent 3px) 0 0 / 18px 12px,
+    radial-gradient(circle, #8ac1e5 0 2px, transparent 3px) 9px 6px / 18px 12px,
+    repeating-linear-gradient(#17344f 0 9px, #081d30 9px 12px);
+}
+
+.bateo-retro .bateo-retro-estadio::before {
+  top: 37%;
+  left: 0;
+  width: 100%;
+  height: 5%;
+  border: 0;
+  border-radius: 0;
+  background: #174d4a;
+  box-shadow: inset 0 3px #297160, inset 0 -4px #082d28;
+}
+
+.bateo-retro .bateo-retro-estadio::after {
+  content: '';
+  position: absolute;
+  z-index: 30;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent 0 3px, #0000000d 3px 4px
+  );
+  pointer-events: none;
+}
+
+.bateo-retro .bateo-retro-campo {
+  position: absolute;
+  inset: 42% -12% -18%;
+  border-radius: 0;
+  background: repeating-conic-gradient(
+    from 45deg at 50% 100%, #186642 0deg 12deg, #237d4b 12deg 24deg
+  );
+}
+
+.bateo-retro .bateo-retro-tierra {
+  position: absolute;
+  left: 50%;
+  bottom: -38%;
+  width: 78%;
+  height: 112%;
+  background: #bd824d;
+  border: 0;
+  transform: translateX(-50%);
+  clip-path: polygon(50% 0, 100% 52%, 50% 100%, 0 52%);
+}
+
+.bateo-retro .bateo-retro-tierra::after {
+  inset: 23%;
+  background: #287f4b;
+}
+
+.retro-cartel {
+  position: absolute;
+  z-index: 4;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  border: 2px solid #dcb455;
+  background: #071b30;
+  color: #ffdd7a;
+  font-size: 9px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.retro-luces {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+}
+
+.retro-luces i {
+  position: absolute;
+  top: 7%;
+  left: 7%;
+  width: 5px;
+  height: 25%;
+  background: #66859b;
+}
+
+.retro-luces i:last-child { left: auto; right: 7%; }
+
+.retro-luces i::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -16px;
+  width: 38px;
+  height: 19px;
+  border: 3px solid #39526b;
+  background: repeating-linear-gradient(
+    90deg, #fff3bc 0 6px, #688696 6px 9px
+  );
+  box-shadow: 0 0 22px #fff3bc55;
+}
+
+.bateo-retro .jugador-retro * {
+  border-radius: 0 !important;
+}
+
+.bateo-retro .jugador-retro {
+  filter: drop-shadow(3px 4px 0 #03151c66);
+}
+
+.bateo-retro .jugador-cara {
+  background: #ca8c5e;
+  box-shadow: inset -4px -2px #a5663e;
+}
+
+.bateo-retro .jugador-gorra,
+.bateo-retro .jugador-casco {
+  background: #126aa0;
+}
+
+.bateo-retro .jugador-bate {
+  background: #edc17e;
+  border-color: #67431e;
+}
+
+.bateo-retro .bateo-retro-mensaje {
+  position: absolute;
+  z-index: 32;
+  top: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 90%;
+  padding: 8px 12px;
+  border: 2px solid #ffd36b;
+  border-radius: 0;
+  background: #071b30ee;
+  color: #fff0b9;
+  font-size: clamp(12px, 3vw, 18px);
+  font-weight: bold;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.retro-presentacion {
+  position: absolute;
+  z-index: 40;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px;
+  background: #041426bd;
+  text-align: center;
+}
+
+.retro-presentacion small {
+  color: #b4d5e9;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.retro-presentacion strong {
+  font-size: clamp(26px, 7vw, 48px);
+  color: #ffe18a;
+  text-shadow: 3px 3px #906027, 6px 6px #061326;
+}
+
+.retro-presentacion > span {
+  color: #fff;
+  font-size: 12px;
+}
+
+.retro-presentacion button,
+.bateo-retro .bateo-retro-controles button {
+  min-height: 50px;
+  padding: 13px 20px;
+  border: 2px solid #fff0b0;
+  border-radius: 3px;
+  background: #f4cb62;
+  color: #071b30 !important;
+  font: bold 14px 'Courier New', monospace;
+  box-shadow: 0 4px #a57525;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.bateo-retro .bateo-retro-controles {
+  padding: 10px 16px 14px;
+  text-align: center;
+  background: #081c30;
+}
+
+.bateo-retro .bateo-retro-controles button {
+  width: min(350px, 100%);
+}
+
+.bateo-retro .bateo-retro-controles button:disabled {
+  background: #465665;
+  border-color: #697988;
+  color: #dbe3ea !important;
+  box-shadow: 0 4px #253542;
+  cursor: default;
+}
+
+.bateo-retro .bateo-retro-conteo {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 12px;
+  background: #061525;
+  color: #abc3d6;
+  font-size: 11px;
+}
+
+.bateo-retro-conteo span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.bateo-retro-conteo i {
+  width: 10px;
+  height: 10px;
+  border-radius: 0;
+  background: #25394a;
+}
+
+.bateo-retro-conteo i.encendido { background: #ffd05e; }
+.bateo-retro-conteo i.rojo { background: #ff675d; }
+
+.bateo-retro .bateo-retro-ayuda {
+  margin: 0;
+  padding: 0 18px 16px;
+  color: #b2c8d9;
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.bateo-retro button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .bateo-retro-fondo { padding: 6px; }
+  .bateo-retro-fondo .bateo-retro {
+    max-height: calc(100dvh - 12px);
+  }
+  .bateo-retro .bateo-retro-header { padding: 10px; }
+  .bateo-retro-header small { letter-spacing: 1px; }
+  .bateo-retro .bateo-retro-tierra { width: 90%; }
+}
