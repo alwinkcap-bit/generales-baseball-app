@@ -1,3 +1,4 @@
+import ComunidadJuegos from './ComunidadJuegos'
 import { estiloPortada } from './EditorPortada'
 import AnalisisTecnico from './AnalisisTecnico'
 import VideosCintillo from './VideosCintillo'
@@ -45,6 +46,10 @@ export default function Inicio({
   const [bateoRetroOpen, setBateoRetroOpen] = useState(false)
   const [retoDigitalOpen, setRetoDigitalOpen] = useState(false)
   const [juegosOpen, setJuegosOpen] = useState(false)
+  useEffect(() => {
+    const codigo = new URLSearchParams(window.location.search).get('duelo')
+    if (codigo && /^[A-F0-9]{8}$/.test(codigo)) setJuegosOpen(true)
+  }, [])
   const [clasesVirtualesOpen, setClasesVirtualesOpen] = useState(false)
   const [scoreboardOpen, setScoreboardOpen] = useState(false)
   const [centroPartidosOpen, setCentroPartidosOpen] = useState(false)
@@ -740,6 +745,8 @@ const responderReto = (opcionElegida) => {
         </button>
       </header>
 
+<ComunidadJuegos usuario={usuario} onLogin={onLogin} onBateo={() => setBateoRetroOpen(true)} />
+
 <section className="juegos-acceso-seccion">
 
   <button
@@ -908,7 +915,7 @@ const responderReto = (opcionElegida) => {
 )}
 
 {bateoRetroOpen && (
-  <BateoRetro onCerrar={() => setBateoRetroOpen(false)} />
+  <BateoRetro usuario={usuario} onCerrar={() => setBateoRetroOpen(false)} />
 )}
 
 {sopaLetrasOpen && (

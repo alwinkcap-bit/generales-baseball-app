@@ -1,10 +1,14 @@
+import { guardarPartidaJonrones } from './JuegosComunidadDatos'
 import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import './BateoRetro.css'
 import './BateoRetroConsola.css'
 
-export default function BateoRetro({ onCerrar }) {
+export default function BateoRetro({ onCerrar, usuario }) {
   const [jugando, setJugando] = useState(false)
+  const [mensajeLiga, setMensajeLiga] = useState('')
+  const partidaLigaRef = useRef(null)
+  const guardadaLigaRef = useRef(false)
   const [terminado, setTerminado] = useState(false)
   const [puntos, setPuntos] = useState(0)
   const [hits, setHits] = useState(0)
@@ -16,6 +20,7 @@ export default function BateoRetro({ onCerrar }) {
   const [lanzamiento, setLanzamiento] = useState(0)
   const [duracion, setDuracion] = useState(1500)
   const [bateando, setBateando] = useState(false)
+  const [manoBateador, setManoBateador] = useState('zurdo')
   const [pelotaActiva, setPelotaActiva] = useState(false)
   const [vueloJonron, setVueloJonron] = useState(false)
   const [record, setRecord] = useState(() => {
@@ -73,6 +78,14 @@ export default function BateoRetro({ onCerrar }) {
       JSON.stringify(nuevoRecord)
     )
   }, [puntos, nivel, hits, jonrones, record])
+
+  useEffect(() => {
+    if (!terminado || !partidaLigaRef.current || guardadaLigaRef.current) return
+    guardadaLigaRef.current = true
+    guardarPartidaJonrones(usuario?.id, { puntos, jonrones }, partidaLigaRef.current)
+      .then(setMensajeLiga)
+      .catch(error => setMensajeLiga(`No se registró en la liga: ${error.message}`))
+  }, [terminado, puntos, jonrones, usuario?.id])
 
   function sonido(frecuencia, tiempo = 0.1) {
     try {
@@ -186,6 +199,9 @@ export default function BateoRetro({ onCerrar }) {
   }
 
   function comenzarJuego() {
+    partidaLigaRef.current = crypto.randomUUID()
+    guardadaLigaRef.current = false
+    setMensajeLiga('')
     setVueloJonron(false)
     window.clearTimeout(temporizadorRef.current)
     window.clearTimeout(siguienteRef.current)
@@ -459,7 +475,7 @@ export default function BateoRetro({ onCerrar }) {
             </div>
           </div>
           <div
-            className={`bateo-retro-bateador jugador-retro bateador-retro ${
+            className={`bateo-retro-bateador jugador-retro bateador-retro postura-${manoBateador} ${
               bateando ? 'bateando' : ''
             }`}
           >
@@ -557,6 +573,24 @@ export default function BateoRetro({ onCerrar }) {
         </div>
 
         <div className="bateo-retro-controles">
+          <div className="retro-selector-mano" aria-label="Lado del bateador">
+            <button
+              type="button"
+              aria-pressed={manoBateador === 'zurdo'}
+              disabled={jugando}
+              onClick={() => setManoBateador('zurdo')}
+            >
+              Zurdo
+            </button>
+            <button
+              type="button"
+              aria-pressed={manoBateador === 'derecho'}
+              disabled={jugando}
+              onClick={() => setManoBateador('derecho')}
+            >
+              Derecho
+            </button>
+          </div>
           {!jugando ? (
             <button
               type="button"
@@ -580,6 +614,7 @@ export default function BateoRetro({ onCerrar }) {
         </div>
 
         <p className="bateo-retro-ayuda">
+          {mensajeLiga && <span role="status">{mensajeLiga}<br /></span>}
           Espera que la pelota se acerque al bateador y pulsa
           <strong> BATEAR</strong>. Mientras más preciso seas, más lejos
           viajará la pelota.
