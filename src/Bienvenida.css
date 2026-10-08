@@ -9,8 +9,7 @@
   color: white;
   text-align: center;
   background:
-    radial-gradient(circle at 50% 25%, rgba(255, 184, 0, 0.2), transparent 30%),
-    linear-gradient(145deg, #020c17 0%, #081b30 48%, #0e3654 100%);
+    linear-gradient(145deg, #061726 0%, #0a2235 48%, #10334a 100%);
   box-sizing: border-box;
 }
 
