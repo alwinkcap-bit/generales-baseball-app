@@ -547,3 +547,120 @@
   .retro-fila-publico i { flex-basis: 6px; }
   .retro-cerca span { letter-spacing: 0; padding: 3px; }
 }
+
+/* Cuadro separado del jardin y alineado con las bases */
+.bateo-retro .bateo-retro-tierra {
+  top: 26%;
+  bottom: auto;
+  left: 50%;
+  width: 67%;
+  height: 84%;
+  transform: translateX(-50%);
+  clip-path: polygon(50% 0, 100% 40%, 50% 100%, 0 40%);
+  z-index: 3;
+}
+
+.bateo-retro .bateo-retro-tierra::after {
+  inset: 16% 19% 23%;
+  clip-path: polygon(50% 0, 100% 41%, 50% 100%, 0 41%);
+}
+
+/* El jardin cubre la punta antigua que llegaba a las gradas */
+.bateo-retro .bateo-retro-tierra {
+  clip-path: polygon(
+    50% 22%, 100% 40%, 68% 77%, 50% 92%,
+    32% 77%, 0 40%
+  );
+}
+
+.bateo-retro .bateo-retro-monticulo {
+  bottom: 42%;
+  z-index: 10;
+}
+
+.bateo-retro .bateo-retro-lanzador.jugador-retro {
+  bottom: 42%;
+  animation: none;
+  transform: translateX(-50%) scale(.73);
+}
+
+.bateo-retro .lanzador-retro .brazo-derecho {
+  transform: rotate(-28deg);
+  transform-origin: top center;
+}
+
+.bateo-retro .lanzador-retro.lanzando .brazo-derecho {
+  animation: retro-brazo-lanzamiento 360ms ease-out;
+}
+
+.bateo-retro .lanzador-retro.lanzando .brazo-izquierdo {
+  animation: retro-guante-lanzamiento 360ms ease-out;
+}
+
+@keyframes retro-brazo-lanzamiento {
+  0% { transform: rotate(-120deg); }
+  45% { transform: rotate(-170deg); }
+  75% { transform: rotate(-55deg); }
+  100% { transform: rotate(-28deg); }
+}
+
+@keyframes retro-guante-lanzamiento {
+  0% { transform: rotate(-35deg); }
+  55% { transform: rotate(45deg); }
+  100% { transform: rotate(18deg); }
+}
+
+/* Bateador con piernas separadas y rodillas flexionadas */
+.bateo-retro .bateador-retro .jugador-piernas {
+  gap: 15px;
+}
+
+.bateo-retro .bateador-retro .jugador-piernas span:first-child {
+  transform: rotate(12deg);
+  transform-origin: top center;
+}
+
+.bateo-retro .bateador-retro .jugador-piernas span:last-child {
+  transform: rotate(-12deg);
+  transform-origin: top center;
+}
+
+.bateo-retro .bateador-retro .jugador-cuerpo {
+  transform: translateX(-50%) rotate(-8deg);
+  transform-origin: bottom center;
+}
+
+.bateo-retro .bateador-retro.bateando .jugador-cuerpo {
+  animation: retro-giro-bateador 220ms ease-out;
+}
+
+.bateo-retro .bateador-retro.bateando .brazo-izquierdo,
+.bateo-retro .bateador-retro.bateando .brazo-derecho {
+  animation: retro-brazos-swing 220ms ease-out;
+}
+
+@keyframes retro-giro-bateador {
+  0% { transform: translateX(-50%) rotate(-8deg); }
+  55% { transform: translateX(-50%) rotate(12deg); }
+  100% { transform: translateX(-50%) rotate(-8deg); }
+}
+
+@keyframes retro-brazos-swing {
+  0% { transform: rotate(-55deg); }
+  55% { transform: rotate(65deg); }
+  100% { transform: rotate(-55deg); }
+}
+
+@media (max-width: 600px) {
+  .bateo-retro .bateo-retro-lanzador.jugador-retro {
+    transform: translateX(-50%) scale(.67);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bateo-retro .lanzador-retro.lanzando .jugador-brazo,
+  .bateo-retro .bateador-retro.bateando .jugador-cuerpo,
+  .bateo-retro .bateador-retro.bateando .jugador-brazo {
+    animation: none;
+  }
+}

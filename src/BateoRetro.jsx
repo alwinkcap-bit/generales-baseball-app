@@ -413,7 +413,9 @@ export default function BateoRetro({ onCerrar }) {
             />
           </svg>
 
-          <div className="bateo-retro-lanzador jugador-retro lanzador-retro">
+          <div className={`bateo-retro-lanzador jugador-retro lanzador-retro ${
+              pelotaActiva ? 'lanzando' : ''
+            }`}>
             <div className="jugador-cabeza">
               <span className="jugador-gorra"></span>
               <span className="jugador-cara"></span>
