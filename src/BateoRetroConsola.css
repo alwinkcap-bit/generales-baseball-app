@@ -971,3 +971,204 @@
     box-shadow: inset 0 0 24px #ffd56a80;
   }
 }
+
+/* Jugadores: silueta y uniforme de Generales */
+.bateo-retro .jugador-retro {
+  width: 64px;
+  height: 112px;
+  filter: drop-shadow(2px 4px 1px #0008);
+}
+
+.bateo-retro .jugador-retro *,
+.bateo-retro .jugador-retro *::before,
+.bateo-retro .jugador-retro *::after {
+  box-sizing: border-box;
+}
+
+.bateo-retro .jugador-retro .jugador-cabeza {
+  top: 1px;
+  width: 28px;
+  height: 30px;
+  z-index: 6;
+}
+
+.bateo-retro .jugador-retro .jugador-cara {
+  top: 9px;
+  left: 4px;
+  width: 22px;
+  height: 23px;
+  border: 2px solid #633c28;
+  border-radius: 5px 5px 9px 8px !important;
+  background: linear-gradient(90deg, #e6ad78, #bd784c);
+  box-shadow: inset -3px -2px #8d492644;
+}
+
+.bateo-retro .jugador-retro .jugador-cara::before {
+  top: 7px;
+  right: 4px;
+  width: 3px;
+  height: 3px;
+  background: #17222b;
+}
+
+.bateo-retro .jugador-retro .jugador-cara::after {
+  right: -3px;
+  bottom: 7px;
+  width: 5px;
+  height: 4px;
+  background: #cc8c5b;
+}
+
+.bateo-retro .jugador-retro .jugador-gorra {
+  top: 2px !important;
+  left: 1px !important;
+  width: 27px;
+  height: 14px;
+  border: 2px solid #061a30;
+  border-radius: 11px 11px 2px 2px !important;
+  background: linear-gradient(135deg, #3184bd, #103b70);
+}
+
+.bateo-retro .jugador-retro .jugador-gorra::after,
+.bateo-retro .jugador-retro .jugador-casco::after {
+  right: -9px;
+  bottom: -2px;
+  width: 13px;
+  height: 4px;
+  border: 1px solid #061a30;
+  border-radius: 0 5px 2px 0 !important;
+  background: #e7b945;
+}
+
+.bateo-retro .jugador-retro .jugador-casco {
+  top: 0 !important;
+  left: 0 !important;
+  width: 29px;
+  height: 20px;
+  border: 2px solid #061a30;
+  border-radius: 12px 12px 4px 4px !important;
+  background: linear-gradient(120deg, #398fc7, #133e74 65%);
+  box-shadow: inset 3px 2px #ffffff30;
+}
+
+.bateo-retro .jugador-retro .jugador-casco::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  bottom: -7px;
+  width: 9px;
+  height: 12px;
+  border: 2px solid #061a30;
+  border-radius: 2px 2px 5px 5px !important;
+  background: #164b80;
+}
+
+.bateo-retro .jugador-retro .jugador-cuerpo {
+  top: 31px;
+  width: 35px;
+  height: 39px;
+  border: 2px solid #061a30;
+  border-radius: 9px 9px 4px 4px !important;
+  background:
+    linear-gradient(90deg, transparent 46%, #eac24d 47% 53%, transparent 54%),
+    linear-gradient(90deg, #123b6b, #267cb4 48%, #123b6b);
+  box-shadow: inset 0 -5px #082a4d;
+}
+
+.bateo-retro .jugador-retro .jugador-cuerpo::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 11px;
+  width: 9px;
+  height: 7px;
+  border-bottom: 3px solid #eac24d;
+  border-radius: 0 0 5px 5px !important;
+  background: #c68a5b;
+}
+
+.bateo-retro .jugador-retro .jugador-cuerpo::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: -1px;
+  width: 33px;
+  height: 5px;
+  background: #142234;
+  border-top: 1px solid #e3c267;
+}
+
+.bateo-retro .jugador-retro .jugador-numero {
+  top: 10px !important;
+  font: bold 12px Arial, sans-serif !important;
+  color: #fff3c6;
+  text-shadow: 1px 1px #061a30;
+}
+
+.bateo-retro .jugador-retro .jugador-brazo {
+  width: 11px;
+  height: 33px;
+  border: 2px solid #493426;
+  border-radius: 6px 6px 5px 5px !important;
+  background: linear-gradient(
+    #185889 0 36%,
+    #e7bd49 37% 43%,
+    #d69b68 44% 85%,
+    #b9784d 86%
+  );
+  transform-origin: 50% 5px;
+}
+
+.bateo-retro .jugador-retro .jugador-piernas {
+  top: 68px;
+  gap: 5px;
+}
+
+.bateo-retro .jugador-retro .jugador-piernas span {
+  width: 14px;
+  height: 38px;
+  border: 2px solid #263444;
+  border-radius: 3px 3px 4px 4px !important;
+  background:
+    linear-gradient(90deg, transparent 65%, #d4a838 66% 78%, transparent 79%),
+    linear-gradient(#f4f1df 0 72%, #174d80 73% 100%);
+  box-shadow: inset -3px 0 #0002;
+  transform-origin: top center;
+}
+
+.bateo-retro .jugador-retro .jugador-piernas span::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: -3px;
+  width: 20px;
+  height: 9px;
+  border: 1px solid #081420;
+  border-bottom: 2px solid #ddd9bd;
+  border-radius: 3px 6px 2px 2px !important;
+  background: #102a42;
+}
+
+.bateo-retro .jugador-retro .jugador-guante {
+  top: 19px !important;
+  left: -14px !important;
+  width: 20px;
+  height: 22px;
+  border: 2px solid #543118;
+  border-radius: 7px 7px 9px 9px !important;
+  background: repeating-linear-gradient(
+    80deg, #a66c32 0 3px, #d09a50 4px 6px
+  );
+  box-shadow: inset 0 -5px #74441e;
+}
+
+.bateo-retro .jugador-retro .jugador-bate {
+  width: 75px;
+  height: 8px;
+  border: 1px solid #714721;
+  border-radius: 5px 2px 2px 5px !important;
+  background: linear-gradient(
+    90deg, #f2d295 0 62%, #bf8841 63% 78%, #263444 79%
+  );
+  box-shadow: 0 2px 1px #0005;
+}
