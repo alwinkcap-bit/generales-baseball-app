@@ -17,6 +17,7 @@ export default function BateoRetro({ onCerrar }) {
   const [duracion, setDuracion] = useState(1500)
   const [bateando, setBateando] = useState(false)
   const [pelotaActiva, setPelotaActiva] = useState(false)
+  const [vueloJonron, setVueloJonron] = useState(false)
   const [record, setRecord] = useState(() => {
     try {
       return JSON.parse(
@@ -98,12 +99,12 @@ export default function BateoRetro({ onCerrar }) {
     }
   }
 
-  function programarSiguiente() {
+  function programarSiguiente(espera = 900) {
     if (!jugandoRef.current) return
 
     siguienteRef.current = window.setTimeout(() => {
       lanzarPelota()
-    }, 900)
+    }, espera)
   }
 
   function terminarJuego() {
@@ -159,6 +160,7 @@ export default function BateoRetro({ onCerrar }) {
   }
 
   function lanzarPelota() {
+    setVueloJonron(false)
     if (!jugandoRef.current || activoRef.current) return
 
     const nivelActual = Math.min(10, Math.floor(hitsRef.current / 3) + 1)
@@ -184,6 +186,7 @@ export default function BateoRetro({ onCerrar }) {
   }
 
   function comenzarJuego() {
+    setVueloJonron(false)
     window.clearTimeout(temporizadorRef.current)
     window.clearTimeout(siguienteRef.current)
 
@@ -222,6 +225,7 @@ export default function BateoRetro({ onCerrar }) {
     setPelotaActiva(false)
 
     if (posicion >= 0.77 && posicion <= 0.86) {
+      setVueloJonron(true)
       const puntosJonron = 100 * nivel
 
       hitsRef.current += 1
@@ -257,7 +261,9 @@ export default function BateoRetro({ onCerrar }) {
       return
     }
 
-    programarSiguiente()
+    programarSiguiente(
+      posicion >= 0.77 && posicion <= 0.86 ? 2400 : 900
+    )
   }
 
   return createPortal(
@@ -486,6 +492,50 @@ export default function BateoRetro({ onCerrar }) {
             >
               ⚾
             </span>
+          )}
+
+          
+          {vueloJonron && (
+            <svg
+              key={`jonron-${lanzamiento}`}
+              className="retro-vuelo-jonron"
+              viewBox="0 0 1000 500"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <path
+                className="retro-estela-jonron"
+                d="M500 465 Q650 -70 790 155"
+                fill="none"
+                stroke="#ffe19a"
+                strokeWidth="3"
+                strokeDasharray="8 10"
+              />
+              <g>
+                <animateMotion
+                  dur="2s"
+                  path="M500 465 Q650 -70 790 155"
+                  calcMode="paced"
+                  fill="freeze"
+                />
+                <circle r="13" fill="#ffdd75" opacity=".25" />
+                <circle r="7" fill="#fff" stroke="#cabca4" strokeWidth="1" />
+                <path
+                  d="M-3 -5 Q1 0 -3 5 M3 -5 Q-1 0 3 5"
+                  fill="none"
+                  stroke="#c83434"
+                  strokeWidth="1.3"
+                />
+                <animateTransform
+                  attributeName="transform"
+                  type="scale"
+                  from="1.3"
+                  to=".65"
+                  dur="2s"
+                  fill="freeze"
+                />
+              </g>
+            </svg>
           )}
 
           <div className="bateo-retro-mensaje">{mensaje}</div>
