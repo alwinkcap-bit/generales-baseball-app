@@ -39,6 +39,10 @@ export default function BateoRetro({ onCerrar, usuario }) {
     }
   })
 
+  const contactoSwingRef = useRef(null)
+  const finSwingRef = useRef(null)
+  const [precisionSwing, setPrecisionSwing] = useState('')
+  const [perfectos, setPerfectos] = useState(0)
   const activoRef = useRef(false)
   const jugandoRef = useRef(false)
   const inicioRef = useRef(0)
@@ -51,6 +55,8 @@ export default function BateoRetro({ onCerrar, usuario }) {
 
   useEffect(() => {
     return () => {
+      window.clearTimeout(contactoSwingRef.current)
+      window.clearTimeout(finSwingRef.current)
       window.clearTimeout(temporizadorRef.current)
       window.clearTimeout(siguienteRef.current)
     }
@@ -185,6 +191,7 @@ export default function BateoRetro({ onCerrar, usuario }) {
     inicioRef.current = performance.now()
     activoRef.current = true
 
+    setPrecisionSwing('')
     setMensaje('¡LANZAMIENTO!')
     setLanzamiento((actual) => actual + 1)
     setPelotaActiva(true)
@@ -199,6 +206,11 @@ export default function BateoRetro({ onCerrar, usuario }) {
   }
 
   function comenzarJuego() {
+    window.clearTimeout(contactoSwingRef.current)
+    window.clearTimeout(finSwingRef.current)
+    setBateando(false)
+    setPrecisionSwing('')
+    setPerfectos(0)
     partidaLigaRef.current = crypto.randomUUID()
     guardadaLigaRef.current = false
     setMensajeLiga('')
@@ -229,18 +241,34 @@ export default function BateoRetro({ onCerrar, usuario }) {
   function batear() {
     if (!jugandoRef.current || !activoRef.current) return
 
-    setBateando(true)
-    window.setTimeout(() => setBateando(false), 220)
-
-    window.clearTimeout(temporizadorRef.current)
-
-    const transcurrido = performance.now() - inicioRef.current
-    const posicion = transcurrido / duracionRef.current
-
+    // Un solo swing por lanzamiento.
     activoRef.current = false
+    window.clearTimeout(temporizadorRef.current)
+    setBateando(true)
+    setPrecisionSwing('')
+
+    // El contacto ocurre a los 120 ms de una animación de 360 ms.
+    const posicion =
+      (performance.now() - inicioRef.current + 120) / duracionRef.current
+
+    finSwingRef.current = window.setTimeout(
+      () => setBateando(false), 360
+    )
+    contactoSwingRef.current = window.setTimeout(
+      () => resolverContacto(posicion), 120
+    )
+  }
+
+  function resolverContacto(posicion) {
+    if (!jugandoRef.current) return
     setPelotaActiva(false)
+    setPrecisionSwing(
+      posicion < 0.77 ? 'TEMPRANO' :
+      posicion > 0.86 ? 'TARDE' : 'PERFECTO'
+    )
 
     if (posicion >= 0.77 && posicion <= 0.86) {
+      setPerfectos(actual => actual + 1)
       setVueloJonron(true)
       const puntosJonron = 100 * nivel
 
@@ -324,6 +352,11 @@ export default function BateoRetro({ onCerrar, usuario }) {
           <small>
             Nivel {record.nivel} · {record.hits} hits ·{' '}
             {record.jonrones} HR
+            {' · '}
+            {record.jonrones >= 10 ? '🏆 BATEADOR ESTRELLA' :
+             record.jonrones >= 3 ? '🔥 JONRONERO' :
+             record.jonrones >= 1 ? '⚾ PRIMER JONRÓN' :
+             'Consigue tu primer jonrón'}
           </small>
         </div>
 
@@ -555,9 +588,20 @@ export default function BateoRetro({ onCerrar, usuario }) {
           )}
 
           <div className="bateo-retro-mensaje">{mensaje}</div>
+          {precisionSwing && (
+            <div className={`retro-precision ${
+              precisionSwing === 'PERFECTO' ? 'perfecto' : ''
+            }`} role="status">
+              {precisionSwing === 'PERFECTO' ? '✦ ' : ''}
+              {precisionSwing}
+            </div>
+          )}
         </div>
 
         <div className="bateo-retro-conteo">
+          <span title="Contactos perfectos en esta partida">
+            ✦ PERFECTOS <b>{perfectos}</b>
+          </span>
           <span>
             STRIKES
             <i className={strikes >= 1 ? 'encendido' : ''}></i>
@@ -605,7 +649,14 @@ export default function BateoRetro({ onCerrar, usuario }) {
               className={`bateo-retro-boton-batear ${
                 pelotaActiva ? 'listo' : ''
               }`}
-              onClick={batear}
+              onPointerDown={evento => {
+                if (evento.button !== 0) return
+                evento.preventDefault()
+                batear()
+              }}
+              onClick={evento => {
+                if (evento.detail === 0) batear()
+              }}
               disabled={!pelotaActiva}
             >
               BATEAR
@@ -615,7 +666,7 @@ export default function BateoRetro({ onCerrar, usuario }) {
 
         <p className="bateo-retro-ayuda">
           {mensajeLiga && <span role="status">{mensajeLiga}<br /></span>}
-          Espera que la pelota se acerque al bateador y pulsa
+          Inicia el swing antes de que la pelota llegue al plato y pulsa
           <strong> BATEAR</strong>. Mientras más preciso seas, más lejos
           viajará la pelota.
         </p>

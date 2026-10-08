@@ -1289,3 +1289,180 @@
     animation: none;
   }
 }
+
+/* SWING COORDINADO CON EL CONTACTO */
+.bateo-retro .bateo-retro-pelota {
+  z-index: 34;
+  animation-name: generales-pelota-contacto;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  pointer-events: none;
+}
+@keyframes generales-pelota-contacto {
+  0% {
+    left: 50%; top: 52%; font-size: 9px;
+    transform: translate(-50%, -50%);
+  }
+  81.5% {
+    left: 50%; top: 90%; font-size: 20px;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    left: 50%; top: 99%; font-size: 24px;
+    transform: translate(-50%, -50%);
+  }
+}
+.bateo-retro .bateador-retro.bateando .jugador-cuerpo,
+.bateo-retro .bateador-retro.bateando .jugador-brazo,
+.bateo-retro .bateador-retro.bateando .jugador-bate,
+.bateo-retro .bateador-retro.bateando .jugador-piernas span {
+  animation-duration: 360ms;
+  animation-timing-function: linear;
+}
+@keyframes generales-giro-swing {
+  0% { transform: translateX(-50%) rotate(-7deg); }
+  15% { transform: translateX(-47%) rotate(-12deg); }
+  33.333% { transform: translateX(-55%) rotate(10deg); }
+  75%, 100% { transform: translateX(-55%) rotate(16deg); }
+}
+@keyframes generales-recorrido-bate {
+  0% { transform: rotate(62deg); }
+  15% { transform: rotate(75deg); }
+  33.333% { transform: rotate(8deg); }
+  75%, 100% { transform: rotate(-65deg); }
+}
+@keyframes generales-brazo-delantero {
+  0%, 15% { transform: rotate(-62deg); }
+  33.333% { transform: rotate(65deg); }
+  75%, 100% { transform: rotate(110deg); }
+}
+@keyframes generales-brazo-trasero {
+  0%, 15% { transform: rotate(-105deg); }
+  33.333% { transform: rotate(45deg); }
+  75%, 100% { transform: rotate(95deg); }
+}
+@keyframes generales-paso-frontal {
+  0%, 15% { transform: rotate(15deg); }
+  33.333%, 100% { transform: translateX(-3px) rotate(20deg); }
+}
+@keyframes generales-pivote-trasero {
+  0%, 15% { transform: rotate(-15deg); }
+  33.333%, 100% { transform: rotate(-5deg) translateY(-2px); }
+}
+.bateo-retro .retro-precision {
+  position: absolute;
+  z-index: 40;
+  top: 19%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 12px;
+  border: 1px solid #7897ad;
+  border-radius: 20px;
+  background: #061726ed;
+  color: #e6edf4;
+  font: bold 11px Arial, sans-serif;
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+.bateo-retro .retro-precision.perfecto {
+  color: #ffe28b;
+  border-color: #efc547;
+  box-shadow: 0 0 14px #efc54755;
+}
+.bateo-retro .bateo-retro-conteo {
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.bateo-retro .bateo-retro-boton-batear {
+  touch-action: manipulation;
+  user-select: none;
+}
+
+/* Ajuste del ancho del juego y sus controles */
+.bateo-retro-fondo {
+  grid-template-columns: minmax(0, 1fr);
+}
+.bateo-retro-fondo .bateo-retro {
+  min-width: 0;
+  max-width: 100%;
+  justify-self: center;
+}
+.bateo-retro > * {
+  min-width: 0;
+  box-sizing: border-box;
+}
+.bateo-retro .bateo-retro-marcador {
+  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+}
+.bateo-retro .bateo-retro-marcador span {
+  min-width: 0;
+}
+.bateo-retro .bateo-retro-marcador b {
+  font-size: clamp(18px, 5vw, 24px);
+  overflow-wrap: anywhere;
+}
+.bateo-retro .bateo-retro-controles {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+  align-items: stretch;
+  gap: 10px;
+}
+.bateo-retro .retro-selector-mano {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  min-width: 0;
+}
+.bateo-retro .bateo-retro-controles button {
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  padding: 10px 6px;
+}
+.bateo-retro .retro-selector-mano button {
+  font-size: 11px;
+  letter-spacing: 0;
+}
+.bateo-retro .bateo-retro-ayuda {
+  width: 100%;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 420px) {
+  .bateo-retro .retro-selector-mano {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bateo-retro .retro-selector-mano button {
+    min-height: 32px;
+    padding: 6px;
+  }
+}
+
+/* Posturas zurda y derecha junto al plato */
+.bateo-retro .bateo-retro-bateador.postura-zurdo {
+  left: 55%;
+  bottom: 3%;
+  transform-origin: bottom center;
+  transform: scale(.88);
+}
+.bateo-retro .bateo-retro-bateador.postura-derecho {
+  left: calc(45% - 64px);
+  bottom: 3%;
+  transform-origin: bottom center;
+  transform: scale(-.88, .88);
+}
+.bateo-retro .retro-selector-mano button[aria-pressed="true"] {
+  border-color: #ffffff;
+  background: #ffe18a;
+  box-shadow: 0 0 0 2px #e9bd5940, 0 4px #a57525;
+}
+@media (max-width: 600px) {
+  .bateo-retro .bateo-retro-bateador.postura-zurdo {
+    transform: scale(.76);
+  }
+  .bateo-retro .bateo-retro-bateador.postura-derecho {
+    transform: scale(-.76, .76);
+  }
+}
