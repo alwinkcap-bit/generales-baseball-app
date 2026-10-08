@@ -664,3 +664,46 @@
     animation: none;
   }
 }
+
+/* Una sola capa para terreno, bases y monticulo */
+.bateo-retro .bateo-retro-tierra,
+.bateo-retro .bateo-retro-monticulo {
+  display: none !important;
+}
+
+.bateo-retro .bateo-retro-diamante-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  clip-path: none !important;
+  pointer-events: none;
+}
+
+/* Pies sobre el monticulo */
+.bateo-retro .bateo-retro-lanzador.jugador-retro {
+  bottom: 43%;
+  transform-origin: bottom center;
+  transform: translateX(-50%) scale(.73);
+}
+
+/* Bateador junto a home */
+.bateo-retro .bateo-retro-bateador.jugador-retro {
+  left: 55%;
+  bottom: 3%;
+  transform-origin: bottom center;
+  transform: scale(.88);
+}
+
+@media (max-width: 600px) {
+  .bateo-retro .bateo-retro-lanzador.jugador-retro {
+    transform: translateX(-50%) scale(.67);
+  }
+
+  .bateo-retro .bateo-retro-bateador.jugador-retro {
+    left: 55%;
+    bottom: 3%;
+    transform: scale(.76);
+  }
+}

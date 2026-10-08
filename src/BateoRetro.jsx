@@ -367,51 +367,70 @@ export default function BateoRetro({ onCerrar }) {
 
           <div className="bateo-retro-monticulo"></div>
 
-          <svg
-            className="bateo-retro-diamante-svg"
-            viewBox="0 0 1000 500"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            <path
-              className="linea-foul-svg"
-              d="M 500 485 L 65 72"
-            />
-            <path
-              className="linea-foul-svg"
-              d="M 500 485 L 935 72"
-            />
+          
+<svg
+  className="bateo-retro-diamante-svg"
+  viewBox="0 0 1000 500"
+  preserveAspectRatio="none"
+  aria-hidden="true"
+>
+  {/* Cuadro: segunda arriba, home abajo */}
+  <path
+    d="M500 235 L790 330 L500 485 L210 330 Z"
+    fill="#d5a064"
+    stroke="#a8753f"
+    strokeWidth="4"
+  />
+  <path
+    d="M500 260 L715 334 L500 447 L285 334 Z"
+    fill="#27804e"
+    stroke="#206c43"
+    strokeWidth="3"
+  />
 
-            <rect
-              className="base-svg"
-              x="273"
-              y="285"
-              width="28"
-              height="28"
-              transform="rotate(45 287 299)"
-            />
-            <rect
-              className="base-svg"
-              x="486"
-              y="141"
-              width="28"
-              height="28"
-              transform="rotate(45 500 155)"
-            />
-            <rect
-              className="base-svg"
-              x="699"
-              y="285"
-              width="28"
-              height="28"
-              transform="rotate(45 713 299)"
-            />
+  {/* Lineas de foul desde home */}
+  <path
+    d="M90 267 L500 475 L910 267"
+    fill="none"
+    stroke="#fff5de"
+    strokeWidth="3"
+  />
 
-            <path
-              className="home-svg"
-              d="M 482 457 L 518 457 L 518 478 L 500 494 L 482 478 Z"
-            />
-          </svg>
+  {/* Caminos entre las cuatro bases */}
+  <path
+    d="M500 475 L760 330 L500 247 L240 330 Z"
+    fill="none"
+    stroke="#efd0a0"
+    strokeWidth="3"
+  />
+
+  {/* Tierra alrededor de home */}
+  <ellipse cx="500" cy="472" rx="48" ry="20"
+    fill="#d5a064" />
+
+  {/* Monticulo y goma */}
+  <ellipse cx="500" cy="290" rx="49" ry="17"
+    fill="#a8753f" />
+  <ellipse cx="500" cy="286" rx="46" ry="15"
+    fill="#e1b27b" stroke="#bd874c" strokeWidth="3" />
+  <rect x="484" y="282" width="32" height="5"
+    fill="#fff4dc" />
+
+  {/* Tercera, segunda y primera */}
+  <g fill="#fff9e8" stroke="#b6c5c9" strokeWidth="2">
+    <path d="M240 320 L258 330 L240 340 L222 330 Z" />
+    <path d="M500 239 L514 247 L500 255 L486 247 Z" />
+    <path d="M760 320 L778 330 L760 340 L742 330 Z" />
+    <path d="M484 459 L516 459 L516 473 L500 485 L484 473 Z" />
+  </g>
+
+  {/* Cajas del bateador */}
+  <g fill="none" stroke="#fff5de" strokeWidth="2" opacity=".75">
+    <path d="M440 447 H471 V482 H440 Z" />
+    <path d="M529 447 H560 V482 H529 Z" />
+  </g>
+</svg>
+
 
           <div className={`bateo-retro-lanzador jugador-retro lanzador-retro ${
               pelotaActiva ? 'lanzando' : ''
