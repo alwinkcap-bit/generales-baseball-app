@@ -382,3 +382,168 @@
   .bateo-retro-header small { letter-spacing: 1px; }
   .bateo-retro .bateo-retro-tierra { width: 90%; }
 }
+
+/* Mayor profundidad y detalle del estadio */
+.bateo-retro .bateo-retro-estadio {
+  height: clamp(340px, 50vh, 480px);
+}
+
+.retro-gradas {
+  position: absolute;
+  z-index: 2;
+  top: 20%;
+  left: 0;
+  right: 0;
+  height: 18%;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  padding: 2px 0;
+  background: #091c30;
+  border-top: 4px solid #3e617b;
+  overflow: hidden;
+}
+
+.retro-fila-publico {
+  display: flex;
+  justify-content: space-around;
+  align-items: end;
+  border-bottom: 2px solid #42627a;
+  background: linear-gradient(#173c58, #0c2136);
+}
+
+.retro-fila-publico:nth-child(even) {
+  transform: translateX(6px);
+}
+
+.retro-fila-publico i {
+  position: relative;
+  display: block;
+  flex: 0 0 8px;
+  height: 7px;
+  background: var(--camisa);
+  box-shadow: 2px 0 #03111f;
+}
+
+.retro-fila-publico i::before {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 4px;
+  top: -4px;
+  left: 1px;
+  background: #d4a37b;
+}
+
+.retro-cerca {
+  position: absolute;
+  z-index: 4;
+  top: 38%;
+  left: 0;
+  right: 0;
+  height: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 5px;
+  padding: 0 6px;
+  border-top: 4px solid #e5bd60;
+  border-bottom: 4px solid #082e35;
+  background: repeating-linear-gradient(
+    90deg, #164b58 0 48px, #0c3445 48px 51px
+  );
+  box-sizing: border-box;
+}
+
+.retro-cerca span {
+  padding: 3px 5px;
+  color: #e4dcba;
+  background: #102d40;
+  border: 1px solid #59817c;
+  font-size: clamp(6px, 1.3vw, 10px);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.retro-cartel { display: none; }
+
+.bateo-retro .bateo-retro-campo {
+  inset: 45% -12% -18%;
+  background: repeating-conic-gradient(
+    from 45deg at 50% 100%,
+    #1a7048 0deg 10deg,
+    #278353 10deg 20deg
+  );
+  box-shadow: inset 0 16px 0 #07382544;
+}
+
+.bateo-retro .bateo-retro-tierra {
+  background:
+    repeating-linear-gradient(
+      0deg, #ffffff05 0 2px, transparent 2px 5px
+    ),
+    linear-gradient(145deg, #dda66b, #b57a43);
+}
+
+.bateo-retro .bateo-retro-tierra::after {
+  background: repeating-linear-gradient(
+    90deg, #24764a 0 24px, #2c8853 24px 48px
+  );
+  box-shadow: inset 0 0 0 4px #754520;
+}
+
+.bateo-retro .bateo-retro-monticulo {
+  background: #d7a267;
+  border: 3px solid #9b642f;
+  box-shadow: 0 4px 0 #64452466, inset 0 3px #edbf83;
+}
+
+/* Las lineas permanecen dentro del terreno */
+.bateo-retro .linea-foul-svg {
+  stroke-width: 3;
+  stroke-dasharray: none;
+}
+
+.bateo-retro .bateo-retro-diamante-svg {
+  clip-path: inset(46% 0 0);
+}
+
+.bateo-retro .jugador-retro .jugador-cuerpo {
+  background: linear-gradient(
+    90deg, #083d6e 0 18%, #1677ad 18% 43%,
+    #f1c952 43% 54%, #126397 54% 82%, #06395e 82%
+  );
+  border-color: #032037;
+  box-shadow: inset 0 3px #48a0c5, 3px 2px #032037;
+}
+
+.bateo-retro .jugador-retro .jugador-casco,
+.bateo-retro .jugador-retro .jugador-gorra {
+  background: linear-gradient(
+    90deg, #073d68 0 20%, #2184b6 20% 70%, #0b4a76 70%
+  );
+  box-shadow: inset 0 3px #5fb5d7;
+}
+
+.bateo-retro .jugador-retro .jugador-piernas span {
+  background: linear-gradient(
+    #e8edf1 0 55%, #b5c6d1 55% 65%,
+    #126397 65% 82%, #031521 82%
+  );
+}
+
+.bateo-retro .jugador-retro .jugador-guante {
+  background: repeating-linear-gradient(
+    90deg, #a96a2c 0 3px, #754219 3px 5px
+  );
+}
+
+.bateo-retro .jugador-retro .jugador-bate {
+  background: linear-gradient(
+    #ffdfa2 0 30%, #d49a4f 30% 75%, #9b602b 75%
+  );
+}
+
+@media (max-width: 600px) {
+  .retro-fila-publico i { flex-basis: 6px; }
+  .retro-cerca span { letter-spacing: 0; padding: 3px; }
+}

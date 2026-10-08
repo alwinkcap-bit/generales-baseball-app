@@ -331,7 +331,30 @@ export default function BateoRetro({ onCerrar }) {
             <span>★ GENERALES DE CHITRÉ ★</span>
           </div>
 
-          <div className="bateo-retro-publico"></div>
+          
+          <div className="retro-gradas" aria-hidden="true">
+            {Array.from({ length: 4 }, (_, fila) => (
+              <div className="retro-fila-publico" key={fila}>
+                {Array.from({ length: 36 }, (_, asiento) => (
+                  <i key={asiento}
+                    style={{
+                      '--camisa': ['#e9bd59', '#54a3ce', '#e46d62', '#e3e8ee'][
+                        (asiento + fila * 3) % 4
+                      ]
+                    }}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+          <div className="retro-cerca" aria-hidden="true">
+            <span>GENERALES</span>
+            <span>CHITRÉ</span>
+            <span>400</span>
+            <span>BASEBALL</span>
+            <span>PLAY BALL</span>
+          </div>
+
           <div className="bateo-retro-campo"></div>
           <div className="bateo-retro-tierra"></div>
 
