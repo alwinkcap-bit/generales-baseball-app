@@ -264,3 +264,101 @@
 .analisis-tecnico-tarjeta a:hover {
   background: linear-gradient(180deg, #269d5c, #147943);
 }
+
+/* ANALISIS COMPACTO */
+.analisis-tecnico {
+  padding: 18px;
+  margin: 18px auto;
+  border-radius: 20px;
+}
+.analisis-tecnico-cabecera h3 {
+  margin: 10px 0 7px;
+  font-size: clamp(21px, 4vw, 28px);
+}
+.analisis-tecnico-cabecera p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.analisis-tecnico-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+  align-items: start;
+}
+.analisis-tecnico-tarjeta {
+  padding: 14px;
+  border-top-width: 2px;
+  border-radius: 15px;
+}
+.analisis-tecnico-superior {
+  gap: 8px;
+}
+.analisis-tecnico-superior img {
+  width: 48px;
+  height: 48px;
+  padding: 4px;
+  border-radius: 12px;
+}
+.analisis-tecnico-precio {
+  font-size: 29px;
+  letter-spacing: -1px;
+}
+.analisis-tecnico-tarjeta h4 {
+  margin: 12px 0 4px;
+  font-size: 19px;
+}
+.analisis-tecnico-detalles {
+  margin-bottom: 12px;
+}
+.analisis-tecnico-detalles summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-height: 44px;
+  color: #f3d487;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+.analisis-tecnico-detalles summary::-webkit-details-marker {
+  display: none;
+}
+.analisis-tecnico-detalles summary::after {
+  content: '+';
+  font-size: 20px;
+}
+.analisis-tecnico-detalles[open] summary::after {
+  content: '−';
+}
+.analisis-tecnico-detalles summary:focus-visible {
+  outline: 2px solid #f3d487;
+  outline-offset: 2px;
+  border-radius: 5px;
+}
+.analisis-tecnico-detalles p,
+.analisis-tecnico-beneficios li {
+  font-size: 12px;
+  line-height: 1.5;
+}
+.analisis-tecnico-beneficios {
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.analisis-tecnico-tarjeta a {
+  min-height: 44px;
+  padding: 10px;
+  font-size: 13px;
+}
+.analisis-tecnico .analisis-tecnico-nota {
+  margin-top: 12px;
+  font-size: 11px;
+}
+@media (max-width: 360px) {
+  .analisis-tecnico { padding: 12px; }
+  .analisis-tecnico-grid { gap: 8px; }
+  .analisis-tecnico-tarjeta { padding: 10px; }
+  .analisis-tecnico-superior img { width: 40px; height: 40px; }
+  .analisis-tecnico-precio { font-size: 25px; }
+}
