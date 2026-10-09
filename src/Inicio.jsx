@@ -11,6 +11,8 @@ import { supabase } from './supabase';
 import SopaLetras from './SopaLetras'
 import MemoriaBeisbol from './MemoriaBeisbol'
 import BateoRetro from './BateoRetro'
+import AtrapaPelota from './AtrapaPelota'
+import CorreBases from './CorreBases'
 import RetoDigital from './RetoDigital'
 import preguntasReto from './PreguntasReto'
 import logoGenerales from './public/logo-generales.webp';
@@ -44,6 +46,8 @@ export default function Inicio({
   const [sopaLetrasOpen, setSopaLetrasOpen] = useState(false)
   const [memoriaOpen, setMemoriaOpen] = useState(false)
   const [bateoRetroOpen, setBateoRetroOpen] = useState(false)
+  const [atrapaOpen, setAtrapaOpen] = useState(false)
+  const [correBasesOpen, setCorreBasesOpen] = useState(false)
   const [retoDigitalOpen, setRetoDigitalOpen] = useState(false)
   const [juegosOpen, setJuegosOpen] = useState(false)
   useEffect(() => {
@@ -65,6 +69,8 @@ export default function Inicio({
     sopaLetrasOpen ||
     memoriaOpen ||
     bateoRetroOpen ||
+    atrapaOpen ||
+    correBasesOpen ||
     retoDigitalOpen ||
     juegosOpen ||
     clasesVirtualesOpen ||
@@ -697,10 +703,11 @@ const responderReto = (opcionElegida) => {
 
           <button
             type="button"
+            className="inicio-juegos-cintillo"
             onClick={() => setJuegosOpen(true)}
           >
-            <span className="inicio-panel-icono">★</span>
-            <strong>Juegos</strong>
+            <span className="inicio-panel-icono">🎮</span>
+            <strong>Zona de Juegos</strong>
             <b>›</b>
           </button>
         </section>
@@ -748,6 +755,33 @@ const responderReto = (opcionElegida) => {
 <ComunidadJuegos usuario={usuario} onLogin={onLogin} onBateo={() => setBateoRetroOpen(true)} />
 
 <section className="juegos-acceso-seccion">
+  <button type="button" className="juego-acceso"
+    onClick={() => {
+      setJuegosOpen(false)
+      setCorreBasesOpen(true)
+    }}>
+    <span className="juego-acceso-icono">🏃</span>
+    <span className="juego-acceso-texto">
+      <strong>Corre las bases</strong>
+      <small>Avanza, deslízate y anota carreras</small>
+    </span>
+    <b>Jugar →</b>
+  </button>
+  <button
+    type="button"
+    className="juego-acceso"
+    onClick={() => {
+      setJuegosOpen(false)
+      setAtrapaOpen(true)
+    }}
+  >
+    <span className="juego-acceso-icono">🥎</span>
+    <span className="juego-acceso-texto">
+      <strong>Atrapa la pelota</strong>
+      <small>Mueve el guante y supera tu récord</small>
+    </span>
+    <b>Jugar →</b>
+  </button>
 
   <button
     type="button"
@@ -912,6 +946,20 @@ const responderReto = (opcionElegida) => {
 
 {retoDigitalOpen && (
   <RetoDigital onCerrar={() => setRetoDigitalOpen(false)} />
+)}
+
+{correBasesOpen && (
+  <CorreBases onCerrar={() => {
+    setCorreBasesOpen(false)
+    setJuegosOpen(true)
+  }} />
+)}
+
+{atrapaOpen && (
+  <AtrapaPelota onCerrar={() => {
+    setAtrapaOpen(false)
+    setJuegosOpen(true)
+  }} />
 )}
 
 {bateoRetroOpen && (

@@ -298,3 +298,73 @@
   height: 80px;
   object-fit: contain;
 }
+
+/* Logos ocupando todo el marco */
+.agenda-juego-logo {
+  padding: 0;
+  overflow: hidden;
+}
+
+.agenda-juego-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  padding: 0;
+}
+
+/* Alerta para el juego de hoy */
+.agenda-alerta-hoy {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 10px 0;
+  padding: 10px 14px;
+  border: 1px solid #f5c451;
+  border-radius: 12px;
+  background: #f5c451;
+  color: #081b30;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: .4px;
+  animation: agenda-pulso-hoy 2.4s ease-in-out infinite;
+}
+
+.agenda-alerta-punto {
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #b52d20;
+}
+
+@keyframes agenda-pulso-hoy {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(245, 196, 81, .35);
+  }
+  50% {
+    box-shadow: 0 0 0 9px rgba(245, 196, 81, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agenda-alerta-hoy {
+    animation: none;
+  }
+}
+
+.agenda-alerta-hoy {
+  animation: agenda-parpadeo-hoy 1.6s ease-in-out infinite;
+}
+
+@keyframes agenda-parpadeo-hoy {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .agenda-alerta-hoy {
+    animation: none;
+    opacity: 1;
+  }
+}

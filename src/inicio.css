@@ -7445,3 +7445,37 @@ body:has(.agenda-editor-fondo) nav.inicio-nav {
     padding-bottom: 14px !important;
   }
 }
+
+/* Cintillo de acceso a la Zona de Juegos */
+button.inicio-juegos-cintillo {
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: none;
+  min-height: 110px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px;
+  text-align: left;
+  background-position: center;
+  background-size: cover;
+}
+
+button.inicio-juegos-cintillo strong {
+  flex: 1;
+  font-size: clamp(22px, 4vw, 30px);
+}
+
+button.inicio-juegos-cintillo > b {
+  margin-left: auto;
+  font-size: 30px;
+}
+
+@media (max-width: 600px) {
+  button.inicio-juegos-cintillo {
+    min-height: 95px;
+    padding: 16px;
+    gap: 12px;
+  }
+}

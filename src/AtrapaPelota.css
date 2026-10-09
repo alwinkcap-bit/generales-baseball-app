@@ -1,0 +1,77 @@
+.atrapa-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: rgba(3, 12, 22, .96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  overflow-y: auto;
+}
+.atrapa-panel {
+  width: min(100%, 700px);
+  max-height: 95dvh;
+  overflow-y: auto;
+  background: #0c263b;
+  color: #fff;
+  border: 1px solid #d6ac43;
+  border-radius: 22px;
+  padding: 20px;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.atrapa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.atrapa-header small { color: #f5cc62; letter-spacing: 2px; }
+.atrapa-header h2 { margin: 6px 0 18px; font-size: clamp(24px, 5vw, 34px); }
+.atrapa-panel button {
+  cursor: pointer;
+  font: inherit;
+  border-radius: 12px;
+  padding: 12px 20px;
+  border: 1px solid #d6ac43;
+  background: #163950;
+  color: #fff;
+}
+.atrapa-header button { font-size: 25px; padding: 6px 16px; }
+.atrapa-marcador {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #061b2c;
+  border-radius: 12px;
+}
+.atrapa-campo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  touch-action: none;
+  outline-offset: 3px;
+}
+.atrapa-portada { text-align: center; padding: 20px 0; }
+.atrapa-pelota { font-size: 75px; }
+.atrapa-portada h3 { font-size: 24px; }
+.atrapa-portada p { line-height: 1.6; }
+.atrapa-modos { display: flex; justify-content: center; gap: 12px; }
+.atrapa-modos button[aria-pressed="true"],
+.atrapa-panel .atrapa-jugar {
+  background: #f2c75c;
+  color: #081b30;
+  font-weight: 800;
+}
+.atrapa-panel .atrapa-jugar { min-width: 190px; margin-top: 8px; }
+.atrapa-ayuda { color: #bed0dd; font-size: 13px; text-align: center; }
+.atrapa-resultado { text-align: center; color: #f5cc62; }
+@media (max-width: 480px) {
+  .atrapa-panel { padding: 14px; }
+  .atrapa-marcador { font-size: 13px; }
+}

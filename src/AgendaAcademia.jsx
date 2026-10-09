@@ -211,6 +211,13 @@ export default function AgendaAcademia({ isAdmin }) {
 
                 <div>
                   <small>PRÓXIMO JUEGO</small>
+
+                  {/^hoy\b/i.test((agenda.juego_fecha || '').trim()) && (
+                    <div className="agenda-alerta-hoy">
+                      <span className="agenda-alerta-punto" aria-hidden="true" />
+                      🔔 ¡HOY TENEMOS JUEGO!
+                    </div>
+                  )}
                   <h3>Generales vs. {agenda.juego_rival}</h3>
                   <div className="agenda-juego-logos">
                     <div className="agenda-juego-logo">
