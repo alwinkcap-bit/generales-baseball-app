@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { supabase } from './supabase'
 import CentroPartidos from './CentroPartidos'
@@ -38,6 +38,8 @@ function hora(valor) {
 }
 
 export default function CalendarioSemanal({ isAdmin }) {
+  const franjaRef = useRef(null)
+  const diaHoyRef = useRef(null)
   const [semana, setSemana] = useState(lunesActual)
   const [partidos, setPartidos] = useState([])
   const [cargando, setCargando] = useState(true)
@@ -86,6 +88,23 @@ export default function CalendarioSemanal({ isAdmin }) {
     return () => { document.body.style.overflow = anterior }
   }, [administrando, isAdmin])
 
+  useEffect(() => {
+    if (cargando || error) return
+    const franja = franjaRef.current
+    const dia = diaHoyRef.current
+    if (!franja) return
+
+    if (dia) {
+      const diferencia =
+        dia.getBoundingClientRect().left -
+        franja.getBoundingClientRect().left
+
+      franja.scrollLeft += diferencia
+    } else {
+      franja.scrollLeft = 0
+    }
+  }, [semana, hoy, cargando, error])
+
   const dias = Array.from({ length: 7 }, (_, i) => sumarDias(semana, i))
 
   return (
@@ -132,11 +151,11 @@ export default function CalendarioSemanal({ isAdmin }) {
           {partidos.length === 0 && (
             <p className="cal-vacio">Todavía no hay juegos programados para esta semana.</p>
           )}
-          <div className="cal-dias">
+          <div className="cal-dias" ref={franjaRef}>
             {dias.map(fecha => {
               const juegos = partidos.filter(p => p.fecha === fecha)
               return (
-                <section key={fecha}
+                <section key={fecha} ref={fecha === hoy ? diaHoyRef : null}
                   className={`cal-dia ${fecha === hoy ? 'cal-hoy' : ''} ${juegos.length === 0 ? 'cal-dia-vacio' : 'cal-dia-programado'}`}>
                   <header className="cal-dia-titulo">
                     <span>{etiqueta(fecha, { weekday: 'short' })}</span>
