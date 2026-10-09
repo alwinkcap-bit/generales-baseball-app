@@ -11,7 +11,9 @@ const agendaInicial = {
   juego_hora: 'Por confirmar',
   juego_rival: 'Rival por confirmar',
   juego_lugar: 'Lugar por confirmar',
-  mostrar_juego: true
+  mostrar_juego: true,
+  logo_generales: '',
+  logo_rival: ''
 }
 
 export default function AgendaAcademia({ isAdmin }) {
@@ -39,7 +41,9 @@ export default function AgendaAcademia({ isAdmin }) {
         juego_hora,
         juego_rival,
         juego_lugar,
-        mostrar_juego
+        mostrar_juego,
+        logo_generales,
+        logo_rival
       `)
       .eq('id', 1)
       .single()
@@ -63,6 +67,61 @@ export default function AgendaAcademia({ isAdmin }) {
     }))
   }
 
+
+  async function seleccionarLogo(evento, campo) {
+    const archivo = evento.target.files?.[0]
+    evento.target.value = ''
+
+    if (!archivo || !isAdmin) return
+
+    if (!['image/png', 'image/jpeg', 'image/webp'].includes(archivo.type)) {
+      setMensaje('Selecciona una imagen PNG, JPG o WebP.')
+      return
+    }
+
+    if (archivo.size > 5 * 1024 * 1024) {
+      setMensaje('La imagen debe pesar menos de 5 MB.')
+      return
+    }
+
+    setMensaje('')
+    const urlTemporal = URL.createObjectURL(archivo)
+
+    try {
+      const imagen = new Image()
+
+      await new Promise((resolve, reject) => {
+        imagen.onload = resolve
+        imagen.onerror = () => reject(new Error('No se pudo leer la imagen.'))
+        imagen.src = urlTemporal
+      })
+
+      const escala = Math.min(
+        1,
+        256 / Math.max(imagen.naturalWidth, imagen.naturalHeight)
+      )
+
+      const canvas = document.createElement('canvas')
+      canvas.width = Math.max(1, Math.round(imagen.naturalWidth * escala))
+      canvas.height = Math.max(1, Math.round(imagen.naturalHeight * escala))
+
+      const contexto = canvas.getContext('2d')
+      if (!contexto) throw new Error('No se pudo preparar el logo.')
+
+      contexto.drawImage(imagen, 0, 0, canvas.width, canvas.height)
+      const logo = canvas.toDataURL('image/png')
+
+      setFormulario(actual => ({
+        ...actual,
+        [campo]: logo
+      }))
+    } catch (error) {
+      setMensaje(error.message)
+    } finally {
+      URL.revokeObjectURL(urlTemporal)
+    }
+  }
+
   function abrirEditor() {
     setFormulario(agenda)
     setMensaje('')
@@ -71,6 +130,7 @@ export default function AgendaAcademia({ isAdmin }) {
 
   async function guardarAgenda(evento) {
     evento.preventDefault()
+    if (!isAdmin || guardando) return
     setGuardando(true)
     setMensaje('')
 
@@ -90,6 +150,8 @@ export default function AgendaAcademia({ isAdmin }) {
       juego_lugar:
         formulario.juego_lugar.trim() || 'Lugar por confirmar',
       mostrar_juego: formulario.mostrar_juego,
+      logo_generales: formulario.logo_generales || '',
+      logo_rival: formulario.logo_rival || '',
       actualizado_en: new Date().toISOString()
     }
 
@@ -150,6 +212,31 @@ export default function AgendaAcademia({ isAdmin }) {
                 <div>
                   <small>PRÓXIMO JUEGO</small>
                   <h3>Generales vs. {agenda.juego_rival}</h3>
+                  <div className="agenda-juego-logos">
+                    <div className="agenda-juego-logo">
+                      {agenda.logo_generales ? (
+                        <img
+                          src={agenda.logo_generales}
+                          alt="Logo de Generales"
+                        />
+                      ) : (
+                        <span>LOGO<br />GENERALES</span>
+                      )}
+                    </div>
+
+                    <span className="agenda-juego-vs">VS</span>
+
+                    <div className="agenda-juego-logo">
+                      {agenda.logo_rival ? (
+                        <img
+                          src={agenda.logo_rival}
+                          alt={`Logo de ${agenda.juego_rival || 'equipo rival'}`}
+                        />
+                      ) : (
+                        <span>LOGO<br />{agenda.juego_rival || 'RIVAL'}</span>
+                      )}
+                    </div>
+                  </div>
                   <p>📅 {agenda.juego_fecha}</p>
                   <p>🕒 {agenda.juego_hora}</p>
                   <p>📍 {agenda.juego_lugar}</p>
@@ -220,6 +307,39 @@ export default function AgendaAcademia({ isAdmin }) {
 
             <fieldset>
               <legend>🏟️ Próximo juego</legend>
+
+              {[
+                ['logo_generales', 'Logo de Generales'],
+                ['logo_rival', 'Logo del equipo rival']
+              ].map(([campo, titulo]) => (
+                <div key={campo}>
+                  <label>
+                    {titulo}
+                    <input
+                      type="file"
+                      accept="image/png,image/jpeg,image/webp"
+                      disabled={guardando}
+                      onChange={evento => seleccionarLogo(evento, campo)}
+                    />
+                  </label>
+
+                  {formulario[campo] && (
+                    <div className="agenda-logo-preview">
+                      <img src={formulario[campo]} alt={titulo} />
+                      <button
+                        type="button"
+                        disabled={guardando}
+                        onClick={() => setFormulario(actual => ({
+                          ...actual,
+                          [campo]: ''
+                        }))}
+                      >
+                        Quitar logo
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
 
               <label>
                 Fecha

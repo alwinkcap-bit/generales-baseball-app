@@ -229,3 +229,72 @@
     padding: 20px 12px;
   }
 }
+
+
+.agenda-juego-logos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.agenda-juego-logo {
+  width: 68px;
+  height: 68px;
+  flex: 0 0 68px;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  padding: 5px;
+  border: 1px dashed #e6bd58;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #f6d27c;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.agenda-juego-vs {
+  color: #f6d27c;
+  font-weight: 900;
+}
+
+@media (max-width: 480px) {
+  .agenda-juego-logo {
+    width: 58px;
+    height: 58px;
+    flex-basis: 58px;
+  }
+}
+
+
+/* Logos editables de los equipos */
+.agenda-juego-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.agenda-juego-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.agenda-logo-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 18px;
+}
+
+.agenda-logo-preview img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
