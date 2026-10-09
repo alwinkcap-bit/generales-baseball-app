@@ -1,0 +1,414 @@
+.cal-semanal {
+  margin: 24px 0;
+  padding: 24px;
+  border: 1px solid #c5a03d;
+  border-radius: 24px;
+  background: #0c263b;
+  color: #fff;
+}
+.cal-cabecera {
+  display: flex; flex-wrap: wrap;
+  justify-content: space-between; align-items: center; gap: 16px;
+}
+.cal-cabecera small { color: #f5cd65; letter-spacing: 1.5px; }
+.cal-cabecera h2 { margin: 7px 0; font-size: clamp(23px, 4vw, 32px); }
+.cal-cabecera p { color: #c4d3de; margin: 8px 0; }
+.cal-semanal button {
+  cursor: pointer; font: inherit; font-weight: bold;
+  padding: 11px 15px; border: 1px solid #c5a03d;
+  border-radius: 10px; background: #123951; color: #f5cd65;
+}
+.cal-cabecera button { background: #f5cd65; color: #081b30; }
+.cal-navegacion {
+  display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0;
+}
+.cal-dias {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(145px, 1fr));
+  gap: 10px; overflow-x: auto; padding: 5px 0 14px;
+}
+.cal-dia {
+  border: 1px solid #315368; border-radius: 14px;
+  background: #071d2e; min-height: 210px; overflow: hidden;
+}
+.cal-dia.cal-hoy { border: 2px solid #f5cd65; }
+.cal-dia-titulo {
+  display: flex; gap: 8px; align-items: center;
+  padding: 12px; background: #123951; text-transform: uppercase;
+}
+.cal-dia-titulo b { font-size: 21px; }
+.cal-dia-titulo small {
+  margin-left: auto; color: #f5cd65; font-size: 10px; font-weight: bold;
+}
+.cal-partido { padding: 12px; border-top: 1px solid #315368; }
+.cal-hora { color: #f5cd65; font-weight: bold; margin-bottom: 12px; font-size: 13px; }
+.cal-equipo {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; margin: 9px 0; font-size: 14px;
+}
+.cal-equipo span { overflow-wrap: anywhere; }
+.cal-equipo b { color: #f5cd65; flex-shrink: 0; }
+.cal-partido p { font-size: 12px; color: #c4d3de; line-height: 1.5; }
+.cal-estado {
+  display: inline-block; padding: 5px 8px; border-radius: 7px;
+  background: #254657; font-size: 11px;
+}
+.cal-vivo { background: #a83434; }
+.cal-partido a {
+  display: block; color: #f5cd65; font-size: 12px; margin-top: 12px;
+}
+.cal-sin-juego { text-align: center; color: #9eb2c1; font-size: 13px; padding: 18px 8px; }
+.cal-ayuda, .cal-vacio { color: #b9cddc; font-size: 13px; }
+.cal-admin-fondo {
+  position: fixed; inset: 0; z-index: 100000;
+  overflow-y: auto; background: #061725; padding: 20px;
+}
+.cal-admin-fondo .centro-partidos {
+  max-width: 1100px; margin: 0 auto; min-height: 100%;
+}
+@media (max-width: 600px) {
+  .cal-semanal { padding: 15px; }
+  .cal-dias { grid-template-columns: repeat(7, 175px); }
+  .cal-navegacion button { font-size: 12px; padding: 10px; }
+  .cal-admin-fondo { padding: 10px; }
+}
+
+/* Calendario más compacto */
+.cal-semanal {
+  width: min(100%, 1200px);
+  margin: 18px auto;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.cal-cabecera h2 {
+  font-size: 24px;
+}
+
+.cal-navegacion {
+  margin: 12px 0;
+}
+
+.cal-dia {
+  min-height: 125px;
+}
+
+.cal-dia-titulo {
+  padding: 8px 10px;
+}
+
+.cal-sin-juego {
+  padding: 10px 6px;
+}
+
+.cal-ayuda {
+  margin: 8px 0 0;
+}
+
+@media (max-width: 600px) {
+  .cal-semanal {
+    padding: 12px;
+  }
+
+  .cal-dias {
+    grid-template-columns: repeat(7, 155px);
+  }
+}
+
+/* Calendario en franja horizontal */
+.cal-dias {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.cal-dia {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.cal-dia-titulo {
+  flex: 0 0 65px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 6px;
+}
+
+.cal-dia-titulo small {
+  margin-left: 0;
+}
+
+.cal-partido {
+  flex: 0 0 190px;
+  width: 190px;
+  box-sizing: border-box;
+  padding: 10px;
+  border-top: 0;
+  border-left: 1px solid #315368;
+}
+
+.cal-hora {
+  margin-bottom: 7px;
+}
+
+.cal-equipo {
+  margin: 6px 0;
+}
+
+.cal-partido p {
+  margin: 6px 0;
+}
+
+.cal-sin-juego {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85px;
+  margin: 0;
+  padding: 10px;
+}
+
+.cal-cabecera h2 {
+  font-size: 21px;
+}
+
+.cal-navegacion {
+  margin: 10px 0;
+}
+
+/* Tarjetas deportivas para los juegos programados */
+.cal-semanal {
+  background: linear-gradient(135deg, #102e45, #071b2d);
+  border-color: #a8873b;
+  box-shadow: 0 12px 30px #0003;
+}
+
+.cal-dia {
+  border-radius: 14px;
+  background: #081e30;
+}
+
+.cal-dia-titulo {
+  background: linear-gradient(180deg, #19435c, #102b40);
+}
+
+.cal-dia.cal-hoy {
+  border-color: #f5cd65;
+  box-shadow: 0 0 14px #f5cd6518;
+}
+
+.cal-partido {
+  flex-basis: 230px;
+  width: 230px;
+  padding: 14px;
+  background: linear-gradient(145deg, #12324a, #091e30);
+  position: relative;
+}
+
+.cal-hora {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 5px 9px;
+  border: 1px solid #f5cd6540;
+  border-radius: 7px;
+  background: #f5cd6510;
+  color: #ffdb7a;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.cal-equipo {
+  gap: 12px;
+  margin: 8px 0;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.cal-equipo b {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 28px;
+  border-radius: 6px;
+  background: #061726;
+  border: 1px solid #315368;
+  color: #fff;
+  font-size: 16px;
+}
+
+.cal-partido p {
+  margin: 7px 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: #b9cedd;
+}
+
+.cal-estado {
+  margin-top: 5px;
+  padding: 5px 9px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+  border: 1px solid #6a91ac55;
+  background: #1b405a;
+  color: #d7eaff;
+}
+
+.cal-partido-en-vivo .cal-estado {
+  background: #802c33;
+  border-color: #ef7474;
+  color: #fff;
+}
+
+.cal-partido-finalizado .cal-estado {
+  background: #174b3b;
+  border-color: #4ea483;
+  color: #b9f2d9;
+}
+
+.cal-partido-cancelado .cal-estado,
+.cal-partido-suspendido .cal-estado {
+  background: #493b25;
+  border-color: #aa8652;
+  color: #ffe0ab;
+}
+
+.cal-partido a {
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.cal-partido a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .cal-partido {
+    flex-basis: 210px;
+    width: 210px;
+    padding: 12px;
+  }
+}
+
+.cal-equipo-local,
+.cal-equipo-visitante {
+  padding: 7px 9px;
+  border-radius: 8px;
+}
+
+.cal-equipo-local {
+  background: #f5cd65;
+  color: #081b30;
+}
+
+.cal-equipo-local b {
+  background: #d9ad43;
+  border-color: #b28a2e;
+  color: #081b30;
+}
+
+.cal-equipo-visitante {
+  background: #174b83;
+  color: #fff;
+}
+
+.cal-equipo-visitante b {
+  background: #0b315d;
+  border-color: #427bb4;
+  color: #fff;
+}
+
+/* Calendario compacto y días sin programación */
+.cal-semanal {
+  padding: 12px;
+}
+
+.cal-cabecera h2 {
+  font-size: 19px;
+}
+
+.cal-semanal button {
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.cal-dia-titulo {
+  flex-basis: 52px;
+  padding: 8px 5px;
+  font-size: 12px;
+}
+
+.cal-dia-titulo b {
+  font-size: 18px;
+}
+
+.cal-partido {
+  flex-basis: 205px;
+  width: 205px;
+  padding: 10px;
+}
+
+.cal-hora {
+  margin-bottom: 6px;
+  padding: 4px 7px;
+  font-size: 12px;
+}
+
+.cal-equipo {
+  padding: 5px 7px;
+  margin: 5px 0;
+  font-size: 13px;
+}
+
+.cal-equipo b {
+  width: 25px;
+  height: 24px;
+  font-size: 14px;
+}
+
+.cal-partido p {
+  margin: 5px 0;
+  font-size: 11px;
+}
+
+.cal-dia-vacio {
+  background: #283540;
+  border-color: #465461;
+}
+
+.cal-dia-vacio .cal-dia-titulo {
+  background: #364550;
+  color: #d5dee5;
+}
+
+.cal-dia-vacio .cal-sin-juego {
+  width: 65px;
+  padding: 8px;
+  color: #c1ccd5;
+  font-size: 11px;
+}
+
+.cal-dia-vacio.cal-hoy {
+  border-color: #f5cd65;
+}
+
+/* Fecha de los días con juegos */
+.cal-dia-programado .cal-dia-titulo {
+  background: linear-gradient(180deg, #806019, #57400f);
+  color: #fff;
+}
+
+.cal-dia-programado .cal-dia-titulo b {
+  color: #fff;
+}
+
+.cal-dia-programado .cal-dia-titulo small {
+  color: #ffe082;
+}
