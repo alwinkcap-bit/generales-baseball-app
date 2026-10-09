@@ -649,7 +649,7 @@ const responderReto = (opcionElegida) => {
 
         <VideosCintillo isAdmin={isAdmin} />
 
-        <AnalisisTecnico />
+        <AgendaAcademia isAdmin={isAdmin} />
 
         <section className="inicio-panel-rapido" aria-label="Accesos principales">
           <button
@@ -714,7 +714,7 @@ const responderReto = (opcionElegida) => {
           />
         )}
 
-        <AgendaAcademia isAdmin={isAdmin} />
+        <AnalisisTecnico />
         <EstadisticasVisitas isAdmin={isAdmin} />
 
         
