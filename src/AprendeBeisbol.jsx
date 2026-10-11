@@ -1,3 +1,4 @@
+import GraficosBeisbol from './GraficosBeisbol'
 import React from 'react'
 
 const temas = [
@@ -87,7 +88,7 @@ export default function AprendeBeisbol({ onReto }) {
           consulta el reglamento de tu torneo: algunas reglas cambian.
         </p>
 
-        {temas.map(tema => (
+        {temas.map((tema, indice) => (
           <details
             key={tema.titulo}
             style={{
@@ -107,6 +108,7 @@ export default function AprendeBeisbol({ onReto }) {
               {tema.titulo}
             </summary>
             <p style={{ lineHeight: 1.7 }}>{tema.texto}</p>
+            <GraficosBeisbol tema={indice} />
             <p style={{
               padding: '12px',
               borderLeft: '3px solid #f3b83b',
