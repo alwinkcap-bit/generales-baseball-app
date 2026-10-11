@@ -15,10 +15,10 @@ const posiciones = [
 function Campo() {
   return (
     <>
-      <path d="M180 250 L25 95 Q180 -35 335 95 Z" fill="#236845" />
+      <path d="M180 250 L25 149.25 Q180 -65 335 149.25 Z" fill="#236845" />
       <path d="M180 250 L80 185 L180 120 L280 185 Z"
         fill="#b78957" stroke="#ead5ac" strokeWidth="2" />
-      <path d="M180 250 L25 95 M180 250 L335 95"
+      <path d="M180 250 L25 149.25 M180 250 L335 149.25"
         stroke="#fff" strokeWidth="2" fill="none" />
       <circle cx="180" cy="177" r="12" fill="#ead5ac" />
       {[[80, 185], [180, 120], [280, 185]].map(([x, y]) => (
