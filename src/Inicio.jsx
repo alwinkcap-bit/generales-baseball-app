@@ -1,3 +1,7 @@
+import AprendeBeisbol from './AprendeBeisbol'
+import gbImagenAprende from "./public/beisbol-guante.jpg"
+import gbImagenJuegos from "./public/beisbol-juegos.avif"
+import gbImagenPartidos from "./public/beisbol-estadio.jpeg"
 import ComunidadJuegos from './ComunidadJuegos'
 import { estiloPortada } from './EditorPortada'
 import AnalisisTecnico from './AnalisisTecnico'
@@ -494,24 +498,22 @@ const responderReto = (opcionElegida) => {
       <main>
         <section className="inicio-hero">
 <div className="inicio-hero-contenido">
-            <span className="inicio-etiqueta">FORMANDO FUTUROS CAMPEONES</span>
-            <h1>
-              GENERALES DE CHITRÉ<br />
-              <span>BASEBALL</span><br />
-              ACADEMY
-            </h1>
-            <p>UN EQUIPO,<br />UNA FAMILIA,<br />UN LEGADO</p>
-            <div className="inicio-acciones">
- <button
-  type="button"
-  className="inicio-boton dorado"
-  onClick={onRegistro}
->
-  ⚾ INSCRÍBETE AHORA
-</button>
-
+  <span className="inicio-etiqueta">TU MUNDO DE BÉISBOL</span>
+  <h1>
+    GENERALES<br />
+    <span>BASEBALL</span>
+  </h1>
+  <p>APRENDE, JUEGA<br />Y VIVE EL BÉISBOL</p>
+  <div className="inicio-acciones">
+    <button
+      type="button"
+      className="inicio-boton dorado"
+      onClick={() => setJuegosOpen(true)}
+    >
+      🎮 EXPLORAR JUEGOS
+    </button>
+  </div>
 </div>
-          </div>
           <div className="inicio-hero-imagen">
   <img
     src={equipoGenerales}
@@ -526,10 +528,10 @@ const responderReto = (opcionElegida) => {
 </div>
         </section>
 
+        
         <Patrocinadores isAdmin={isAdmin} />
 
-
-        <section className="inicio-inscripcion-destacada" aria-label="Inscripciones">
+<section className="inicio-inscripcion-destacada" aria-label="Inscripciones">
           <button
             type="button"
             className="inicio-boton dorado inicio-inscripcion-compacta"
@@ -552,7 +554,7 @@ const responderReto = (opcionElegida) => {
           </button>
         </section>
 
-        <section
+<section
           className="inicio-instagram-destacado"
           aria-label="Instagram de Generales de Chitré"
         >
@@ -582,6 +584,111 @@ const responderReto = (opcionElegida) => {
 </span>
 </a>
         </section>
+
+        
+<section
+  className="generales-explorar"
+  aria-labelledby="generales-explorar-titulo"
+>
+  <div className="gb-explorar-encabezado">
+    <span>EXPLORA GENERALES BASEBALL</span>
+    <h2 id="generales-explorar-titulo">
+      El béisbol también se vive aquí
+    </h2>
+    <p>Conocimiento, diversión y pasión por el juego.</p>
+  </div>
+
+  <div className="gb-accesos-grid">
+    {[
+      {
+        titulo: 'Aprende béisbol',
+        detalle: 'Pon a prueba tus conocimientos',
+        etiqueta: 'CONOCIMIENTO',
+        imagen: gbImagenAprende,
+        abrir: () => document.getElementById('gb-aprende-beisbol')?.showModal()
+      },
+      {
+        titulo: 'Juegos y retos',
+        detalle: 'Batea, juega y supera tus marcas',
+        etiqueta: 'ENTRETENIMIENTO',
+        imagen: gbImagenJuegos,
+        abrir: () => setJuegosOpen(true)
+      },
+      {
+        titulo: 'Calendario',
+        detalle: 'Entrenamientos y próximos juegos',
+        etiqueta: 'EN EL TERRENO',
+        imagen: gbImagenPartidos,
+        abrir: () => document.getElementById('gb-calendario-agenda')?.showModal()
+      },
+      {
+        titulo: 'Nuestra academia',
+        detalle: 'Conoce a Generales de Chitré',
+        etiqueta: 'UN EQUIPO, UNA FAMILIA',
+        imagen: equipoGenerales,
+        abrir: () => document.getElementById('gb-academia-ventana')?.showModal()
+      }
+    ].map((acceso) => (
+      <button
+        key={acceso.titulo}
+        type="button"
+        className="gb-acceso-card"
+        onClick={acceso.abrir}
+      >
+        <img
+          className="gb-acceso-imagen"
+          src={acceso.imagen}
+          alt=""
+          loading="lazy"
+        />
+        <span className="gb-acceso-sombra" aria-hidden="true" />
+        <span className="gb-acceso-contenido">
+          <span className="gb-acceso-etiqueta">{acceso.etiqueta}</span>
+          <strong>{acceso.titulo}</strong>
+          <span className="gb-acceso-detalle">{acceso.detalle}</span>
+          <span className="gb-acceso-accion">
+            Explorar <span aria-hidden="true">↗</span>
+          </span>
+        </span>
+      </button>
+    ))}
+  </div>
+</section>
+
+
+<section className="inicio-panel-rapido" aria-label="Más opciones de béisbol">
+  <button
+    type="button"
+    className="inicio-clases-publicas"
+    onClick={() => setClasesVirtualesOpen(true)}
+  >
+    <span className="inicio-panel-icono">▶</span>
+    <strong>Clases virtuales</strong>
+    <b>›</b>
+  </button>
+
+  <button type="button" onClick={() => setNoticiasOpen(true)}>
+    <span className="inicio-panel-icono">▤</span>
+    <strong>Noticias de Generales</strong>
+    <b>›</b>
+  </button>
+
+  <button type="button" onClick={() => setTiendaOpen(true)}>
+    <span className="inicio-panel-icono">🛍️</span>
+    <strong>Tienda</strong>
+    <b>›</b>
+  </button>
+</section>
+
+
+
+
+
+        
+
+        
+
+        
 
         {(imagenesGaleriaPublica.length > 0 || isAdmin) && (
           <section
@@ -653,64 +760,11 @@ const responderReto = (opcionElegida) => {
           </section>
         )}
 
-        <VideosCintillo isAdmin={isAdmin} />
+<VideosCintillo isAdmin={isAdmin} />
 
-        <AgendaAcademia isAdmin={isAdmin} />
+        
 
-        <section className="inicio-panel-rapido" aria-label="Accesos principales">
-          <button
-            type="button"
-            className="inicio-clases-publicas"
-            onClick={() => setClasesVirtualesOpen(true)}
-          >
-            <span className="inicio-panel-icono">▶</span>
-            <strong>Clases virtuales</strong>
-            <b>›</b>
-          </button>
-
-          <button type="button" onClick={() => setProgramasOpen(true)}>
-            <span className="inicio-panel-icono">⚾</span>
-            <strong>Programas</strong>
-            <b>›</b>
-          </button>
-
-          <button type="button" onClick={onJugadoresPublicos}>
-            <span className="inicio-panel-icono">👥</span>
-            <strong>Jugadores</strong>
-            <b>›</b>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setPartidosPublicosOpen(true)}
-          >
-            <span className="inicio-panel-icono">📅</span>
-            <strong>Partidos</strong>
-            <b>›</b>
-          </button>
-
-          <button type="button" onClick={() => setNoticiasOpen(true)}>
-            <span className="inicio-panel-icono">▤</span>
-            <strong>Noticias</strong>
-            <b>›</b>
-          </button>
-
-          <button type="button" onClick={() => setTiendaOpen(true)}>
-            <span className="inicio-panel-icono">🛍️</span>
-            <strong>Tienda</strong>
-            <b>›</b>
-          </button>
-
-          <button
-            type="button"
-            className="inicio-juegos-cintillo"
-            onClick={() => setJuegosOpen(true)}
-          >
-            <span className="inicio-panel-icono">🎮</span>
-            <strong>Zona de Juegos</strong>
-            <b>›</b>
-          </button>
-        </section>
+        
 
         {clasesVirtualesOpen && (
           <ClasesVirtuales
@@ -738,7 +792,7 @@ const responderReto = (opcionElegida) => {
     >
       <header className="juegos-pantalla-encabezado">
         <div>
-          <small>GENERALES DE CHITRÉ</small>
+          <small>GENERALES BASEBALL</small>
           <h2>Zona de Juegos</h2>
           <p>Aprende y diviértete jugando béisbol.</p>
         </div>
@@ -857,24 +911,13 @@ const responderReto = (opcionElegida) => {
 
 <section id="servicios" className="inicio-servicios-panel">
   <div className="inicio-servicios-encabezado">
-    <span>SERVICIOS DE LA ACADEMIA</span>
-    <h2>Explora Generales</h2>
-    <p>Información, productos y herramientas de nuestra Academia.</p>
+    <span>GENERALES BASEBALL</span>
+    <h2>Aprende, juega y vive el béisbol</h2>
+    <p>Un espacio para jugadores, entrenadores, familias y aficionados. Disfruta los juegos, consulta partidos y conoce nuestra academia.</p>
   </div>
 
   <div className="inicio-servicios-grid">
-    <button
-      type="button"
-      className="inicio-servicio-card servicio-entrenadores"
-      onClick={onEntrenadores}
-    >
-      <span className="inicio-servicio-icono">⚾</span>
-      <span>
-        <strong>Nuestros entrenadores</strong>
-        <small>Conoce al equipo técnico</small>
-      </span>
-      <b>›</b>
-    </button>
+    
 
     <button
       type="button"
@@ -1161,6 +1204,26 @@ const responderReto = (opcionElegida) => {
             <div><strong>⭐</strong><span>Valores para<br />la vida</span></div>
           </div>
         </section>
+
+<section
+  className="inicio-panel-rapido generales-academia-accesos"
+  aria-label="Opciones de la academia"
+>
+  
+
+  
+
+  
+
+  
+</section>
+
+
+
+
+
+
+
 
       <section id="historia" className="inicio-ubicacion">
   <span className="inicio-etiqueta">NUESTRA HISTORIA</span>
@@ -1653,7 +1716,185 @@ const responderReto = (opcionElegida) => {
 <div style={{ height: '16px' }}></div>
   
 </section>
-      </main>
+      
+
+
+<dialog
+  id="gb-academia-ventana"
+  aria-labelledby="gb-academia-titulo"
+  style={{
+    width: 'min(600px, 94vw)',
+    maxWidth: '94vw',
+    maxHeight: '90vh',
+    padding: '20px',
+    boxSizing: 'border-box',
+    border: '1px solid #f3b83b',
+    borderRadius: '18px',
+    background: '#081b30',
+    color: '#fff'
+  }}
+>
+  <header style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '12px',
+    marginBottom: '20px'
+  }}>
+    <div>
+      <small style={{ color: '#f3b83b' }}>GENERALES DE CHITRÉ</small>
+      <h2 id="gb-academia-titulo" style={{ margin: '8px 0' }}>
+        Nuestra academia
+      </h2>
+    </div>
+    <form method="dialog">
+      <button
+        type="submit"
+        autoFocus
+        aria-label="Cerrar academia"
+        style={{
+          padding: '10px 14px',
+          background: '#f3b83b',
+          color: '#081b30',
+          border: 0,
+          borderRadius: '10px',
+          fontWeight: 800,
+          cursor: 'pointer'
+        }}
+      >
+        Cerrar ×
+      </button>
+    </form>
+  </header>
+
+  <div style={{ display: 'grid', gap: '12px' }}>
+    {[
+      {
+        icono: '🧢',
+        titulo: 'Nuestros entrenadores',
+        detalle: 'Conoce al equipo técnico',
+        abrir: onEntrenadores
+      },
+      {
+        icono: '⚾',
+        titulo: 'Programas',
+        detalle: 'Formación por edades',
+        abrir: () => setProgramasOpen(true)
+      },
+      {
+        icono: '👥',
+        titulo: 'Jugadores',
+        detalle: 'Conoce a nuestros jugadores',
+        abrir: onJugadoresPublicos
+      }
+    ].map((opcion) => (
+      <button
+        key={opcion.titulo}
+        type="button"
+        onClick={() => {
+          document.getElementById('gb-academia-ventana')?.close()
+          opcion.abrir()
+        }}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '14px',
+          width: '100%',
+          padding: '20px 16px',
+          border: '1px solid #b98c32',
+          borderRadius: '14px',
+          background: '#102b47',
+          color: '#fff',
+          textAlign: 'left',
+          fontFamily: 'inherit',
+          cursor: 'pointer'
+        }}
+      >
+        <span aria-hidden="true" style={{ fontSize: '28px' }}>
+          {opcion.icono}
+        </span>
+        <span style={{ flex: 1 }}>
+          <strong style={{ display: 'block', fontSize: '17px' }}>
+            {opcion.titulo}
+          </strong>
+          <small style={{
+            display: 'block',
+            marginTop: '6px',
+            color: '#c8d8e8'
+          }}>
+            {opcion.detalle}
+          </small>
+        </span>
+        <span aria-hidden="true" style={{ color: '#f3b83b' }}>›</span>
+      </button>
+    ))}
+  </div>
+</dialog>
+
+
+<dialog
+  id="gb-calendario-agenda"
+  aria-labelledby="gb-calendario-agenda-titulo"
+  style={{
+    width: 'min(900px, 94vw)',
+    maxWidth: '94vw',
+    maxHeight: '90vh',
+    padding: 0,
+    boxSizing: 'border-box',
+    border: '1px solid #f3b83b',
+    borderRadius: '18px',
+    background: '#081b30',
+    color: '#fff'
+  }}
+>
+  <header style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '12px',
+    padding: '18px',
+    borderBottom: '1px solid rgba(243, 184, 59, .3)'
+  }}>
+    <div>
+      <small style={{ color: '#f3b83b' }}>GENERALES DE CHITRÉ</small>
+      <h2
+        id="gb-calendario-agenda-titulo"
+        style={{ margin: '8px 0 0' }}
+      >
+        Calendario
+      </h2>
+      <p style={{ margin: '8px 0 0', color: '#c8d8e8' }}>
+        Entrenamientos y próximos juegos de la academia.
+      </p>
+    </div>
+
+    <form method="dialog">
+      <button
+        type="submit"
+        autoFocus
+        aria-label="Cerrar calendario"
+        style={{
+          padding: '10px 14px',
+          border: 0,
+          borderRadius: '10px',
+          background: '#f3b83b',
+          color: '#081b30',
+          fontWeight: 800,
+          cursor: 'pointer'
+        }}
+      >
+        Cerrar ×
+      </button>
+    </form>
+  </header>
+
+  <div style={{ padding: '12px' }}>
+    <AgendaAcademia isAdmin={isAdmin} />
+  </div>
+</dialog>
+
+<AprendeBeisbol onReto={() => setRetoDigitalOpen(true)} />
+</main>
 
       {mostrarBarraPrincipal && (
       <nav className="inicio-nav">

@@ -6,6 +6,8 @@ import { supabase } from './supabase'
 import './VideosCintillo.css'
 
 const BUCKET = 'videos-cintillo'
+const esImagenCintillo = ruta =>
+  /\.(jpg|jpeg|png|webp)$/i.test(ruta || '')
 
 function medirDuracion(archivo) {
   return new Promise((resolve, reject) => {
@@ -69,30 +71,65 @@ export default function VideosCintillo({ isAdmin }) {
       return
     }
     if (!archivo) {
-      setMensaje('Selecciona un video antes de publicar.')
+      setMensaje('Selecciona una imagen o un video antes de publicar.')
       return
     }
     setOcupado(true)
-    setMensaje('Comprobando video…')
+    setMensaje('Comprobando archivo…')
     let rutaSubida = null
     try {
       const nombre = titulo.trim()
       if (!nombre) throw new Error('Escribe el título.')
-      if (!['video/mp4', 'video/webm'].includes(archivo.type)) {
-        throw new Error('Selecciona un MP4 o WebM.')
+      const extensiones = {
+        'video/mp4': 'mp4',
+        'video/webm': 'webm',
+        'image/jpeg': 'jpg',
+        'image/png': 'png',
+        'image/webp': 'webp'
       }
-      if (archivo.size > 50 * 1024 * 1024) {
-        throw new Error('El máximo es 50 MB.')
+      const extension = extensiones[archivo.type]
+      if (!extension) {
+        throw new Error('Selecciona MP4, WebM, JPG, PNG o WebP.')
       }
-      const duracion = await medirDuracion(archivo)
-      if (!Number.isFinite(duracion) || duracion <= 0 || duracion > 20) {
+
+      const esImagen = archivo.type.startsWith('image/')
+      const limite = (esImagen ? 10 : 50) * 1024 * 1024
+      if (archivo.size > limite) {
         throw new Error(
-          Number.isFinite(duracion)
-            ? `El video dura ${duracion.toFixed(2)} segundos. El máximo es 20.`
-            : 'No se pudo determinar la duración. Prueba exportándolo como MP4.'
+          esImagen ? 'La imagen no puede superar 10 MB.'
+                   : 'El video no puede superar 50 MB.'
         )
       }
-      const extension = archivo.type === 'video/webm' ? 'webm' : 'mp4'
+
+      let duracion = 0
+      if (esImagen) {
+        const urlTemporal = URL.createObjectURL(archivo)
+        try {
+          await new Promise((resolve, reject) => {
+            const imagen = new Image()
+            const timer = setTimeout(
+              () => reject(new Error('No se pudo leer la imagen.')),
+              15000
+            )
+            imagen.onload = () => {
+              clearTimeout(timer)
+              resolve()
+            }
+            imagen.onerror = () => {
+              clearTimeout(timer)
+              reject(new Error('La imagen no se pudo abrir.'))
+            }
+            imagen.src = urlTemporal
+          })
+        } finally {
+          URL.revokeObjectURL(urlTemporal)
+        }
+      } else {
+        duracion = await medirDuracion(archivo)
+        if (!Number.isFinite(duracion) || duracion <= 0 || duracion > 20) {
+          throw new Error('El video debe durar entre 0 y 20 segundos, sin incluir 0.')
+        }
+      }
       const ruta = `${crypto.randomUUID()}.${extension}`
       setMensaje('Publicando…')
       const { error: subida } = await supabase.storage
@@ -104,7 +141,9 @@ export default function VideosCintillo({ isAdmin }) {
         titulo: nombre,
         archivo_path: ruta,
         duracion,
-        ajuste_portada: portada
+        ajuste_portada: esImagen
+          ? { modo: 'contain', x: 50, y: 50, zoom: 1, tiempo: 0 }
+          : portada
       })
       if (error) throw error
       rutaSubida = null
@@ -113,8 +152,8 @@ export default function VideosCintillo({ isAdmin }) {
       setPortada({ modo: 'cover', x: 50, y: 50, zoom: 1, tiempo: 0 })
       if (entrada.current) entrada.current.value = ''
       setEditor(false)
-      setMensaje('✅ Video publicado.')
-      window.alert('Video publicado correctamente.')
+      setMensaje('✅ Archivo publicado.')
+      window.alert('Archivo publicado correctamente.')
       await cargar()
     } catch (error) {
       let aviso = ''
@@ -123,7 +162,7 @@ export default function VideosCintillo({ isAdmin }) {
           .from(BUCKET).remove([rutaSubida])
         if (limpieza) aviso = ' El archivo quedó pendiente de limpieza.'
       }
-      console.error('Error publicando video:', error)
+      console.error('Error publicando archivo:', error)
       window.alert(`No se pudo publicar: ${error.message || String(error)}${aviso}`)
       setMensaje(`${error.message || String(error)}${aviso}`)
     } finally {
@@ -145,7 +184,7 @@ export default function VideosCintillo({ isAdmin }) {
         .from(BUCKET).remove([video.archivo_path])
       setMensaje(borrado
         ? `Retirado del cintillo. Falta borrar el archivo: ${borrado.message}`
-        : 'Video eliminado.')
+        : 'Archivo eliminado.')
     } catch (error) {
       setMensaje(error.message)
     } finally {
@@ -154,17 +193,17 @@ export default function VideosCintillo({ isAdmin }) {
   }
 
   return (
-    <section className="videos-cintillo" aria-label="Videos de la academia">
+    <section className="videos-cintillo" aria-label="Imágenes y videos de béisbol">
       <header className="videos-cintillo-header">
         <div>
           <small>GENERALES EN ACCIÓN</small>
           <h3>Mejores momentos</h3>
-          <p>Entrenamientos y jugadas en 20 segundos.</p>
+          <p>Imágenes y videos para vivir el béisbol.</p>
         </div>
         {isAdmin && (
           <button type="button" disabled={ocupado}
             onClick={() => setEditor(actual => !actual)}>
-            {editor ? 'Cerrar' : '＋ Publicar video'}
+            {editor ? 'Cerrar' : '＋ Publicar imagen o video'}
           </button>
         )}
       </header>
@@ -177,8 +216,8 @@ export default function VideosCintillo({ isAdmin }) {
               onChange={evento => setTitulo(evento.target.value)} />
           </label>
           <label>
-            MP4 o WebM · máximo 20 segundos y 50 MB
-            <input ref={entrada} type="file" accept="video/mp4,video/webm"
+            Videos: MP4 o WebM, hasta 20 s y 50 MB. Imágenes: JPG, PNG o WebP, hasta 10 MB.
+            <input ref={entrada} type="file" accept="video/mp4,video/webm,image/jpeg,image/png,image/webp"
               required disabled={ocupado}
               onChange={evento => {
                 setArchivo(evento.target.files?.[0] || null)
@@ -187,7 +226,7 @@ export default function VideosCintillo({ isAdmin }) {
                 })
               }} />
           </label>
-          {archivo && (
+          {archivo && archivo.type.startsWith('video/') && (
             <AjustePortadaSubida
               key={`${archivo.name}-${archivo.lastModified}`}
               archivo={archivo}
@@ -198,7 +237,7 @@ export default function VideosCintillo({ isAdmin }) {
               proporcion="270 / 155"
             />
           )}
-          <button type="button" onClick={publicar} disabled={ocupado}>
+          <button type="submit" disabled={ocupado}>
             {ocupado ? 'Publicando…' : 'Publicar'}
           </button>
         </form>
@@ -206,22 +245,51 @@ export default function VideosCintillo({ isAdmin }) {
 
       {mensaje && <p className="videos-cintillo-mensaje" role="status">{mensaje}</p>}
       {videos.length === 0 ? (
-        <p className="videos-cintillo-vacio">Pronto compartiremos nuevos videos.</p>
+        <p className="videos-cintillo-vacio">Pronto compartiremos imágenes y videos.</p>
       ) : (
         <>
-          <p className="videos-cintillo-ayuda">Desliza para ver más videos →</p>
+          <p className="videos-cintillo-ayuda">Desliza para ver imágenes y videos →</p>
           <div className="videos-cintillo-lista">
             {videos.map(video => {
               const { data } = supabase.storage
                 .from(BUCKET).getPublicUrl(video.archivo_path)
+              const esImagen = esImagenCintillo(video.archivo_path)
               return (
                 <article className="videos-cintillo-tarjeta" key={video.id}>
-                  <VideoCintilloVisor
-                    src={data.publicUrl}
-                    titulo={video.titulo}
-                    ajuste={video.ajuste_portada}
-                  />
-                  {isAdmin && (
+                  {esImagen ? (
+                    <a
+                      href={data.publicUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Abrir imagen: ${video.titulo}`}
+                      style={{
+                        display: 'block',
+                        width: '100%',
+                        aspectRatio: '270 / 155',
+                        background: '#081b30',
+                        overflow: 'hidden'
+                      }}
+                    >
+                      <img
+                        src={data.publicUrl}
+                        alt={video.titulo}
+                        loading="lazy"
+                        style={{
+                          display: 'block',
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'contain'
+                        }}
+                      />
+                    </a>
+                  ) : (
+                    <VideoCintilloVisor
+                      src={data.publicUrl}
+                      titulo={video.titulo}
+                      ajuste={video.ajuste_portada}
+                    />
+                  )}
+                  {isAdmin && !esImagen && (
                     <EditorPortada
                       src={data.publicUrl}
                       tipo="video"
@@ -240,12 +308,14 @@ export default function VideosCintillo({ isAdmin }) {
                         month: 'short'
                       })}
                     </small>
-                    <span>{Math.ceil(Number(video.duracion))} s</span>
+                    <span>
+                      {esImagen ? 'Imagen' : `${Math.ceil(Number(video.duracion))} s`}
+                    </span>
                   </div>
                   {isAdmin && (
                     <button className="videos-cintillo-eliminar" type="button"
                       disabled={ocupado} onClick={() => eliminar(video)}>
-                      Eliminar video
+                      Eliminar archivo
                     </button>
                   )}
                 </article>

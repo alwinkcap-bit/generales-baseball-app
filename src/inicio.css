@@ -7479,3 +7479,145 @@ button.inicio-juegos-cintillo > b {
     gap: 12px;
   }
 }
+
+
+/* INICIO GB ACCESOS PROFESIONALES */
+.generales-explorar {
+  padding: 30px 16px;
+  background: #081b30;
+  color: #fff;
+}
+.gb-explorar-encabezado,
+.gb-accesos-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.gb-explorar-encabezado > span {
+  color: #f3b83b;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+}
+.gb-explorar-encabezado h2 {
+  margin: 10px 0;
+  color: #fff;
+  font-size: clamp(22px, 4vw, 32px);
+  line-height: 1.2;
+}
+.gb-explorar-encabezado p {
+  color: #bacbde;
+  line-height: 1.5;
+}
+.gb-accesos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+.gb-acceso-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  min-width: 0;
+  min-height: 225px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(243, 184, 59, .45);
+  border-radius: 18px;
+  background: #102b47;
+  color: #fff;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .22);
+  transition: transform .2s ease, border-color .2s ease;
+}
+.gb-acceso-imagen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .3s ease;
+}
+.gb-acceso-sombra {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(4, 14, 26, .12) 0%,
+    rgba(4, 14, 26, .78) 45%,
+    #04101e 100%
+  );
+}
+.gb-acceso-contenido {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: 100%;
+  padding: 20px 16px;
+}
+.gb-acceso-etiqueta {
+  color: #ffcf69;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+.gb-acceso-contenido strong {
+  color: #fff;
+  font-size: clamp(17px, 2.5vw, 23px);
+  line-height: 1.2;
+}
+.gb-acceso-detalle {
+  color: #e0e9f3;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.gb-acceso-accion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, .18);
+  color: #ffcf69;
+  font-size: 12px;
+  font-weight: 800;
+}
+.gb-acceso-accion > span {
+  font-size: 21px;
+}
+.gb-acceso-card:focus-visible {
+  outline: 3px solid #ffcf69;
+  outline-offset: 4px;
+}
+@media (hover: hover) {
+  .gb-acceso-card:hover {
+    transform: translateY(-3px);
+    border-color: #f3b83b;
+  }
+  .gb-acceso-card:hover .gb-acceso-imagen {
+    transform: scale(1.05);
+  }
+}
+@media (min-width: 950px) {
+  .gb-accesos-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 350px) {
+  .gb-accesos-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gb-acceso-card,
+  .gb-acceso-imagen {
+    transition: none;
+  }
+}
+/* FIN GB ACCESOS PROFESIONALES */
