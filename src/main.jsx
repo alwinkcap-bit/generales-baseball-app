@@ -9,6 +9,7 @@ import Inicio from './Inicio'
 import Bienvenida from './Bienvenida'
 import Registro from './Registro';
 import EntrenadoresAdmin from './EntrenadoresAdmin'
+import ControlPagos from './ControlPagos'
 import EntrenadoresPublicos from './EntrenadoresPublicos'
 import JugadoresPublicos from './JugadoresPublicos'
 import PantallaTransmision from './PantallaTransmision'
@@ -1072,6 +1073,10 @@ if (bienvenidaOpen) {
 if (vista === 'registro') {
   return <Registro onVolver={() => setVista('inicio')} />;
 }
+if (vista === 'pagos-admin' && isAdmin) {
+  return <ControlPagos onVolver={() => setVista('admin')} />
+}
+
 if (vista === 'entrenadores-admin' && isAdmin) {
   return (
     <EntrenadoresAdmin
@@ -1194,6 +1199,16 @@ if (vista === 'inicio') {
   >
     <span className="acceso-icono">⚾</span>
     <span>Perfiles de entrenadores</span>
+  </button>
+)}
+{isAdmin && (
+  <button
+    type="button"
+    className="ghost"
+    onClick={() => setVista('pagos-admin')}
+  >
+    <span className="acceso-icono">💳</span>
+    <span>Control de pagos</span>
   </button>
 )}
         {isAdmin && (
