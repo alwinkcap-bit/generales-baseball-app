@@ -21,6 +21,7 @@ export default function JugadoresPublicos() {
         .select(
           'id,nombre,apellido,categoria,posicion,numero,batea,lanza,foto_url,estado'
         )
+        .eq('estado', 'Activo')
         .order('nombre')
 
       if (!activo) return
