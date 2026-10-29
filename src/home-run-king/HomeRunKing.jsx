@@ -1,6 +1,6 @@
 
 import { useState } from 'react'
-
+import Estadio3D from './Estadio3D'
 export default function HomeRunKing() {
   const [lanzamientos, setLanzamientos] = useState(0)
   const [puntos, setPuntos] = useState(0)
@@ -46,7 +46,7 @@ export default function HomeRunKing() {
     }}>
       <h1>⚾ HOME RUN KING 3D</h1>
       <h2>CAMPEONATO DE JONRONES</h2>
-
+<Estadio3D />
       <section style={{
         background: '#132e4c',
         padding: 25,
