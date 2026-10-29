@@ -32,3 +32,12 @@ jobs:
           VITE_SUPABASE_URL: https://bhwgjqtugfslkspxbkbi.supabase.co
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
         run: npm run build -- --base=/generales-baseball-app/
+        
+      - name: Guardar version de prueba
+        uses: actions/upload-artifact@v4
+        with:
+          name: generales-panel-financiero-prueba
+          path: dist/
+          retention-days: 7
+
+        
