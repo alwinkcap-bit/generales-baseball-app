@@ -10,6 +10,7 @@ import Bienvenida from './Bienvenida'
 import Registro from './Registro';
 import EntrenadoresAdmin from './EntrenadoresAdmin'
 import ControlPagos from './ControlPagos'
+import ResumenFinanciero from './ResumenFinanciero'
 import EntrenadoresPublicos from './EntrenadoresPublicos'
 import JugadoresPublicos from './JugadoresPublicos'
 import PantallaTransmision from './PantallaTransmision'
@@ -1243,6 +1244,13 @@ if (vista === 'inicio') {
 )}
 
       </section>
+      
+{isAdmin && (
+  <div style={{ margin: '20px 0' }}>
+    <ResumenFinanciero />
+  </div>
+)}
+
 {isAdmin && inscripcionesOpen && (
   <div
     className="inscripciones-modal-fondo"
