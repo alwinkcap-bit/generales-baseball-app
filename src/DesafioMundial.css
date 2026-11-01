@@ -1,0 +1,342 @@
+.desafio-mundial {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #061a32, #123c65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.desafio-panel {
+  width: 100%;
+  max-width: 540px;
+  padding: 28px;
+  background: #ffffff;
+  color: #10243b;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 12px 40px #0005;
+}
+
+.desafio-panel h1 {
+  font-size: 26px;
+  color: #123c65;
+}
+
+.desafio-cerrar {
+  display: block;
+  margin-left: auto;
+  background: #eee;
+  color: #222;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.desafio-tiempo {
+  font-size: 36px;
+  font-weight: bold;
+  margin: 18px;
+  color: #c62828;
+}
+
+.desafio-opciones {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.desafio-opciones button,
+.desafio-resultado button {
+  padding: 15px;
+  border-radius: 12px;
+  border: none;
+  background: #174e82;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.desafio-opciones button.correcta {
+  background: #198754;
+}
+
+.desafio-opciones button.incorrecta {
+  background: #c62828;
+}
+
+.desafio-opciones button:disabled {
+  cursor: default;
+}
+
+.desafio-resultado {
+  display: grid;
+  gap: 14px;
+}
+
+.desafio-puntuacion {
+  font-size: 64px;
+  font-weight: bold;
+  color: #174e82;
+}
+
+.desafio-niveles {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.desafio-nivel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px;
+  border-radius: 14px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.desafio-nivel span {
+  font-size: 13px;
+}
+
+.desafio-explicacion {
+  margin-top: 16px;
+  padding: 14px;
+  background: #eaf4ff;
+  border-radius: 12px;
+  color: #142b48;
+}
+
+.desafio-explicacion p {
+  line-height: 1.5;
+}
+
+/* Corrección de visibilidad del Desafío Mundial */
+.desafio-mundial {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 15px !important;
+  background: rgba(0, 20, 50, 0.95) !important;
+  overflow-y: auto !important;
+}
+
+.desafio-mundial .desafio-panel {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: 600px !important;
+  max-height: 95vh !important;
+  overflow-y: auto !important;
+  background: white !important;
+  color: #142b48 !important;
+  padding: 25px !important;
+  border-radius: 18px !important;
+}
+
+/* ===== DESAFÍO MUNDIAL - ESTILO ESTADIO ===== */
+
+.desafio-mundial {
+  background:
+    radial-gradient(circle at 50% 15%, #1e4776 0%, transparent 45%),
+    rgba(2, 12, 30, 0.97) !important;
+  backdrop-filter: blur(8px);
+  padding: 18px !important;
+}
+
+.desafio-mundial .desafio-panel {
+  background: linear-gradient(155deg, #122b4b, #07162d) !important;
+  color: #ffffff !important;
+  border: 1px solid #365476;
+  box-shadow: 0 25px 80px rgba(0,0,0,.55);
+  max-width: 650px !important;
+  border-radius: 24px !important;
+  padding: 28px 22px !important;
+  text-align: center;
+  animation: desafioEntrada .35s ease-out;
+}
+
+@keyframes desafioEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.desafio-panel h1 {
+  color: #f5c75b;
+  font-size: clamp(23px, 5vw, 34px);
+  letter-spacing: 1px;
+  margin: 18px 0 8px;
+}
+
+.desafio-panel h2 {
+  color: #ffffff;
+  font-size: clamp(20px, 4vw, 26px);
+}
+
+.desafio-panel h3 {
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+.desafio-panel p {
+  color: #c2d1e5;
+}
+
+.desafio-panel .desafio-cerrar {
+  background: #243d5a;
+  color: #ffffff;
+  border: 1px solid #47617e;
+  border-radius: 10px;
+}
+
+.desafio-niveles {
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.desafio-panel .desafio-nivel {
+  width: 100%;
+  min-height: 82px;
+  background: linear-gradient(120deg, #17365c, #234c78);
+  border: 1px solid #4a6b91;
+  border-radius: 16px;
+  color: #ffffff;
+  padding: 17px;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+
+.desafio-panel .desafio-nivel:hover {
+  transform: translateY(-3px);
+  border-color: #f5c75b;
+  box-shadow: 0 8px 25px rgba(245,199,91,.16);
+}
+
+.desafio-panel .desafio-nivel strong {
+  color: #f5c75b;
+  font-size: 20px;
+}
+
+.desafio-panel .desafio-nivel span {
+  color: #d6e2f1;
+  font-size: 14px;
+}
+
+.desafio-panel .desafio-tiempo {
+  color: #f5c75b;
+  font-size: 32px;
+  font-weight: 900;
+  margin: 14px 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.desafio-panel .desafio-opciones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin: 22px auto;
+}
+
+.desafio-panel .desafio-opciones button {
+  display: block;
+  width: 100%;
+  min-height: 60px;
+  padding: 14px 18px;
+  background: #1d3c61;
+  color: white;
+  border: 1px solid #496888;
+  border-radius: 13px;
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+
+.desafio-panel .desafio-opciones button:not(:disabled):hover {
+  background: #2b5887;
+  transform: translateX(4px);
+}
+
+.desafio-panel .desafio-opciones button.correcta {
+  background: #12654d !important;
+  border-color: #54e1a4 !important;
+  color: #ffffff !important;
+}
+
+.desafio-panel .desafio-opciones button.incorrecta {
+  background: #8b2936 !important;
+  border-color: #ff8191 !important;
+  color: #ffffff !important;
+}
+
+.desafio-panel .desafio-explicacion {
+  background: #173654;
+  border: 1px solid #496888;
+  color: #ffffff;
+  border-radius: 15px;
+  padding: 18px;
+}
+
+.desafio-panel .desafio-explicacion p {
+  color: #e0eaf5;
+}
+
+.desafio-panel .desafio-resultado {
+  padding: 15px 0;
+}
+
+.desafio-panel .desafio-puntuacion {
+  font-size: clamp(60px, 12vw, 88px);
+  font-weight: 900;
+  color: #f5c75b;
+  text-shadow: 0 5px 25px rgba(245,199,91,.25);
+}
+
+.desafio-panel .desafio-resultado button,
+.desafio-panel .desafio-explicacion button {
+  width: min(100%, 320px);
+  min-height: 50px;
+  background: #f5c75b;
+  color: #09213d;
+  border: none;
+  border-radius: 12px;
+  font-weight: 800;
+  margin: 6px auto;
+  cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .desafio-mundial .desafio-panel {
+    padding: 20px 15px !important;
+    max-height: 94dvh !important;
+  }
+
+  .desafio-panel .desafio-opciones button {
+    font-size: 15px;
+    min-height: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desafio-panel,
+  .desafio-panel button {
+    animation: none !important;
+    transition: none !important;
+  }
+}

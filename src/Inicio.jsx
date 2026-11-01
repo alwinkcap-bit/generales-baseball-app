@@ -18,6 +18,7 @@ import BateoRetro from './BateoRetro'
 import AtrapaPelota from './AtrapaPelota'
 import CorreBases from './CorreBases'
 import RetoDigital from './RetoDigital'
+import DesafioMundial from './DesafioMundial'
 import preguntasReto from './PreguntasReto'
 import logoGenerales from './public/logo-generales.webp';
 import equipoGenerales from './public/equipo-generales.webp';
@@ -53,6 +54,7 @@ export default function Inicio({
   const [atrapaOpen, setAtrapaOpen] = useState(false)
   const [correBasesOpen, setCorreBasesOpen] = useState(false)
   const [retoDigitalOpen, setRetoDigitalOpen] = useState(false)
+  const [desafioMundialOpen, setDesafioMundialOpen] = useState(false)
   const [juegosOpen, setJuegosOpen] = useState(false)
   useEffect(() => {
     const codigo = new URLSearchParams(window.location.search).get('duelo')
@@ -76,6 +78,7 @@ export default function Inicio({
     atrapaOpen ||
     correBasesOpen ||
     retoDigitalOpen ||
+    desafioMundialOpen ||
     juegosOpen ||
     clasesVirtualesOpen ||
     scoreboardOpen ||
@@ -840,6 +843,19 @@ const responderReto = (opcionElegida) => {
   <button
     type="button"
     className="juego-acceso"
+    onClick={() => setDesafioMundialOpen(true)}
+  >
+    <span className="juego-acceso-icono">🌎</span>
+    <span className="juego-acceso-texto">
+      <strong>Desafío Mundial</strong>
+      <small>7 preguntas · 7 segundos · Comparte tu resultado</small>
+    </span>
+    <b>Jugar →</b>
+  </button>
+
+  <button
+    type="button"
+    className="juego-acceso"
     onClick={() => setRetoDigitalOpen(true)}
   >
     <span className="juego-acceso-icono">🏆</span>
@@ -989,6 +1005,10 @@ const responderReto = (opcionElegida) => {
 
 {retoDigitalOpen && (
   <RetoDigital onCerrar={() => setRetoDigitalOpen(false)} />
+)}
+
+{desafioMundialOpen && (
+  <DesafioMundial onCerrar={() => setDesafioMundialOpen(false)} />
 )}
 
 {correBasesOpen && (
