@@ -340,3 +340,81 @@
     transition: none !important;
   }
 }
+
+
+/* AJUSTE COMPACTO DESAFIO MUNDIAL */
+
+/* Ventana centrada y adaptable */
+.desafio-mundial {
+  padding: 8px !important;
+}
+
+.desafio-mundial .desafio-panel {
+  width: min(100%, 620px) !important;
+  max-height: calc(100dvh - 16px) !important;
+  padding: 12px 18px !important;
+  overflow-y: auto !important;
+}
+
+/* Preguntas y cronómetro */
+.desafio-panel h2,
+.desafio-panel h3 {
+  margin: 6px 0 !important;
+  line-height: 1.2 !important;
+}
+
+.desafio-panel .desafio-tiempo {
+  font-size: 26px !important;
+  margin: 3px 0 8px !important;
+}
+
+/* Respuestas más compactas */
+.desafio-panel .desafio-opciones {
+  gap: 7px !important;
+  margin: 10px auto !important;
+}
+
+.desafio-panel .desafio-opciones button {
+  min-height: 42px !important;
+  padding: 8px 12px !important;
+  font-size: 15px !important;
+  line-height: 1.2 !important;
+}
+
+/* Explicación y botón siguiente */
+.desafio-panel .desafio-explicacion {
+  padding: 10px 12px !important;
+  margin: 8px 0 !important;
+}
+
+.desafio-panel .desafio-explicacion p {
+  margin: 5px 0 !important;
+  line-height: 1.25 !important;
+}
+
+.desafio-panel .desafio-explicacion button {
+  min-height: 42px !important;
+  padding: 8px 12px !important;
+  margin: 8px auto 0 !important;
+}
+
+/* Pantallas pequeñas */
+@media (max-height: 750px) {
+  .desafio-mundial .desafio-panel {
+    padding: 8px 12px !important;
+  }
+
+  .desafio-panel .desafio-opciones {
+    gap: 5px !important;
+    margin: 7px auto !important;
+  }
+
+  .desafio-panel .desafio-opciones button {
+    min-height: 38px !important;
+    padding: 6px 10px !important;
+  }
+
+  .desafio-panel .desafio-explicacion {
+    padding: 8px !important;
+  }
+}
