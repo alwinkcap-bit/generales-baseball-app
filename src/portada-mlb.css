@@ -1,0 +1,330 @@
+/* GENERALES DE CHITRÉ - REDISEÑO PORTADA MLB */
+/* Primera etapa: colores, encabezado y banner principal */
+
+.inicio-app {
+  background: #091525;
+  color: #ffffff;
+}
+
+.inicio-app .inicio-header {
+  background: linear-gradient(110deg, #081321, #172c47);
+  border-bottom: 2px solid #c72b38;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+}
+
+.inicio-app .inicio-hero {
+  background: linear-gradient(125deg, #091525, #173354);
+  border: 1px solid rgba(226, 180, 82, 0.25);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+}
+
+.inicio-app .inicio-hero h1 {
+  color: #ffffff;
+  text-shadow: 0 3px 15px rgba(0, 0, 0, 0.4);
+}
+
+.inicio-app .inicio-hero h1 span {
+  color: #e7b955;
+}
+
+.inicio-app .inicio-hero-contenido > p {
+  color: #e0e8f2;
+}
+
+.inicio-app .inicio-boton.dorado {
+  background: linear-gradient(135deg, #f1c86b, #cb9133);
+  color: #101b2c;
+  border-radius: 12px;
+  font-weight: 800;
+  box-shadow: 0 7px 20px rgba(214, 161, 62, 0.25);
+}
+
+.inicio-app .inicio-boton.dorado:hover {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .inicio-app .inicio-hero {
+    border-radius: 14px;
+  }
+}
+
+/* PRUEBA TEMPORAL DEL REDISEÑO */
+#inicio.inicio-app .inicio-hero {
+  outline: 6px solid #ff0000 !important;
+}
+
+/* PORTADA MLB - ESTILOS PRIORITARIOS */
+
+#inicio.inicio-app {
+  background: #091525;
+  color: #ffffff;
+}
+
+#inicio.inicio-app .inicio-header {
+  background: linear-gradient(110deg, #081321, #172c47) !important;
+  border-bottom: 2px solid #c72b38;
+}
+
+#inicio.inicio-app .inicio-hero {
+  outline: none !important;
+  background: linear-gradient(125deg, #091525, #173354) !important;
+  border: 1px solid rgba(226, 180, 82, 0.35);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+}
+
+#inicio.inicio-app .inicio-hero h1 {
+  color: #ffffff !important;
+}
+
+#inicio.inicio-app .inicio-hero h1 span {
+  color: #e7b955 !important;
+}
+
+#inicio.inicio-app .inicio-boton.dorado {
+  background: linear-gradient(135deg, #f1c86b, #cb9133) !important;
+  color: #101b2c !important;
+  border-radius: 12px;
+}
+
+
+/* PORTADA MLB - ESTILOS PRIORITARIOS */
+
+#inicio.inicio-app {
+  background: #091525;
+  color: #ffffff;
+}
+
+#inicio.inicio-app .inicio-header {
+  background: linear-gradient(110deg, #081321, #172c47) !important;
+  border-bottom: 2px solid #c72b38;
+}
+
+#inicio.inicio-app .inicio-hero {
+  outline: none !important;
+  background: linear-gradient(125deg, #091525, #173354) !important;
+  border: 1px solid rgba(226, 180, 82, 0.35);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.3);
+}
+
+#inicio.inicio-app .inicio-hero h1 {
+  color: #ffffff !important;
+}
+
+#inicio.inicio-app .inicio-hero h1 span {
+  color: #e7b955 !important;
+}
+
+#inicio.inicio-app .inicio-boton.dorado {
+  background: linear-gradient(135deg, #f1c86b, #cb9133) !important;
+  color: #101b2c !important;
+  border-radius: 12px;
+}
+
+
+/* GENERALES - BANNER MLB V2 */
+
+#inicio.inicio-app .inicio-hero {
+  position: relative;
+  display: flex !important;
+  align-items: center;
+  width: min(1180px, calc(100% - 32px));
+  min-height: 520px;
+  border-radius: 22px;
+  isolation: isolate;
+}
+
+#inicio.inicio-app .inicio-hero::before {
+  background: linear-gradient(
+    90deg,
+    rgba(5, 16, 32, 0.96) 0%,
+    rgba(5, 16, 32, 0.84) 38%,
+    rgba(5, 16, 32, 0.12) 100%
+  ) !important;
+}
+
+#inicio.inicio-app .inicio-hero-contenido {
+  position: relative;
+  z-index: 4;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  width: min(540px, 60%);
+  padding: 48px;
+  text-align: left;
+}
+
+#inicio.inicio-app .inicio-hero-contenido .inicio-etiqueta,
+#inicio.inicio-app .inicio-hero-contenido h1,
+#inicio.inicio-app .inicio-hero-contenido .inicio-acciones {
+  display: block !important;
+}
+
+#inicio.inicio-app .inicio-hero-contenido h1 {
+  font-size: clamp(2.5rem, 5vw, 4.8rem);
+  line-height: 1.02;
+  font-weight: 950;
+  margin: 18px 0;
+}
+
+#inicio.inicio-app .inicio-hero-contenido > p {
+  font-size: clamp(1rem, 1.8vw, 1.4rem);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: normal;
+  margin-bottom: 24px;
+}
+
+#inicio.inicio-app .inicio-acciones {
+  margin-top: 22px;
+}
+
+#inicio.inicio-app .inicio-foto-equipo {
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 768px) {
+  #inicio.inicio-app .inicio-hero {
+    min-height: 530px;
+    align-items: flex-end;
+  }
+
+  #inicio.inicio-app .inicio-hero::before {
+    background: linear-gradient(
+      0deg,
+      rgba(5, 16, 32, 0.97) 0%,
+      rgba(5, 16, 32, 0.7) 45%,
+      rgba(5, 16, 32, 0.08) 100%
+    ) !important;
+  }
+
+  #inicio.inicio-app .inicio-hero-contenido {
+    width: 100%;
+    padding: 28px 22px;
+  }
+
+  #inicio.inicio-app .inicio-hero-contenido h1 {
+    font-size: clamp(2.1rem, 9vw, 3.4rem);
+  }
+}
+
+/* AJUSTE FINO DEL BANNER MLB */
+
+#inicio.inicio-app .inicio-hero-contenido {
+  width: min(480px, 48%);
+  padding: 42px;
+}
+
+#inicio.inicio-app .inicio-hero-contenido h1 {
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  letter-spacing: -0.045em;
+  line-height: 1.06;
+}
+
+#inicio.inicio-app .inicio-hero::before {
+  background: linear-gradient(
+    90deg,
+    rgba(5, 16, 32, 0.97) 0%,
+    rgba(5, 16, 32, 0.88) 25%,
+    rgba(5, 16, 32, 0.35) 53%,
+    rgba(5, 16, 32, 0.04) 100%
+  ) !important;
+}
+
+@media (max-width: 768px) {
+  #inicio.inicio-app .inicio-hero-contenido {
+    width: 100%;
+    padding: 28px 22px;
+  }
+
+  #inicio.inicio-app .inicio-hero-contenido h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  #inicio.inicio-app .inicio-hero::before {
+    background: linear-gradient(
+      0deg,
+      rgba(5, 16, 32, 0.97) 0%,
+      rgba(5, 16, 32, 0.75) 42%,
+      rgba(5, 16, 32, 0.05) 100%
+    ) !important;
+  }
+}
+
+/* PORTADA MLB - IMAGEN DEFINITIVA */
+
+#inicio.inicio-app .inicio-hero {
+  position: relative;
+  width: min(1180px, calc(100% - 32px));
+  min-height: 0;
+  aspect-ratio: 2 / 1;
+  background: url('/portada-generales-mlb.png') center / 100% 100% no-repeat !important;
+  overflow: hidden;
+}
+
+#inicio.inicio-app .inicio-hero::before,
+#inicio.inicio-app .inicio-hero::after,
+#inicio.inicio-app .inicio-hero-imagen {
+  display: none !important;
+}
+
+#inicio.inicio-app .inicio-hero-contenido {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#inicio.inicio-app .inicio-hero-contenido .inicio-etiqueta,
+#inicio.inicio-app .inicio-hero-contenido h1,
+#inicio.inicio-app .inicio-hero-contenido > p {
+  display: none !important;
+}
+
+#inicio.inicio-app .inicio-acciones {
+  position: absolute;
+  left: 5.8%;
+  top: 74%;
+  width: 27%;
+  height: 11%;
+  margin: 0;
+  z-index: 5;
+}
+
+#inicio.inicio-app .inicio-acciones .inicio-boton.dorado {
+  display: block !important;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+#inicio.inicio-app .inicio-acciones .inicio-boton.dorado:focus-visible {
+  opacity: 0.85;
+  outline: 3px solid white;
+}
+
+@media (max-width: 768px) {
+  #inicio.inicio-app .inicio-hero {
+    width: calc(100% - 16px);
+    min-height: 0;
+    aspect-ratio: 2 / 1;
+  }
+
+  #inicio.inicio-app .inicio-hero-contenido {
+    width: 100%;
+    padding: 0;
+  }
+}

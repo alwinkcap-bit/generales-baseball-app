@@ -9,6 +9,7 @@ import VideosCintillo from './VideosCintillo'
 
 
 import './inicio.css';
+import './portada-mlb.css';
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom'
 import { supabase } from './supabase';
