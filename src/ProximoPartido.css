@@ -1,0 +1,491 @@
+.proximo-partido {
+  position: relative;
+  isolation: isolate;
+  width: min(94%, 900px);
+  margin: 16px auto;
+  padding: 15px 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 192, 65, .75);
+  border-radius: 16px;
+  background:
+    radial-gradient(ellipse at 50% 115%, rgba(40, 112, 181, .48), transparent 65%),
+    linear-gradient(120deg, #06162c 0%, #102f52 50%, #06162c 100%);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, .32),
+    inset 0 1px 0 rgba(255, 255, 255, .12);
+  color: white;
+}
+
+.proximo-partido::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: .22;
+  background: repeating-linear-gradient(
+    115deg,
+    transparent 0 48px,
+    rgba(255, 255, 255, .07) 49px,
+    transparent 50px 100px
+  );
+  pointer-events: none;
+}
+
+.proximo-partido-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  color: #ffca55;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.proximo-partido-fecha {
+  color: #e5efff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  text-align: right;
+}
+
+.proximo-partido-equipos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.proximo-partido-equipo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.proximo-partido-equipo img {
+  width: 64px;
+  height: 64px;
+  padding: 7px;
+  border: 1px solid rgba(255, 201, 85, .55);
+  border-radius: 50%;
+  background: radial-gradient(circle, #25476a, #07182e);
+  box-shadow: 0 0 16px rgba(255, 191, 65, .16);
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.proximo-partido-equipo strong {
+  font-size: clamp(13px, 1.7vw, 18px);
+  font-weight: 900;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, .4);
+}
+
+.proximo-partido-vs {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin: auto;
+  border: 1px solid rgba(255, 202, 85, .6);
+  border-radius: 50%;
+  background: radial-gradient(circle, #274566, #081a32);
+  color: #ffca55;
+  font-size: 24px;
+  font-weight: 1000;
+  font-style: italic;
+  text-shadow: 0 0 12px rgba(255, 202, 85, .4);
+  box-shadow: 0 0 22px rgba(255, 202, 85, .13);
+}
+
+.proximo-partido-detalles {
+  display: flex;
+  justify-content: center;
+  gap: 12px 28px;
+  flex-wrap: wrap;
+  padding-top: 11px;
+  border-top: 1px solid rgba(255, 202, 85, .3);
+  color: #e5efff;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .proximo-partido {
+    padding: 13px 12px;
+    margin: 12px auto;
+  }
+
+  .proximo-partido-encabezado {
+    font-size: 10px;
+    letter-spacing: .4px;
+  }
+
+  .proximo-partido-fecha {
+    font-size: 10px;
+  }
+
+  .proximo-partido-equipos {
+    grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
+    gap: 5px;
+  }
+
+  .proximo-partido-equipo {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .proximo-partido-equipo img {
+    width: 52px;
+    height: 52px;
+  }
+
+  .proximo-partido-equipo strong {
+    font-size: 11px;
+  }
+
+  .proximo-partido-vs {
+    width: 44px;
+    height: 44px;
+    font-size: 19px;
+  }
+
+  .proximo-partido-detalles {
+    gap: 7px 14px;
+    font-size: 11px;
+  }
+}
+
+/* Presentación de equipos estilo MLB */
+.proximo-partido-equipos {
+  grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr);
+  gap: 14px;
+  margin: 10px 0;
+}
+
+.proximo-partido-equipo {
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+}
+
+.proximo-partido-equipo img {
+  width: 82px;
+  height: 82px;
+  padding: 8px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: radial-gradient(circle, #234a73, #06172e);
+  border: 2px solid #e9b84e;
+  box-shadow: 0 0 20px rgba(233, 184, 78, .22);
+}
+
+.proximo-partido-equipo strong {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+@media (max-width: 600px) {
+  .proximo-partido-equipos {
+    grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .proximo-partido-equipo img {
+    width: 66px;
+    height: 66px;
+    padding: 5px;
+  }
+
+  .proximo-partido-equipo strong {
+    font-size: 11px;
+  }
+}
+
+/* Diseño de enfrentamiento deportivo */
+.proximo-partido {
+  background:
+    radial-gradient(ellipse at 25% 50%, rgba(35, 110, 190, .45), transparent 48%),
+    radial-gradient(ellipse at 75% 50%, rgba(215, 47, 57, .24), transparent 48%),
+    linear-gradient(135deg, #030c1b, #12365a 48%, #030c1b);
+  border: 1px solid #f6bd49;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, .4),
+    inset 0 0 35px rgba(255, 255, 255, .04);
+}
+
+.proximo-partido::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(
+      115deg,
+      transparent 0 80px,
+      rgba(255, 255, 255, .045) 81px,
+      transparent 83px 160px
+    );
+  opacity: .7;
+}
+
+.proximo-partido::after {
+  content: "";
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  bottom: -48px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(64, 145, 225, .24);
+  filter: blur(35px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.proximo-partido-equipo img {
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, .06),
+    0 0 25px rgba(255, 194, 65, .3),
+    0 8px 20px rgba(0, 0, 0, .5);
+}
+
+.proximo-partido-vs {
+  width: 66px;
+  height: 66px;
+  border: none;
+  background: transparent;
+  color: #ffcb52;
+  font-size: 32px;
+  font-weight: 1000;
+  font-style: italic;
+  text-shadow:
+    0 2px 0 #8a4d08,
+    0 0 18px rgba(255, 193, 59, .7);
+  box-shadow: none;
+  transform: skew(-8deg);
+}
+
+.proximo-partido-encabezado {
+  position: relative;
+  z-index: 1;
+}
+
+.proximo-partido-detalles {
+  position: relative;
+  z-index: 1;
+  background: rgba(3, 12, 27, .3);
+  border-radius: 0 0 8px 8px;
+}
+
+@media (max-width: 600px) {
+  .proximo-partido-vs {
+    width: 45px;
+    height: 45px;
+    font-size: 25px;
+  }
+}
+
+/* Diseño de enfrentamiento deportivo */
+.proximo-partido {
+  background:
+    radial-gradient(ellipse at 25% 50%, rgba(35, 110, 190, .45), transparent 48%),
+    radial-gradient(ellipse at 75% 50%, rgba(215, 47, 57, .24), transparent 48%),
+    linear-gradient(135deg, #030c1b, #12365a 48%, #030c1b);
+  border: 1px solid #f6bd49;
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, .4),
+    inset 0 0 35px rgba(255, 255, 255, .04);
+}
+
+.proximo-partido::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(
+      115deg,
+      transparent 0 80px,
+      rgba(255, 255, 255, .045) 81px,
+      transparent 83px 160px
+    );
+  opacity: .7;
+}
+
+.proximo-partido::after {
+  content: "";
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  bottom: -48px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(64, 145, 225, .24);
+  filter: blur(35px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.proximo-partido-equipo img {
+  box-shadow:
+    0 0 0 4px rgba(255, 255, 255, .06),
+    0 0 25px rgba(255, 194, 65, .3),
+    0 8px 20px rgba(0, 0, 0, .5);
+}
+
+.proximo-partido-vs {
+  width: 66px;
+  height: 66px;
+  border: none;
+  background: transparent;
+  color: #ffcb52;
+  font-size: 32px;
+  font-weight: 1000;
+  font-style: italic;
+  text-shadow:
+    0 2px 0 #8a4d08,
+    0 0 18px rgba(255, 193, 59, .7);
+  box-shadow: none;
+  transform: skew(-8deg);
+}
+
+.proximo-partido-encabezado {
+  position: relative;
+  z-index: 1;
+}
+
+.proximo-partido-detalles {
+  position: relative;
+  z-index: 1;
+  background: rgba(3, 12, 27, .3);
+  border-radius: 0 0 8px 8px;
+}
+
+@media (max-width: 600px) {
+  .proximo-partido-vs {
+    width: 45px;
+    height: 45px;
+    font-size: 25px;
+  }
+}
+
+/* Enfrentamiento MLB: Generales dorado vs rival rojo */
+.proximo-partido {
+  background:
+    linear-gradient(
+      112deg,
+      #674108 0%,
+      #c58c1e 34%,
+      #81530c 47%,
+      #07172d 49%,
+      #07172d 51%,
+      #75101e 53%,
+      #b91e30 76%,
+      #530b18 100%
+    );
+  border: 1px solid #f4c45b;
+}
+
+.proximo-partido::before {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.25),
+      transparent 35%,
+      rgba(0,0,0,.55) 50%,
+      transparent 65%,
+      rgba(0,0,0,.3)
+    ),
+    repeating-linear-gradient(
+      115deg,
+      transparent 0 65px,
+      rgba(255,255,255,.08) 66px,
+      transparent 68px 130px
+    );
+  opacity: 1;
+}
+
+.proximo-partido-equipo strong {
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0,0,0,.8);
+}
+
+.proximo-partido-vs {
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+  text-shadow:
+    0 3px 0 #07172d,
+    0 0 18px #ffcf62;
+}
+
+.proximo-partido-detalles {
+  background: rgba(3,12,27,.55);
+  padding: 10px 8px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 8px;
+}
+
+
+/* Escudos grandes sin marcos circulares */
+.proximo-partido-equipo img {
+  width: 112px;
+  height: 112px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 9px rgba(0,0,0,.5));
+}
+
+.proximo-partido-equipo {
+  gap: 3px;
+}
+
+@media (max-width: 600px) {
+  .proximo-partido-equipo img {
+    width: 82px;
+    height: 82px;
+  }
+}
+
+/* Fondo oficial Generales azul vs rival rojo */
+.proximo-partido {
+  background:
+    radial-gradient(
+      ellipse at 22% 45%,
+      rgba(35, 135, 255, 0.65),
+      transparent 43%
+    ),
+    linear-gradient(
+      112deg,
+      #041b45 0%,
+      #0755b5 32%,
+      #032c70 47%,
+      #020d22 49%,
+      #020d22 51%,
+      #75101e 53%,
+      #b91e30 76%,
+      #530b18 100%
+    );
+  border: 1px solid #3d9bff;
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.35),
+    0 0 18px rgba(0, 105, 255, 0.12);
+}
+
+.proximo-partido-encabezado {
+  color: #ffffff;
+}
