@@ -3,6 +3,31 @@ import { supabase } from './supabase'
 import './ProximoPartido.css'
 import logoGenerales3D from './public/logo-generales-3d.png'
 
+
+function formatoFecha(valor) {
+  if (!valor) return 'FECHA POR CONFIRMAR'
+
+  const fecha = new Date(`${valor.slice(0, 10)}T12:00:00Z`)
+  if (Number.isNaN(fecha.getTime())) return valor
+
+  return new Intl.DateTimeFormat('es-PA', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+    timeZone: 'UTC'
+  }).format(fecha).replace(/\./g, '').toUpperCase()
+}
+
+function formatoHora(valor) {
+  if (!valor || !/^\d{1,2}:\d{2}/.test(valor)) {
+    return valor || 'Hora por confirmar'
+  }
+
+  const [horas, minutos] = valor.split(':').map(Number)
+  const periodo = horas < 12 ? 'a. m.' : 'p. m.'
+  return `${horas % 12 || 12}:${String(minutos).padStart(2, '0')} ${periodo}`
+}
+
 export default function ProximoPartido() {
   const [partido, setPartido] = useState(null)
 
@@ -76,7 +101,7 @@ export default function ProximoPartido() {
       <div className="proximo-partido-encabezado">
         <span>⚾ PRÓXIMO PARTIDO</span>
         <span className="proximo-partido-fecha">
-          {partido.juego_fecha}
+          {formatoFecha(partido.juego_fecha)}
         </span>
       </div>
 
@@ -97,7 +122,7 @@ export default function ProximoPartido() {
       </div>
 
       <div className="proximo-partido-detalles">
-        <span>🕒 {partido.juego_hora}</span>
+        <span>🕒 {formatoHora(partido.juego_hora)}</span>
         <span>📍 {partido.juego_lugar}</span>
       </div>
     </section>
