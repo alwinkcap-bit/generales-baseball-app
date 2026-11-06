@@ -1,0 +1,50 @@
+.cintillo-practicas {
+  max-width: 900px;
+  margin: 10px auto 18px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: 12px;
+  background: linear-gradient(110deg, #06172f, #104b91);
+  border: 1px solid #327bc1;
+  box-shadow: 0 5px 16px rgba(0,0,0,.22);
+  color: white;
+}
+
+.cintillo-practicas-icono {
+  font-size: 27px;
+}
+
+.cintillo-practicas-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cintillo-practicas-info strong {
+  font-size: 12px;
+  color: #f4c451;
+  letter-spacing: 1px;
+}
+
+.cintillo-practicas-info span {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.cintillo-practicas-info small {
+  font-size: 12px;
+  color: #c5d9ef;
+}
+
+@media (max-width: 600px) {
+  .cintillo-practicas {
+    margin: 8px 10px 14px;
+    padding: 10px 12px;
+  }
+
+  .cintillo-practicas-info span {
+    font-size: 12px;
+  }
+}

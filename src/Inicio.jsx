@@ -4,7 +4,7 @@ import gbImagenJuegos from "./public/beisbol-juegos.avif"
 import gbImagenPartidos from "./public/beisbol-estadio.jpeg"
 import ComunidadJuegos from './ComunidadJuegos'
 import { estiloPortada } from './EditorPortada'
-import AnalisisTecnico from './AnalisisTecnico'
+
 import VideosCintillo from './VideosCintillo'
 
 
@@ -27,6 +27,8 @@ import ScoreboardGenerales from './ScoreboardGenerales'
 import CentroPartidos from './CentroPartidos'
 import PartidosPublicos from './PartidosPublicos'
 import AgendaAcademia from './AgendaAcademia'
+import ProximoPartido from './ProximoPartido'
+import CintilloPracticas from './CintilloPracticas'
 import EstadisticasVisitas from './EstadisticasVisitas'
 import ClasesVirtuales from './ClasesVirtuales'
 import InstalarApp from './InstalarApp'
@@ -533,7 +535,11 @@ const responderReto = (opcionElegida) => {
         </section>
 
         
+        <ProximoPartido />
+        <CintilloPracticas />
         <Patrocinadores isAdmin={isAdmin} />
+
+
 
 <section className="inicio-inscripcion-destacada" aria-label="Inscripciones">
           <button
@@ -779,7 +785,7 @@ const responderReto = (opcionElegida) => {
           />
         )}
 
-        <AnalisisTecnico />
+        
         <EstadisticasVisitas isAdmin={isAdmin} />
 
         
