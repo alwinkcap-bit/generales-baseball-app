@@ -21,11 +21,17 @@ const fecha = new Date(`${valor.trim()}T12:00:00Z`)
 }
 
 function formatoHora(valor) {
-  if (!valor || !/^\d{1,2}:\d{2}/.test(valor)) {
-    return valor || 'Hora por confirmar'
+  if (!valor) {
+    return 'Hora por confirmar'
   }
 
-  const [horas, minutos] = valor.split(':').map(Number)
+  const hora = String(valor).trim()
+
+  if (!/^\d{1,2}:\d{2}(?::\d{2})?$/.test(hora)) {
+    return hora
+  }
+
+  const [horas, minutos] = hora.split(':').map(Number)
   const periodo = horas < 12 ? 'a. m.' : 'p. m.'
   return `${horas % 12 || 12}:${String(minutos).padStart(2, '0')} ${periodo}`
 }
