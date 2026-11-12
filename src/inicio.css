@@ -8108,3 +8108,152 @@ button.inicio-juegos-cintillo > b {
   .inicio-hero-imagen { height: 100% !important; }
   .inicio-foto-equipo { height: 100% !important; min-height: 0 !important; object-fit: cover !important; }
 }
+
+/* AJUSTE FINAL PORTADA MOVIL Y FANTASY */
+@media (max-width: 520px) {
+  .inicio-hero {
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 1 / 1 !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .inicio-hero-imagen {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .inicio-foto-equipo {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .inicio-hero-contenido .inicio-acciones {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 5px !important;
+  }
+
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    width: 145px !important;
+    height: 48px !important;
+    min-height: 0 !important;
+    aspect-ratio: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    align-self: flex-start !important;
+    transform: none !important;
+  }
+
+  .inicio-hero-contenido .fantasy-banner-imagen {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+}
+
+/* PORTADA MOVIL - PROPORCION Y FANTASY */
+@media (max-width: 520px) {
+  .inicio-hero {
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 1.18 / 1 !important;
+  }
+
+  .inicio-hero-contenido {
+    bottom: 18px !important;
+  }
+
+  .inicio-hero-contenido .inicio-acciones {
+    gap: 4px !important;
+  }
+
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    width: 135px !important;
+    height: 43px !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+}
+
+/* CENTRAR FANTASY DEBAJO DE EXPLORAR JUEGOS */
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones {
+    align-items: flex-start !important;
+    gap: 0 !important;
+  }
+
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    width: 135px !important;
+    height: 38px !important;
+    margin: -2px 0 0 0 !important;
+    align-self: flex-start !important;
+    transform: translateX(-5px) !important;
+  }
+}
+
+/* AJUSTE DE ESPACIO ENTRE BOTONES MOVIL */
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    margin-top: -24px !important;
+    transform: translateX(-5px) !important;
+  }
+}
+
+/* ALINEACION FINA FANTASY MOVIL */
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    margin-top: -30px !important;
+    transform: translateX(-15px) !important;
+  }
+}
+
+/* AJUSTE HORIZONTAL FINAL FANTASY */
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    transform: translateX(-25px) !important;
+  }
+}
+
+/* FANTASY - AJUSTE HORIZONTAL */
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    transform: translateX(-35px) !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    transform: translateX(-43px) !important;
+  }
+}
+
+/* PORTADA MOVIL - REDUCIR ALTURA SIN MOVER FANTASY */
+@media (max-width: 520px) {
+  .inicio-hero {
+    aspect-ratio: 1.35 / 1 !important;
+    min-height: 0 !important;
+  }
+
+  .inicio-foto-equipo {
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+}
+
+/* PORTADA MOVIL - PROPORCION MAS COMPACTA */
+@media (max-width: 520px) {
+  .inicio-hero {
+    aspect-ratio: 1.5 / 1 !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+}
