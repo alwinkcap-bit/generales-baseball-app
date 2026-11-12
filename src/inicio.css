@@ -7621,3 +7621,483 @@ button.inicio-juegos-cintillo > b {
   }
 }
 /* FIN GB ACCESOS PROFESIONALES */
+
+/* ACCESOS PRINCIPALES - GENERALES Y FANTASY 2027 */
+.inicio-hero {
+  min-height: 650px;
+}
+
+.inicio-hero-contenido {
+  width: min(430px, calc(100% - 40px));
+  bottom: 35px;
+}
+
+.inicio-hero-contenido .inicio-acciones {
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.inicio-hero-contenido .inicio-acciones .inicio-boton {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  min-height: 110px;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(255, 207, 71, .5), transparent 35%),
+    linear-gradient(135deg, #83091c, #cf1835 55%, #102c69);
+  border: 2px solid #ffd45a;
+}
+
+@media (max-width: 820px) {
+  .inicio-hero {
+    min-height: 650px;
+  }
+
+  .inicio-hero-contenido {
+    right: 20px;
+    bottom: 28px;
+    width: calc(100% - 40px);
+    text-align: center;
+  }
+
+  .inicio-hero-contenido > p {
+    font-size: clamp(1.8rem, 7vw, 3rem);
+  }
+}
+
+/* FANTASY 2027 - MISMAS DIMENSIONES QUE EXPLORAR JUEGOS */
+.inicio-hero-contenido .inicio-acciones {
+  align-items: flex-start !important;
+  gap: 10px !important;
+}
+
+.inicio-hero-contenido .inicio-acciones .inicio-boton.dorado,
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  width: 300px !important;
+  max-width: 100% !important;
+  height: 58px !important;
+  min-height: 58px !important;
+  padding: 8px 12px !important;
+  box-sizing: border-box;
+  border-radius: 30px !important;
+}
+
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  gap: 2px;
+  background: linear-gradient(135deg, #a50020, #e32638 55%, #871025);
+  border: 2px solid #ffd45a;
+}
+
+.inicio-hero-contenido .fantasy-directo span {
+  font-size: 16px !important;
+  line-height: 1.15;
+}
+
+.inicio-hero-contenido .fantasy-directo small {
+  font-size: 9px !important;
+  letter-spacing: 0;
+}
+
+@media (max-width: 820px) {
+  .inicio-hero-contenido .inicio-acciones {
+    align-items: center !important;
+  }
+
+  .inicio-hero {
+    min-height: 700px;
+  }
+}
+
+
+/* FANTASY GENERALES 2027 - BOTÓN COMPACTO */
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  width: 300px !important;
+  height: 58px !important;
+  min-height: 58px !important;
+  padding: 8px 14px !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background: linear-gradient(135deg, #a00020, #e32638, #9c0926) !important;
+  border: 2px solid #ffd45a !important;
+  border-radius: 30px !important;
+}
+
+.inicio-hero-contenido .fantasy-directo span {
+  font-size: 17px !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+  white-space: nowrap;
+}
+
+.inicio-hero-contenido .fantasy-directo small {
+  display: none !important;
+}
+
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    width: min(300px, 100%) !important;
+  }
+
+  .inicio-hero-contenido .fantasy-directo span {
+    font-size: clamp(12px, 4vw, 17px) !important;
+  }
+}
+
+/* CORRECCIÓN FINAL DEL TEXTO FANTASY */
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  width: 300px !important;
+  max-width: 100% !important;
+  height: 58px !important;
+  min-height: 58px !important;
+  padding: 6px 12px !important;
+  overflow: hidden;
+}
+
+.inicio-hero-contenido .fantasy-directo span {
+  display: block;
+  width: 100%;
+  font-size: 15px !important;
+  line-height: 1.2 !important;
+  white-space: normal !important;
+  text-align: center;
+  overflow-wrap: normal;
+}
+
+@media (max-width: 520px) {
+  .inicio-hero-contenido .fantasy-directo span {
+    font-size: 14px !important;
+  }
+}
+
+/* FANTASY GENERALES 2028 - BOTÓN CON IMAGEN */
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  width: 300px !important;
+  max-width: 100% !important;
+  height: 90px !important;
+  min-height: 90px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 18px !important;
+  background-image: url('/generales-baseball-app/fantasy-generales-2028.png') !important;
+  background-repeat: no-repeat !important;
+  background-size: 100% auto !important;
+  background-position: center bottom !important;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .45);
+}
+
+.inicio-hero-contenido .fantasy-directo span,
+.inicio-hero-contenido .fantasy-directo small {
+  display: none !important;
+}
+
+.inicio-hero-contenido .fantasy-directo:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.12);
+}
+
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    width: min(300px, 100%) !important;
+  }
+}
+
+
+/* RECUPERAR BOTÓN FANTASY 2028 */
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  width: 300px !important;
+  max-width: 100% !important;
+  height: 58px !important;
+  min-height: 58px !important;
+  padding: 8px 12px !important;
+  border: 2px solid #ffd45a !important;
+  border-radius: 30px !important;
+  background: linear-gradient(135deg, #850019, #d91c35, #102c69) !important;
+  box-shadow: 0 6px 18px rgba(0,0,0,.4);
+  overflow: hidden;
+}
+
+.inicio-hero-contenido .fantasy-directo span {
+  display: block !important;
+  width: 100%;
+  color: #fff;
+  font-size: 15px !important;
+  font-weight: 900;
+  line-height: 1.2;
+  white-space: normal !important;
+  text-align: center;
+}
+
+.inicio-hero-contenido .fantasy-directo small {
+  display: none !important;
+}
+
+/* FANTASY GENERALES 2028 - BANNER DEFINITIVO */
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  display: block !important;
+  width: 340px !important;
+  max-width: 100% !important;
+  height: 105px !important;
+  min-height: 105px !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 20px !important;
+
+  background-image: url('/generales-baseball-app/fantasy-generales-2028-banner.png') !important;
+  background-color: transparent !important;
+  background-size: contain !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+
+  box-shadow: none !important;
+  cursor: pointer;
+  transition: transform .2s ease, filter .2s ease;
+}
+
+.inicio-hero-contenido .fantasy-directo span,
+.inicio-hero-contenido .fantasy-directo small {
+  display: none !important;
+}
+
+.inicio-hero-contenido .fantasy-directo:hover {
+  transform: scale(1.04);
+  filter: brightness(1.15);
+}
+
+.inicio-hero-contenido .fantasy-directo:focus-visible {
+  outline: 3px solid #ffd45a;
+  outline-offset: 3px;
+}
+
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    width: min(340px, 100%) !important;
+    height: 100px !important;
+    min-height: 100px !important;
+  }
+}
+
+/* MOSTRAR IMAGEN DEL BOTÓN FANTASY 2028 */
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  display: flex !important;
+  width: 340px !important;
+  max-width: 100% !important;
+  height: 105px !important;
+  min-height: 105px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  overflow: visible !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.inicio-hero-contenido .fantasy-banner-imagen {
+  display: block !important;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 340 / 105;
+  }
+}
+
+/* FANTASY 2028 - TAMAÑO DESTACADO */
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  width: 380px !important;
+  max-width: 100% !important;
+  height: 120px !important;
+  min-height: 120px !important;
+  margin-top: -8px;
+}
+
+.inicio-hero-contenido .fantasy-banner-imagen {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 3.2 / 1;
+  }
+}
+
+/* FANTASY 2028 - TAMAÑO DESTACADO */
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  width: 380px !important;
+  max-width: 100% !important;
+  height: 120px !important;
+  min-height: 120px !important;
+  margin-top: -8px;
+}
+
+.inicio-hero-contenido .fantasy-banner-imagen {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 3.2 / 1;
+  }
+}
+
+/* FANTASY GENERALES 2028 - AJUSTE DE PROPORCIONES */
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  width: 400px !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 3 / 1 !important;
+  margin-top: 0 !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+  background: transparent !important;
+}
+
+.inicio-hero-contenido .fantasy-banner-imagen {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: fill !important;
+}
+
+.inicio-hero-contenido {
+  bottom: 48px !important;
+}
+
+@media (max-width: 820px) {
+  .inicio-hero-contenido {
+    bottom: 35px !important;
+  }
+}
+
+/* FANTASY 2028 - AMPLIACIÓN VISUAL */
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  width: 400px !important;
+  max-width: none !important;
+  height: 125px !important;
+  min-height: 125px !important;
+  aspect-ratio: auto !important;
+  margin: -8px 0 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.inicio-hero-contenido .fantasy-banner-imagen {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: fill !important;
+}
+
+@media (max-width: 820px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    width: min(400px, 100%) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 3.2 / 1 !important;
+  }
+}
+
+/* FANTASY 2028 - EVITAR RECORTE INFERIOR */
+.inicio-hero {
+  min-height: 720px !important;
+}
+
+.inicio-hero-contenido {
+  bottom: 75px !important;
+}
+
+.inicio-hero-contenido .inicio-acciones {
+  gap: 12px !important;
+}
+
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  width: 400px !important;
+  height: 125px !important;
+  min-height: 125px !important;
+  margin-top: 0 !important;
+}
+
+.inicio-hero-contenido .fantasy-banner-imagen {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+@media (max-width: 820px) {
+  .inicio-hero {
+    min-height: 720px !important;
+  }
+
+  .inicio-hero-contenido {
+    bottom: 55px !important;
+  }
+
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    width: min(400px, 100%) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 3.2 / 1 !important;
+  }
+}
+
+/* FANTASY GENERALES 2028 - ALINEACIÓN FINAL */
+.inicio-hero-contenido .inicio-acciones {
+  align-items: flex-start !important;
+}
+
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  align-self: flex-start !important;
+  margin-top: -18px !important;
+  margin-left: 0 !important;
+  transform: translateY(-12px);
+}
+
+.inicio-hero-contenido .inicio-acciones .fantasy-directo:hover {
+  transform: translateY(-15px) scale(1.03);
+}
+
+@media (max-width: 820px) {
+  .inicio-hero-contenido .inicio-acciones {
+    align-items: flex-start !important;
+  }
+
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    margin-left: 0 !important;
+  }
+}
+
+/* FANTASY 2028 - CENTRADO BAJO EXPLORAR JUEGOS */
+.inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  margin-left: -50px !important;
+}
+
+@media (max-width: 820px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    margin-left: 0 !important;
+    align-self: center !important;
+  }
+}

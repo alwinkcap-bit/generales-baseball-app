@@ -44,7 +44,7 @@ export default function ProximoPartido() {
 
       const { data, error } = await supabase
         .from('partidos')
-        .select('id,fecha,hora,equipo_visitante,equipo_local,estadio,estado')
+        .select('id,fecha,hora,equipo_visitante,equipo_local,estadio,estado,logo_rival')
         .gte('fecha', hoy)
         .order('fecha', { ascending: true })
         .order('hora', { ascending: true })
@@ -63,29 +63,16 @@ export default function ProximoPartido() {
 
       if (!siguiente || !activo) return
 
-      const { data: agenda } = await supabase
-        .from('agenda_academia')
-        .select('juego_rival,logo_rival')
-        .eq('id', 1)
-        .maybeSingle()
-
-      if (!activo) return
-
       const rival = /generales/i.test(siguiente.equipo_local || '')
         ? siguiente.equipo_visitante
         : siguiente.equipo_local
-
-      const logoRival =
-        agenda?.juego_rival?.trim().toLowerCase() === rival?.trim().toLowerCase()
-          ? agenda.logo_rival
-          : null
 
       setPartido({
         juego_fecha: siguiente.fecha,
         juego_hora: siguiente.hora?.slice(0, 5) || 'Por confirmar',
         juego_rival: rival || 'Por confirmar',
         juego_lugar: siguiente.estadio || 'Por confirmar',
-        logo_rival: logoRival
+        logo_rival: siguiente.logo_rival || null
       })
     }
 
@@ -107,7 +94,7 @@ export default function ProximoPartido() {
 
       <div className="proximo-partido-equipos">
         <div className="proximo-partido-equipo">
-          <img src={logoGenerales3D} alt="Generales de Chitré" />
+          <img src={`${import.meta.env.BASE_URL}logo-generales-nuevo.png`} alt="Generales de Chitré" />
           <strong>GENERALES</strong>
         </div>
 

@@ -1,3 +1,4 @@
+import AdminPeloterosSoftbol from './FantasyGenerales/AdminPeloterosSoftbol';
 import './AdminJugador.css'
 import AjustePortadaSubida from './AjustePortadaSubida'
 import EditorPortada, { estiloPortada } from './EditorPortada'
@@ -1077,6 +1078,10 @@ if (vista === 'pagos-admin' && isAdmin) {
   return <ControlPagos onVolver={() => setVista('admin')} />
 }
 
+if (vista === 'softbol-admin' && isAdmin) {
+  return <AdminPeloterosSoftbol onVolver={() => setVista('admin')} />;
+}
+
 if (vista === 'entrenadores-admin' && isAdmin) {
   return (
     <EntrenadoresAdmin
@@ -1199,6 +1204,16 @@ if (vista === 'inicio') {
   >
     <span className="acceso-icono">⚾</span>
     <span>Perfiles de entrenadores</span>
+  </button>
+)}
+{isAdmin && (
+  <button
+    type="button"
+    className="ghost"
+    onClick={() => setVista('softbol-admin')}
+  >
+    <span className="acceso-icono">🥎</span>
+    <span>Peloteros Sóftbol 2027</span>
   </button>
 )}
 {isAdmin && (

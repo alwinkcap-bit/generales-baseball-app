@@ -6,6 +6,7 @@ const formularioInicial = {
   fecha: '',
   hora: '',
   equipo_visitante: '',
+  logo_rival: '',
   equipo_local: 'Generales',
   categoria: '',
   estadio: 'Estadio Pepe Osorio',
@@ -108,6 +109,7 @@ export default function CentroPartidos({ onCerrar }) {
         .update(datos)
         .eq('id', editandoId)
         .eq('creado_por', user.id)
+        .select('id,logo_rival')
     } else {
       resultado = await supabase
         .from('partidos')
@@ -115,6 +117,12 @@ export default function CentroPartidos({ onCerrar }) {
           ...datos,
           creado_por: user.id
         })
+    }
+
+    if (editandoId && !resultado.error && !resultado.data?.length) {
+      setMensaje('No se actualizó el partido. Verifica que pertenezca a tu cuenta administradora.')
+      setGuardando(false)
+      return
     }
 
     if (resultado.error) {
@@ -139,6 +147,7 @@ export default function CentroPartidos({ onCerrar }) {
       fecha: partido.fecha || '',
       hora: partido.hora?.slice(0, 5) || '',
       equipo_visitante: partido.equipo_visitante || '',
+      logo_rival: partido.logo_rival || '',
       equipo_local: partido.equipo_local || 'Generales',
       categoria: partido.categoria || '',
       estadio: partido.estadio || '',
@@ -225,6 +234,66 @@ export default function CentroPartidos({ onCerrar }) {
               onChange={actualizarCampo}
               placeholder="Nombre del rival"
               required
+            />
+          </label>
+
+          <label>
+            Escudo del equipo rival
+            <input
+              type="file"
+              accept="image/png,image/jpeg,image/webp"
+              onChange={async (evento) => {
+                const archivo = evento.target.files?.[0]
+                evento.target.value = ''
+                if (!archivo) return
+
+                if (!['image/png', 'image/jpeg', 'image/webp'].includes(archivo.type)) {
+                  setMensaje('Selecciona una imagen PNG, JPG o WebP.')
+                  return
+                }
+
+                if (archivo.size > 5 * 1024 * 1024) {
+                  setMensaje('La imagen debe pesar menos de 5 MB.')
+                  return
+                }
+
+                const url = URL.createObjectURL(archivo)
+
+                try {
+                  const imagen = new Image()
+                  await new Promise((resolve, reject) => {
+                    imagen.onload = resolve
+                    imagen.onerror = () => reject(new Error('No se pudo leer la imagen.'))
+                    imagen.src = url
+                  })
+
+                  const escala = Math.min(
+                    1,
+                    256 / Math.max(imagen.naturalWidth, imagen.naturalHeight)
+                  )
+
+                  const canvas = document.createElement('canvas')
+                  canvas.width = Math.max(1, Math.round(imagen.naturalWidth * escala))
+                  canvas.height = Math.max(1, Math.round(imagen.naturalHeight * escala))
+
+                  const contexto = canvas.getContext('2d')
+                  if (!contexto) throw new Error('No se pudo procesar la imagen.')
+
+                  contexto.drawImage(imagen, 0, 0, canvas.width, canvas.height)
+                  const logo = canvas.toDataURL('image/png')
+
+                  setFormulario(actual => ({
+                    ...actual,
+                    logo_rival: logo
+                  }))
+
+                  setMensaje('✅ Escudo preparado. Guarda el partido para conservarlo.')
+                } catch (error) {
+                  setMensaje(error.message)
+                } finally {
+                  URL.revokeObjectURL(url)
+                }
+              }}
             />
           </label>
 

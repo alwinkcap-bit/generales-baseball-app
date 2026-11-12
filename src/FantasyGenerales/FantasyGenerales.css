@@ -1,0 +1,1408 @@
+.fantasy-generales{min-height:100dvh;background:linear-gradient(160deg,#06182e,#12375a);color:#fff;padding:22px 16px 40px;font-family:Arial,sans-serif;box-sizing:border-box;text-align:center}
+.fantasy-generales *{box-sizing:border-box}
+.fantasy-volver,.fantasy-regresar{display:block;background:transparent;color:#fff;border:0;font-weight:700;padding:10px;cursor:pointer}
+.fantasy-encabezado{padding:18px 0 25px}
+.fantasy-etiqueta{display:inline-block;color:#f2c14e;border:1px solid #f2c14e;border-radius:20px;padding:5px 12px;font-size:12px;font-weight:bold}
+.fantasy-encabezado h1{font-size:clamp(25px,6vw,38px);margin:16px 0 8px;color:#f2c14e}
+.fantasy-encabezado p{color:#d5e3f2}
+.fantasy-generales h2{font-size:20px;margin:16px 0}
+.fantasy-campeonatos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:920px;margin:25px auto}
+.fantasy-campeonato{background:linear-gradient(155deg,#204c79,#0a233d);border:2px solid #bd8f30;border-radius:16px;padding:25px 12px;color:#fff;display:flex;flex-direction:column;align-items:center;gap:12px;cursor:pointer;min-height:225px}
+.fantasy-campeonato strong{font-size:17px}
+.fantasy-campeonato small{color:#c5d6e8;line-height:1.4}
+.fantasy-icono{font-size:44px}
+.fantasy-entrar{color:#f2c14e;font-weight:bold;margin-top:auto}
+.fantasy-panel{max-width:500px;margin:0 auto;background:#102e4e;border:1px solid #b98b2f;border-radius:18px;padding:20px}
+.fantasy-panel label{display:block;text-align:left;font-size:12px;font-weight:bold;margin:20px 0 8px}
+.fantasy-panel input{width:100%;padding:13px;border-radius:9px;border:1px solid #7c9ab8;font-size:16px;background:#fff;color:#10233d}
+.fantasy-guardar{width:100%;background:#f2c14e;border:0;border-radius:10px;padding:14px;font-weight:800;margin-top:15px;cursor:pointer}
+.fantasy-guardar:disabled{opacity:.5;cursor:not-allowed}
+.fantasy-exito{color:#8ee6b1}
+.fantasy-progreso{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #53718d;margin-top:22px;padding-top:18px}
+.fantasy-aviso{color:#c5d6e8;font-size:13px}
+@media(max-width:650px){.fantasy-campeonatos{grid-template-columns:1fr;max-width:380px;gap:12px}.fantasy-campeonato{min-height:135px;padding:15px}.fantasy-icono{font-size:34px}}
+
+/* Fantasy Generales: pantalla completa por encima de Inicio */
+.fantasy-generales {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100dvh !important;
+  min-height: 100dvh !important;
+  z-index: 2147483647 !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+}
+
+body:has(.fantasy-generales) {
+  overflow: hidden;
+}
+
+/* Distribucion de campeonatos */
+.fantasy-generales .fantasy-campeonatos {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  width: min(100%, 900px) !important;
+  max-width: 900px !important;
+  gap: 18px !important;
+  margin: 22px auto !important;
+}
+.fantasy-generales .fantasy-campeonato {
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 220px !important;
+  padding: 20px 12px !important;
+}
+.fantasy-generales .fantasy-campeonato strong {
+  font-size: 17px !important;
+}
+.fantasy-generales .fantasy-campeonato small {
+  font-size: 12px !important;
+}
+body:has(.fantasy-generales) nav {
+  visibility: hidden !important;
+}
+@media (max-width: 650px) {
+  .fantasy-generales .fantasy-campeonatos {
+    grid-template-columns: 1fr !important;
+    max-width: 380px !important;
+    gap: 12px !important;
+  }
+  .fantasy-generales .fantasy-campeonato {
+    min-height: 135px !important;
+    padding: 14px !important;
+  }
+}
+
+/* Alineacion Fantasy compacta */
+.fantasy-generales .fantasy-alineacion {
+  margin-top: 18px;
+  text-align: left;
+}
+.fantasy-generales .fantasy-alineacion h3 {
+  text-align: center;
+  font-size: 17px;
+  margin: 12px 0 18px;
+}
+.fantasy-generales .fantasy-posicion {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 12px !important;
+  width: 100% !important;
+  min-height: 58px !important;
+  padding: 9px 12px !important;
+  margin-bottom: 7px !important;
+  background: #193e63 !important;
+  border: 1px solid #446587 !important;
+  border-radius: 10px !important;
+  text-align: left !important;
+}
+.fantasy-generales .fantasy-posicion-codigo {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 46px;
+  height: 38px;
+  background: #092640;
+  border-radius: 8px;
+  color: #f2c14e;
+  font-size: 15px !important;
+  font-weight: 800;
+}
+.fantasy-generales .fantasy-posicion-nombre {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px !important;
+  font-weight: 700;
+}
+.fantasy-generales .fantasy-posicion-vacia {
+  font-size: 12px !important;
+  color: #a9c3dc;
+  white-space: nowrap;
+}
+
+/* FANTASY GENERALES 2028 - TARJETAS PREMIUM */
+.fantasy-campeonatos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  max-width: 1180px;
+  margin: 28px auto;
+}
+
+.fantasy-campeonato {
+  position: relative;
+  isolation: isolate;
+  min-height: 230px;
+  padding: 25px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  overflow: hidden;
+  border: 2px solid #ffc43b;
+  border-radius: 22px;
+  color: white;
+  background: linear-gradient(135deg, #174d91, #071a3c);
+  box-shadow: 0 12px 30px rgba(0,0,0,.35);
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.fantasy-campeonato:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px rgba(255,190,40,.25);
+}
+
+.fantasy-campeonato-juvenil {
+  background: linear-gradient(135deg, #1763b9, #071638);
+}
+
+.fantasy-campeonato-mayor {
+  background: linear-gradient(135deg, #bc1731, #42091c);
+}
+
+.fantasy-campeonato-mlb {
+  background: linear-gradient(135deg, #17468a, #081b3d);
+}
+
+.fantasy-campeonato-softbol-veteranos {
+  grid-column: 2;
+  background: linear-gradient(135deg, #173f8b, #07142c);
+}
+
+.fantasy-campeonato .fantasy-icono {
+  font-size: 2.4rem;
+}
+
+.fantasy-campeonato strong {
+  color: #ffd04b;
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.fantasy-campeonato small {
+  color: #fff;
+  font-size: .85rem;
+  line-height: 1.4;
+}
+
+.fantasy-campeonato .fantasy-entrar {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 155px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  color: #08152c;
+  background: linear-gradient(180deg, #ffe56b, #f3ad16);
+  font-weight: 950;
+  box-shadow: 0 5px 15px rgba(0,0,0,.3);
+}
+
+@media (max-width: 800px) {
+  .fantasy-campeonatos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 0 12px;
+  }
+
+  .fantasy-campeonato-softbol-veteranos {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .fantasy-campeonatos {
+    grid-template-columns: 1fr;
+  }
+
+  .fantasy-campeonato {
+    min-height: 200px;
+  }
+}
+
+/* FANTASY GENERALES 2028 - IMÁGENES INDIVIDUALES */
+.fantasy-campeonatos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 1100px;
+  gap: 22px;
+}
+
+.fantasy-campeonatos .fantasy-campeonato {
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid #ffc43b;
+  border-radius: 20px;
+  background: #071a2f !important;
+}
+
+.fantasy-campeonatos .fantasy-tarjeta-imagen {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.fantasy-campeonatos .fantasy-campeonato > :not(.fantasy-tarjeta-imagen) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.fantasy-campeonato-softbol-veteranos {
+  grid-column: auto;
+}
+
+@media (max-width: 650px) {
+  .fantasy-campeonatos {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 0 12px;
+  }
+}
+
+/* FANTASY GENERALES 2028 - DISTRIBUCIÓN 2 X 2 */
+.fantasy-campeonatos {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  width: min(1000px, calc(100% - 32px)) !important;
+  max-width: 1000px !important;
+  gap: 22px !important;
+  margin: 30px auto !important;
+}
+
+.fantasy-campeonatos .fantasy-campeonato {
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  min-height: 0 !important;
+}
+
+.fantasy-campeonatos .fantasy-tarjeta-imagen {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: fill !important;
+}
+
+.fantasy-campeonatos .fantasy-campeonato-softbol-veteranos {
+  grid-column: auto !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-campeonatos {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+}
+
+/* FANTASY GENERALES 2028 - TARJETAS GRANDES SIN DOBLE MARCO */
+
+.fantasy-campeonatos {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  width: min(1200px, calc(100% - 32px)) !important;
+  max-width: 1200px !important;
+  gap: 20px !important;
+  margin: 30px auto !important;
+}
+
+.fantasy-campeonatos .fantasy-campeonato {
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 18px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+
+.fantasy-campeonatos .fantasy-tarjeta-imagen {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: fill !important;
+  border: none !important;
+  border-radius: 18px !important;
+}
+
+.fantasy-campeonatos .fantasy-campeonato:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(243,184,59,.2) !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-campeonatos {
+    grid-template-columns: 1fr !important;
+    width: calc(100% - 24px) !important;
+    gap: 14px !important;
+  }
+}
+
+/* FANTASY GENERALES 2028 - FONDO ESTADIO PREMIUM */
+.fantasy-generales {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 15% 15%,
+      rgba(0, 100, 220, 0.30),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse at 85% 20%,
+      rgba(190, 20, 45, 0.22),
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 50% 95%,
+      rgba(243, 184, 59, 0.12),
+      transparent 55%
+    ),
+    linear-gradient(
+      160deg,
+      #041326 0%,
+      #0b2c51 48%,
+      #05152c 100%
+    ) !important;
+}
+
+.fantasy-generales::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      115deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.045) 45%,
+      transparent 65%
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 110px,
+      rgba(255, 255, 255, 0.015) 111px 112px
+    );
+}
+
+.fantasy-generales::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  bottom: -240px;
+  width: 950px;
+  height: 430px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse,
+    rgba(243, 184, 59, 0.16),
+    transparent 70%
+  );
+  filter: blur(35px);
+}
+
+.fantasy-encabezado {
+  position: relative;
+  z-index: 1;
+}
+
+.fantasy-campeonatos {
+  position: relative;
+  z-index: 1;
+}
+
+/* FANTASY 2028 - PORTADA COMPLETA */
+.fantasy-generales.fantasy-portada-activa {
+  position: relative;
+  min-height: 100vh;
+  background:
+    #041326
+    url('/generales-baseball-app/fantasy-portada-2028.png')
+    center top / 100% auto no-repeat !important;
+}
+
+/* La imagen ya contiene el encabezado y las tarjetas */
+.fantasy-portada-activa .fantasy-encabezado,
+.fantasy-portada-activa > h2 {
+  display: none !important;
+}
+
+.fantasy-portada-activa .fantasy-campeonatos {
+  position: relative;
+  width: min(100%, 1748px) !important;
+  max-width: 1748px !important;
+  aspect-ratio: 1748 / 864;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+.fantasy-portada-activa .fantasy-campeonato {
+  position: absolute !important;
+  min-height: 0 !important;
+  height: 26% !important;
+  width: 23% !important;
+  opacity: 0;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+.fantasy-portada-activa .fantasy-campeonato-juvenil {
+  top: 41%;
+  left: 15%;
+}
+
+.fantasy-portada-activa .fantasy-campeonato-mayor {
+  top: 41%;
+  left: 39%;
+}
+
+.fantasy-portada-activa .fantasy-campeonato-mlb {
+  top: 41%;
+  left: 63%;
+}
+
+.fantasy-portada-activa .fantasy-campeonato-softbol-veteranos {
+  top: 69%;
+  left: 30%;
+  width: 38% !important;
+}
+
+.fantasy-portada-activa .fantasy-campeonato:focus-visible {
+  opacity: 1;
+  outline: 3px solid #ffcf48;
+}
+
+
+/* CORRECCIÓN PORTADA FANTASY 2028 */
+.fantasy-generales.fantasy-portada-activa {
+  background-image: var(--fantasy-portada-url) !important;
+  background-position: center top !important;
+  background-size: 100% auto !important;
+  background-repeat: no-repeat !important;
+}
+
+/* FANTASY 2028 - BOTÓN VOLVER PREMIUM */
+.fantasy-generales .fantasy-volver {
+  position: relative;
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 18px 0 0 24px;
+  padding: 13px 22px;
+  min-height: 48px;
+  color: #ffffff !important;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: .3px;
+  text-shadow: 0 2px 4px rgba(0,0,0,.5);
+  background: linear-gradient(135deg, #082a55, #06152d) !important;
+  border: 2px solid #ffc83d !important;
+  border-radius: 30px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.45);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.fantasy-generales .fantasy-volver:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255,200,61,.35);
+}
+
+.fantasy-generales .fantasy-volver:focus-visible {
+  outline: 3px solid #ffffff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales .fantasy-volver {
+    margin: 12px 0 0 12px;
+    padding: 10px 15px;
+    font-size: 13px;
+  }
+}
+
+
+/* FANTASY 2028 - BOTÓN VOLVER DEFINITIVO */
+.fantasy-generales.fantasy-portada-activa > .fantasy-volver {
+  position: fixed !important;
+  top: 20px !important;
+  left: 20px !important;
+  z-index: 9999 !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: auto !important;
+  min-height: 42px !important;
+  margin: 0 !important;
+  padding: 9px 17px !important;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #153e70, #06172e) !important;
+  border: 1px solid #f3b83b !important;
+  border-radius: 12px !important;
+  box-shadow: 0 5px 16px rgba(0,0,0,.4) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  cursor: pointer;
+}
+
+.fantasy-generales.fantasy-portada-activa > .fantasy-volver:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #20548e, #0b2547) !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales.fantasy-portada-activa > .fantasy-volver {
+    top: 10px !important;
+    left: 10px !important;
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* FANTASY 2028 - BOTÓN 3D CON RELIEVE */
+.fantasy-generales.fantasy-portada-activa > .fantasy-volver {
+  background:
+    linear-gradient(
+      165deg,
+      #3679c5 0%,
+      #123e82 24%,
+      #071a43 55%,
+      #08132e 100%
+    ) !important;
+
+  border: 2px solid #ffcc45 !important;
+  border-bottom: 4px solid #a66a08 !important;
+  border-radius: 16px !important;
+
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+
+  text-shadow: 0 2px 3px #000;
+
+  box-shadow:
+    inset 0 2px 2px rgba(255,255,255,.55),
+    inset 0 -5px 8px rgba(0,0,0,.5),
+    0 5px 0 #640d20,
+    0 9px 18px rgba(0,0,0,.55),
+    0 0 12px rgba(255,204,69,.35) !important;
+
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.fantasy-generales.fantasy-portada-activa > .fantasy-volver:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.2);
+}
+
+.fantasy-generales.fantasy-portada-activa > .fantasy-volver:active {
+  transform: translateY(3px);
+  box-shadow:
+    inset 0 3px 8px rgba(0,0,0,.5),
+    0 2px 0 #640d20,
+    0 4px 10px rgba(0,0,0,.4) !important;
+}
+
+
+/* FANTASY 2028 - BOTÓN PREMIUM 3D */
+.fantasy-generales.fantasy-portada-activa > .fantasy-volver {
+  position: fixed !important;
+  top: 20px !important;
+  left: 20px !important;
+  z-index: 9999 !important;
+
+  padding: 13px 23px !important;
+  min-height: 48px !important;
+
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 900 !important;
+  letter-spacing: 1px !important;
+
+  background: linear-gradient(
+    155deg,
+    #ff5968 0%,
+    #cb1837 25%,
+    #7e0929 58%,
+    #132d64 100%
+  ) !important;
+
+  border: 2px solid #ffdc65 !important;
+  border-bottom: 5px solid #a66b12 !important;
+  border-radius: 15px !important;
+
+  text-shadow: 0 2px 3px #320616 !important;
+
+  box-shadow:
+    inset 0 3px 2px rgba(255,255,255,.65),
+    inset 0 -5px 8px rgba(0,0,0,.4),
+    0 5px 0 #5b1025,
+    0 10px 20px rgba(0,0,0,.6),
+    0 0 18px rgba(255,203,67,.5) !important;
+
+  transition: transform .2s ease, filter .2s ease !important;
+}
+
+.fantasy-generales.fantasy-portada-activa > .fantasy-volver:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.18);
+}
+
+.fantasy-generales.fantasy-portada-activa > .fantasy-volver:active {
+  transform: translateY(4px);
+  box-shadow:
+    inset 0 4px 9px rgba(0,0,0,.5),
+    0 1px 0 #5b1025,
+    0 4px 10px rgba(0,0,0,.4) !important;
+}
+
+@media (max-width:650px) {
+  .fantasy-generales.fantasy-portada-activa > .fantasy-volver {
+    top: 10px !important;
+    left: 10px !important;
+    padding: 10px 14px !important;
+    min-height: 42px !important;
+    font-size: 11px !important;
+    letter-spacing: .3px !important;
+  }
+}
+
+/* FANTASY 2028 - ZONAS TÁCTILES AMPLIADAS */
+.fantasy-portada-activa .fantasy-campeonato {
+  height: 29% !important;
+  width: 24% !important;
+  cursor: pointer !important;
+  touch-action: manipulation;
+}
+
+/* Juvenil */
+.fantasy-portada-activa .fantasy-campeonato-juvenil {
+  top: 39% !important;
+  left: 14% !important;
+}
+
+/* Mayor */
+.fantasy-portada-activa .fantasy-campeonato-mayor {
+  top: 39% !important;
+  left: 38% !important;
+}
+
+/* MLB */
+.fantasy-portada-activa .fantasy-campeonato-mlb {
+  top: 39% !important;
+  left: 62% !important;
+}
+
+/* Sóftbol Veteranos */
+.fantasy-portada-activa .fantasy-campeonato-softbol-veteranos {
+  top: 69% !important;
+  left: 29% !important;
+  width: 40% !important;
+  height: 28% !important;
+}
+
+/* FANTASY 2028 - PANEL CREAR EQUIPO PREMIUM */
+.fantasy-generales .fantasy-panel {
+  width: min(94%, 820px);
+  max-width: 820px;
+  margin: 30px auto;
+  padding: clamp(20px, 4vw, 38px);
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    145deg,
+    #1c4778 0%,
+    #102e55 35%,
+    #071a35 100%
+  );
+
+  border: 2px solid #e8b94d;
+  border-radius: 24px;
+
+  box-shadow:
+    inset 0 2px 3px rgba(255,255,255,.22),
+    inset 0 -8px 18px rgba(0,0,0,.3),
+    0 14px 35px rgba(0,0,0,.45),
+    0 0 25px rgba(232,185,77,.12);
+}
+
+/* TÍTULOS */
+.fantasy-generales .fantasy-panel h2,
+.fantasy-generales .fantasy-panel h3 {
+  color: #ffd66b;
+  text-shadow: 0 3px 6px rgba(0,0,0,.5);
+}
+
+/* CAMPO DEL NOMBRE */
+.fantasy-generales .fantasy-panel input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 52px;
+  border: 2px solid #d6ae54;
+  border-radius: 13px;
+  background: #f7f9ff;
+  font-weight: 700;
+  box-shadow: inset 0 3px 7px rgba(0,0,0,.12);
+}
+
+/* BOTONES CON RELIEVE 3D */
+.fantasy-generales .fantasy-panel .fantasy-guardar {
+  min-height: 54px;
+  color: #10213c;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: .4px;
+
+  background: linear-gradient(
+    180deg,
+    #fff1a2 0%,
+    #f7c64e 40%,
+    #bd831c 100%
+  );
+
+  border: 1px solid #ffe79a;
+  border-bottom: 5px solid #85570c;
+  border-radius: 14px;
+
+  box-shadow:
+    inset 0 2px 2px rgba(255,255,255,.75),
+    0 6px 12px rgba(0,0,0,.3);
+
+  transition: transform .18s ease, filter .18s ease;
+}
+
+.fantasy-generales .fantasy-panel .fantasy-guardar:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.fantasy-generales .fantasy-panel .fantasy-guardar:active:not(:disabled) {
+  transform: translateY(3px);
+}
+
+.fantasy-generales .fantasy-panel .fantasy-guardar:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+/* BOTÓN CAMBIAR CAMPEONATO */
+.fantasy-generales .fantasy-panel .fantasy-regresar {
+  color: #ffffff;
+  background: linear-gradient(145deg,#255b96,#091e3d);
+  border: 1px solid #d7ad4d;
+  border-radius: 11px;
+  padding: 12px 18px;
+  box-shadow: 0 4px 9px rgba(0,0,0,.3);
+  cursor: pointer;
+}
+
+/* CELULARES */
+@media (max-width: 650px) {
+  .fantasy-generales .fantasy-panel {
+    width: 96%;
+    margin: 15px auto;
+    padding: 18px;
+    border-radius: 17px;
+  }
+
+  .fantasy-generales .fantasy-panel .fantasy-guardar {
+    font-size: 13px;
+  }
+}
+
+/* FANTASY 2028 - ALINEACIÓN DEPORTIVA PREMIUM */
+.fantasy-generales .fantasy-alineacion {
+  margin-top: 26px;
+  padding: 20px;
+  background: linear-gradient(160deg, #071b36, #102e50);
+  border: 1px solid #b98b2f;
+  border-radius: 20px;
+  box-shadow: inset 0 2px 8px rgba(255,255,255,.06),
+              0 10px 24px rgba(0,0,0,.3);
+}
+
+.fantasy-generales .fantasy-alineacion h3 {
+  color: #ffda71;
+  font-size: 20px;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 22px;
+  text-shadow: 0 3px 6px rgba(0,0,0,.5);
+}
+
+.fantasy-generales .fantasy-posicion {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  min-height: 68px !important;
+  padding: 12px 16px !important;
+  margin-bottom: 10px !important;
+  box-sizing: border-box;
+
+  background: linear-gradient(
+    145deg,
+    #245b90 0%,
+    #153a66 45%,
+    #091e3d 100%
+  ) !important;
+
+  border: 1px solid #bd9748 !important;
+  border-radius: 14px !important;
+
+  box-shadow:
+    inset 0 2px 2px rgba(255,255,255,.16),
+    inset 0 -4px 7px rgba(0,0,0,.25),
+    0 5px 12px rgba(0,0,0,.25) !important;
+}
+
+.fantasy-generales .fantasy-posicion-codigo {
+  flex: 0 0 52px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  color: #10213a !important;
+  background: linear-gradient(160deg,#fff0a2,#f4c34e,#b77b18) !important;
+  border: 1px solid #ffe7a0;
+  border-radius: 10px !important;
+
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  box-shadow: inset 0 2px 2px rgba(255,255,255,.6),
+              0 4px 7px rgba(0,0,0,.3);
+}
+
+.fantasy-generales .fantasy-posicion-nombre {
+  color: #ffffff !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+}
+
+.fantasy-generales .fantasy-posicion-vacia {
+  margin-left: auto;
+  color: #a9c3dc !important;
+  font-size: 12px !important;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+@media (max-width:650px) {
+  .fantasy-generales .fantasy-alineacion {
+    padding: 12px;
+  }
+
+  .fantasy-generales .fantasy-posicion {
+    gap: 8px !important;
+    padding: 10px !important;
+  }
+
+  .fantasy-generales .fantasy-posicion-codigo {
+    flex-basis: 40px !important;
+    height: 38px !important;
+    font-size: 13px !important;
+  }
+
+  .fantasy-generales .fantasy-posicion-nombre {
+    font-size: 12px !important;
+  }
+
+  .fantasy-generales .fantasy-posicion-vacia {
+    font-size: 10px !important;
+  }
+}
+
+/* FANTASY 2028 - TIPOGRAFÍA COMPACTA */
+.fantasy-generales .fantasy-panel h2 {
+  font-size: clamp(20px, 2.5vw, 26px) !important;
+  line-height: 1.2 !important;
+}
+
+.fantasy-generales .fantasy-panel > p {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+
+.fantasy-generales .fantasy-panel label {
+  font-size: 11px !important;
+  letter-spacing: .5px;
+}
+
+.fantasy-generales .fantasy-panel input {
+  font-size: 14px !important;
+}
+
+.fantasy-generales .fantasy-panel .fantasy-guardar,
+.fantasy-generales .fantasy-panel .fantasy-regresar {
+  font-size: 12px !important;
+}
+
+.fantasy-generales .fantasy-progreso {
+  font-size: 12px !important;
+}
+
+.fantasy-generales .fantasy-alineacion h3 {
+  font-size: 16px !important;
+}
+
+.fantasy-generales .fantasy-posicion-codigo {
+  font-size: 13px !important;
+}
+
+.fantasy-generales .fantasy-posicion-nombre {
+  font-size: 13px !important;
+}
+
+.fantasy-generales .fantasy-posicion-vacia {
+  font-size: 11px !important;
+}
+
+.fantasy-generales .fantasy-aviso {
+  font-size: 11px !important;
+  line-height: 1.5;
+}
+
+@media (max-width:650px) {
+  .fantasy-generales .fantasy-panel h2 {
+    font-size: 19px !important;
+  }
+
+  .fantasy-generales .fantasy-posicion-nombre {
+    font-size: 11px !important;
+  }
+
+  .fantasy-generales .fantasy-posicion-vacia {
+    font-size: 10px !important;
+  }
+}
+
+
+/* FANTASY 2028 - CONTROLES COMPACTOS DEL DRAFT */
+.fantasy-generales .fantasy-draft-controles {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.fantasy-generales .fantasy-draft-controles .fantasy-guardar,
+.fantasy-generales .fantasy-draft-controles .fantasy-regresar {
+  width: auto !important;
+  flex: 1;
+  max-width: 240px;
+  min-height: 40px !important;
+  margin: 0 !important;
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+}
+
+@media (max-width: 480px) {
+  .fantasy-generales .fantasy-draft-controles {
+    gap: 6px;
+  }
+  .fantasy-generales .fantasy-draft-controles .fantasy-guardar,
+  .fantasy-generales .fantasy-draft-controles .fantasy-regresar {
+    font-size: 10px !important;
+    padding: 8px 6px !important;
+  }
+}
+
+
+/* SALA DRAFT 2028 - MARCADOR INTERACTIVO */
+.fantasy-generales .fantasy-draft-estadio {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1728 / 864;
+  margin: 12px auto 18px;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.fantasy-generales .fantasy-draft-fondo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.fantasy-generales .fantasy-draft-dato {
+  position: absolute;
+  z-index: 2;
+  text-align: center;
+  color: #ffd65c;
+  font-weight: 900;
+  text-shadow: 0 2px 4px #000;
+  background: #071a35;
+  border-radius: 5px;
+  padding: 2px 5px;
+  font-size: clamp(9px, 1.6vw, 18px);
+}
+
+.fantasy-generales .fantasy-draft-ronda {
+  top: 57%;
+  left: 8%;
+  width: 13%;
+}
+
+.fantasy-generales .fantasy-draft-seleccion {
+  top: 57%;
+  left: 26%;
+  width: 15%;
+}
+
+.fantasy-generales .fantasy-draft-tiempo {
+  top: 53%;
+  left: 47%;
+  width: 18%;
+  font-size: clamp(13px, 2.8vw, 32px);
+}
+
+.fantasy-generales .fantasy-draft-turno {
+  top: 57%;
+  left: 77%;
+  width: 17%;
+}
+
+.fantasy-generales .fantasy-draft-zona {
+  position: absolute;
+  z-index: 3;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.fantasy-generales .fantasy-draft-iniciar {
+  left: 21%;
+  top: 71%;
+  width: 31%;
+  height: 13%;
+}
+
+.fantasy-generales .fantasy-draft-pausar {
+  left: 54%;
+  top: 71%;
+  width: 25%;
+  height: 13%;
+}
+
+.fantasy-generales .fantasy-draft-zona:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: -3px;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales .fantasy-draft-dato {
+    font-size: 8px;
+    padding: 1px 2px;
+  }
+
+  .fantasy-generales .fantasy-draft-tiempo {
+    font-size: 12px;
+  }
+}
+
+/* FANTASY 2028 - DATOS INTEGRADOS AL MARCADOR */
+.fantasy-generales .fantasy-draft-dato {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  line-height: 1.1 !important;
+  white-space: nowrap;
+  text-shadow: 0 2px 4px #000, 0 0 8px rgba(0,0,0,.8) !important;
+}
+
+.fantasy-generales .fantasy-draft-ronda {
+  top: 58% !important;
+  left: 8% !important;
+  width: 13% !important;
+}
+
+.fantasy-generales .fantasy-draft-seleccion {
+  top: 58% !important;
+  left: 26% !important;
+  width: 15% !important;
+}
+
+.fantasy-generales .fantasy-draft-tiempo {
+  top: 52% !important;
+  left: 46% !important;
+  width: 19% !important;
+  color: #ff6262 !important;
+  font-size: clamp(14px, 2.6vw, 30px) !important;
+  text-shadow: 0 2px 5px #000, 0 0 8px #000 !important;
+}
+
+.fantasy-generales .fantasy-draft-turno {
+  top: 58% !important;
+  left: 77% !important;
+  width: 17% !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales .fantasy-draft-dato {
+    font-size: 9px !important;
+  }
+
+  .fantasy-generales .fantasy-draft-tiempo {
+    font-size: clamp(11px, 3vw, 18px) !important;
+  }
+}
+
+/* FANTASY 2028 - ALINEACIÓN DEL NUEVO MARCADOR */
+.fantasy-generales .fantasy-draft-dato {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: #ffe08a !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+  white-space: nowrap;
+  text-shadow: 0 2px 5px #000 !important;
+}
+
+/* RONDA */
+.fantasy-generales .fantasy-draft-ronda {
+  top: 57% !important;
+  left: 10% !important;
+  width: 12% !important;
+}
+
+/* SELECCIÓN */
+.fantasy-generales .fantasy-draft-seleccion {
+  top: 57% !important;
+  left: 29% !important;
+  width: 12% !important;
+}
+
+/* RELOJ */
+.fantasy-generales .fantasy-draft-tiempo {
+  top: 54% !important;
+  left: 46% !important;
+  width: 17% !important;
+  font-size: clamp(13px, 2.5vw, 28px) !important;
+  color: #ff6262 !important;
+}
+
+/* EQUIPO EN TURNO */
+.fantasy-generales .fantasy-draft-turno {
+  top: 57% !important;
+  left: 76% !important;
+  width: 18% !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ZONAS TÁCTILES DE LOS BOTONES */
+.fantasy-generales .fantasy-draft-iniciar {
+  top: 72% !important;
+  left: 20% !important;
+  width: 32% !important;
+  height: 13% !important;
+}
+
+.fantasy-generales .fantasy-draft-pausar {
+  top: 72% !important;
+  left: 54% !important;
+  width: 26% !important;
+  height: 13% !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales .fantasy-draft-dato {
+    font-size: 9px !important;
+  }
+
+  .fantasy-generales .fantasy-draft-tiempo {
+    font-size: 13px !important;
+  }
+}
+
+/* FANTASY 2028 - MARCADOR DINÁMICO DEFINITIVO */
+.fantasy-generales .fantasy-draft-ronda {
+  top: 57% !important;
+  left: 8% !important;
+  width: 15% !important;
+}
+
+.fantasy-generales .fantasy-draft-seleccion {
+  top: 57% !important;
+  left: 26% !important;
+  width: 17% !important;
+}
+
+.fantasy-generales .fantasy-draft-tiempo {
+  top: 54% !important;
+  left: 48% !important;
+  width: 16% !important;
+  color: #ff4848 !important;
+  font-size: clamp(15px, 2.8vw, 32px) !important;
+}
+
+.fantasy-generales .fantasy-draft-turno {
+  top: 57% !important;
+  left: 77% !important;
+  width: 17% !important;
+}
+
+.fantasy-generales .fantasy-draft-iniciar {
+  top: 71% !important;
+  left: 20% !important;
+  width: 32% !important;
+  height: 13% !important;
+}
+
+.fantasy-generales .fantasy-draft-pausar {
+  top: 71% !important;
+  left: 54% !important;
+  width: 26% !important;
+  height: 13% !important;
+}
+
+/* FANTASY 2028 - COLORES Y RELOJ */
+.fantasy-generales .fantasy-draft-ronda,
+.fantasy-generales .fantasy-draft-seleccion {
+  color: #ffdc35 !important;
+  font-size: clamp(12px, 1.9vw, 23px) !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 3px #000, 0 0 9px #b87b00 !important;
+}
+
+.fantasy-generales .fantasy-draft-tiempo {
+  top: 53% !important;
+  left: 49% !important;
+  width: 17% !important;
+  color: #ff4747 !important;
+  font-size: clamp(15px, 2.7vw, 32px) !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 3px #000, 0 0 9px #ff3333 !important;
+}
+
+.fantasy-generales .fantasy-draft-turno {
+  color: #ffd43b !important;
+  font-size: clamp(12px, 1.9vw, 23px) !important;
+  font-weight: 900 !important;
+  text-shadow: 0 2px 3px #000, 0 0 9px #b87b00 !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales .fantasy-draft-tiempo {
+    font-size: 15px !important;
+  }
+}
+
+/* FANTASY 2028 - AJUSTE FINO DEL MARCADOR */
+.fantasy-generales .fantasy-draft-ronda {
+  top: 57% !important;
+  left: 7% !important;
+  width: 16% !important;
+}
+
+.fantasy-generales .fantasy-draft-seleccion {
+  top: 57% !important;
+  left: 26% !important;
+  width: 17% !important;
+}
+
+.fantasy-generales .fantasy-draft-turno {
+  top: 57% !important;
+  left: 77% !important;
+  width: 17% !important;
+}
+
+.fantasy-generales .fantasy-draft-ronda,
+.fantasy-generales .fantasy-draft-seleccion,
+.fantasy-generales .fantasy-draft-turno {
+  font-size: clamp(10px, 1.55vw, 18px) !important;
+  text-align: center !important;
+}
+
+/* Centrar el tiempo a la derecha del cronómetro */
+.fantasy-generales .fantasy-draft-tiempo {
+  top: 52.5% !important;
+  left: 49% !important;
+  width: 16% !important;
+  font-size: clamp(13px, 2.2vw, 25px) !important;
+  text-align: center !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales .fantasy-draft-ronda,
+  .fantasy-generales .fantasy-draft-seleccion,
+  .fantasy-generales .fantasy-draft-turno {
+    font-size: 10px !important;
+  }
+
+  .fantasy-generales .fantasy-draft-tiempo {
+    font-size: 13px !important;
+  }
+}
+
+/* FANTASY 2028 - CENTRADO FINAL */
+.fantasy-generales .fantasy-draft-ronda {
+  left: 6.5% !important;
+  width: 16% !important;
+}
+
+.fantasy-generales .fantasy-draft-seleccion {
+  left: 25.5% !important;
+  width: 17% !important;
+}
+
+.fantasy-generales .fantasy-draft-tiempo {
+  left: 48.5% !important;
+  width: 16% !important;
+}
+
+.fantasy-generales .fantasy-draft-turno {
+  left: 76.5% !important;
+  width: 17% !important;
+}
+
+/* FANTASY 2028 - EQUIPOS FANTASY COMPACTOS */
+.fantasy-generales .fantasy-equipos-compactos .fantasy-posicion {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 9px 14px !important;
+  margin: 5px 0 !important;
+  gap: 10px !important;
+  border-radius: 9px !important;
+}
+
+.fantasy-generales .fantasy-equipos-compactos .fantasy-posicion span {
+  font-size: 16px !important;
+  line-height: 1.3 !important;
+}
+
+.fantasy-generales .fantasy-equipos-compactos .fantasy-posicion strong {
+  font-size: 11px !important;
+  white-space: nowrap;
+}

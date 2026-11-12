@@ -1,8 +1,8 @@
+import CalendarioSemanal from './CalendarioSemanal'
 import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { supabase } from './supabase'
 import './AgendaAcademia.css'
-import CalendarioSemanal from './CalendarioSemanal'
 
 const agendaInicial = {
   entrenamiento_dias: 'Por confirmar',
@@ -255,7 +255,11 @@ export default function AgendaAcademia({ isAdmin }) {
         )}
       </section>
 
-      <CalendarioSemanal isAdmin={isAdmin} />
+      
+
+      <section className="agenda-calendario-semanal">
+        <CalendarioSemanal isAdmin={isAdmin} />
+      </section>
 
       {editando && createPortal(
         <div

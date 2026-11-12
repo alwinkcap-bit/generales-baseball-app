@@ -1,3 +1,4 @@
+/* ARCHIVO: src/BateoRetro.css */
 /* BATEO RETRO GENERALES */
 
 .bateo-retro-fondo {
@@ -1547,5 +1548,1553 @@
   .bateo-retro-record {
     flex-direction: column;
     gap: 3px;
+  }
+}
+
+
+
+/* ARCHIVO: src/BateoRetroConsola.css */
+/* Pantalla propia de Generales inspirada en consolas clasicas */
+.bateo-retro-fondo {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  box-sizing: border-box;
+  background: #030b17ed;
+  overflow-y: auto;
+}
+
+.bateo-retro-fondo .bateo-retro {
+  width: min(800px, 100%);
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+  border: 3px solid #e6bd52;
+  border-radius: 8px;
+  background: #071b30;
+  color: #eef7ff;
+  font-family: 'Courier New', monospace;
+  box-shadow: 0 0 0 5px #122d46, 0 22px 70px #000a;
+}
+
+.bateo-retro .bateo-retro-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 2px solid #e6bd52;
+  background: #0b253d;
+}
+
+.bateo-retro-header small {
+  color: #f5cc61;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.bateo-retro-header h2 {
+  margin: 5px 0 0;
+  font-size: clamp(20px, 5vw, 30px);
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 3px 3px #020c18;
+}
+
+.bateo-retro .bateo-retro-header button {
+  width: auto;
+  height: auto;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid #53738e;
+  border-radius: 4px;
+  background: #102f49;
+  color: white;
+  font: bold 12px 'Courier New', monospace;
+}
+
+.bateo-retro .bateo-retro-marcador {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr);
+  gap: 2px;
+  padding: 10px;
+  background: #020c17;
+}
+
+.bateo-retro-marcador span {
+  display: grid;
+  gap: 5px;
+  padding: 8px 4px;
+  text-align: center;
+  color: #91abc1;
+  font-size: 10px;
+  letter-spacing: 1px;
+  border: 1px solid #264158;
+  background: #081a29;
+}
+
+.bateo-retro-marcador b {
+  color: #ffe08b;
+  font-size: clamp(20px, 5vw, 30px);
+  text-shadow: 2px 2px #654914;
+}
+
+.bateo-retro .bateo-retro-record {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+  margin: 0;
+  padding: 9px 12px;
+  border: 0;
+  border-bottom: 2px solid #264158;
+  border-radius: 0;
+  background: #10243a;
+  font-size: 11px;
+}
+
+.bateo-retro .bateo-retro-estadio {
+  position: relative;
+  isolation: isolate;
+  height: clamp(300px, 47vh, 430px);
+  overflow: hidden;
+  perspective: none;
+  background: #123752;
+}
+
+.bateo-retro .bateo-retro-cielo {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 30%;
+  background:
+    radial-gradient(circle at 76% 22%, #fff2bf 0 10px, transparent 11px),
+    radial-gradient(circle at 15% 20%, #c1e5ff 0 1px, transparent 2px),
+    radial-gradient(circle at 56% 32%, #c1e5ff 0 1px, transparent 2px),
+    linear-gradient(#061426, #1b4566);
+}
+
+.bateo-retro-cielo > span { display: none; }
+
+.bateo-retro .bateo-retro-publico {
+  position: absolute;
+  z-index: 2;
+  inset: 24% 0 auto;
+  height: 14%;
+  border-top: 5px solid #17334c;
+  border-bottom: 7px solid #edc155;
+  background:
+    radial-gradient(circle, #f4cf76 0 2px, transparent 3px) 0 0 / 18px 12px,
+    radial-gradient(circle, #8ac1e5 0 2px, transparent 3px) 9px 6px / 18px 12px,
+    repeating-linear-gradient(#17344f 0 9px, #081d30 9px 12px);
+}
+
+.bateo-retro .bateo-retro-estadio::before {
+  top: 37%;
+  left: 0;
+  width: 100%;
+  height: 5%;
+  border: 0;
+  border-radius: 0;
+  background: #174d4a;
+  box-shadow: inset 0 3px #297160, inset 0 -4px #082d28;
+}
+
+.bateo-retro .bateo-retro-estadio::after {
+  content: '';
+  position: absolute;
+  z-index: 30;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent 0 3px, #0000000d 3px 4px
+  );
+  pointer-events: none;
+}
+
+.bateo-retro .bateo-retro-campo {
+  position: absolute;
+  inset: 42% -12% -18%;
+  border-radius: 0;
+  background: repeating-conic-gradient(
+    from 45deg at 50% 100%, #186642 0deg 12deg, #237d4b 12deg 24deg
+  );
+}
+
+.bateo-retro .bateo-retro-tierra {
+  position: absolute;
+  left: 50%;
+  bottom: -38%;
+  width: 78%;
+  height: 112%;
+  background: #bd824d;
+  border: 0;
+  transform: translateX(-50%);
+  clip-path: polygon(50% 0, 100% 52%, 50% 100%, 0 52%);
+}
+
+.bateo-retro .bateo-retro-tierra::after {
+  inset: 23%;
+  background: #287f4b;
+}
+
+.retro-cartel {
+  position: absolute;
+  z-index: 4;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  border: 2px solid #dcb455;
+  background: #071b30;
+  color: #ffdd7a;
+  font-size: 9px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.retro-luces {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  pointer-events: none;
+}
+
+.retro-luces i {
+  position: absolute;
+  top: 7%;
+  left: 7%;
+  width: 5px;
+  height: 25%;
+  background: #66859b;
+}
+
+.retro-luces i:last-child { left: auto; right: 7%; }
+
+.retro-luces i::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -16px;
+  width: 38px;
+  height: 19px;
+  border: 3px solid #39526b;
+  background: repeating-linear-gradient(
+    90deg, #fff3bc 0 6px, #688696 6px 9px
+  );
+  box-shadow: 0 0 22px #fff3bc55;
+}
+
+.bateo-retro .jugador-retro * {
+  border-radius: 0 !important;
+}
+
+.bateo-retro .jugador-retro {
+  filter: drop-shadow(3px 4px 0 #03151c66);
+}
+
+.bateo-retro .jugador-cara {
+  background: #ca8c5e;
+  box-shadow: inset -4px -2px #a5663e;
+}
+
+.bateo-retro .jugador-gorra,
+.bateo-retro .jugador-casco {
+  background: #126aa0;
+}
+
+.bateo-retro .jugador-bate {
+  background: #edc17e;
+  border-color: #67431e;
+}
+
+.bateo-retro .bateo-retro-mensaje {
+  position: absolute;
+  z-index: 32;
+  top: 7%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 90%;
+  padding: 8px 12px;
+  border: 2px solid #ffd36b;
+  border-radius: 0;
+  background: #071b30ee;
+  color: #fff0b9;
+  font-size: clamp(12px, 3vw, 18px);
+  font-weight: bold;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.retro-presentacion {
+  position: absolute;
+  z-index: 40;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px;
+  background: #041426bd;
+  text-align: center;
+}
+
+.retro-presentacion small {
+  color: #b4d5e9;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.retro-presentacion strong {
+  font-size: clamp(26px, 7vw, 48px);
+  color: #ffe18a;
+  text-shadow: 3px 3px #906027, 6px 6px #061326;
+}
+
+.retro-presentacion > span {
+  color: #fff;
+  font-size: 12px;
+}
+
+.retro-presentacion button,
+.bateo-retro .bateo-retro-controles button {
+  min-height: 50px;
+  padding: 13px 20px;
+  border: 2px solid #fff0b0;
+  border-radius: 3px;
+  background: #f4cb62;
+  color: #071b30 !important;
+  font: bold 14px 'Courier New', monospace;
+  box-shadow: 0 4px #a57525;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.bateo-retro .bateo-retro-controles {
+  padding: 10px 16px 14px;
+  text-align: center;
+  background: #081c30;
+}
+
+.bateo-retro .bateo-retro-controles button {
+  width: min(350px, 100%);
+}
+
+.bateo-retro .bateo-retro-controles button:disabled {
+  background: #465665;
+  border-color: #697988;
+  color: #dbe3ea !important;
+  box-shadow: 0 4px #253542;
+  cursor: default;
+}
+
+.bateo-retro .bateo-retro-conteo {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 12px;
+  background: #061525;
+  color: #abc3d6;
+  font-size: 11px;
+}
+
+.bateo-retro-conteo span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.bateo-retro-conteo i {
+  width: 10px;
+  height: 10px;
+  border-radius: 0;
+  background: #25394a;
+}
+
+.bateo-retro-conteo i.encendido { background: #ffd05e; }
+.bateo-retro-conteo i.rojo { background: #ff675d; }
+
+.bateo-retro .bateo-retro-ayuda {
+  margin: 0;
+  padding: 0 18px 16px;
+  color: #b2c8d9;
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.bateo-retro button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .bateo-retro-fondo { padding: 6px; }
+  .bateo-retro-fondo .bateo-retro {
+    max-height: calc(100dvh - 12px);
+  }
+  .bateo-retro .bateo-retro-header { padding: 10px; }
+  .bateo-retro-header small { letter-spacing: 1px; }
+  .bateo-retro .bateo-retro-tierra { width: 90%; }
+}
+
+/* Mayor profundidad y detalle del estadio */
+.bateo-retro .bateo-retro-estadio {
+  height: clamp(340px, 50vh, 480px);
+}
+
+.retro-gradas {
+  position: absolute;
+  z-index: 2;
+  top: 20%;
+  left: 0;
+  right: 0;
+  height: 18%;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  padding: 2px 0;
+  background: #091c30;
+  border-top: 4px solid #3e617b;
+  overflow: hidden;
+}
+
+.retro-fila-publico {
+  display: flex;
+  justify-content: space-around;
+  align-items: end;
+  border-bottom: 2px solid #42627a;
+  background: linear-gradient(#173c58, #0c2136);
+}
+
+.retro-fila-publico:nth-child(even) {
+  transform: translateX(6px);
+}
+
+.retro-fila-publico i {
+  position: relative;
+  display: block;
+  flex: 0 0 8px;
+  height: 7px;
+  background: var(--camisa);
+  box-shadow: 2px 0 #03111f;
+}
+
+.retro-fila-publico i::before {
+  content: '';
+  position: absolute;
+  width: 5px;
+  height: 4px;
+  top: -4px;
+  left: 1px;
+  background: #d4a37b;
+}
+
+.retro-cerca {
+  position: absolute;
+  z-index: 4;
+  top: 38%;
+  left: 0;
+  right: 0;
+  height: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 5px;
+  padding: 0 6px;
+  border-top: 4px solid #e5bd60;
+  border-bottom: 4px solid #082e35;
+  background: repeating-linear-gradient(
+    90deg, #164b58 0 48px, #0c3445 48px 51px
+  );
+  box-sizing: border-box;
+}
+
+.retro-cerca span {
+  padding: 3px 5px;
+  color: #e4dcba;
+  background: #102d40;
+  border: 1px solid #59817c;
+  font-size: clamp(6px, 1.3vw, 10px);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.retro-cartel { display: none; }
+
+.bateo-retro .bateo-retro-campo {
+  inset: 45% -12% -18%;
+  background: repeating-conic-gradient(
+    from 45deg at 50% 100%,
+    #1a7048 0deg 10deg,
+    #278353 10deg 20deg
+  );
+  box-shadow: inset 0 16px 0 #07382544;
+}
+
+.bateo-retro .bateo-retro-tierra {
+  background:
+    repeating-linear-gradient(
+      0deg, #ffffff05 0 2px, transparent 2px 5px
+    ),
+    linear-gradient(145deg, #dda66b, #b57a43);
+}
+
+.bateo-retro .bateo-retro-tierra::after {
+  background: repeating-linear-gradient(
+    90deg, #24764a 0 24px, #2c8853 24px 48px
+  );
+  box-shadow: inset 0 0 0 4px #754520;
+}
+
+.bateo-retro .bateo-retro-monticulo {
+  background: #d7a267;
+  border: 3px solid #9b642f;
+  box-shadow: 0 4px 0 #64452466, inset 0 3px #edbf83;
+}
+
+/* Las lineas permanecen dentro del terreno */
+.bateo-retro .linea-foul-svg {
+  stroke-width: 3;
+  stroke-dasharray: none;
+}
+
+.bateo-retro .bateo-retro-diamante-svg {
+  clip-path: inset(46% 0 0);
+}
+
+.bateo-retro .jugador-retro .jugador-cuerpo {
+  background: linear-gradient(
+    90deg, #083d6e 0 18%, #1677ad 18% 43%,
+    #f1c952 43% 54%, #126397 54% 82%, #06395e 82%
+  );
+  border-color: #032037;
+  box-shadow: inset 0 3px #48a0c5, 3px 2px #032037;
+}
+
+.bateo-retro .jugador-retro .jugador-casco,
+.bateo-retro .jugador-retro .jugador-gorra {
+  background: linear-gradient(
+    90deg, #073d68 0 20%, #2184b6 20% 70%, #0b4a76 70%
+  );
+  box-shadow: inset 0 3px #5fb5d7;
+}
+
+.bateo-retro .jugador-retro .jugador-piernas span {
+  background: linear-gradient(
+    #e8edf1 0 55%, #b5c6d1 55% 65%,
+    #126397 65% 82%, #031521 82%
+  );
+}
+
+.bateo-retro .jugador-retro .jugador-guante {
+  background: repeating-linear-gradient(
+    90deg, #a96a2c 0 3px, #754219 3px 5px
+  );
+}
+
+.bateo-retro .jugador-retro .jugador-bate {
+  background: linear-gradient(
+    #ffdfa2 0 30%, #d49a4f 30% 75%, #9b602b 75%
+  );
+}
+
+@media (max-width: 600px) {
+  .retro-fila-publico i { flex-basis: 6px; }
+  .retro-cerca span { letter-spacing: 0; padding: 3px; }
+}
+
+/* Cuadro separado del jardin y alineado con las bases */
+.bateo-retro .bateo-retro-tierra {
+  top: 26%;
+  bottom: auto;
+  left: 50%;
+  width: 67%;
+  height: 84%;
+  transform: translateX(-50%);
+  clip-path: polygon(50% 0, 100% 40%, 50% 100%, 0 40%);
+  z-index: 3;
+}
+
+.bateo-retro .bateo-retro-tierra::after {
+  inset: 16% 19% 23%;
+  clip-path: polygon(50% 0, 100% 41%, 50% 100%, 0 41%);
+}
+
+/* El jardin cubre la punta antigua que llegaba a las gradas */
+.bateo-retro .bateo-retro-tierra {
+  clip-path: polygon(
+    50% 22%, 100% 40%, 68% 77%, 50% 92%,
+    32% 77%, 0 40%
+  );
+}
+
+.bateo-retro .bateo-retro-monticulo {
+  bottom: 42%;
+  z-index: 10;
+}
+
+.bateo-retro .bateo-retro-lanzador.jugador-retro {
+  bottom: 42%;
+  animation: none;
+  transform: translateX(-50%) scale(.73);
+}
+
+.bateo-retro .lanzador-retro .brazo-derecho {
+  transform: rotate(-28deg);
+  transform-origin: top center;
+}
+
+.bateo-retro .lanzador-retro.lanzando .brazo-derecho {
+  animation: retro-brazo-lanzamiento 360ms ease-out;
+}
+
+.bateo-retro .lanzador-retro.lanzando .brazo-izquierdo {
+  animation: retro-guante-lanzamiento 360ms ease-out;
+}
+
+@keyframes retro-brazo-lanzamiento {
+  0% { transform: rotate(-120deg); }
+  45% { transform: rotate(-170deg); }
+  75% { transform: rotate(-55deg); }
+  100% { transform: rotate(-28deg); }
+}
+
+@keyframes retro-guante-lanzamiento {
+  0% { transform: rotate(-35deg); }
+  55% { transform: rotate(45deg); }
+  100% { transform: rotate(18deg); }
+}
+
+/* Bateador con piernas separadas y rodillas flexionadas */
+.bateo-retro .bateador-retro .jugador-piernas {
+  gap: 15px;
+}
+
+.bateo-retro .bateador-retro .jugador-piernas span:first-child {
+  transform: rotate(12deg);
+  transform-origin: top center;
+}
+
+.bateo-retro .bateador-retro .jugador-piernas span:last-child {
+  transform: rotate(-12deg);
+  transform-origin: top center;
+}
+
+.bateo-retro .bateador-retro .jugador-cuerpo {
+  transform: translateX(-50%) rotate(-8deg);
+  transform-origin: bottom center;
+}
+
+.bateo-retro .bateador-retro.bateando .jugador-cuerpo {
+  animation: retro-giro-bateador 220ms ease-out;
+}
+
+.bateo-retro .bateador-retro.bateando .brazo-izquierdo,
+.bateo-retro .bateador-retro.bateando .brazo-derecho {
+  animation: retro-brazos-swing 220ms ease-out;
+}
+
+@keyframes retro-giro-bateador {
+  0% { transform: translateX(-50%) rotate(-8deg); }
+  55% { transform: translateX(-50%) rotate(12deg); }
+  100% { transform: translateX(-50%) rotate(-8deg); }
+}
+
+@keyframes retro-brazos-swing {
+  0% { transform: rotate(-55deg); }
+  55% { transform: rotate(65deg); }
+  100% { transform: rotate(-55deg); }
+}
+
+@media (max-width: 600px) {
+  .bateo-retro .bateo-retro-lanzador.jugador-retro {
+    transform: translateX(-50%) scale(.67);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bateo-retro .lanzador-retro.lanzando .jugador-brazo,
+  .bateo-retro .bateador-retro.bateando .jugador-cuerpo,
+  .bateo-retro .bateador-retro.bateando .jugador-brazo {
+    animation: none;
+  }
+}
+
+/* Una sola capa para terreno, bases y monticulo */
+.bateo-retro .bateo-retro-tierra,
+.bateo-retro .bateo-retro-monticulo {
+  display: none !important;
+}
+
+.bateo-retro .bateo-retro-diamante-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  clip-path: none !important;
+  pointer-events: none;
+}
+
+/* Pies sobre el monticulo */
+.bateo-retro .bateo-retro-lanzador.jugador-retro {
+  bottom: 43%;
+  transform-origin: bottom center;
+  transform: translateX(-50%) scale(.73);
+}
+
+/* Bateador junto a home */
+.bateo-retro .bateo-retro-bateador.jugador-retro {
+  left: 55%;
+  bottom: 3%;
+  transform-origin: bottom center;
+  transform: scale(.88);
+}
+
+@media (max-width: 600px) {
+  .bateo-retro .bateo-retro-lanzador.jugador-retro {
+    transform: translateX(-50%) scale(.67);
+  }
+
+  .bateo-retro .bateo-retro-bateador.jugador-retro {
+    left: 55%;
+    bottom: 3%;
+    transform: scale(.76);
+  }
+}
+
+/* Pantalla de juego con controles siempre visibles */
+.bateo-retro-fondo .bateo-retro {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto auto auto minmax(160px, 1fr) auto auto auto;
+  height: min(760px, calc(100dvh - 24px));
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+}
+
+.bateo-retro .bateo-retro-header {
+  padding: 8px 14px;
+}
+
+.bateo-retro-header h2 {
+  font-size: 22px;
+  margin-top: 3px;
+}
+
+.bateo-retro .bateo-retro-marcador {
+  padding: 6px 10px;
+}
+
+.bateo-retro-marcador span {
+  padding: 5px 3px;
+  gap: 3px;
+  font-size: 9px;
+}
+
+.bateo-retro-marcador b {
+  font-size: 24px;
+}
+
+.bateo-retro .bateo-retro-record {
+  padding: 6px 10px;
+  gap: 4px 10px;
+  font-size: 10px;
+}
+
+.bateo-retro .bateo-retro-estadio {
+  height: auto;
+  min-height: 160px;
+}
+
+.bateo-retro .bateo-retro-conteo {
+  padding: 8px;
+}
+
+.bateo-retro .bateo-retro-controles {
+  padding: 8px 14px 10px;
+}
+
+.bateo-retro .bateo-retro-controles button {
+  min-height: 48px;
+  padding: 10px 18px;
+}
+
+.bateo-retro .bateo-retro-ayuda {
+  padding: 0 12px 8px;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .bateo-retro-fondo .bateo-retro {
+    height: calc(100dvh - 12px);
+    max-height: calc(100dvh - 12px);
+  }
+
+  .bateo-retro-header h2 {
+    font-size: 19px;
+  }
+
+  .bateo-retro .bateo-retro-header button {
+    font-size: 11px;
+    padding: 8px;
+  }
+
+  .bateo-retro .bateo-retro-record small {
+    display: none;
+  }
+
+  .bateo-retro .bateo-retro-controles {
+    padding-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* En pantallas bajas, conservar espacio para jugar */
+@media (max-height: 500px) {
+  .bateo-retro .bateo-retro-header small,
+  .bateo-retro .bateo-retro-record,
+  .bateo-retro .bateo-retro-ayuda {
+    display: none;
+  }
+
+  .bateo-retro-fondo .bateo-retro {
+    grid-template-rows: auto auto minmax(160px, 1fr) auto auto;
+  }
+}
+
+/* Pantalla de juego con controles siempre visibles */
+.bateo-retro-fondo .bateo-retro {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto auto auto minmax(160px, 1fr) auto auto auto;
+  height: min(760px, calc(100dvh - 24px));
+  max-height: calc(100dvh - 24px);
+  overflow-y: auto;
+}
+
+.bateo-retro .bateo-retro-header {
+  padding: 8px 14px;
+}
+
+.bateo-retro-header h2 {
+  font-size: 22px;
+  margin-top: 3px;
+}
+
+.bateo-retro .bateo-retro-marcador {
+  padding: 6px 10px;
+}
+
+.bateo-retro-marcador span {
+  padding: 5px 3px;
+  gap: 3px;
+  font-size: 9px;
+}
+
+.bateo-retro-marcador b {
+  font-size: 24px;
+}
+
+.bateo-retro .bateo-retro-record {
+  padding: 6px 10px;
+  gap: 4px 10px;
+  font-size: 10px;
+}
+
+.bateo-retro .bateo-retro-estadio {
+  height: auto;
+  min-height: 160px;
+}
+
+.bateo-retro .bateo-retro-conteo {
+  padding: 8px;
+}
+
+.bateo-retro .bateo-retro-controles {
+  padding: 8px 14px 10px;
+}
+
+.bateo-retro .bateo-retro-controles button {
+  min-height: 48px;
+  padding: 10px 18px;
+}
+
+.bateo-retro .bateo-retro-ayuda {
+  padding: 0 12px 8px;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .bateo-retro-fondo .bateo-retro {
+    height: calc(100dvh - 12px);
+    max-height: calc(100dvh - 12px);
+  }
+
+  .bateo-retro-header h2 {
+    font-size: 19px;
+  }
+
+  .bateo-retro .bateo-retro-header button {
+    font-size: 11px;
+    padding: 8px;
+  }
+
+  .bateo-retro .bateo-retro-record small {
+    display: none;
+  }
+
+  .bateo-retro .bateo-retro-controles {
+    padding-bottom: max(10px, env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* En pantallas bajas, conservar espacio para jugar */
+@media (max-height: 500px) {
+  .bateo-retro .bateo-retro-header small,
+  .bateo-retro .bateo-retro-record,
+  .bateo-retro .bateo-retro-ayuda {
+    display: none;
+  }
+
+  .bateo-retro-fondo .bateo-retro {
+    grid-template-rows: auto auto minmax(160px, 1fr) auto auto;
+  }
+}
+
+/* Trayectoria visible después de conectar un jonrón */
+.bateo-retro .retro-vuelo-jonron {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 35;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bateo-retro .retro-estela-jonron {
+  opacity: .65;
+  animation: retro-estela-desaparece 2.3s linear forwards;
+}
+
+@keyframes retro-estela-desaparece {
+  0%, 75% { opacity: .65; }
+  100% { opacity: 0; }
+}
+
+/* El público celebra los jonrones */
+.bateo-retro .retro-gradas-celebrando {
+  animation: retro-gradas-destello 500ms ease-in-out 4;
+}
+
+.bateo-retro .retro-gradas-celebrando i {
+  animation: retro-publico-salto 400ms ease-in-out 5;
+}
+
+.bateo-retro .retro-gradas-celebrando i:nth-child(3n) {
+  animation-delay: 70ms;
+}
+
+.bateo-retro .retro-gradas-celebrando i:nth-child(3n + 1) {
+  animation-delay: 140ms;
+}
+
+@keyframes retro-publico-salto {
+  0%, 100% { transform: translateY(0); }
+  45% { transform: translateY(-5px) rotate(-8deg); }
+  65% { transform: translateY(-3px) rotate(8deg); }
+}
+
+@keyframes retro-gradas-destello {
+  0%, 100% {
+    box-shadow: inset 0 0 0 transparent;
+  }
+  50% {
+    box-shadow: inset 0 0 24px #ffd56a80;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bateo-retro .retro-gradas-celebrando,
+  .bateo-retro .retro-gradas-celebrando i {
+    animation: none;
+  }
+
+  .bateo-retro .retro-gradas-celebrando {
+    box-shadow: inset 0 0 24px #ffd56a80;
+  }
+}
+
+/* Jugadores: silueta y uniforme de Generales */
+.bateo-retro .jugador-retro {
+  width: 64px;
+  height: 112px;
+  filter: drop-shadow(2px 4px 1px #0008);
+}
+
+.bateo-retro .jugador-retro *,
+.bateo-retro .jugador-retro *::before,
+.bateo-retro .jugador-retro *::after {
+  box-sizing: border-box;
+}
+
+.bateo-retro .jugador-retro .jugador-cabeza {
+  top: 1px;
+  width: 28px;
+  height: 30px;
+  z-index: 6;
+}
+
+.bateo-retro .jugador-retro .jugador-cara {
+  top: 9px;
+  left: 4px;
+  width: 22px;
+  height: 23px;
+  border: 2px solid #633c28;
+  border-radius: 5px 5px 9px 8px !important;
+  background: linear-gradient(90deg, #e6ad78, #bd784c);
+  box-shadow: inset -3px -2px #8d492644;
+}
+
+.bateo-retro .jugador-retro .jugador-cara::before {
+  top: 7px;
+  right: 4px;
+  width: 3px;
+  height: 3px;
+  background: #17222b;
+}
+
+.bateo-retro .jugador-retro .jugador-cara::after {
+  right: -3px;
+  bottom: 7px;
+  width: 5px;
+  height: 4px;
+  background: #cc8c5b;
+}
+
+.bateo-retro .jugador-retro .jugador-gorra {
+  top: 2px !important;
+  left: 1px !important;
+  width: 27px;
+  height: 14px;
+  border: 2px solid #061a30;
+  border-radius: 11px 11px 2px 2px !important;
+  background: linear-gradient(135deg, #3184bd, #103b70);
+}
+
+.bateo-retro .jugador-retro .jugador-gorra::after,
+.bateo-retro .jugador-retro .jugador-casco::after {
+  right: -9px;
+  bottom: -2px;
+  width: 13px;
+  height: 4px;
+  border: 1px solid #061a30;
+  border-radius: 0 5px 2px 0 !important;
+  background: #e7b945;
+}
+
+.bateo-retro .jugador-retro .jugador-casco {
+  top: 0 !important;
+  left: 0 !important;
+  width: 29px;
+  height: 20px;
+  border: 2px solid #061a30;
+  border-radius: 12px 12px 4px 4px !important;
+  background: linear-gradient(120deg, #398fc7, #133e74 65%);
+  box-shadow: inset 3px 2px #ffffff30;
+}
+
+.bateo-retro .jugador-retro .jugador-casco::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  bottom: -7px;
+  width: 9px;
+  height: 12px;
+  border: 2px solid #061a30;
+  border-radius: 2px 2px 5px 5px !important;
+  background: #164b80;
+}
+
+.bateo-retro .jugador-retro .jugador-cuerpo {
+  top: 31px;
+  width: 35px;
+  height: 39px;
+  border: 2px solid #061a30;
+  border-radius: 9px 9px 4px 4px !important;
+  background:
+    linear-gradient(90deg, transparent 46%, #eac24d 47% 53%, transparent 54%),
+    linear-gradient(90deg, #123b6b, #267cb4 48%, #123b6b);
+  box-shadow: inset 0 -5px #082a4d;
+}
+
+.bateo-retro .jugador-retro .jugador-cuerpo::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 11px;
+  width: 9px;
+  height: 7px;
+  border-bottom: 3px solid #eac24d;
+  border-radius: 0 0 5px 5px !important;
+  background: #c68a5b;
+}
+
+.bateo-retro .jugador-retro .jugador-cuerpo::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: -1px;
+  width: 33px;
+  height: 5px;
+  background: #142234;
+  border-top: 1px solid #e3c267;
+}
+
+.bateo-retro .jugador-retro .jugador-numero {
+  top: 10px !important;
+  font: bold 12px Arial, sans-serif !important;
+  color: #fff3c6;
+  text-shadow: 1px 1px #061a30;
+}
+
+.bateo-retro .jugador-retro .jugador-brazo {
+  width: 11px;
+  height: 33px;
+  border: 2px solid #493426;
+  border-radius: 6px 6px 5px 5px !important;
+  background: linear-gradient(
+    #185889 0 36%,
+    #e7bd49 37% 43%,
+    #d69b68 44% 85%,
+    #b9784d 86%
+  );
+  transform-origin: 50% 5px;
+}
+
+.bateo-retro .jugador-retro .jugador-piernas {
+  top: 68px;
+  gap: 5px;
+}
+
+.bateo-retro .jugador-retro .jugador-piernas span {
+  width: 14px;
+  height: 38px;
+  border: 2px solid #263444;
+  border-radius: 3px 3px 4px 4px !important;
+  background:
+    linear-gradient(90deg, transparent 65%, #d4a838 66% 78%, transparent 79%),
+    linear-gradient(#f4f1df 0 72%, #174d80 73% 100%);
+  box-shadow: inset -3px 0 #0002;
+  transform-origin: top center;
+}
+
+.bateo-retro .jugador-retro .jugador-piernas span::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: -3px;
+  width: 20px;
+  height: 9px;
+  border: 1px solid #081420;
+  border-bottom: 2px solid #ddd9bd;
+  border-radius: 3px 6px 2px 2px !important;
+  background: #102a42;
+}
+
+.bateo-retro .jugador-retro .jugador-guante {
+  top: 19px !important;
+  left: -14px !important;
+  width: 20px;
+  height: 22px;
+  border: 2px solid #543118;
+  border-radius: 7px 7px 9px 9px !important;
+  background: repeating-linear-gradient(
+    80deg, #a66c32 0 3px, #d09a50 4px 6px
+  );
+  box-shadow: inset 0 -5px #74441e;
+}
+
+.bateo-retro .jugador-retro .jugador-bate {
+  width: 75px;
+  height: 8px;
+  border: 1px solid #714721;
+  border-radius: 5px 2px 2px 5px !important;
+  background: linear-gradient(
+    90deg, #f2d295 0 62%, #bf8841 63% 78%, #263444 79%
+  );
+  box-shadow: 0 2px 1px #0005;
+}
+
+/* Postura del bateador y secuencia del swing */
+.bateo-retro .bateador-retro .jugador-cuerpo {
+  width: 30px;
+  transform: translateX(-50%) rotate(-7deg);
+  transform-origin: 50% 90%;
+}
+
+.bateo-retro .bateador-retro .jugador-cabeza {
+  left: 44%;
+  transform: translateX(-50%) rotate(-6deg);
+}
+
+.bateo-retro .bateador-retro .jugador-piernas {
+  gap: 14px;
+}
+
+.bateo-retro .bateador-retro .jugador-piernas span:first-child {
+  transform: rotate(15deg);
+}
+
+.bateo-retro .bateador-retro .jugador-piernas span:last-child {
+  transform: rotate(-15deg);
+}
+
+.bateo-retro .bateador-retro .brazo-izquierdo {
+  top: 6px !important;
+  left: -6px !important;
+  height: 29px;
+  z-index: 7;
+  transform: rotate(-62deg);
+}
+
+.bateo-retro .bateador-retro .brazo-derecho {
+  top: 5px !important;
+  right: -5px;
+  height: 29px;
+  z-index: 8;
+  transform: rotate(-105deg);
+}
+
+.bateo-retro .bateador-retro .jugador-bate {
+  top: 27px !important;
+  left: -9px !important;
+  width: 68px;
+  transform: rotate(62deg);
+  transform-origin: 90% 50%;
+}
+
+.bateo-retro .bateador-retro.bateando .jugador-cuerpo {
+  animation: generales-giro-swing 220ms ease-in-out both;
+}
+
+.bateo-retro .bateador-retro.bateando .brazo-izquierdo {
+  animation: generales-brazo-delantero 220ms ease-in-out both;
+}
+
+.bateo-retro .bateador-retro.bateando .brazo-derecho {
+  animation: generales-brazo-trasero 220ms ease-in-out both;
+}
+
+.bateo-retro .bateador-retro.bateando .jugador-bate {
+  animation: generales-recorrido-bate 220ms ease-in-out both;
+}
+
+.bateo-retro .bateador-retro.bateando .jugador-piernas span:first-child {
+  animation: generales-paso-frontal 220ms ease-in-out both;
+}
+
+.bateo-retro .bateador-retro.bateando .jugador-piernas span:last-child {
+  animation: generales-pivote-trasero 220ms ease-in-out both;
+}
+
+@keyframes generales-giro-swing {
+  0% { transform: translateX(-50%) rotate(-7deg); }
+  20% { transform: translateX(-47%) rotate(-12deg); }
+  55% { transform: translateX(-55%) rotate(10deg); }
+  100% { transform: translateX(-55%) rotate(16deg); }
+}
+
+@keyframes generales-recorrido-bate {
+  0% { transform: rotate(62deg); }
+  20% { transform: rotate(75deg); }
+  55% { transform: rotate(8deg); }
+  100% { transform: rotate(-65deg); }
+}
+
+@keyframes generales-brazo-delantero {
+  0%, 20% { transform: rotate(-62deg); }
+  55% { transform: rotate(65deg); }
+  100% { transform: rotate(110deg); }
+}
+
+@keyframes generales-brazo-trasero {
+  0%, 20% { transform: rotate(-105deg); }
+  55% { transform: rotate(45deg); }
+  100% { transform: rotate(95deg); }
+}
+
+@keyframes generales-paso-frontal {
+  0%, 20% { transform: rotate(15deg); }
+  55%, 100% { transform: translateX(-3px) rotate(20deg); }
+}
+
+@keyframes generales-pivote-trasero {
+  0%, 20% { transform: rotate(-15deg); }
+  55%, 100% { transform: rotate(-5deg) translateY(-2px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bateo-retro .bateador-retro.bateando .jugador-cuerpo,
+  .bateo-retro .bateador-retro.bateando .jugador-bate,
+  .bateo-retro .bateador-retro.bateando .jugador-brazo,
+  .bateo-retro .bateador-retro.bateando .jugador-piernas span {
+    animation: none;
+  }
+}
+
+/* SWING COORDINADO CON EL CONTACTO */
+.bateo-retro .bateo-retro-pelota {
+  z-index: 34;
+  animation-name: generales-pelota-contacto;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  pointer-events: none;
+}
+@keyframes generales-pelota-contacto {
+  0% {
+    left: 50%; top: 52%; font-size: 9px;
+    transform: translate(-50%, -50%);
+  }
+  81.5% {
+    left: 50%; top: 90%; font-size: 20px;
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    left: 50%; top: 99%; font-size: 24px;
+    transform: translate(-50%, -50%);
+  }
+}
+.bateo-retro .bateador-retro.bateando .jugador-cuerpo,
+.bateo-retro .bateador-retro.bateando .jugador-brazo,
+.bateo-retro .bateador-retro.bateando .jugador-bate,
+.bateo-retro .bateador-retro.bateando .jugador-piernas span {
+  animation-duration: 360ms;
+  animation-timing-function: linear;
+}
+@keyframes generales-giro-swing {
+  0% { transform: translateX(-50%) rotate(-7deg); }
+  15% { transform: translateX(-47%) rotate(-12deg); }
+  33.333% { transform: translateX(-55%) rotate(10deg); }
+  75%, 100% { transform: translateX(-55%) rotate(16deg); }
+}
+@keyframes generales-recorrido-bate {
+  0% { transform: rotate(62deg); }
+  15% { transform: rotate(75deg); }
+  33.333% { transform: rotate(8deg); }
+  75%, 100% { transform: rotate(-65deg); }
+}
+@keyframes generales-brazo-delantero {
+  0%, 15% { transform: rotate(-62deg); }
+  33.333% { transform: rotate(65deg); }
+  75%, 100% { transform: rotate(110deg); }
+}
+@keyframes generales-brazo-trasero {
+  0%, 15% { transform: rotate(-105deg); }
+  33.333% { transform: rotate(45deg); }
+  75%, 100% { transform: rotate(95deg); }
+}
+@keyframes generales-paso-frontal {
+  0%, 15% { transform: rotate(15deg); }
+  33.333%, 100% { transform: translateX(-3px) rotate(20deg); }
+}
+@keyframes generales-pivote-trasero {
+  0%, 15% { transform: rotate(-15deg); }
+  33.333%, 100% { transform: rotate(-5deg) translateY(-2px); }
+}
+.bateo-retro .retro-precision {
+  position: absolute;
+  z-index: 40;
+  top: 19%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 12px;
+  border: 1px solid #7897ad;
+  border-radius: 20px;
+  background: #061726ed;
+  color: #e6edf4;
+  font: bold 11px Arial, sans-serif;
+  letter-spacing: 1px;
+  pointer-events: none;
+}
+.bateo-retro .retro-precision.perfecto {
+  color: #ffe28b;
+  border-color: #efc547;
+  box-shadow: 0 0 14px #efc54755;
+}
+.bateo-retro .bateo-retro-conteo {
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.bateo-retro .bateo-retro-boton-batear {
+  touch-action: manipulation;
+  user-select: none;
+}
+
+/* Ajuste del ancho del juego y sus controles */
+.bateo-retro-fondo {
+  grid-template-columns: minmax(0, 1fr);
+}
+.bateo-retro-fondo .bateo-retro {
+  min-width: 0;
+  max-width: 100%;
+  justify-self: center;
+}
+.bateo-retro > * {
+  min-width: 0;
+  box-sizing: border-box;
+}
+.bateo-retro .bateo-retro-marcador {
+  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+}
+.bateo-retro .bateo-retro-marcador span {
+  min-width: 0;
+}
+.bateo-retro .bateo-retro-marcador b {
+  font-size: clamp(18px, 5vw, 24px);
+  overflow-wrap: anywhere;
+}
+.bateo-retro .bateo-retro-controles {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+  align-items: stretch;
+  gap: 10px;
+}
+.bateo-retro .retro-selector-mano {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  min-width: 0;
+}
+.bateo-retro .bateo-retro-controles button {
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  padding: 10px 6px;
+}
+.bateo-retro .retro-selector-mano button {
+  font-size: 11px;
+  letter-spacing: 0;
+}
+.bateo-retro .bateo-retro-ayuda {
+  width: 100%;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 420px) {
+  .bateo-retro .retro-selector-mano {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bateo-retro .retro-selector-mano button {
+    min-height: 32px;
+    padding: 6px;
+  }
+}
+
+/* Posturas zurda y derecha junto al plato */
+.bateo-retro .bateo-retro-bateador.postura-zurdo {
+  left: 55%;
+  bottom: 3%;
+  transform-origin: bottom center;
+  transform: scale(.88);
+}
+.bateo-retro .bateo-retro-bateador.postura-derecho {
+  left: calc(45% - 64px);
+  bottom: 3%;
+  transform-origin: bottom center;
+  transform: scale(-.88, .88);
+}
+.bateo-retro .retro-selector-mano button[aria-pressed="true"] {
+  border-color: #ffffff;
+  background: #ffe18a;
+  box-shadow: 0 0 0 2px #e9bd5940, 0 4px #a57525;
+}
+@media (max-width: 600px) {
+  .bateo-retro .bateo-retro-bateador.postura-zurdo {
+    transform: scale(.76);
+  }
+  .bateo-retro .bateo-retro-bateador.postura-derecho {
+    transform: scale(-.76, .76);
+  }
+}
+
+
+/* Bateadores con las siluetas proporcionadas */
+.bateo-retro .bateo-retro-silueta-bateador {
+  position: absolute;
+  z-index: 20;
+  bottom: 2.5%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: clamp(76px, 16%, 132px);
+  height: clamp(118px, 40%, 158px);
+  transform: translateX(-50%);
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Las cajas del home están centradas aproximadamente en 45.5% y 54.5%. */
+.bateo-retro .bateo-retro-silueta-bateador.postura-zurdo {
+  left: 54.5%;
+}
+
+.bateo-retro .bateo-retro-silueta-bateador.postura-derecho {
+  left: 45.5%;
+}
+
+.bateo-retro .bateo-retro-silueta-bateador img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  transform-origin: 52% 62%;
+  filter: drop-shadow(0 0 2px #efc547) drop-shadow(2px 4px 2px #0009);
+}
+
+/* Swing visible: carga, contacto a los 120 ms y seguimiento. */
+.bateo-retro .bateo-retro-silueta-bateador.postura-zurdo.bateando img {
+  animation: swing-silueta-zurdo 700ms ease-in-out both;
+}
+
+.bateo-retro .bateo-retro-silueta-bateador.postura-derecho.bateando img {
+  animation: swing-silueta-derecho 700ms ease-in-out both;
+}
+
+@keyframes swing-silueta-zurdo {
+  0% { transform: rotate(-8deg) translate(0, 0); }
+  12% { transform: rotate(-20deg) translate(2px, 2px); }
+  17.14% { transform: rotate(24deg) translate(-4px, -2px); }
+  48% { transform: rotate(62deg) translate(-14px, -7px); }
+  76% { transform: rotate(50deg) translate(-10px, -5px); }
+  100% { transform: rotate(42deg) translate(-6px, -3px); }
+}
+
+@keyframes swing-silueta-derecho {
+  0% { transform: rotate(8deg) translate(0, 0); }
+  12% { transform: rotate(20deg) translate(-2px, 2px); }
+  17.14% { transform: rotate(-24deg) translate(4px, -2px); }
+  48% { transform: rotate(-62deg) translate(14px, -7px); }
+  76% { transform: rotate(-50deg) translate(10px, -5px); }
+  100% { transform: rotate(-42deg) translate(6px, -3px); }
+}
+
+@media (max-width: 600px) {
+  .bateo-retro .bateo-retro-silueta-bateador {
+    width: clamp(68px, 20%, 94px);
+    height: clamp(108px, 38%, 132px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bateo-retro .bateo-retro-silueta-bateador.bateando img {
+    animation-duration: 1ms;
   }
 }

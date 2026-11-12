@@ -3,6 +3,8 @@ import gbImagenAprende from "./public/beisbol-guante.jpg"
 import gbImagenJuegos from "./public/beisbol-juegos.avif"
 import gbImagenPartidos from "./public/beisbol-estadio.jpeg"
 import ComunidadJuegos from './ComunidadJuegos'
+import ManagerVirtual from './ManagerVirtual/ManagerVirtual'
+import FantasyGenerales from './FantasyGenerales/FantasyGenerales'
 import { estiloPortada } from './EditorPortada'
 
 import VideosCintillo from './VideosCintillo'
@@ -58,6 +60,9 @@ export default function Inicio({
   const [correBasesOpen, setCorreBasesOpen] = useState(false)
   const [retoDigitalOpen, setRetoDigitalOpen] = useState(false)
   const [desafioMundialOpen, setDesafioMundialOpen] = useState(false)
+  const [managerVirtualOpen, setManagerVirtualOpen] = useState(false)
+  // Fantasy Generales 2028: acceso público temporalmente desactivado.
+  const [fantasyGeneralesOpen, setFantasyGeneralesOpen] = useState(false)
   const [juegosOpen, setJuegosOpen] = useState(false)
   useEffect(() => {
     const codigo = new URLSearchParams(window.location.search).get('duelo')
@@ -518,6 +523,23 @@ const responderReto = (opcionElegida) => {
     >
       🎮 EXPLORAR JUEGOS
     </button>
+
+    <button
+      type="button"
+      className="inicio-boton fantasy-directo"
+      disabled
+      title="Fantasy Generales 2028 — COMING SOON"
+      onClick={() => {
+        setJuegosOpen(false)
+        setFantasyGeneralesOpen(true)
+      }}
+    >
+      <img
+        src={`${import.meta.env.BASE_URL}fantasy-generales-2028-banner.png`}
+        alt="Fantasy Generales 2028"
+        className="fantasy-banner-imagen"
+      />
+    </button>
   </div>
 </div>
           <div className="inicio-hero-imagen">
@@ -819,6 +841,36 @@ const responderReto = (opcionElegida) => {
 <ComunidadJuegos usuario={usuario} onLogin={onLogin} onBateo={() => setBateoRetroOpen(true)} />
 
 <section className="juegos-acceso-seccion">
+  <button
+    type="button"
+    className="juego-acceso"
+    disabled
+    title="Fantasy Generales 2028 — Próximamente"
+  >
+    <span className="juego-acceso-icono">🏆</span>
+    <span className="juego-acceso-texto">
+      <strong>Fantasy Generales 2028 — COMING SOON</strong>
+      <small>🏆 PRÓXIMAMENTE</small>
+    </span>
+    <b>Jugar →</b>
+  </button>
+
+  <button
+    type="button"
+    className="juego-acceso"
+    onClick={() => {
+      setJuegosOpen(false)
+      setManagerVirtualOpen(true)
+    }}
+  >
+    <span className="juego-acceso-icono">🧠</span>
+    <span className="juego-acceso-texto">
+      <strong>Mánager Virtual</strong>
+      <small>Dirige el partido · 20 segundos para decidir</small>
+    </span>
+    <b>Jugar →</b>
+  </button>
+
   <button type="button" className="juego-acceso"
     onClick={() => {
       setJuegosOpen(false)
@@ -1012,6 +1064,27 @@ const responderReto = (opcionElegida) => {
 
 {retoDigitalOpen && (
   <RetoDigital onCerrar={() => setRetoDigitalOpen(false)} />
+)}
+
+{fantasyGeneralesOpen && (
+  <FantasyGenerales
+    isAdmin={isAdmin}
+    usuario={usuario}
+    onCerrar={() => {
+      setFantasyGeneralesOpen(false)
+      setJuegosOpen(false)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }}
+  />
+)}
+
+{managerVirtualOpen && (
+  <ManagerVirtual
+    onCerrar={() => {
+      setManagerVirtualOpen(false)
+      setJuegosOpen(true)
+    }}
+  />
 )}
 
 {desafioMundialOpen && (

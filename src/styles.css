@@ -1079,3 +1079,71 @@
   color: rgba(255, 255, 255, 0.68);
   line-height: 1.4;
 }
+
+/* CORRECCIÓN: TEXTO VISIBLE EN TÍTULO DE GALERÍA */
+.galeria-publica-form input[type="text"] {
+  background-color: #ffffff !important;
+  color: #082a4a !important;
+  -webkit-text-fill-color: #082a4a !important;
+  caret-color: #082a4a !important;
+}
+
+.galeria-publica-form input[type="text"]::placeholder {
+  color: #687987 !important;
+  opacity: 1;
+}
+
+/* FANTASY GENERALES 2027 - ACCESO DIRECTO */
+.inicio-acciones .fantasy-directo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 440px;
+  min-height: 105px;
+  padding: 18px 20px;
+  border: 2px solid #ffd45a;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 85% 20%, #ffcf47 0%, transparent 30%),
+    linear-gradient(135deg, #780719 0%, #d71935 48%, #102e72 100%);
+  box-shadow: 0 5px 0 #7c4510, 0 12px 28px #0008;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.inicio-acciones .fantasy-directo span {
+  font-size: clamp(18px, 4vw, 25px);
+  font-weight: 900;
+  line-height: 1.2;
+  text-shadow: 2px 3px 3px #0009;
+}
+
+.inicio-acciones .fantasy-directo small {
+  color: #ffe69a;
+  font-size: clamp(10px, 2.5vw, 13px);
+  font-weight: 800;
+  letter-spacing: .5px;
+}
+
+.inicio-acciones .fantasy-directo:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 0 #7c4510, 0 16px 32px #0009;
+}
+
+.inicio-acciones .fantasy-directo:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+  .inicio-acciones .fantasy-directo {
+    max-width: 100%;
+    min-height: 95px;
+    padding: 14px 12px;
+  }
+}

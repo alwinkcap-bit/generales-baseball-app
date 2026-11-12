@@ -1,7 +1,11 @@
+
+/* ARCHIVO: src/BateoRetro.jsx */
 import { guardarPartidaJonrones } from './JuegosComunidadDatos'
 import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import './BateoRetro.css'
+import bateadorZurdoImg from './assets/bateador-zurdo.png'
+import bateadorDerechoImg from './assets/bateador-derecho.png'
 import './BateoRetroConsola.css'
 
 export default function BateoRetro({ onCerrar, usuario }) {
@@ -247,12 +251,12 @@ export default function BateoRetro({ onCerrar, usuario }) {
     setBateando(true)
     setPrecisionSwing('')
 
-    // El contacto ocurre a los 120 ms de una animación de 360 ms.
+    // El contacto ocurre a los 120 ms de una animación de 700 ms.
     const posicion =
       (performance.now() - inicioRef.current + 120) / duracionRef.current
 
     finSwingRef.current = window.setTimeout(
-      () => setBateando(false), 360
+      () => setBateando(false), 700
     )
     contactoSwingRef.current = window.setTimeout(
       () => resolverContacto(posicion), 120
@@ -508,27 +512,16 @@ export default function BateoRetro({ onCerrar, usuario }) {
             </div>
           </div>
           <div
-            className={`bateo-retro-bateador jugador-retro bateador-retro postura-${manoBateador} ${
+            className={`bateo-retro-silueta-bateador postura-${manoBateador} ${
               bateando ? 'bateando' : ''
             }`}
+            aria-hidden="true"
           >
-            <div className="jugador-cabeza">
-              <span className="jugador-casco"></span>
-              <span className="jugador-cara"></span>
-            </div>
-
-            <div className="jugador-cuerpo">
-              <span className="jugador-numero">G</span>
-              <span className="jugador-brazo brazo-izquierdo"></span>
-              <span className="jugador-brazo brazo-derecho"></span>
-            </div>
-
-            <div className="jugador-piernas">
-              <span></span>
-              <span></span>
-            </div>
-
-            <span className="jugador-bate"></span>
+            <img
+              src={manoBateador === 'zurdo' ? bateadorZurdoImg : bateadorDerechoImg}
+              alt=""
+              draggable="false"
+            />
           </div>
 
           <div className="bateo-retro-home">◆</div>
@@ -675,3 +668,6 @@ export default function BateoRetro({ onCerrar, usuario }) {
     document.body
   )
 }
+
+
+
