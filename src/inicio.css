@@ -8257,3 +8257,17 @@ button.inicio-juegos-cintillo > b {
     min-height: 0 !important;
   }
 }
+
+/* SUBIR FANTASY 2028 EN PORTADA MOVIL */
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    transform: translate(-43px, -12px) !important;
+  }
+}
+
+/* AJUSTE FINO ALTURA FANTASY MOVIL */
+@media (max-width: 520px) {
+  .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+    transform: translate(-43px, -6px) !important;
+  }
+}
