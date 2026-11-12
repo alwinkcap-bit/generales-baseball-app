@@ -8101,3 +8101,10 @@ button.inicio-juegos-cintillo > b {
     align-self: center !important;
   }
 }
+
+/* CORRECCION PORTADA MOVIL */
+@media (max-width: 520px) {
+  .inicio-hero { min-height: 430px !important; height: 430px !important; }
+  .inicio-hero-imagen { height: 100% !important; }
+  .inicio-foto-equipo { height: 100% !important; min-height: 0 !important; object-fit: cover !important; }
+}

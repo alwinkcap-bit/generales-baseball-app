@@ -7,7 +7,9 @@ import logoGenerales3D from './public/logo-generales-3d.png'
 function formatoFecha(valor) {
   if (!valor) return 'FECHA POR CONFIRMAR'
 
-  const fecha = new Date(`${valor.slice(0, 10)}T12:00:00Z`)
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(valor.trim())) return valor.toUpperCase()
+
+const fecha = new Date(`${valor.trim()}T12:00:00Z`)
   if (Number.isNaN(fecha.getTime())) return valor
 
   return new Intl.DateTimeFormat('es-PA', {
@@ -42,38 +44,40 @@ export default function ProximoPartido() {
         day: '2-digit'
       }).format(new Date())
 
-      const { data, error } = await supabase
-        .from('partidos')
-        .select('id,fecha,hora,equipo_visitante,equipo_local,estadio,estado,logo_rival')
-        .gte('fecha', hoy)
-        .order('fecha', { ascending: true })
-        .order('hora', { ascending: true })
-        .limit(50)
+   const { data, error } = await supabase
+  .from('agenda_academia')
+  .select(`
+    juego_fecha,
+    juego_hora,
+    juego_rival,
+    juego_lugar,
+    mostrar_juego,
+    logo_generales,
+    logo_rival
+  `)
+  .eq('id', 1)
+  .single()
 
       if (error) {
         console.error('Error al cargar próximo partido:', error)
         return
       }
 
-      const siguiente = (data || []).find(p =>
-        !['finalizado', 'cancelado', 'suspendido'].includes(
-          (p.estado || '').trim().toLowerCase()
-        )
-      )
+    if (!activo) return
 
-      if (!siguiente || !activo) return
+if (!data || !data.mostrar_juego) {
+  setPartido(null)
+  return
+}
 
-      const rival = /generales/i.test(siguiente.equipo_local || '')
-        ? siguiente.equipo_visitante
-        : siguiente.equipo_local
-
-      setPartido({
-        juego_fecha: siguiente.fecha,
-        juego_hora: siguiente.hora?.slice(0, 5) || 'Por confirmar',
-        juego_rival: rival || 'Por confirmar',
-        juego_lugar: siguiente.estadio || 'Por confirmar',
-        logo_rival: siguiente.logo_rival || null
-      })
+setPartido({
+  juego_fecha: data.juego_fecha || 'Por confirmar',
+  juego_hora: data.juego_hora || 'Por confirmar',
+  juego_rival: data.juego_rival || 'Por confirmar',
+  juego_lugar: data.juego_lugar || 'Por confirmar',
+  logo_generales: data.logo_generales || null,
+  logo_rival: data.logo_rival || null
+})
     }
 
     cargarPartido()
@@ -94,7 +98,10 @@ export default function ProximoPartido() {
 
       <div className="proximo-partido-equipos">
         <div className="proximo-partido-equipo">
-          <img src={`${import.meta.env.BASE_URL}logo-generales-nuevo.png`} alt="Generales de Chitré" />
+          <img
+  src={partido.logo_generales || `${import.meta.env.BASE_URL}logo-generales-nuevo.png?v=2`}
+  alt="Generales de Chitré"
+/>
           <strong>GENERALES</strong>
         </div>
 
