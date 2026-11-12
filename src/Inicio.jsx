@@ -17,7 +17,6 @@ import { createPortal } from 'react-dom'
 import { supabase } from './supabase';
 import SopaLetras from './SopaLetras'
 import MemoriaBeisbol from './MemoriaBeisbol'
-import BateoRetro from './BateoRetro'
 import AtrapaPelota from './AtrapaPelota'
 import CorreBases from './CorreBases'
 import RetoDigital from './RetoDigital'
@@ -55,7 +54,6 @@ export default function Inicio({
   const [masOpen, setMasOpen] = useState(false)
   const [sopaLetrasOpen, setSopaLetrasOpen] = useState(false)
   const [memoriaOpen, setMemoriaOpen] = useState(false)
-  const [bateoRetroOpen, setBateoRetroOpen] = useState(false)
   const [atrapaOpen, setAtrapaOpen] = useState(false)
   const [correBasesOpen, setCorreBasesOpen] = useState(false)
   const [retoDigitalOpen, setRetoDigitalOpen] = useState(false)
@@ -82,7 +80,6 @@ export default function Inicio({
     masOpen ||
     sopaLetrasOpen ||
     memoriaOpen ||
-    bateoRetroOpen ||
     atrapaOpen ||
     correBasesOpen ||
     retoDigitalOpen ||
@@ -838,7 +835,7 @@ const responderReto = (opcionElegida) => {
         </button>
       </header>
 
-<ComunidadJuegos usuario={usuario} onLogin={onLogin} onBateo={() => setBateoRetroOpen(true)} />
+<ComunidadJuegos usuario={usuario} onLogin={onLogin} />
 
 <section className="juegos-acceso-seccion">
   <button
@@ -966,16 +963,16 @@ const responderReto = (opcionElegida) => {
   <button
     type="button"
     className="juego-acceso"
-    onClick={() => setBateoRetroOpen(true)}
+    disabled title="Home Run King 3D — Próximamente"
   >
     <span className="juego-acceso-icono">🕹️</span>
 
     <span className="juego-acceso-texto">
-      <strong>Bateo Retro</strong>
-      <small>Batea, consigue hits y conecta jonrones</small>
+      <strong>Home Run King 3D — PRÓXIMAMENTE</strong>
+      <small>Prepárate para el gran desafío de jonrones en 3D</small>
     </span>
 
-    <b>Jugar →</b>
+    <b>Muy pronto ⚾</b>
   </button>
 
 </section>
@@ -1105,9 +1102,6 @@ const responderReto = (opcionElegida) => {
   }} />
 )}
 
-{bateoRetroOpen && (
-  <BateoRetro usuario={usuario} onCerrar={() => setBateoRetroOpen(false)} />
-)}
 
 {sopaLetrasOpen && (
   <SopaLetras
