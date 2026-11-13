@@ -33,11 +33,12 @@ export function crearOrdenDraft(equipos, rondas = REGLAS_DRAFT.jugadoresPorEquip
 }
 
 // Draft rotativo: cada equipo inicia exactamente una ronda.
-export function crearOrdenRotativo(equipos, rondas = 10) {
+export function crearOrdenRotativo(equipos, rondas = 18) {
   if (!Array.isArray(equipos) ||
-      equipos.length !== 10 ||
-      new Set(equipos.map(e => e.id)).size !== 10) {
-    throw new Error('El Draft rotativo requiere exactamente 10 equipos únicos.');
+      equipos.length < 2 ||
+      equipos.length > 10 ||
+      new Set(equipos.map(e => e.id)).size !== equipos.length) {
+    throw new Error('El Draft rotativo requiere entre 2 y 10 equipos únicos.');
   }
 
   const orden = [];
@@ -68,7 +69,7 @@ export function crearDraft(equipos, campeonato) {
     campeonato,
     estado: 'preparado',
     orden: campeonato === 'softbol-veteranos'
-      ? crearOrdenRotativo(equipos)
+      ? crearOrdenRotativo(equipos, 18)
       : crearOrdenDraft(equipos),
     seleccionActual: 0,
     selecciones: []
@@ -93,8 +94,32 @@ export function seleccionarJugador(draft, equipoId, jugador) {
     throw new Error('Selecciona un pelotero válido.');
   }
 
-  if (draft.selecciones.some(s => s.jugadorId === jugador.id)) {
-    throw new Error('Este pelotero ya fue seleccionado.');
+  const jugadorRepetido = draft.selecciones.some(s =>
+    s.jugadorId === jugador.id &&
+    (draft.campeonato !== 'softbol-veteranos' || s.equipoId === equipoId)
+  );
+
+  if (jugadorRepetido) {
+    throw new Error(
+      draft.campeonato === 'softbol-veteranos'
+        ? 'Este pelotero ya pertenece a tu equipo Fantasy.'
+        : 'Este pelotero ya fue seleccionado.'
+    );
+  }
+
+  // Veteranos: máximo cinco equipos Fantasy por pelotero.
+  if (draft.campeonato === 'softbol-veteranos') {
+    const equiposQueLoEligieron = new Set(
+      draft.selecciones
+        .filter(s => s.jugadorId === jugador.id)
+        .map(s => s.equipoId)
+    );
+
+    if (equiposQueLoEligieron.size >= 5) {
+      throw new Error(
+        'CUPO COMPLETO: este pelotero ya fue seleccionado por 5 equipos Fantasy.'
+      );
+    }
   }
 
   const selecciones = [

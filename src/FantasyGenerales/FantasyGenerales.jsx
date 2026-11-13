@@ -4,6 +4,7 @@ import { supabase } from '../supabase';
 import { posicionesFantasy } from './posicionesFantasy';
 import React, { useState } from 'react';
 import './FantasyGenerales.css';
+import './PortadaFantasy2028.css';
 
 const campeonatos = [
   { id: 'juvenil', nombre: 'BÉISBOL JUVENIL', icono: '🇵🇦', descripcion: 'Campeonato Nacional Juvenil de Panamá' },
@@ -143,9 +144,6 @@ export default function FantasyGenerales({ onCerrar, isAdmin = false, usuario = 
   return (
     <main
       className={`fantasy-generales ${!campeonato ? "fantasy-portada-activa" : ""}`}
-      style={!campeonato ? {
-        '--fantasy-portada-url': `url("${import.meta.env.BASE_URL}fantasy-portada-2028.png")`
-      } : undefined}
     >
       <button className="fantasy-volver" onClick={onCerrar}>← VOLVER AL INICIO</button>
       <header className="fantasy-encabezado">
@@ -207,11 +205,16 @@ export default function FantasyGenerales({ onCerrar, isAdmin = false, usuario = 
           key={campeonato.id}
           campeonato={campeonato.id}
           nombreEquipo={nombreEquipo}
+          salaId={
+            campeonato.id === 'softbol-veteranos'
+              ? salaCreada?.sala_id ?? null
+              : undefined
+          }
           onVolver={() => setSalaDraftOpen(false)}
         />
       ) : !campeonato ? (
         <>
-          <h2>ELIGE TU CAMPEONATO</h2>
+          <h2 className="fantasy-seleccion-titulo">ELIGE TU CAMPEONATO</h2>
           <div className="fantasy-campeonatos">
             {campeonatos.map(c => (
               <button key={c.id} className={`fantasy-campeonato fantasy-campeonato-${c.id}`} onClick={() => {
@@ -221,7 +224,10 @@ export default function FantasyGenerales({ onCerrar, isAdmin = false, usuario = 
               }}>
                 <img
                   className="fantasy-tarjeta-imagen"
-                  src={`${import.meta.env.BASE_URL}fantasy-${c.id === 'softbol-veteranos' ? 'softbol' : c.id}-2028.png`}
+                loading={c.id === 'juvenil' ? 'eager' : 'lazy'}
+                decoding="async"
+                fetchPriority={c.id === 'juvenil' ? 'high' : 'auto'}
+                  src={`${import.meta.env.BASE_URL}fantasy-${c.id === 'softbol-veteranos' ? 'softbol' : c.id}-2028.webp`}
                   alt={`${c.nombre} - Fantasy Generales 2028`}
                 />
                 <span className="fantasy-icono">{c.icono}</span>
@@ -231,6 +237,7 @@ export default function FantasyGenerales({ onCerrar, isAdmin = false, usuario = 
               </button>
             ))}
           </div>
+          
         </>
       ) : (
         <section className="fantasy-panel">
@@ -366,12 +373,23 @@ export default function FantasyGenerales({ onCerrar, isAdmin = false, usuario = 
           )}
           <div className="fantasy-progreso">
             <strong>MI ALINEACIÓN</strong>
-            <span>0 / 10 jugadores</span>
+            <span>
+              0 / {campeonato.id === 'softbol-veteranos' ? 18 : 10} jugadores
+            </span>
           </div>
           {(guardado || Boolean(localStorage.getItem('fantasy-generales-' + campeonato.id))) && (
             <div className="fantasy-alineacion">
               <h3>⚾ SELECCIONA TUS PELOTEROS</h3>
-              {posicionesFantasy.map(posicion => (
+              {(campeonato.id === 'softbol-veteranos'
+                ? [
+                    ...posicionesFantasy,
+                    ...Array.from({ length: 8 }, (_, i) => ({
+                      id: `SUP${i + 1}`,
+                      nombre: `Suplente ${i + 1}`
+                    }))
+                  ]
+                : posicionesFantasy
+              ).map(posicion => (
                 <div className="fantasy-posicion" key={posicion.id}>
                   <span className="fantasy-posicion-codigo">{posicion.id}</span>
                   <span className="fantasy-posicion-nombre">{posicion.nombre}</span>

@@ -1,9 +1,54 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from '../supabase';
 import { crearDraft, obtenerTurno, iniciarDraft, seleccionarJugador, REGLAS_DRAFT } from './motorDraft';
 import { equiposSoftbol } from './equiposSoftbol';
 import { obtenerPosicionRonda } from './rondasSoftbol';
 
-export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin = false, usuario = null }) {
+export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin = false, usuario = null, salaId = null }) {
+  const esSalaRealVeteranos =
+    campeonato === 'softbol-veteranos' && Boolean(salaId);
+
+  const [equiposReales, setEquiposReales] = useState([]);
+  const [cargandoEquipos, setCargandoEquipos] = useState(false);
+  const [errorEquipos, setErrorEquipos] = useState('');
+
+  useEffect(() => {
+    if (!esSalaRealVeteranos) return;
+
+    let cancelado = false;
+
+    async function cargarEquipos() {
+      setCargandoEquipos(true);
+      setErrorEquipos('');
+
+      const { data, error } = await supabase.rpc(
+        'fantasy_veteranos_equipos_sala',
+        { p_sala_id: salaId }
+      );
+
+      if (cancelado) return;
+
+      if (error) {
+        setErrorEquipos(error.message);
+      } else {
+        setEquiposReales(
+          (data || []).map(e => ({
+            id: e.participante_id,
+            nombre: e.nombre_equipo
+          }))
+        );
+      }
+
+      setCargandoEquipos(false);
+    }
+
+    cargarEquipos();
+
+    return () => {
+      cancelado = true;
+    };
+  }, [esSalaRealVeteranos, salaId]);
+
   const [draft, setDraft] = useState(() => {
     const equiposDemo = [
       { id: 'usuario', nombre: nombreEquipo || 'Mi equipo' },
@@ -36,11 +81,13 @@ export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin 
         guardado &&
         guardado.campeonato === campeonato &&
         Array.isArray(guardado.orden) &&
-        guardado.orden.length === 100 &&
+        guardado.orden.length >= 36 &&
+        guardado.orden.length <= 180 &&
+        guardado.orden.length % 18 === 0 &&
         Array.isArray(guardado.selecciones) &&
         Number.isInteger(guardado.seleccionActual) &&
         guardado.seleccionActual >= 0 &&
-        guardado.seleccionActual <= 100 &&
+        guardado.seleccionActual <= guardado.orden.length &&
         ['preparado', 'activo', 'finalizado'].includes(guardado.estado)
       ) {
         return guardado;
@@ -86,8 +133,11 @@ export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin 
     : null;
 
   const peloterosFiltrados = peloteros.filter(j =>
-    !draft.selecciones.some(s => s.jugadorId === j.id) &&
-    (!posicionObligatoria || j.posicion === posicionObligatoria.posicion) &&
+    !draft.selecciones.some(s =>
+      s.jugadorId === j.id &&
+      s.equipoId === obtenerTurno(draft)?.equipoId
+    ) &&
+    (!posicionObligatoria || posicionObligatoria.posicion === 'LIBRE' || j.posicion === posicionObligatoria.posicion) &&
     j.nombre.toLowerCase().includes(busqueda.toLowerCase()) &&
     (!filtroEquipo || j.equipoId === filtroEquipo)
   );
@@ -127,8 +177,11 @@ export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin 
       const posicion = obtenerPosicionRonda(turnoActual.ronda);
 
       const disponibles = peloteros.filter(j =>
-        j.posicion === posicion?.posicion &&
-        !draft.selecciones.some(s => s.jugadorId === j.id)
+        (posicion?.posicion === 'LIBRE' || j.posicion === posicion?.posicion) &&
+        !draft.selecciones.some(s =>
+      s.jugadorId === j.id &&
+      s.equipoId === obtenerTurno(draft)?.equipoId
+    )
       );
 
       if (disponibles.length === 0) {
@@ -194,7 +247,10 @@ export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin 
       }
       if (campeonato === 'softbol-veteranos') {
         const posicionRequerida = obtenerPosicionRonda(turnoActual.ronda);
-        if (!posicionRequerida || jugador.posicion !== posicionRequerida.posicion) {
+        if (!posicionRequerida || (
+          posicionRequerida.posicion !== 'LIBRE' &&
+          jugador.posicion !== posicionRequerida.posicion
+        )) {
           throw new Error('Este pelotero no corresponde a la posición de la ronda.');
         }
       }
@@ -232,8 +288,8 @@ export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin 
         nombre: t.equipoNombre
       }));
 
-    if (equipos.length !== 10) {
-      setMensajeSeleccion('No se encontraron los 10 equipos.');
+    if (equipos.length < 2 || equipos.length > 10) {
+      setMensajeSeleccion('Se necesitan entre 2 y 10 equipos Fantasy.');
       return;
     }
 
@@ -248,6 +304,64 @@ export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin 
   }
 
   const turno = obtenerTurno(draft);
+
+  if (esSalaRealVeteranos) {
+    return (
+      <div style={{
+        padding: 24,
+        maxWidth: 800,
+        margin: '0 auto',
+        color: '#ffffff',
+        background: '#10233d',
+        borderRadius: 16
+      }}>
+        <button onClick={onVolver}>← VOLVER</button>
+
+        <h2>⚾ FANTASY SÓFTBOL VETERANOS 2028</h2>
+        <h3>Equipos inscritos en la sala</h3>
+
+        {cargandoEquipos && <p>Consultando Supabase...</p>}
+
+        {errorEquipos && (
+          <p style={{ color: '#ff9999' }}>
+            Error: {errorEquipos}
+          </p>
+        )}
+
+        {!cargandoEquipos && !errorEquipos && (
+          <>
+            <h2>{equiposReales.length} / 10 equipos</h2>
+
+            {equiposReales.length === 0 && (
+              <p>Todavía no hay equipos inscritos.</p>
+            )}
+
+            {equiposReales.map((equipo, indice) => (
+              <div key={equipo.id} style={{
+                padding: 14,
+                marginBottom: 10,
+                background: '#203b5e',
+                borderRadius: 10
+              }}>
+                ⚾ {indice + 1}. {equipo.nombre}
+              </div>
+            ))}
+
+            <p>
+              {equiposReales.length < 2
+                ? 'Se necesitan al menos 2 equipos para iniciar.'
+                : 'Sala lista para continuar con la configuración del Draft.'}
+            </p>
+
+            <p style={{ color: '#ffcc66' }}>
+              El Draft compartido se habilitará después de
+              instalar y probar las funciones del servidor.
+            </p>
+          </>
+        )}
+      </div>
+    );
+  }
 
   return (
     <section className="fantasy-panel" style={{ margin: '15px auto' }}>
@@ -277,7 +391,7 @@ export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin 
         />
 
         <div className="fantasy-draft-dato fantasy-draft-ronda">
-          {turno?.ronda || 10} DE 10
+          {turno?.ronda || 18} DE 18
         </div>
 
         <div className="fantasy-draft-dato fantasy-draft-seleccion">
@@ -345,26 +459,60 @@ export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin 
           <p style={{ margin: "8px 0", fontSize: 13 }}>{peloterosFiltrados.length} peloteros encontrados</p>
           {mensajeSeleccion && <p role="status">{mensajeSeleccion}</p>}
 
-          {peloterosFiltrados.map(j => (
+          {peloterosFiltrados.map(j => {
+            const equiposSeleccionaron = new Set(
+              draft.selecciones
+                .filter(s => s.jugadorId === j.id)
+                .map(s => s.equipoId)
+            ).size;
+
+            const cupoCompleto = equiposSeleccionaron >= 5;
+            const yaSeleccionadoPorEquipo = Boolean(
+              turno && draft.selecciones.some(s =>
+                s.jugadorId === j.id &&
+                s.equipoId === turno.equipoId
+              )
+            );
+
+            return (
             <div key={j.id} className="fantasy-posicion">
               <span className="fantasy-posicion-codigo">{j.posicion}</span>
               <span className="fantasy-posicion-nombre">{j.nombre}</span>
               <span>
                 {equiposSoftbol.find(e => e.id === j.equipoId)?.nombre || 'Equipo'}
               </span>
+              <span style={{
+                color: cupoCompleto ? '#ff7777' : '#f2c14e',
+                fontWeight: 'bold',
+                fontSize: 12
+              }}>
+                {equiposSeleccionaron}/5
+                {cupoCompleto
+                  ? ' · CUPO COMPLETO'
+                  : equiposSeleccionaron === 4
+                    ? ' · ÚLTIMO CUPO'
+                    : ' · DISPONIBLE'}
+              </span>
               <button
                 type="button"
                 disabled={
                   draft.estado !== 'activo' ||
                   !turno ||
-                  segundos === 0
+                  segundos === 0 ||
+                  cupoCompleto ||
+                  yaSeleccionadoPorEquipo
                 }
                 onClick={() => elegirPelotero(j)}
               >
-                SELECCIONAR
+                {cupoCompleto
+                  ? 'CUPO COMPLETO'
+                  : yaSeleccionadoPorEquipo
+                    ? 'YA SELECCIONADO'
+                    : 'SELECCIONAR'}
               </button>
             </div>
-          ))}
+            );
+          })}
 
           {peloterosFiltrados.length === 0 && (
             <p style={{ margin: "8px 0", fontSize: 13 }}>No hay peloteros que coincidan con la búsqueda.</p>
@@ -437,7 +585,7 @@ export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin 
                 <div key={equipo.equipoId} className="fantasy-posicion"
                   style={{ justifyContent: 'space-between' }}>
                   <span>{equipo.equipoNombre}</span>
-                  <strong>{cantidad}/10 jugadores</strong>
+                  <strong>{cantidad}/18 jugadores</strong>
                 </div>
               );
             })}
@@ -481,11 +629,11 @@ export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin 
                 <strong>
                   {draft.selecciones.filter(
                     s => s.equipoId === equipoVisible
-                  ).length}/10 jugadores seleccionados
+                  ).length}/18 jugadores seleccionados
                 </strong>
               </p>
 
-              {Array.from({ length: 10 }, (_, i) => {
+              {Array.from({ length: 18 }, (_, i) => {
                 const ronda = i + 1;
                 const posicion = obtenerPosicionRonda(ronda);
                 const elegido = draft.selecciones.find(
@@ -526,12 +674,12 @@ export default function SalaDraft({ campeonato, nombreEquipo, onVolver, isAdmin 
 
       <h3>
         {campeonato === 'softbol-veteranos'
-          ? '📋 TURNOS DE LA RONDA ' + (turno?.ronda || 10)
+          ? '📋 TURNOS DE LA RONDA ' + (turno?.ronda || 18)
           : 'ORDEN DE SELECCIÓN'}
       </h3>
       {(campeonato === 'softbol-veteranos'
         ? draft.orden.filter(
-            seleccion => seleccion.ronda === (turno?.ronda || 10)
+            seleccion => seleccion.ronda === (turno?.ronda || 18)
           )
         : draft.orden.slice(0, 12)
       ).map((seleccion) => (
