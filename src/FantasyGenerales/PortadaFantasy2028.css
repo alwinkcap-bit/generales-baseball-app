@@ -1,0 +1,517 @@
+
+/* Portada Fantasy 2028: diseño independiente */
+
+.fantasy-generales.fantasy-portada-activa {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  min-height: 100vh !important;
+  height: auto !important;
+  background: linear-gradient(145deg, #07172b, #102e50) !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-encabezado,
+.fantasy-generales.fantasy-portada-activa .fantasy-seleccion-titulo {
+  position: relative !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-align: center !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 20px !important;
+  width: min(100% - 32px, 1000px) !important;
+  max-width: 1000px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 20px auto !important;
+  padding: 0 !important;
+  transform: none !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+  position: relative !important;
+  inset: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 250px !important;
+  margin: 0 !important;
+  padding: 20px !important;
+  background: linear-gradient(145deg, #173e6a, #0b2039) !important;
+  border: 1px solid #d6aa4d !important;
+  border-radius: 18px !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-tarjeta-imagen {
+  position: static !important;
+  display: block !important;
+  width: 180px !important;
+  max-width: 85% !important;
+  height: 110px !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+  transform: none !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato strong,
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato small,
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato .fantasy-entrar {
+  position: static !important;
+  display: block !important;
+  transform: none !important;
+  text-align: center !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato strong {
+  color: white !important;
+  font-size: 21px !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-entrar {
+  background: #f5c747 !important;
+  color: #102039 !important;
+  padding: 10px 30px !important;
+  border-radius: 25px !important;
+  font-weight: 900 !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-ranking-portada {
+  position: relative !important;
+  width: min(100% - 32px, 1000px) !important;
+  max-width: 1000px !important;
+  margin: 20px auto 40px !important;
+  transform: none !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+    grid-template-columns: 1fr !important;
+  }
+
+  .fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+    min-height: 220px !important;
+  }
+}
+
+/* Corrección de distribución: tarjetas y ranking */
+.fantasy-generales.fantasy-portada-activa {
+  justify-content: flex-start !important;
+  overflow: visible !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-auto-rows: auto !important;
+  gap: 18px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 20px auto 30px !important;
+  flex: none !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+  position: relative !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  inset: auto !important;
+  min-height: 210px !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 20px !important;
+  overflow: hidden !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-tarjeta-imagen {
+  width: min(100%, 260px) !important;
+  max-width: 100% !important;
+  height: 145px !important;
+  object-fit: contain !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-ranking-portada {
+  position: relative !important;
+  inset: auto !important;
+  display: block !important;
+  clear: both !important;
+  float: none !important;
+  transform: none !important;
+  flex: none !important;
+  height: auto !important;
+  margin: 20px auto 50px !important;
+  z-index: 1 !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+    grid-template-columns: 1fr !important;
+  }
+
+  .fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+    min-height: 190px !important;
+  }
+}
+
+/* Ajuste compacto de portada Fantasy */
+.fantasy-generales.fantasy-portada-activa {
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow-y: visible !important;
+  padding-bottom: 45px !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  margin: 12px auto 24px !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 18px 14px !important;
+  gap: 8px !important;
+  justify-content: center !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-tarjeta-imagen {
+  width: min(100%, 260px) !important;
+  height: auto !important;
+  max-height: 145px !important;
+  object-fit: contain !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-ranking-portada {
+  position: relative !important;
+  display: block !important;
+  width: min(100% - 32px, 1000px) !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  margin: 16px auto 35px !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* RANKING FANTASY RECONSTRUIDO */
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+  grid-auto-rows: 190px !important;
+  gap: 14px !important;
+  margin-bottom: 24px !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+  min-height: 0 !important;
+  height: 190px !important;
+  padding: 12px !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-tarjeta-imagen {
+  width: 250px !important;
+  height: 145px !important;
+  object-fit: contain !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-ranking-portada {
+  position: relative !important;
+  inset: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  width: min(100% - 32px, 1000px) !important;
+  max-width: 1000px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 auto 50px !important;
+  padding: 24px !important;
+  background: linear-gradient(145deg, #17395f, #0b203a) !important;
+  border: 1px solid #d6aa4d !important;
+  border-radius: 18px !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-ranking-lista {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-ranking-fila {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  min-height: 52px !important;
+  padding: 12px !important;
+  background: #1b416a !important;
+  border-radius: 10px !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: 175px !important;
+  }
+
+  .fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+    height: 175px !important;
+  }
+
+  .fantasy-generales.fantasy-portada-activa .fantasy-ranking-portada {
+    padding: 16px !important;
+  }
+}
+
+/* RANKING FANTASY - DESPLAZAMIENTO INDEPENDIENTE */
+.fantasy-generales.fantasy-portada-activa .fantasy-ranking-portada {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  order: 3 !important;
+  flex-shrink: 0 !important;
+  width: min(92%, 540px) !important;
+  max-height: 300px !important;
+  min-height: 180px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #f5c64e #102844;
+  margin: 12px auto 30px !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-ranking-lista {
+  flex-shrink: 0 !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-ranking-titulo {
+  flex-shrink: 0 !important;
+}
+
+
+/* CORRECCION SCROLL PORTADA FANTASY 286 */
+.fantasy-generales.fantasy-portada-activa {
+  position: fixed !important;
+  inset: 0 !important;
+  height: 100dvh !important;
+  min-height: 0 !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior-y: contain;
+  box-sizing: border-box !important;
+  padding-bottom: 70px !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-ranking-portada {
+  position: relative !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  margin-bottom: 35px !important;
+}
+
+
+/* PORTADA COMPACTA FANTASY 290 */
+
+/* Mantener la ventana Fantasy desplazable */
+.fantasy-generales.fantasy-portada-activa {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-top: 12px !important;
+  padding-bottom: 24px !important;
+}
+
+/* Botón volver arriba, sin superposiciones */
+.fantasy-generales.fantasy-portada-activa > .fantasy-volver {
+  position: relative !important;
+  inset: auto !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  order: -10 !important;
+  align-self: flex-start !important;
+  display: block !important;
+  width: max-content !important;
+  height: auto !important;
+  margin: 0 0 8px 12px !important;
+  padding: 9px 14px !important;
+  transform: none !important;
+  z-index: 5 !important;
+}
+
+/* Cuatro campeonatos compactos */
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+  gap: 9px !important;
+  margin-top: 10px !important;
+  margin-bottom: 12px !important;
+  grid-auto-rows: auto !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+  height: 145px !important;
+  min-height: 145px !important;
+  max-height: 145px !important;
+  padding: 5px 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-tarjeta-imagen {
+  width: 225px !important;
+  max-width: 95% !important;
+  height: 125px !important;
+  object-fit: contain !important;
+  margin: auto !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-encabezado {
+  margin-bottom: 4px !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-seleccion-titulo {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+    grid-template-columns: 1fr !important;
+    gap: 9px !important;
+  }
+}
+
+
+/* AJUSTE MARCOS FANTASY 291 */
+
+/* Marcos más ajustados */
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+  height: 155px !important;
+  min-height: 155px !important;
+  max-height: 155px !important;
+  padding: 3px 6px !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Recuperar tamaño de las imágenes */
+.fantasy-generales.fantasy-portada-activa .fantasy-tarjeta-imagen {
+  width: 260px !important;
+  max-width: 98% !important;
+  height: 145px !important;
+  object-fit: contain !important;
+  margin: auto !important;
+}
+
+/* Reducir separación entre marcos */
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+  gap: 7px !important;
+}
+
+/* AJUSTE FINAL TARJETAS FANTASY 292 */
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  width: min(100%, 340px) !important;
+  max-width: 340px !important;
+  gap: 7px !important;
+  margin: 10px auto 15px !important;
+  padding: 0 !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 148px !important;
+  min-height: 148px !important;
+  max-height: 148px !important;
+  margin: 0 !important;
+  padding: 3px !important;
+  box-sizing: border-box !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-tarjeta-imagen {
+  position: relative !important;
+  display: block !important;
+  width: 285px !important;
+  max-width: 98% !important;
+  height: 140px !important;
+  object-fit: contain !important;
+  margin: auto !important;
+  transform: none !important;
+}
+
+/* FANTASY 293 - IMAGEN COMPLETA EN EL MARCO */
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+  width: min(100%, 340px) !important;
+  max-width: 340px !important;
+  gap: 8px !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: 1.9 / 1 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  border-radius: 14px !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-tarjeta-imagen {
+  display: block !important;
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transform: none !important;
+}
+
+
+/* AJUSTE VERTICAL IMAGENES 294 */
+.fantasy-generales.fantasy-portada-activa .fantasy-tarjeta-imagen {
+  transform: translateY(20px) !important;
+  object-fit: contain !important;
+}
