@@ -1,5 +1,6 @@
 import PanelEquiposSoftbol from './PanelEquiposSoftbol';
 import SalaDraft from './SalaDraft';
+import SalaDraftVeteranos from './SalaDraftVeteranos';
 import { supabase } from '../supabase';
 import { posicionesFantasy } from './posicionesFantasy';
 import React, { useState } from 'react';
@@ -199,7 +200,16 @@ export default function FantasyGenerales({ onCerrar, isAdmin = false, usuario = 
           )}
         </section>
       ) : salaDraftOpen && campeonato ? (
-        <SalaDraft
+        campeonato.id === 'softbol-veteranos' && salaCreada?.sala_id ? (
+          <SalaDraftVeteranos
+            key={salaCreada.sala_id}
+            salaId={salaCreada.sala_id}
+            usuario={usuario}
+            isAdmin={isAdmin}
+            onVolver={() => setSalaDraftOpen(false)}
+          />
+        ) : (
+          <SalaDraft
           isAdmin={isAdmin}
           usuario={usuario}
           key={campeonato.id}
@@ -212,6 +222,7 @@ export default function FantasyGenerales({ onCerrar, isAdmin = false, usuario = 
           }
           onVolver={() => setSalaDraftOpen(false)}
         />
+        )
       ) : !campeonato ? (
         <>
           <h2 className="fantasy-seleccion-titulo">ELIGE TU CAMPEONATO</h2>

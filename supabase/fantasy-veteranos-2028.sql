@@ -85,6 +85,10 @@ SET search_path = ''
 AS $$
   SELECT
     auth.uid() IS NOT NULL
+    AND COALESCE(
+      (auth.jwt() ->> 'is_anonymous')::boolean,
+      false
+    ) = false
     AND EXISTS (
       SELECT 1
       FROM public.fantasy_salas s
@@ -119,6 +123,10 @@ SECURITY DEFINER
 SET search_path = ''
 AS $$
   SELECT auth.uid() IS NOT NULL
+    AND COALESCE(
+      (auth.jwt() ->> 'is_anonymous')::boolean,
+      false
+    ) = false
     AND EXISTS (
       SELECT 1
       FROM public.fantasy_veteranos_admins a
@@ -466,36 +474,45 @@ ENABLE ROW LEVEL SECURITY;
 
 -- Vincular las selecciones al catálogo oficial de Monagrillo.
 
-ALTER TABLE public.fantasy_veteranos_selecciones
-ADD CONSTRAINT fantasy_veteranos_selecciones_pelotero_fkey
-FOREIGN KEY (jugador_id)
-REFERENCES public.fantasy_veteranos_peloteros(id)
-ON DELETE RESTRICT;
 
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'fantasy_veteranos_selecciones_pelotero_fkey'
+      AND conrelid = 'public.fantasy_veteranos_selecciones'::regclass
+  ) THEN
+    ALTER TABLE public.fantasy_veteranos_selecciones
+    ADD CONSTRAINT fantasy_veteranos_selecciones_pelotero_fkey
+    FOREIGN KEY (jugador_id)
+    REFERENCES public.fantasy_veteranos_peloteros(id)
+    ON DELETE RESTRICT;
+  END IF;
 
--- Garantizar que cada selección corresponda a un turno oficial.
--- El participante y la ronda deben coincidir con el turno registrado.
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'fantasy_veteranos_turno_identidad_unica'
+      AND conrelid = 'public.fantasy_veteranos_turnos'::regclass
+  ) THEN
+    ALTER TABLE public.fantasy_veteranos_turnos
+    ADD CONSTRAINT fantasy_veteranos_turno_identidad_unica
+    UNIQUE (draft_id, numero_turno, participante_id, ronda);
+  END IF;
 
-ALTER TABLE public.fantasy_veteranos_turnos
-ADD CONSTRAINT fantasy_veteranos_turno_identidad_unica
-UNIQUE (draft_id, numero_turno, participante_id, ronda);
-
-ALTER TABLE public.fantasy_veteranos_selecciones
-ADD CONSTRAINT fantasy_veteranos_seleccion_turno_fkey
-FOREIGN KEY (
-  draft_id,
-  numero_turno,
-  participante_id,
-  ronda
-)
-REFERENCES public.fantasy_veteranos_turnos (
-  draft_id,
-  numero_turno,
-  participante_id,
-  ronda
-)
-ON DELETE RESTRICT;
-
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint
+    WHERE conname = 'fantasy_veteranos_seleccion_turno_fkey'
+      AND conrelid = 'public.fantasy_veteranos_selecciones'::regclass
+  ) THEN
+    ALTER TABLE public.fantasy_veteranos_selecciones
+    ADD CONSTRAINT fantasy_veteranos_seleccion_turno_fkey
+    FOREIGN KEY (draft_id, numero_turno, participante_id, ronda)
+    REFERENCES public.fantasy_veteranos_turnos
+    (draft_id, numero_turno, participante_id, ronda)
+    ON DELETE RESTRICT;
+  END IF;
+END;
+$$;
 
 -- Proteger las tablas del Draft contra escrituras directas.
 -- Las operaciones se realizarán mediante funciones autorizadas.
@@ -959,6 +976,112 @@ FOR EACH ROW
 EXECUTE FUNCTION public.fantasy_veteranos_exigir_catalogo();
 
 
+
+-- Registrar peloteros oficiales de Monagrillo.
+CREATE OR REPLACE FUNCTION public.fantasy_veteranos_registrar_pelotero(
+  p_nombre text,
+  p_posicion text
+)
+RETURNS uuid
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+DECLARE
+  v_id uuid;
+BEGIN
+  IF NOT public.fantasy_veteranos_puede_editar_catalogo() THEN
+    RAISE EXCEPTION 'No tienes permisos para registrar peloteros';
+  END IF;
+
+  IF p_nombre IS NULL OR length(trim(p_nombre)) = 0 THEN
+    RAISE EXCEPTION 'Debes indicar el nombre del pelotero';
+  END IF;
+
+  IF p_posicion IS NULL OR p_posicion NOT IN (
+    'P', 'C', '1B', '2B', '3B', 'SS', 'OF', 'DH'
+  ) THEN
+    RAISE EXCEPTION 'Posición no válida';
+  END IF;
+
+  INSERT INTO public.fantasy_veteranos_peloteros (
+    nombre, posicion
+  )
+  VALUES (trim(p_nombre), p_posicion)
+  RETURNING id INTO v_id;
+
+  RETURN v_id;
+END;
+$$;
+
+REVOKE ALL ON FUNCTION
+public.fantasy_veteranos_registrar_pelotero(text, text)
+FROM PUBLIC, anon, authenticated;
+
+GRANT EXECUTE ON FUNCTION
+public.fantasy_veteranos_registrar_pelotero(text, text)
+TO authenticated;
+
+
+-- Editar o desactivar peloteros oficiales de Monagrillo.
+CREATE OR REPLACE FUNCTION public.fantasy_veteranos_actualizar_pelotero(
+  p_id uuid,
+  p_nombre text,
+  p_posicion text,
+  p_activo boolean
+)
+RETURNS void
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+BEGIN
+  IF NOT public.fantasy_veteranos_puede_editar_catalogo() THEN
+    RAISE EXCEPTION 'No tienes permisos para editar peloteros';
+  END IF;
+
+  IF p_id IS NULL THEN
+    RAISE EXCEPTION 'Debes indicar el pelotero';
+  END IF;
+
+  IF p_nombre IS NULL OR length(trim(p_nombre)) = 0 THEN
+    RAISE EXCEPTION 'El nombre no puede estar vacío';
+  END IF;
+
+  IF p_posicion IS NULL OR p_posicion NOT IN (
+    'P', 'C', '1B', '2B', '3B', 'SS', 'OF', 'DH'
+  ) THEN
+    RAISE EXCEPTION 'Posición no válida';
+  END IF;
+
+  IF p_activo IS NULL THEN
+    RAISE EXCEPTION 'Debes indicar el estado del pelotero';
+  END IF;
+
+  UPDATE public.fantasy_veteranos_peloteros
+  SET nombre = trim(p_nombre),
+      posicion = p_posicion,
+      activo = p_activo
+  WHERE id = p_id;
+
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'Pelotero no encontrado';
+  END IF;
+END;
+$$;
+
+REVOKE ALL ON FUNCTION
+public.fantasy_veteranos_actualizar_pelotero(
+  uuid, text, text, boolean
+)
+FROM PUBLIC, anon, authenticated;
+
+GRANT EXECUTE ON FUNCTION
+public.fantasy_veteranos_actualizar_pelotero(
+  uuid, text, text, boolean
+)
+TO authenticated;
+
 -- Proteger el catálogo mientras exista un Draft activo.
 CREATE OR REPLACE FUNCTION public.fantasy_veteranos_proteger_catalogo()
 RETURNS trigger
@@ -985,7 +1108,7 @@ END;
 $$;
 
 CREATE TRIGGER fantasy_veteranos_proteger_catalogo_trigger
-BEFORE UPDATE OR DELETE
+BEFORE INSERT OR UPDATE OR DELETE
 ON public.fantasy_veteranos_peloteros
 FOR EACH ROW
 EXECUTE FUNCTION public.fantasy_veteranos_proteger_catalogo();
@@ -1020,4 +1143,126 @@ BEFORE INSERT
 ON public.fantasy_participantes
 FOR EACH ROW
 EXECUTE FUNCTION public.fantasy_veteranos_bloquear_ingreso();
+
+
+-- POLITICAS DE LECTURA VETERANOS 2028
+-- Catálogo visible para usuarios autenticados.
+-- Incluye sesiones anónimas utilizadas por Fantasy.
+
+GRANT SELECT ON public.fantasy_veteranos_peloteros
+TO authenticated;
+
+DROP POLICY IF EXISTS veteranos_leer_peloteros
+ON public.fantasy_veteranos_peloteros;
+
+CREATE POLICY veteranos_leer_peloteros
+ON public.fantasy_veteranos_peloteros
+FOR SELECT TO authenticated
+USING (true);
+
+-- Solo integrantes de la sala pueden consultar su Draft.
+
+GRANT SELECT ON public.fantasy_veteranos_drafts
+TO authenticated;
+
+DROP POLICY IF EXISTS veteranos_leer_drafts
+ON public.fantasy_veteranos_drafts;
+
+CREATE POLICY veteranos_leer_drafts
+ON public.fantasy_veteranos_drafts
+FOR SELECT TO authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM public.fantasy_participantes p
+    WHERE p.sala_id = fantasy_veteranos_drafts.sala_id
+      AND p.usuario_id = (SELECT auth.uid())
+  )
+  OR EXISTS (
+    SELECT 1
+    FROM public.fantasy_salas s
+    WHERE s.id = fantasy_veteranos_drafts.sala_id
+      AND s.organizador_id = (SELECT auth.uid())
+  )
+);
+
+GRANT SELECT ON public.fantasy_veteranos_turnos
+TO authenticated;
+
+DROP POLICY IF EXISTS veteranos_leer_turnos
+ON public.fantasy_veteranos_turnos;
+
+CREATE POLICY veteranos_leer_turnos
+ON public.fantasy_veteranos_turnos
+FOR SELECT TO authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM public.fantasy_veteranos_drafts d
+    WHERE d.id = fantasy_veteranos_turnos.draft_id
+  )
+);
+
+GRANT SELECT ON public.fantasy_veteranos_selecciones
+TO authenticated;
+
+DROP POLICY IF EXISTS veteranos_leer_selecciones
+ON public.fantasy_veteranos_selecciones;
+
+CREATE POLICY veteranos_leer_selecciones
+ON public.fantasy_veteranos_selecciones
+FOR SELECT TO authenticated
+USING (
+  EXISTS (
+    SELECT 1
+    FROM public.fantasy_veteranos_drafts d
+    WHERE d.id = fantasy_veteranos_selecciones.draft_id
+  )
+);
+
+
+-- LIMITE OFICIAL DE 40 PELOTEROS MONAGRILLO
+-- Serializa las altas y reactivaciones para evitar superar el límite.
+
+CREATE OR REPLACE FUNCTION public.fantasy_veteranos_limitar_catalogo()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY INVOKER
+SET search_path = ''
+AS $$
+DECLARE
+  v_total integer;
+BEGIN
+  -- Solo comprobar altas o reactivaciones.
+  IF NEW.activo = true THEN
+    IF TG_OP = 'INSERT' THEN
+      PERFORM pg_advisory_xact_lock(2028, 40);
+    ELSIF OLD.activo = false THEN
+      PERFORM pg_advisory_xact_lock(2028, 40);
+    ELSE
+      RETURN NEW;
+    END IF;
+
+    SELECT COUNT(*) INTO v_total
+    FROM public.fantasy_veteranos_peloteros
+    WHERE activo = true;
+
+    IF v_total >= 40 THEN
+      RAISE EXCEPTION
+        'Monagrillo ya tiene 40 peloteros activos';
+    END IF;
+  END IF;
+
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS fantasy_veteranos_limitar_catalogo_trigger
+ON public.fantasy_veteranos_peloteros;
+
+CREATE TRIGGER fantasy_veteranos_limitar_catalogo_trigger
+BEFORE INSERT OR UPDATE OF activo
+ON public.fantasy_veteranos_peloteros
+FOR EACH ROW
+EXECUTE FUNCTION public.fantasy_veteranos_limitar_catalogo();
 
