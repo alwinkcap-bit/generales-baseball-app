@@ -7,7 +7,7 @@ import ManagerVirtual from './ManagerVirtual/ManagerVirtual'
 import FantasyGenerales from './FantasyGenerales/FantasyGenerales'
 import { estiloPortada } from './EditorPortada'
 
-import VideosCintillo from './VideosCintillo'
+
 
 
 import './inicio.css';
@@ -789,7 +789,7 @@ const responderReto = (opcionElegida) => {
           </section>
         )}
 
-<VideosCintillo isAdmin={isAdmin} />
+
 
         
 
