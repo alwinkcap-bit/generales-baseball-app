@@ -267,7 +267,7 @@
   width: min(1180px, calc(100% - 32px));
   min-height: 0;
   aspect-ratio: 2 / 1;
-  background: url('/portada-generales-mlb.png') center / 100% 100% no-repeat !important;
+  background: url('./portada-generales-mlb.webp') center / 100% 100% no-repeat !important;
   overflow: hidden;
 }
 
