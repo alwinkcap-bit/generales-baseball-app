@@ -505,6 +505,12 @@ const responderReto = (opcionElegida) => {
 
       <main>
         <section className="inicio-hero">
+          <img
+            className="portada-mlb-fondo"
+            src={`${import.meta.env.BASE_URL}portada-generales-mlb.webp`}
+            alt="Portada Generales Baseball"
+          />
+
 <div className="inicio-hero-contenido">
   <span className="inicio-etiqueta">TU MUNDO DE BÉISBOL</span>
   <h1>
@@ -524,7 +530,6 @@ const responderReto = (opcionElegida) => {
     <button
       type="button"
       className="inicio-boton fantasy-directo"
-      disabled
       title="Fantasy Generales 2028 — COMING SOON"
       onClick={() => {
         setJuegosOpen(false)
@@ -532,7 +537,7 @@ const responderReto = (opcionElegida) => {
       }}
     >
       <img
-        src={`${import.meta.env.BASE_URL}fantasy-generales-2028-banner.png`}
+        src={`${import.meta.env.BASE_URL}fantasy-generales-2028-banner.webp`}
         alt="Fantasy Generales 2028"
         className="fantasy-banner-imagen"
       />

@@ -107,7 +107,7 @@ export function seleccionarJugador(draft, equipoId, jugador) {
     );
   }
 
-  // Veteranos: máximo cinco equipos Fantasy por pelotero.
+  // Veteranos: máximo tres equipos Fantasy por pelotero.
   if (draft.campeonato === 'softbol-veteranos') {
     const equiposQueLoEligieron = new Set(
       draft.selecciones
@@ -115,9 +115,9 @@ export function seleccionarJugador(draft, equipoId, jugador) {
         .map(s => s.equipoId)
     );
 
-    if (equiposQueLoEligieron.size >= 5) {
+    if (equiposQueLoEligieron.size >= 3) {
       throw new Error(
-        'CUPO COMPLETO: este pelotero ya fue seleccionado por 5 equipos Fantasy.'
+        'CUPO COMPLETO: este pelotero ya fue seleccionado por 3 equipos Fantasy.'
       );
     }
   }

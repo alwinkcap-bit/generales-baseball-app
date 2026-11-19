@@ -556,6 +556,106 @@ ENABLE ROW LEVEL SECURITY;
 
 -- Selección segura de peloteros en Fantasy Veteranos.
 
+
+-- Comprobar que una elección no agote los cupos por posición.
+CREATE OR REPLACE FUNCTION public.fantasy_veteranos_cupos_viables(
+  p_draft_id uuid,
+  p_participante_id uuid,
+  p_jugador_id uuid,
+  p_numero_turno integer
+)
+RETURNS boolean
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+  WITH jugador AS (
+    SELECT posicion
+    FROM public.fantasy_veteranos_peloteros
+    WHERE id = p_jugador_id
+  ),
+  posiciones AS (
+    SELECT unnest(ARRAY[
+      'P','C','1B','2B','3B','SS','OF','DH'
+    ]) AS posicion
+  ),
+  pendientes AS (
+    SELECT t.posicion_requerida AS posicion,
+           COUNT(*) AS necesarios
+    FROM public.fantasy_veteranos_turnos t
+    WHERE t.draft_id = p_draft_id
+      AND t.numero_turno > p_numero_turno
+      AND t.posicion_requerida <> 'LIBRE'
+    GROUP BY t.posicion_requerida
+  ),
+  capacidad AS (
+    SELECT p.posicion,
+           SUM(
+             GREATEST(
+               0,
+               5 - (
+                 SELECT COUNT(DISTINCT s.participante_id)
+                 FROM public.fantasy_veteranos_selecciones s
+                 WHERE s.draft_id = p_draft_id
+                   AND s.jugador_id = p.id
+               ) - CASE WHEN p.id = p_jugador_id THEN 1 ELSE 0 END
+             )
+           ) AS disponibles
+    FROM public.fantasy_veteranos_peloteros p
+    WHERE p.activo = true
+      AND p.equipo_real = 'Monagrillo'
+    GROUP BY p.posicion
+  )
+  SELECT NOT EXISTS (
+    SELECT 1
+    FROM posiciones pos
+    LEFT JOIN pendientes pen USING (posicion)
+    LEFT JOIN capacidad cap USING (posicion)
+    WHERE COALESCE(cap.disponibles, 0)
+        < COALESCE(pen.necesarios, 0)
+  )
+  AND NOT EXISTS (
+    SELECT 1
+    FROM (
+      SELECT
+        t.participante_id,
+        COUNT(*) AS turnos_pendientes
+      FROM public.fantasy_veteranos_turnos t
+      WHERE t.draft_id = p_draft_id
+        AND t.numero_turno > p_numero_turno
+      GROUP BY t.participante_id
+    ) pendientes_equipo
+    WHERE (
+      SELECT COUNT(*)
+      FROM public.fantasy_veteranos_peloteros p
+      WHERE p.activo = true
+        AND p.equipo_real = 'Monagrillo'
+        AND NOT EXISTS (
+          SELECT 1
+          FROM public.fantasy_veteranos_selecciones s
+          WHERE s.draft_id = p_draft_id
+            AND s.participante_id = pendientes_equipo.participante_id
+            AND s.jugador_id = p.id
+        )
+        AND NOT (
+          pendientes_equipo.participante_id = p_participante_id
+          AND p.id = p_jugador_id
+        )
+        AND (
+          SELECT COUNT(DISTINCT s.participante_id)
+          FROM public.fantasy_veteranos_selecciones s
+          WHERE s.draft_id = p_draft_id
+            AND s.jugador_id = p.id
+        ) + CASE WHEN p.id = p_jugador_id THEN 1 ELSE 0 END < 3
+    ) < pendientes_equipo.turnos_pendientes
+  );
+$$;
+
+REVOKE ALL ON FUNCTION
+public.fantasy_veteranos_cupos_viables(uuid, uuid, uuid, integer)
+FROM PUBLIC, anon, authenticated;
+
 CREATE OR REPLACE FUNCTION public.fantasy_veteranos_seleccionar(
   p_draft_id uuid,
   p_jugador_id uuid
@@ -639,9 +739,19 @@ BEGIN
     FROM public.fantasy_veteranos_selecciones
     WHERE draft_id = p_draft_id
       AND jugador_id = p_jugador_id
-  ) >= 5 THEN
+  ) >= 3 THEN
     RAISE EXCEPTION
-      'CUPO COMPLETO: este pelotero ya pertenece a 5 equipos Fantasy';
+      'CUPO COMPLETO: este pelotero ya pertenece a 3 equipos Fantasy';
+  END IF;
+
+  IF NOT public.fantasy_veteranos_cupos_viables(
+    p_draft_id,
+    v_turno.participante_id,
+    p_jugador_id,
+    v_turno.numero_turno
+  ) THEN
+    RAISE EXCEPTION
+      'Esta selección dejaría sin cupos una posición pendiente';
   END IF;
 
   INSERT INTO public.fantasy_veteranos_selecciones (
@@ -713,7 +823,7 @@ DECLARE
   v_total integer;
 BEGIN
   -- Solo puede ejecutarse desde el servicio del servidor.
-  IF auth.role() IS DISTINCT FROM 'service_role' THEN
+  IF session_user <> 'postgres' THEN
     RAISE EXCEPTION 'Operación reservada al servidor';
   END IF;
 
@@ -760,8 +870,19 @@ BEGIN
       FROM public.fantasy_veteranos_selecciones s
       WHERE s.draft_id = p_draft_id
         AND s.jugador_id = p.id
-    ) < 5
-  ORDER BY p.id
+    ) < 3
+    AND public.fantasy_veteranos_cupos_viables(
+      p_draft_id,
+      v_turno.participante_id,
+      p.id,
+      v_turno.numero_turno
+    )
+  ORDER BY (
+    SELECT COUNT(*)
+    FROM public.fantasy_veteranos_selecciones s
+    WHERE s.draft_id = p_draft_id
+      AND s.jugador_id = p.id
+  ), p.id
   LIMIT 1;
 
   IF v_jugador IS NULL THEN
@@ -817,6 +938,21 @@ GRANT EXECUTE ON FUNCTION
 public.fantasy_veteranos_resolver_vencido(uuid)
 TO service_role;
 
+
+
+-- Resolver turnos vencidos desde el servidor cada 5 segundos.
+CREATE EXTENSION IF NOT EXISTS pg_cron;
+
+SELECT cron.schedule(
+  'fantasy_veteranos_2028_turnos_vencidos',
+  '5 seconds',
+  $cron$
+    SELECT public.fantasy_veteranos_resolver_vencido(d.id)
+    FROM public.fantasy_veteranos_drafts d
+    WHERE d.estado = 'activo'
+      AND d.turno_vence_en <= clock_timestamp();
+  $cron$
+);
 
 -- Consulta segura del estado del Draft.
 CREATE OR REPLACE FUNCTION public.fantasy_veteranos_estado_draft(
@@ -928,14 +1064,14 @@ SET search_path = ''
 AS $$
   SELECT
     COUNT(*) = 40
-    AND COUNT(*) FILTER (WHERE posicion = 'P') >= 2
-    AND COUNT(*) FILTER (WHERE posicion = 'C') >= 2
-    AND COUNT(*) FILTER (WHERE posicion = '1B') >= 2
-    AND COUNT(*) FILTER (WHERE posicion = '2B') >= 2
-    AND COUNT(*) FILTER (WHERE posicion = '3B') >= 2
-    AND COUNT(*) FILTER (WHERE posicion = 'SS') >= 2
-    AND COUNT(*) FILTER (WHERE posicion = 'OF') >= 6
-    AND COUNT(*) FILTER (WHERE posicion = 'DH') >= 2
+    AND COUNT(*) FILTER (WHERE posicion = 'P') >= 3
+    AND COUNT(*) FILTER (WHERE posicion = 'C') >= 3
+    AND COUNT(*) FILTER (WHERE posicion = '1B') >= 3
+    AND COUNT(*) FILTER (WHERE posicion = '2B') >= 3
+    AND COUNT(*) FILTER (WHERE posicion = '3B') >= 3
+    AND COUNT(*) FILTER (WHERE posicion = 'SS') >= 3
+    AND COUNT(*) FILTER (WHERE posicion = 'OF') >= 8
+    AND COUNT(*) FILTER (WHERE posicion = 'DH') >= 3
   FROM public.fantasy_veteranos_peloteros
   WHERE activo = true
     AND equipo_real = 'Monagrillo';

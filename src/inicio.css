@@ -7786,7 +7786,7 @@ button.inicio-juegos-cintillo > b {
   padding: 0 !important;
   border: 0 !important;
   border-radius: 18px !important;
-  background-image: url('/generales-baseball-app/fantasy-generales-2028.png') !important;
+  background-image: url('/generales-baseball-app/fantasy-generales-2028.webp') !important;
   background-repeat: no-repeat !important;
   background-size: 100% auto !important;
   background-position: center bottom !important;
@@ -7851,7 +7851,7 @@ button.inicio-juegos-cintillo > b {
   border: none !important;
   border-radius: 20px !important;
 
-  background-image: url('/generales-baseball-app/fantasy-generales-2028-banner.png') !important;
+  background-image: url('/generales-baseball-app/fantasy-generales-2028-banner.webp') !important;
   background-color: transparent !important;
   background-size: contain !important;
   background-position: center !important;
@@ -8269,5 +8269,268 @@ button.inicio-juegos-cintillo > b {
 @media (max-width: 520px) {
   .inicio-hero-contenido .inicio-acciones .fantasy-directo {
     transform: translate(-43px, -6px) !important;
+  }
+}
+
+/* GENERALES - CABECERA MOVIL EN DOS FILAS */
+@media (max-width: 600px) {
+  .inicio-app .inicio-header {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: auto auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 12px 14px !important;
+    gap: 12px !important;
+    align-items: center !important;
+  }
+
+  .inicio-app .inicio-header .inicio-marca {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    justify-self: start !important;
+  }
+
+  .inicio-app .inicio-header .inicio-avisos-contenedor {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 44px 44px !important;
+    grid-template-rows: 44px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    flex-basis: auto !important;
+    gap: 10px !important;
+    margin: 0 !important;
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+  }
+
+  .inicio-app .inicio-header .inicio-compartir,
+  .inicio-app .inicio-header .inicio-notificacion {
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+}
+
+/* CABECERA GENERALES - ESTILO AZUL DEPORTIVO */
+@media (max-width: 600px) {
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child {
+    background: linear-gradient(135deg, #173c64, #0b2746) !important;
+    border: 1px solid #42658a !important;
+    color: #ffffff !important;
+    border-radius: 10px !important;
+    box-shadow: 0 3px 8px rgba(0,0,0,.22) !important;
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera
+  .instalar-app-texto {
+    color: #ffffff !important;
+    text-shadow: none !important;
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera svg {
+    color: #efc24f !important;
+    background: transparent !important;
+  }
+
+  .inicio-app .inicio-header .inicio-compartir,
+  .inicio-app .inicio-header .inicio-notificacion {
+    background: linear-gradient(135deg, #173c64, #0b2746) !important;
+    border: 1px solid #42658a !important;
+    color: #efc24f !important;
+    border-radius: 10px !important;
+    box-shadow: 0 3px 8px rgba(0,0,0,.22) !important;
+  }
+}
+
+/* GENERALES - BOTONES PREMIUM CON RELIEVE 3D */
+@media (max-width: 600px) {
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child,
+  .inicio-app .inicio-header .inicio-compartir,
+  .inicio-app .inicio-header .inicio-notificacion {
+    background: linear-gradient(
+      180deg,
+      #3675ac 0%,
+      #1a4c80 12%,
+      #10345f 48%,
+      #071b39 100%
+    ) !important;
+
+    border: 1px solid #d6a83b !important;
+    border-radius: 11px !important;
+
+    box-shadow:
+      inset 0 2px 1px rgba(255,255,255,.4),
+      inset 0 -4px 5px rgba(0,0,0,.45),
+      0 5px 0 #041020,
+      0 8px 13px rgba(0,0,0,.4) !important;
+
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,.6) !important;
+    transition: transform .15s ease, box-shadow .15s ease !important;
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child:active,
+  .inicio-app .inicio-header .inicio-compartir:active,
+  .inicio-app .inicio-header .inicio-notificacion:active {
+    transform: translateY(3px) !important;
+    box-shadow:
+      inset 0 3px 6px rgba(0,0,0,.5),
+      0 2px 0 #041020 !important;
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera svg,
+  .inicio-app .inicio-header .inicio-compartir-icono {
+    color: #ffd45a !important;
+    fill: currentColor !important;
+    opacity: 1 !important;
+  }
+}
+
+/* GENERALES - TEXTO DORADO METALICO BRILLANTE */
+@media (max-width: 600px) {
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera
+  .instalar-app-texto {
+    color: #ffd45a !important;
+    background: linear-gradient(
+      180deg,
+      #fff9cc 0%,
+      #ffe875 28%,
+      #ffcb35 52%,
+      #d99513 75%,
+      #fff0a0 100%
+    ) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    font-weight: 900 !important;
+    text-shadow: none !important;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.65))
+            drop-shadow(0 0 3px rgba(255,205,65,.35));
+  }
+}
+
+/* GENERALES - ACABADO 3D PREMIUM DE CABECERA */
+@media (max-width: 600px) {
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera:first-child,
+  .inicio-app .inicio-header .inicio-compartir,
+  .inicio-app .inicio-header .inicio-notificacion {
+    background: linear-gradient(
+      180deg,
+      #5597ce 0%,
+      #27669e 8%,
+      #124577 28%,
+      #092c55 65%,
+      #03152e 100%
+    ) !important;
+
+    border: 1.5px solid #ffd45a !important;
+    border-radius: 12px !important;
+
+    box-shadow:
+      inset 0 2px 2px rgba(255,255,255,.65),
+      inset 0 -4px 6px rgba(0,0,0,.6),
+      0 3px 0 #a87316,
+      0 6px 12px rgba(0,0,0,.5),
+      0 0 8px rgba(255,204,65,.25) !important;
+  }
+
+  /* ICONO DESCARGA DORADO CON RELIEVE */
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera svg {
+    width: 23px !important;
+    height: 23px !important;
+    flex-basis: 23px !important;
+    box-sizing: border-box !important;
+    padding: 3px !important;
+    color: #ffd45a !important;
+    stroke: #ffd45a !important;
+    fill: none !important;
+    opacity: 1 !important;
+    background: linear-gradient(
+      145deg,
+      #285b8c,
+      #061a36
+    ) !important;
+    border: 1px solid rgba(255,212,90,.7) !important;
+    border-radius: 6px !important;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,.8));
+  }
+
+  .inicio-app .inicio-header
+  .inicio-avisos-contenedor > button.inicio-instalar-cabecera
+  .instalar-app-texto {
+    font-size: 12px !important;
+    letter-spacing: .3px !important;
+    font-weight: 900 !important;
+  }
+}
+
+/* FANTASY 2028 - ANIMACION TACTIL PREMIUM */
+.inicio-app .inicio-hero-contenido .inicio-acciones .fantasy-directo {
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: manipulation;
+  transition:
+    filter .16s ease,
+    box-shadow .16s ease !important;
+  will-change: filter;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .inicio-app .inicio-hero-contenido .inicio-acciones .fantasy-directo:hover {
+    filter: brightness(1.12) saturate(1.15) !important;
+  }
+}
+
+.inicio-app .inicio-hero-contenido .inicio-acciones .fantasy-directo:active {
+  filter: brightness(1.25) saturate(1.2) !important;
+  box-shadow:
+    inset 0 3px 8px rgba(0,0,0,.45),
+    0 0 12px rgba(255,210,65,.65) !important;
+}
+
+.inicio-app .inicio-hero-contenido .inicio-acciones
+.fantasy-directo:active .fantasy-banner-imagen {
+  transform: scale(.95) !important;
+  transition: transform .12s ease !important;
+}
+
+.inicio-app .inicio-hero-contenido .inicio-acciones
+.fantasy-directo .fantasy-banner-imagen {
+  transition: transform .16s ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inicio-app .inicio-hero-contenido .inicio-acciones .fantasy-directo,
+  .inicio-app .inicio-hero-contenido .inicio-acciones
+  .fantasy-directo .fantasy-banner-imagen {
+    transition: none !important;
   }
 }

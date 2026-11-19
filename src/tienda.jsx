@@ -1,3 +1,4 @@
+import { tarjetasColeccionables } from "./data/tarjetasColeccionables";
 import React from 'react';
 
 export default function Tienda({ onVolver }) {
@@ -27,6 +28,24 @@ export default function Tienda({ onVolver }) {
           <button type="button">Comprar / Solicitar</button>
         </div>
       </div>
+
+      {/* Tarjetas coleccionables */}
+      <section className="tarjetas-seccion">
+<h2>⚾ Tarjetas Coleccionables</h2>
+<p>Descubre nuestras tarjetas de béisbol disponibles.</p>
+<div className="tienda-grid">
+{tarjetasColeccionables.map((tarjeta) => (
+<div className="producto-card" key={tarjeta.id}>
+<div className="producto-imagen-placeholder">🃏</div>
+<h3>{tarjeta.jugador}</h3>
+<p>{tarjeta.marca} {tarjeta.anio} · #{tarjeta.numero}</p>
+<p>Tarjeta sola: ${tarjeta.precioSolo.toFixed(2)}</p>
+<p>Con protector: ${tarjeta.precioProtector.toFixed(2)}</p>
+<p>{tarjeta.estado}</p>
+</div>
+))}
+</div>
+</section>
     </div>
   );
 }

@@ -1,0 +1,1145 @@
+
+/* Fantasy Sóftbol Veteranos 2028
+   Estilos visuales del Centro de Estadísticas */
+
+.veteranos-estadisticas {
+  width: min(94%, 1000px);
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 193, 7, .22);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, .25);
+  text-align: left;
+}
+
+.veteranos-estadisticas h2 {
+  color: #ffc247;
+  font-size: clamp(23px, 4vw, 32px);
+  text-align: center;
+  margin: 20px 0 8px;
+}
+
+.veteranos-estadisticas h3 {
+  color: #ffcc63;
+  font-size: clamp(18px, 3vw, 23px);
+  margin: 25px 0 15px;
+}
+
+.veteranos-estadisticas label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #e8efff;
+}
+
+.veteranos-estadisticas input,
+.veteranos-estadisticas select {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 43px;
+  padding: 10px 12px;
+  border: 1px solid #47617e;
+  border-radius: 8px;
+  background: #1b314e;
+  color: white;
+  font: inherit;
+  color-scheme: dark;
+}
+
+.veteranos-estadisticas input:focus,
+.veteranos-estadisticas select:focus {
+  outline: 2px solid #ffc247;
+  outline-offset: 1px;
+}
+
+.veteranos-estadisticas input::placeholder {
+  color: #aabbd0;
+}
+
+.veteranos-estadisticas button {
+  min-height: 43px;
+  padding: 10px 16px;
+  border: 1px solid #e5ad32;
+  border-radius: 8px;
+  background: #f5bb43;
+  color: #10233d;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.veteranos-estadisticas button:hover {
+  background: #ffcf70;
+}
+
+.veteranos-estadisticas details {
+  border: 1px solid #39587b;
+  border-radius: 12px;
+}
+
+.veteranos-estadisticas summary {
+  color: #fff;
+  padding: 5px;
+}
+
+.veteranos-estadisticas table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.veteranos-estadisticas th {
+  padding: 13px 10px;
+  background: #244467;
+  color: #ffd36d;
+  text-align: left;
+}
+
+.veteranos-estadisticas td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #304866;
+  text-align: left;
+}
+
+.veteranos-estadisticas tbody tr:nth-child(even) {
+  background: rgba(255,255,255,.045);
+}
+
+.veteranos-estadisticas td:last-child {
+  color: #ffce56;
+  font-weight: 800;
+}
+
+.veteranos-estadisticas hr {
+  border: 0;
+  border-top: 1px solid #3c5675;
+  margin: 30px 0;
+}
+
+.veteranos-estadisticas [role="status"] {
+  padding: 12px 14px;
+  background: #1e4162;
+  border-radius: 8px;
+  border-left: 4px solid #ffc247;
+}
+
+@media (max-width: 600px) {
+  .veteranos-estadisticas {
+    width: 96%;
+    padding: 14px !important;
+    margin: 12px auto !important;
+  }
+
+  .veteranos-estadisticas h2,
+  .veteranos-estadisticas h3 {
+    text-align: center;
+  }
+
+  .veteranos-estadisticas button {
+    max-width: 100%;
+    font-size: 13px;
+  }
+
+  .veteranos-estadisticas table {
+    font-size: 12px;
+  }
+
+  .veteranos-estadisticas th,
+  .veteranos-estadisticas td {
+    padding: 10px 6px;
+  }
+}
+
+
+/* IDENTIDAD MONAGRILLO VETERANOS 2028 */
+
+.veteranos-estadisticas {
+  --vino: #65152b;
+  --vino-oscuro: #2b0d19;
+  --dorado: #d4af37;
+  --blanco: #ffffff;
+
+  background: linear-gradient(
+    145deg,
+    #481124,
+    #2b0d19
+  ) !important;
+
+  border: 1px solid var(--dorado) !important;
+  color: var(--blanco) !important;
+  box-shadow: 0 16px 45px rgba(0,0,0,.35);
+}
+
+.veteranos-estadisticas h2,
+.veteranos-estadisticas h3 {
+  color: var(--dorado) !important;
+}
+
+.veteranos-estadisticas label {
+  color: var(--blanco);
+}
+
+.veteranos-estadisticas input,
+.veteranos-estadisticas select {
+  background: #391322 !important;
+  color: #fff !important;
+  border: 1px solid #a47756 !important;
+  border-radius: 9px;
+}
+
+.veteranos-estadisticas input:focus,
+.veteranos-estadisticas select:focus {
+  outline: 2px solid var(--dorado);
+  border-color: var(--dorado) !important;
+}
+
+.veteranos-estadisticas button {
+  background: var(--dorado) !important;
+  color: var(--vino-oscuro) !important;
+  border: 1px solid #f0d77c !important;
+  border-radius: 9px;
+  font-weight: 800;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.veteranos-estadisticas button:hover {
+  background: #f0d77c !important;
+  transform: translateY(-1px);
+}
+
+.veteranos-estadisticas details {
+  background: #601b32 !important;
+  border: 1px solid var(--dorado);
+}
+
+.veteranos-estadisticas summary {
+  color: #fff;
+}
+
+.veteranos-estadisticas th {
+  background: var(--vino) !important;
+  color: var(--dorado) !important;
+  border-bottom: 2px solid var(--dorado);
+}
+
+.veteranos-estadisticas td {
+  color: #fff;
+  border-bottom: 1px solid #784358;
+}
+
+.veteranos-estadisticas tbody tr:nth-child(even) {
+  background: rgba(255,255,255,.06);
+}
+
+.veteranos-estadisticas td:last-child {
+  color: #f1c75b;
+}
+
+.veteranos-estadisticas [role="status"] {
+  background: #601b32;
+  color: #fff;
+  border-left: 4px solid var(--dorado);
+}
+
+.veteranos-estadisticas hr {
+  border-top: 1px solid var(--dorado);
+}
+
+.veteranos-estadisticas input::placeholder {
+  color: #cbb5bf;
+}
+
+
+/* MONAGRILLO COLORES VIVOS 2028 */
+
+.veteranos-estadisticas {
+  --vino: #981d42;
+  --vino-oscuro: #65152b;
+  --dorado: #f5c542;
+  --blanco: #ffffff;
+
+  background: linear-gradient(
+    145deg,
+    #a9254c 0%,
+    #861b3c 48%,
+    #65152b 100%
+  ) !important;
+
+  border: 2px solid #f5c542 !important;
+  box-shadow:
+    0 14px 35px rgba(0,0,0,.25),
+    inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+.veteranos-estadisticas h2,
+.veteranos-estadisticas h3 {
+  color: #ffda62 !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,.22);
+}
+
+.veteranos-estadisticas label,
+.veteranos-estadisticas p {
+  color: #fff !important;
+}
+
+.veteranos-estadisticas input,
+.veteranos-estadisticas select {
+  background: #fff !important;
+  color: #421021 !important;
+  border: 2px solid #e9c56c !important;
+  color-scheme: light;
+}
+
+.veteranos-estadisticas input::placeholder {
+  color: #777 !important;
+}
+
+.veteranos-estadisticas button {
+  background: linear-gradient(
+    180deg,
+    #ffe27b,
+    #f5c542
+  ) !important;
+
+  color: #511126 !important;
+  border: 1px solid #ffe995 !important;
+  box-shadow: 0 3px 9px rgba(0,0,0,.2);
+}
+
+.veteranos-estadisticas button:hover {
+  background: #ffe58a !important;
+}
+
+.veteranos-estadisticas details {
+  background: #b32a52 !important;
+  border: 1px solid #f5c542 !important;
+}
+
+.veteranos-estadisticas th {
+  background: #66132e !important;
+  color: #ffda62 !important;
+}
+
+.veteranos-estadisticas td {
+  color: #fff !important;
+  border-bottom: 1px solid rgba(255,255,255,.25);
+}
+
+.veteranos-estadisticas td:last-child {
+  color: #ffda62 !important;
+}
+
+.veteranos-estadisticas tbody tr:nth-child(even) {
+  background: rgba(255,255,255,.1);
+}
+
+.veteranos-estadisticas [role="status"] {
+  background: #b32a52 !important;
+  border-left: 5px solid #ffda62 !important;
+}
+
+.veteranos-estadisticas hr {
+  border-top: 1px solid #ffda62 !important;
+}
+
+
+/* MONAGRILLO ESTILO BASEBALL PRO 2028 */
+
+.veteranos-estadisticas {
+  --vino: #541322;
+  --vino-oscuro: #350b16;
+  --dorado: #c59a36;
+  --blanco: #f2f2f0;
+
+  background: #181b20 !important;
+  color: #f2f2f0 !important;
+  border: 1px solid #765326 !important;
+  border-top: 5px solid #751c30 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 12px 30px rgba(0,0,0,.35) !important;
+}
+
+.veteranos-estadisticas h2 {
+  color: #fff !important;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-weight: 900;
+  text-shadow: none !important;
+}
+
+.veteranos-estadisticas h3 {
+  color: #d5ae52 !important;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+  font-weight: 800;
+  text-shadow: none !important;
+  border-left: 4px solid #751c30;
+  padding-left: 12px;
+}
+
+.veteranos-estadisticas p,
+.veteranos-estadisticas label {
+  color: #f2f2f0 !important;
+}
+
+.veteranos-estadisticas input,
+.veteranos-estadisticas select {
+  background: #252a31 !important;
+  color: #fff !important;
+  border: 1px solid #62666c !important;
+  border-radius: 5px !important;
+  color-scheme: dark;
+  box-shadow: none !important;
+}
+
+.veteranos-estadisticas input:focus,
+.veteranos-estadisticas select:focus {
+  outline: 2px solid #c59a36 !important;
+  border-color: #c59a36 !important;
+}
+
+.veteranos-estadisticas input::placeholder {
+  color: #aeb2b9 !important;
+}
+
+.veteranos-estadisticas button {
+  background: #751c30 !important;
+  color: #fff !important;
+  border: 1px solid #a97d3d !important;
+  border-radius: 5px !important;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.veteranos-estadisticas button:hover {
+  background: #92263e !important;
+  border-color: #d5ae52 !important;
+  transform: none !important;
+}
+
+.veteranos-estadisticas details {
+  background: #292d33 !important;
+  border: 1px solid #6a4c31 !important;
+  border-radius: 6px !important;
+}
+
+.veteranos-estadisticas summary {
+  color: #f2f2f0 !important;
+  font-weight: 800;
+}
+
+.veteranos-estadisticas th {
+  background: #541322 !important;
+  color: #f2f2f0 !important;
+  border-bottom: 2px solid #c59a36 !important;
+  text-transform: uppercase;
+}
+
+.veteranos-estadisticas td {
+  background: transparent !important;
+  color: #f2f2f0 !important;
+  border-bottom: 1px solid #41454d !important;
+}
+
+.veteranos-estadisticas tbody tr:nth-child(even) {
+  background: #252a31 !important;
+}
+
+.veteranos-estadisticas td:last-child {
+  color: #e0b75d !important;
+  font-weight: 900;
+}
+
+.veteranos-estadisticas [role="status"] {
+  background: #292d33 !important;
+  color: #fff !important;
+  border-left: 4px solid #c59a36 !important;
+}
+
+.veteranos-estadisticas hr {
+  border-top: 1px solid #765326 !important;
+}
+
+/* Tarjetas del historial */
+.veteranos-estadisticas h3 ~ div[style*="background"] {
+  border-color: #765326;
+}
+
+
+/* CLASIFICACION BASEBALL PRO 2028 */
+
+.veteranos-ranking {
+  margin: 20px 0 30px;
+  background: #202329;
+  border: 1px solid #795e35;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.veteranos-ranking-encabezado {
+  background: #541322;
+  border-bottom: 3px solid #c59a36;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.veteranos-ranking-encabezado span {
+  color: #d5ae52;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.veteranos-ranking-encabezado h4 {
+  color: #fff;
+  font-size: clamp(17px, 3vw, 23px);
+  margin: 5px 0;
+  font-weight: 900;
+}
+
+.veteranos-ranking-encabezado p {
+  color: #e2d9dc !important;
+  margin: 0;
+  font-size: 13px;
+}
+
+.veteranos-ranking-encabezado > strong {
+  color: #d5ae52;
+  border: 1px solid #a27d3d;
+  padding: 7px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.veteranos-ranking-tabla {
+  overflow-x: auto;
+}
+
+.veteranos-ranking table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.veteranos-ranking th {
+  background: #30343a !important;
+  color: #e9e9e9 !important;
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 13px !important;
+}
+
+.veteranos-ranking td {
+  padding: 12px 13px !important;
+  font-size: 14px;
+}
+
+.veteranos-ranking td:last-child,
+.veteranos-ranking th:last-child {
+  text-align: right;
+}
+
+.veteranos-ranking-posicion {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background: #383d45;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: 900;
+}
+
+.veteranos-ranking-posicion.posicion-1 {
+  background: #c59a36;
+  color: #181b20;
+}
+
+.veteranos-ranking-posicion.posicion-2 {
+  background: #8c929b;
+  color: #fff;
+}
+
+.veteranos-ranking-posicion.posicion-3 {
+  background: #916039;
+  color: #fff;
+}
+
+.veteranos-ranking-nombre {
+  color: #fff !important;
+  font-weight: 700;
+}
+
+.veteranos-ranking-puntos {
+  color: #d5ae52 !important;
+  font-weight: 900;
+  font-size: 19px !important;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 600px) {
+  .veteranos-ranking-encabezado {
+    padding: 14px;
+  }
+
+  .veteranos-ranking td,
+  .veteranos-ranking th {
+    padding: 10px 8px !important;
+  }
+
+  .veteranos-ranking-nombre {
+    font-size: 12px !important;
+  }
+}
+
+
+/* TABLA ANCHA MONAGRILLO 2028 */
+
+.veteranos-estadisticas .veteranos-ranking {
+  width: 100%;
+  max-width: none;
+}
+
+.veteranos-estadisticas .veteranos-ranking-encabezado {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.veteranos-estadisticas .veteranos-ranking-tabla {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+
+.veteranos-estadisticas .veteranos-ranking-tabla table {
+  width: 100% !important;
+  min-width: 0;
+  table-layout: auto;
+  margin: 0;
+}
+
+.veteranos-estadisticas .veteranos-ranking-tabla th:first-child,
+.veteranos-estadisticas .veteranos-ranking-tabla td:first-child {
+  width: 75px;
+  text-align: center;
+}
+
+.veteranos-estadisticas .veteranos-ranking-tabla th:nth-child(2),
+.veteranos-estadisticas .veteranos-ranking-tabla td:nth-child(2) {
+  text-align: left;
+}
+
+.veteranos-estadisticas .veteranos-ranking-tabla th:last-child,
+.veteranos-estadisticas .veteranos-ranking-tabla td:last-child {
+  width: 90px;
+  text-align: right;
+}
+
+.veteranos-estadisticas .veteranos-ranking-tabla td {
+  height: 44px;
+}
+
+@media (max-width: 600px) {
+  .veteranos-estadisticas .veteranos-ranking-tabla th:first-child,
+  .veteranos-estadisticas .veteranos-ranking-tabla td:first-child {
+    width: 48px;
+  }
+
+  .veteranos-estadisticas .veteranos-ranking-tabla th:last-child,
+  .veteranos-estadisticas .veteranos-ranking-tabla td:last-child {
+    width: 55px;
+  }
+}
+
+
+/* TARJETAS EQUIPOS FANTASY VETERANOS 2028 */
+
+.veteranos-tarjetas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 20px 0 30px;
+}
+
+.veteranos-equipo-card {
+  min-width: 0;
+  padding: 17px;
+  background: #252a31;
+  border: 1px solid #765326;
+  border-radius: 9px;
+  color: #fff;
+}
+
+.veteranos-equipo-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #484c53;
+}
+
+.veteranos-equipo-escudo {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: #541322;
+  color: #d5ae52;
+  border: 1px solid #a97d3d;
+  border-radius: 7px;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.veteranos-equipo-header h4 {
+  margin: 0 0 5px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.veteranos-equipo-header small,
+.veteranos-equipo-datos small {
+  color: #aeb4be;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.veteranos-equipo-datos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 18px 0;
+}
+
+.veteranos-equipo-datos > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.veteranos-equipo-datos strong {
+  color: #fff;
+  font-size: 24px;
+}
+
+.veteranos-equipo-datos .veteranos-equipo-pts {
+  color: #d5ae52;
+}
+
+.veteranos-estadisticas .veteranos-equipo-boton {
+  width: 100%;
+  background: #541322 !important;
+  color: #fff !important;
+  border: 1px solid #a97d3d !important;
+}
+
+.veteranos-equipo-plantilla {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #484c53;
+}
+
+.veteranos-equipo-jugador {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid #41454d;
+  font-size: 12px;
+}
+
+.veteranos-equipo-jugador strong {
+  color: #d5ae52;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .veteranos-tarjetas-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* TARJETAS FANTASY - VERSION INTEGRADA */
+
+.veteranos-tarjetas-seguras {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 20px 0 30px;
+}
+
+.veteranos-tarjeta-segura {
+  background: #252a31;
+  border: 1px solid #765326;
+  border-radius: 10px;
+  padding: 18px;
+  color: #f2f2f0;
+  min-width: 0;
+}
+
+.veteranos-tarjeta-titulo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 17px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #484c53;
+}
+
+.veteranos-tarjeta-titulo span {
+  background: #541322;
+  padding: 10px;
+  border-radius: 7px;
+}
+
+.veteranos-tarjeta-datos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 18px 0;
+}
+
+.veteranos-tarjeta-datos div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.veteranos-tarjeta-datos small {
+  color: #aeb4be;
+  font-size: 11px;
+}
+
+.veteranos-tarjeta-datos strong {
+  font-size: 24px;
+  color: #d5ae52;
+}
+
+.veteranos-tarjeta-detalles summary {
+  cursor: pointer;
+  text-align: center;
+  background: #541322;
+  border: 1px solid #a97d3d;
+  border-radius: 6px;
+  padding: 12px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.veteranos-tarjeta-detalles ol {
+  padding-left: 24px;
+}
+
+.veteranos-tarjeta-detalles li {
+  padding: 7px 0;
+  border-bottom: 1px solid #41454d;
+}
+
+@media (max-width: 600px) {
+  .veteranos-tarjetas-seguras {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* PASO 501 - TARJETAS FANTASY BASEBALL PRO */
+
+.veteranos-estadisticas .veteranos-tarjetas-seguras {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 20px auto 32px;
+}
+
+.veteranos-estadisticas .veteranos-tarjeta-segura {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 20px;
+  background: #252a31;
+  border: 1px solid #765326;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.veteranos-estadisticas .veteranos-tarjeta-titulo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  text-align: left;
+}
+
+.veteranos-estadisticas .veteranos-tarjeta-titulo strong {
+  font-size: 18px;
+  color: #f2f2f0;
+  line-height: 1.3;
+}
+
+.veteranos-estadisticas .veteranos-tarjeta-datos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  text-align: center;
+}
+
+.veteranos-estadisticas .veteranos-tarjeta-datos > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.veteranos-estadisticas .veteranos-tarjeta-datos strong {
+  font-size: 26px;
+  color: #d5ae52;
+}
+
+.veteranos-estadisticas .veteranos-tarjeta-detalles {
+  width: 100%;
+}
+
+.veteranos-estadisticas .veteranos-tarjeta-detalles summary {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 13px;
+}
+
+@media (max-width: 650px) {
+  .veteranos-estadisticas .veteranos-tarjetas-seguras {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+
+/* PASO 507 - ROSTER MONAGRILLO BASEBALL PRO */
+
+.veteranos-estadisticas .veteranos-roster-admin {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 24px 0;
+  padding: 20px;
+  background: #181b20;
+  border: 1px solid #765326;
+  border-radius: 10px;
+}
+
+.veteranos-estadisticas .veteranos-roster-fila {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 120px;
+  align-items: center !important;
+  gap: 16px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #383d45;
+  text-align: left !important;
+}
+
+.veteranos-estadisticas .veteranos-roster-fila > div:first-child {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  min-width: 0;
+  text-align: left !important;
+}
+
+.veteranos-estadisticas .veteranos-roster-fila strong {
+  color: #f2f2f0;
+  font-size: 15px !important;
+  font-weight: 700;
+}
+
+.veteranos-estadisticas .veteranos-roster-fila span {
+  color: #d5ae52;
+  font-size: 14px !important;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.veteranos-estadisticas .veteranos-roster-fila > button {
+  width: 100%;
+  margin: 0 !important;
+  padding: 10px;
+  background: #541322;
+  color: white;
+  border: 1px solid #a97d3d;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.veteranos-estadisticas .veteranos-roster-edicion {
+  grid-column: 1 / -1;
+  display: grid !important;
+  grid-template-columns: minmax(0, 2fr) 90px auto auto;
+  gap: 10px;
+  align-items: center;
+}
+
+@media (max-width: 650px) {
+  .veteranos-estadisticas .veteranos-roster-admin {
+    padding: 12px;
+  }
+
+  .veteranos-estadisticas .veteranos-roster-fila {
+    grid-template-columns: minmax(0, 1fr) 95px;
+    gap: 8px;
+    padding: 12px 6px;
+  }
+
+  .veteranos-estadisticas .veteranos-roster-edicion {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+/* PASO 508 - ROSTER COMPACTO */
+
+.veteranos-estadisticas .veteranos-roster-admin {
+  width: 100%;
+  max-width: 100%;
+  margin: 18px 0;
+  padding: 16px;
+  box-sizing: border-box;
+  background: #181b20;
+  border: 1px solid #765326;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.veteranos-estadisticas .veteranos-roster-admin h3 {
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+.veteranos-estadisticas .veteranos-roster-admin > p {
+  margin: 6px 0 12px;
+  font-size: 13px;
+  text-align: left;
+}
+
+.veteranos-estadisticas .veteranos-roster-admin > input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 10px !important;
+  padding: 9px 12px;
+}
+
+.veteranos-estadisticas .veteranos-roster-fila {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 92px;
+  width: 100%;
+  max-width: none;
+  min-height: 42px;
+  box-sizing: border-box;
+  align-items: center !important;
+  justify-items: stretch !important;
+  gap: 10px;
+  padding: 5px 10px !important;
+  margin: 0 !important;
+  border-bottom: 1px solid #363b43;
+  text-align: left !important;
+}
+
+.veteranos-estadisticas .veteranos-roster-fila > div:first-child:not(.veteranos-roster-edicion) {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+}
+
+.veteranos-estadisticas .veteranos-roster-fila strong {
+  font-size: 13px !important;
+  color: #f2f2f0;
+  line-height: 1.3;
+}
+
+.veteranos-estadisticas .veteranos-roster-fila span {
+  font-size: 12px !important;
+  color: #d5ae52;
+  line-height: 1.3;
+}
+
+.veteranos-estadisticas .veteranos-roster-fila > button {
+  display: block !important;
+  width: 92px !important;
+  min-width: 0;
+  min-height: 30px;
+  padding: 5px 7px !important;
+  margin: 0 !important;
+  font-size: 11px !important;
+  line-height: 1.2;
+  border-radius: 5px;
+  background: #541322;
+  color: #fff;
+  border: 1px solid #a97d3d;
+}
+
+.veteranos-estadisticas .veteranos-roster-fila:has(.veteranos-roster-edicion) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.veteranos-estadisticas .veteranos-roster-edicion {
+  width: 100%;
+  min-width: 0;
+  grid-column: 1 / -1;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 75px auto auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.veteranos-estadisticas .veteranos-roster-edicion input,
+.veteranos-estadisticas .veteranos-roster-edicion select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 650px) {
+  .veteranos-estadisticas .veteranos-roster-admin {
+    padding: 10px;
+  }
+
+  .veteranos-estadisticas .veteranos-roster-fila {
+    grid-template-columns: minmax(0, 1fr) 78px;
+    gap: 6px;
+    padding: 6px 4px !important;
+  }
+
+  .veteranos-estadisticas .veteranos-roster-fila > button {
+    width: 78px !important;
+    font-size: 10px !important;
+  }
+
+  .veteranos-estadisticas .veteranos-roster-edicion {
+    grid-template-columns: minmax(0, 1fr) 75px;
+  }
+
+  .veteranos-estadisticas .veteranos-roster-edicion button {
+    width: 100%;
+  }
+}

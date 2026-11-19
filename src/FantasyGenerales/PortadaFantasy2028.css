@@ -515,3 +515,121 @@
   transform: translateY(20px) !important;
   object-fit: contain !important;
 }
+
+
+/* FANTASY 2028 - BOTONES HORIZONTALES */
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding: 8px !important;
+  scroll-snap-type: x proximity;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+  flex: 0 0 180px !important;
+  width: 180px !important;
+  min-width: 180px !important;
+  height: auto !important;
+  aspect-ratio: 1.8 / 1 !important;
+  margin: 0 !important;
+  scroll-snap-align: start;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-tarjeta-imagen {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+
+/* FANTASY 2028 - RANKING DEBAJO DE CAMPEONATOS */
+
+.fantasy-generales.fantasy-portada-activa {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+  order: 1 !important;
+  flex-shrink: 0 !important;
+  margin-top: 10px !important;
+  margin-bottom: 8px !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-ranking-portada {
+  order: 2 !important;
+  position: relative !important;
+  inset: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: min(94%, 900px) !important;
+  max-width: 900px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+  margin: 8px auto 24px !important;
+  transform: none !important;
+  flex-shrink: 0 !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-ranking-lista {
+  width: 100% !important;
+}
+
+@media (max-width: 650px) {
+  .fantasy-generales.fantasy-portada-activa .fantasy-ranking-portada {
+    width: calc(100% - 24px) !important;
+    padding: 14px !important;
+  }
+}
+
+
+/* FANTASY 2028 - BOTONES VERTICALES */
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonatos {
+  display: flex !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  width: min(100%, 380px) !important;
+  max-width: 380px !important;
+  height: auto !important;
+  aspect-ratio: auto !important;
+  overflow: visible !important;
+  margin: 12px auto 18px !important;
+  padding: 0 12px !important;
+  box-sizing: border-box !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-campeonato {
+  flex: 0 0 auto !important;
+  display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 16 / 9 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.fantasy-generales.fantasy-portada-activa .fantasy-tarjeta-imagen {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}

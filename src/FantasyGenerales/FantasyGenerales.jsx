@@ -1,4 +1,5 @@
 import PanelEquiposSoftbol from './PanelEquiposSoftbol';
+import CentroEstadisticasVeteranos from './CentroEstadisticasVeteranos';
 import SalaDraft from './SalaDraft';
 import SalaDraftVeteranos from './SalaDraftVeteranos';
 import { supabase } from '../supabase';
@@ -32,6 +33,7 @@ export default function FantasyGenerales({ onCerrar, isAdmin = false, usuario = 
   const [nombreEquipo, setNombreEquipo] = useState('');
   const [guardado, setGuardado] = useState(false);
   const [salaDraftOpen, setSalaDraftOpen] = useState(false);
+  const [centroEstadisticasOpen, setCentroEstadisticasOpen] = useState(false);
   const [crearSalaOpen, setCrearSalaOpen] = useState(false);
   const [nombreSala, setNombreSala] = useState('');
   const [fechaDraft, setFechaDraft] = useState('');
@@ -199,6 +201,10 @@ export default function FantasyGenerales({ onCerrar, isAdmin = false, usuario = 
             </p>
           )}
         </section>
+      ) : centroEstadisticasOpen && campeonato?.id === 'softbol-veteranos' && isAdmin ? (
+        <CentroEstadisticasVeteranos
+          onVolver={() => setCentroEstadisticasOpen(false)}
+        />
       ) : salaDraftOpen && campeonato ? (
         campeonato.id === 'softbol-veteranos' && salaCreada?.sala_id ? (
           <SalaDraftVeteranos
@@ -380,7 +386,19 @@ export default function FantasyGenerales({ onCerrar, isAdmin = false, usuario = 
             🏆 ENTRAR AL DRAFT
           </button>
           {campeonato.id === 'softbol-veteranos' && (
-            <PanelEquiposSoftbol />
+            <>
+              <PanelEquiposSoftbol />
+              {isAdmin && (
+                <button
+                  type="button"
+                  className="fantasy-guardar"
+                  onClick={() => setCentroEstadisticasOpen(true)}
+                  style={{ marginTop: 12 }}
+                >
+                  📊 CENTRO DE ESTADÍSTICAS
+                </button>
+              )}
+            </>
           )}
           <div className="fantasy-progreso">
             <strong>MI ALINEACIÓN</strong>
